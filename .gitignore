@@ -1,0 +1,6 @@
+backup
+work
+
+*.sdf
+*.dump
+*.vstf
