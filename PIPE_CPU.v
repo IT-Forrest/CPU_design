@@ -67,6 +67,21 @@ module PIPE_CPU(
     reg     [GENERAL_REG_WIDTH-1:0] gr[7:0];
     wire    branch_flag;
 
+    //*********** Facilitate code learning ***********//
+    wire    [4:0]   code_type;
+    wire    [2:0]   oper1_r1;
+    wire    [3:0]   oper2_r2;
+    wire    oper2_is_val;
+    wire    [3:0]   oper3_r3;
+    wire    oper3_is_val;
+    
+    assign  code_type = id_ir[MSB_OP_16B-1:MSB_OPER1_11B];
+    assign  oper1_r1 = id_ir[MSB_OPER1_11B-1:MSB_OPER2_8B];
+    assign  oper2_r2 = id_ir[MSB_OPER2_8B-1:MSB_OPER3_4B];
+    assign  oper3_r3 = id_ir[MSB_OPER3_4B-1:0];
+    assign  oper2_is_val = id_ir[MSB_OPER2_8B-1];
+    assign  oper3_is_val = id_ir[MSB_OPER3_4B-1];
+    
     //************* CPU Control *************//
     always @(posedge clk)
         begin
@@ -283,7 +298,7 @@ module PIPE_CPU(
         end
 
     //************* MEM *************//
-    assign d_addr = reg_C[MSB_OPER2_8B-1:0];
+    assign d_addr = reg_C[D_MEM_ADDR_WIDTH-1:0];
     assign d_we = dw;
     assign d_dataout = smdr1;
     assign branch_flag = ((mem_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `JUMP)

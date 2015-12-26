@@ -39,7 +39,7 @@ module PCPU_MEM_RST_TOP;
         .clk(clk),
         .rst(rst),
         .addr(i_addr),
-        .we(1'b0),
+        .d_we(1'b0),
         .datain(16'b0000_0000_0000_0000),
         .dataout(i_datain)
     );
@@ -47,7 +47,7 @@ module PCPU_MEM_RST_TOP;
         .clk(clk),
         .rst(rst),
         .addr(d_addr),
-        .we(d_we),
+        .d_we(d_we),
         .datain(d_dataout),
         .dataout(d_datain)
     );
@@ -64,18 +64,19 @@ module PCPU_MEM_RST_TOP;
         #100;
         
         // Add stimulus here
-        $display("pc :               id_ir                :reg_A :reg_B :reg_C\
+        $display("pc  :               id_ir                :reg_A :reg_B :reg_C\
 : da  :  dd  : w : reC1 :  gr1  :  gr2  :  gr3   :zf :nf:cf");
-        $monitor("%h : %b : %h : %h : %h : %h : %h : %b : %h : %h : %h : %h : %b : %b : %b", 
+        $monitor("%3d : %b : %h : %h : %h : %h : %h : %b : %h : %h : %h : %h : %b : %b : %b", 
             uut.pc, uut.id_ir, uut.reg_A, uut.reg_B, uut.reg_C,
             d_addr, d_dataout, d_we, uut.reg_C1, uut.gr[1], uut.gr[2], uut.gr[3],
             uut.zf, uut.nf, uut.cf);
 
-        #10 rst_n <= 0;
-        #10 rst_n <= 1;
-        #10 enable <= 1;
-        #10 start <=1;
-        #10 start <= 0;
+        #10 rst_n = 0;
+        #10 rst_n = 1;
+        #10 enable = 1;
+        #10 start =1;
+        #10 start = 0;
+        #200 $stop();
     end
     
     always #5

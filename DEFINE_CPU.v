@@ -46,6 +46,7 @@
 `define BC      5'b1_1110
 `define BNC     5'b1_1111
 
+// index of the general memory
 `define gr0     3'b000
 `define gr1     3'b001
 `define gr2     3'b010
