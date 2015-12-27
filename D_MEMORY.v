@@ -20,9 +20,10 @@ module D_MEMORY(
         begin
             if (!rst_n)
                 begin
-                    D_RAM[0] <= 16'h00AB;
-                    D_RAM[1] <= 16'h3C00;
-                    D_RAM[2] <= 16'h0000;
+                    // The initialization is moved to the top-level test bench
+                    // D_RAM[0] <= 16'h00AB;
+                    // D_RAM[1] <= 16'h3C00;
+                    // D_RAM[2] <= 16'h0000;
                 end
             else if (d_we)
                 D_RAM[addr] <= datain;

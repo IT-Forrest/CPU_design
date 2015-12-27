@@ -21,6 +21,8 @@ module PCPU_MEM_INIT_TOP;
     wire d_we;
     wire [15:0] d_dataout;
 
+    integer i;
+    
     // Instantiate the Unit Under Test (UUT)
     PIPE_CPU uut (
         .clk(clk), 
@@ -38,7 +40,7 @@ module PCPU_MEM_INIT_TOP;
         .clk(clk),
         .rst_n(rst_n), 
         .addr(i_addr),
-        .d_we(d_we),//
+        .d_we(d_we),// need a seperate control signal; or instruction set will be overwritten when d_we=1
         .datain(16'b0000_0000_0000_0000),//i_instruct
         .dataout(i_datain)
     );
@@ -64,7 +66,7 @@ module PCPU_MEM_INIT_TOP;
         
         // Add stimulus here
         $display("pc  :               id_ir                :reg_A :reg_B :reg_C\
-: da  :  dd  : w : reC1 :  gr1  :  gr2  :  gr3   :zf :nf:cf");
+            : da  :  dd  : w : reC1 :  gr1  :  gr2  :  gr3   :zf :nf:cf");
         $monitor("%3d : %b : %h : %h : %h : %h : %h : %b : %h : %h : %h : %h : %b : %b : %b", 
             uut.pc, uut.id_ir, uut.reg_A, uut.reg_B, uut.reg_C,
             d_addr, d_dataout, d_we, uut.reg_C1, uut.gr[1], uut.gr[2], uut.gr[3],
@@ -84,9 +86,10 @@ module PCPU_MEM_INIT_TOP;
         i_mem.I_RAM[11] = {`NOP, 11'b000_0000_0000};
         i_mem.I_RAM[12] = {`NOP, 11'b000_0000_0000};
         i_mem.I_RAM[13] = {`NOP, 11'b000_0000_0000};
+        i_mem.I_RAM[14] = {`SRL, `gr4, 1'b0, `gr3, 4'b0001};//if no jump from BNZ, then keep on this instruction 
+        i_mem.I_RAM[15] = {`HALT, 11'b000_0000_0000};
         i_mem.I_RAM[187] = {`CMP, 4'b0000, `gr1, 1'b0, `gr2};
         i_mem.I_RAM[188] = {`HALT, 11'b000_0000_0000};
-        
         
         d_mem.D_RAM[0] = 16'h00AB;
         d_mem.D_RAM[1] = 16'h3C00;

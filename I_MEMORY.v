@@ -20,22 +20,23 @@ module I_MEMORY(
         begin
             if (!rst_n)
                 begin
-                    I_RAM[0] <= {`LOAD, `gr1, 1'b0, `gr0, 4'b0000};
-                    I_RAM[1] <= {`LOAD, `gr2, 1'b0, `gr0, 4'b0001};
-                    I_RAM[2] <= {`NOP, 11'b000_0000_0000};
-                    I_RAM[3] <= {`NOP, 11'b000_0000_0000};
-                    I_RAM[4] <= {`NOP, 11'b000_0000_0000};
-                    I_RAM[5] <= {`ADD, `gr3, 1'b0, `gr1, 1'b0, `gr2};
-                    I_RAM[6] <= {`NOP, 11'b000_0000_0000};
-                    I_RAM[7] <= {`NOP, 11'b000_0000_0000};
-                    I_RAM[8] <= {`NOP, 11'b000_0000_0000};
-                    I_RAM[9] <= {`STORE, `gr3, 1'b0, `gr0, 4'b0010};
-                    I_RAM[10] <= {`BNZ, `gr1, 8'b0001_0000};
-                    I_RAM[11] <= {`NOP, 11'b000_0000_0000};
-                    I_RAM[12] <= {`NOP, 11'b000_0000_0000};
-                    I_RAM[13] <= {`NOP, 11'b000_0000_0000};
-                    I_RAM[187] <= {`CMP, 4'b0000, `gr1, 1'b0, `gr2};
-                    I_RAM[188] <= {`HALT, 11'b000_0000_0000};
+                    // The initialization is moved to the top-level test bench
+                    // I_RAM[0] <= {`LOAD, `gr1, 1'b0, `gr0, 4'b0000};
+                    // I_RAM[1] <= {`LOAD, `gr2, 1'b0, `gr0, 4'b0001};
+                    // I_RAM[2] <= {`NOP, 11'b000_0000_0000};
+                    // I_RAM[3] <= {`NOP, 11'b000_0000_0000};
+                    // I_RAM[4] <= {`NOP, 11'b000_0000_0000};
+                    // I_RAM[5] <= {`ADD, `gr3, 1'b0, `gr1, 1'b0, `gr2};
+                    // I_RAM[6] <= {`NOP, 11'b000_0000_0000};
+                    // I_RAM[7] <= {`NOP, 11'b000_0000_0000};
+                    // I_RAM[8] <= {`NOP, 11'b000_0000_0000};
+                    // I_RAM[9] <= {`STORE, `gr3, 1'b0, `gr0, 4'b0010};
+                    // I_RAM[10] <= {`BNZ, `gr1, 8'b0001_0000};
+                    // I_RAM[11] <= {`NOP, 11'b000_0000_0000};
+                    // I_RAM[12] <= {`NOP, 11'b000_0000_0000};
+                    // I_RAM[13] <= {`NOP, 11'b000_0000_0000};
+                    // I_RAM[187] <= {`CMP, 4'b0000, `gr1, 1'b0, `gr2};
+                    // I_RAM[188] <= {`HALT, 11'b000_0000_0000};
                 end
             else if (d_we)
                 I_RAM[addr] <= datain;

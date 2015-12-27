@@ -10,7 +10,7 @@ add wave -noupdate -radix unsigned /PCPU_MEM_INIT_TOP/uut/i_addr
 add wave -noupdate /PCPU_MEM_INIT_TOP/uut/d_addr
 add wave -noupdate /PCPU_MEM_INIT_TOP/uut/d_we
 add wave -noupdate /PCPU_MEM_INIT_TOP/uut/state
-add wave -noupdate /PCPU_MEM_INIT_TOP/uut/d_dataout
+add wave -noupdate -radix hexadecimal /PCPU_MEM_INIT_TOP/uut/d_dataout
 add wave -noupdate -radix unsigned /PCPU_MEM_INIT_TOP/uut/code_type
 add wave -noupdate /PCPU_MEM_INIT_TOP/uut/oper1_r1
 add wave -noupdate /PCPU_MEM_INIT_TOP/uut/oper2_is_val
@@ -19,7 +19,7 @@ add wave -noupdate /PCPU_MEM_INIT_TOP/uut/oper3_is_val
 add wave -noupdate /PCPU_MEM_INIT_TOP/uut/oper3_r3
 add wave -noupdate -divider {New Divider}
 add wave -noupdate /PCPU_MEM_INIT_TOP/uut/cf_buf
-add wave -noupdate -radix unsigned /PCPU_MEM_INIT_TOP/uut/ALUo
+add wave -noupdate -radix hexadecimal /PCPU_MEM_INIT_TOP/uut/ALUo
 add wave -noupdate /PCPU_MEM_INIT_TOP/uut/zf
 add wave -noupdate /PCPU_MEM_INIT_TOP/uut/nf
 add wave -noupdate /PCPU_MEM_INIT_TOP/uut/cf
@@ -27,13 +27,15 @@ add wave -noupdate /PCPU_MEM_INIT_TOP/uut/dw
 add wave -noupdate -radix unsigned /PCPU_MEM_INIT_TOP/uut/pc
 add wave -noupdate -radix hexadecimal /PCPU_MEM_INIT_TOP/uut/id_ir
 add wave -noupdate -radix hexadecimal /PCPU_MEM_INIT_TOP/uut/ex_ir
+add wave -noupdate -radix hexadecimal /PCPU_MEM_INIT_TOP/uut/mem_ir
+add wave -noupdate -radix hexadecimal /PCPU_MEM_INIT_TOP/uut/wb_ir
 add wave -noupdate -radix hexadecimal /PCPU_MEM_INIT_TOP/uut/reg_A
 add wave -noupdate -radix hexadecimal /PCPU_MEM_INIT_TOP/uut/reg_B
 add wave -noupdate -radix hexadecimal /PCPU_MEM_INIT_TOP/uut/reg_C
 add wave -noupdate -radix hexadecimal /PCPU_MEM_INIT_TOP/uut/reg_C1
 add wave -noupdate /PCPU_MEM_INIT_TOP/uut/branch_flag
 TreeUpdate [SetDefaultTree]
-WaveRestoreCursors {{Cursor 1} {121990 ps} 0}
+WaveRestoreCursors {{Cursor 1} {128288 ps} 0}
 quietly wave cursor active 1
 configure wave -namecolwidth 227
 configure wave -valuecolwidth 200
@@ -49,4 +51,4 @@ configure wave -griddelta 40
 configure wave -timeline 0
 configure wave -timelineunits ps
 update
-WaveRestoreZoom {750 ps} {315750 ps}
+WaveRestoreZoom {100750 ps} {415750 ps}
