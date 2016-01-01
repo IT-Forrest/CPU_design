@@ -7,7 +7,7 @@
 // VERSION      : 1.0
 // PURPOSE      : macros defined in the CPU design
 // --------------------------------------------------------------------
-// ABSTRACT: simulation time 1us given each time period 10ns
+// ABSTRACT: simulation time 13us given each time period 10ns
 // --------------------------------------------------------------------
 `timescale 1ns / 1ps
 `include "../DEFINE_CPU.v"
@@ -15,7 +15,7 @@
 `include "../I_MEMORY.v"
 `include "../D_MEMORY.v"
 
-module PCPU_MEM_INIT_TOP;
+module PCPU_MEM_LOOP_TOP;
 
     // Inputs
     reg clk;
@@ -83,24 +83,29 @@ module PCPU_MEM_INIT_TOP;
             d_addr, d_dataout, d_we, uut.reg_C1, uut.gr[1], uut.gr[2], uut.gr[3],
             uut.zf, uut.nf, uut.cf);
 
-        i_mem.I_RAM[0] = {`LOAD, `gr1, 1'b0, `gr0, 4'b0000};
-        i_mem.I_RAM[1] = {`LOAD, `gr2, 1'b0, `gr0, 4'b0001};
-        i_mem.I_RAM[2] = {`NOP, 11'b000_0000_0000};
-        i_mem.I_RAM[3] = {`NOP, 11'b000_0000_0000};
-        i_mem.I_RAM[4] = {`NOP, 11'b000_0000_0000};
-        i_mem.I_RAM[5] = {`ADD, `gr3, 1'b0, `gr1, 1'b0, `gr2};
-        i_mem.I_RAM[6] = {`NOP, 11'b000_0000_0000};
-        i_mem.I_RAM[7] = {`NOP, 11'b000_0000_0000};
-        i_mem.I_RAM[8] = {`NOP, 11'b000_0000_0000};
-        i_mem.I_RAM[9] = {`STORE, `gr3, 1'b0, `gr0, 4'b0010};
-        i_mem.I_RAM[10] = {`BNZ, `gr1, 8'b0001_0000};
+        i_mem.I_RAM[ 0] = {`SUB, `gr7, 1'b0, `gr7, 1'b0, `gr7};//reset the loop controller `gr7
+        i_mem.I_RAM[ 1] = {`SUB, `gr1, 1'b0, `gr1, 1'b0, `gr1};//reset the sum value
+        i_mem.I_RAM[ 2] = {`NOP, 11'b000_0000_0000};
+        i_mem.I_RAM[ 3] = {`NOP, 11'b000_0000_0000};
+        i_mem.I_RAM[ 4] = {`NOP, 11'b000_0000_0000};
+        i_mem.I_RAM[ 5] = {`ADDI, `gr7, 4'b0001, 4'b1001};//set the loop controller `gr7 = 25
+        i_mem.I_RAM[ 6] = {`NOP, 11'b000_0000_0000};
+        i_mem.I_RAM[ 7] = {`NOP, 11'b000_0000_0000};
+        i_mem.I_RAM[ 8] = {`NOP, 11'b000_0000_0000};
+        i_mem.I_RAM[ 9] = {`ADD, `gr1, 1'b0, `gr1, 1'b0, `gr7};//sum += `gr7
+        i_mem.I_RAM[10] = {`SUBI, `gr7, 4'b0000, 4'b0001};
         i_mem.I_RAM[11] = {`NOP, 11'b000_0000_0000};
         i_mem.I_RAM[12] = {`NOP, 11'b000_0000_0000};
         i_mem.I_RAM[13] = {`NOP, 11'b000_0000_0000};
-        i_mem.I_RAM[14] = {`SRL, `gr4, 1'b0, `gr3, 4'b0001};//if no jump from BNZ, then keep on this instruction 
-        i_mem.I_RAM[15] = {`HALT, 11'b000_0000_0000};
-        i_mem.I_RAM[187] = {`CMP, 4'b0000, `gr1, 1'b0, `gr2};
-        i_mem.I_RAM[188] = {`HALT, 11'b000_0000_0000};
+        i_mem.I_RAM[14] = {`BNZ, `gr0, 4'b0000, 4'b1001};//if (`gr7 != 0) go to I_RAM[ 9];
+        i_mem.I_RAM[15] = {`NOP, 11'b000_0000_0000};
+        i_mem.I_RAM[16] = {`NOP, 11'b000_0000_0000};
+        i_mem.I_RAM[17] = {`NOP, 11'b000_0000_0000};
+        i_mem.I_RAM[18] = {`STORE, `gr1, 1'b0, `gr0, 4'b0010};
+        i_mem.I_RAM[19] = {`NOP, 11'b000_0000_0000};
+        i_mem.I_RAM[20] = {`NOP, 11'b000_0000_0000};
+        i_mem.I_RAM[21] = {`NOP, 11'b000_0000_0000};
+        i_mem.I_RAM[22] = {`HALT, 11'b000_0000_0000};//due to the pipeline, we need to add many `NOP to the instruction set
         
         d_mem.D_RAM[0] = 16'h00AB;
         d_mem.D_RAM[1] = 16'h3C00;
@@ -111,7 +116,7 @@ module PCPU_MEM_INIT_TOP;
         #10 enable = 1;
         #10 start =1;
         #10 start = 0;
-        #250 $stop();
+        #3130 $stop();
     end
     
     always #5
