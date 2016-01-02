@@ -1,4 +1,11 @@
-{F:/05. Code Battle/04. Verilog/CPU_design/sim/PCPU_MEM_INIT_TEST.v} {1 {vlog -work work -stats=none {F:/05. Code Battle/04. Verilog/CPU_design/sim/PCPU_MEM_INIT_TEST.v}
+{F:/05. Code Battle/04. Verilog/CPU_design/SHARE_SUPERALU.v} {1 {vlog -work work -stats=none {F:/05. Code Battle/04. Verilog/CPU_design/SHARE_SUPERALU.v}
+Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
+-- Compiling module SHARE_SUPERALU
+
+Top level modules:
+	SHARE_SUPERALU
+
+} {} {}} {F:/05. Code Battle/04. Verilog/CPU_design/sim/PCPU_MEM_INIT_TEST.v} {1 {vlog -work work -stats=none {F:/05. Code Battle/04. Verilog/CPU_design/sim/PCPU_MEM_INIT_TEST.v}
 Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
 -- Compiling module PIPE_CPU
 -- Compiling module I_MEMORY
@@ -37,7 +44,25 @@ Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
 Top level modules:
 	I_MEMORY
 
+} {} {}} {F:/05. Code Battle/04. Verilog/CPU_design/sim/tb_Super_ALU.v} {1 {vlog -work work -stats=none {F:/05. Code Battle/04. Verilog/CPU_design/sim/tb_Super_ALU.v}
+Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
+-- Compiling module SHARE_SUPERALU
+-- Compiling module SHARE_SUPERALU_TOP
+
+Top level modules:
+	SHARE_SUPERALU_TOP
+
 } {} {}} {F:/05. Code Battle/04. Verilog/CPU_design/DEFINE_CPU.v} {1 {vlog -work work -stats=none {F:/05. Code Battle/04. Verilog/CPU_design/DEFINE_CPU.v}
 Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
+
+} {} {}} {F:/05. Code Battle/04. Verilog/CPU_design/sim/PCPU_MEM_LOOP_TEST.v} {1 {vlog -work work -stats=none {F:/05. Code Battle/04. Verilog/CPU_design/sim/PCPU_MEM_LOOP_TEST.v}
+Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
+-- Compiling module PIPE_CPU
+-- Compiling module I_MEMORY
+-- Compiling module D_MEMORY
+-- Compiling module PCPU_MEM_LOOP_TOP
+
+Top level modules:
+	PCPU_MEM_LOOP_TOP
 
 } {} {}}
