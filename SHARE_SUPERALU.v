@@ -58,10 +58,10 @@ module SHARE_SUPERALU(
     parameter   MULTI_PURE      = 0,// multiply a pure fraction
                 MULTI_FRAC      = 1,// multiply a fraction like 1.4
                 MULTI_MAXM      = 2;// multiply a fraction like 2.3, then bound to 2
-    parameter   STEP_LSHT  = 4'b0000,
-                STEP_JUDGE = 4'b0001,
-                STEP_RSHT  = 4'b0010,
-                STEP_MEND  = 4'b0011;
+    parameter   STEP_MLSHT  = 4'b0000,
+                STEP_MJUDGE = 4'b0001,
+                STEP_MRSHT  = 4'b0010,
+                STEP_MMEND  = 4'b0011;
                 
     // division
     parameter   SA_DIV          = 0,
@@ -76,7 +76,7 @@ module SHARE_SUPERALU(
     parameter   SQRT_STEP0 = 4'b0000,
                 SQRT_STEP1 = 4'b0001,
                 SQRT_STEP2 = 4'b0010,
-                SQRT_STEP3 = 4'b0011,
+                SQRT_STEP3 = 4'b1101,
                 SQRT_STEP4 = 4'b0100,
                 SQRT_STEP5 = 4'b0101,
                 SQRT_STEP6 = 4'b0110,
@@ -85,6 +85,8 @@ module SHARE_SUPERALU(
                 SQRT_STEP9 = 4'b1001,
                 SQRT_STEP10 = 4'b1010,
                 SQRT_STEP11 = 4'b1011,
+                SQRT_STEP12 = 4'b1100,
+                SQRT_SMEND = 4'b0011,
                 INI_DEGREE = 13'b0000111100110;     //0.95*512
                 //INI_DEGREE = 13'b0000111110100;     //0.97*512=500
     parameter   SQRT_RSHT_WIDTH = 4'b1000;// index
@@ -132,9 +134,11 @@ module SHARE_SUPERALU(
     assign  sigma = (XOR_SRC)? xtemp[MAX_SQRT_WIDTH-1]: ytemp[MAX_SQRT_WIDTH-1];
 
     // for shared output
-    assign  alu_is_done = (alu_type==ALU_MULTIPLY)? (step == STEP_MEND):
-                          (alu_type==ALU_DIVISION)? (step == STEP_DMEND):
-                          (alu_type==ALU_SQRTPOWS)? ((index == SQRT_RSHT_WIDTH) && (step == SQRT_STEP3)):0;
+    assign  alu_is_done = (step == 4'b0011);
+    // assign  alu_is_done = (alu_type==ALU_MULTIPLY)? (step == STEP_MMEND):
+                          // (alu_type==ALU_DIVISION)? (step == STEP_DMEND):
+                          // (alu_type==ALU_SQRTPOWS)? (step == SQRT_SMEND):0;//((index == SQRT_RSHT_WIDTH) && (step == SQRT_STEP3)):0;
+
     assign  FOUT    = (alu_type==ALU_MULTIPLY)? xtemp: //12 bits  multiplication_tmp
                       (alu_type==ALU_DIVISION)? division_rema: //9 bits  dividend_tmp[QUOTIENT_WIDTH-1:0]
                       (alu_type==ALU_SQRTPOWS)? ((XOR_SRC)? ytemp[MAX_SQRT_WIDTH-1:2] : xtemp[MAX_SQRT_WIDTH-1:2]):
@@ -164,7 +168,7 @@ module SHARE_SUPERALU(
                     xtemp <= 0;//X_IN;
                     ytemp <= Y_IN;
                     rsht_bits <= 1;
-                    step <= STEP_JUDGE;//STEP_LSHT;
+                    step <= STEP_MJUDGE;//STEP_MLSHT;
                     pre_work <= 0;
                     SEL_SRC <= 0;//SEL_Z <= 0;//post_work
                     index <= 8;//MULTIPLIER_WIDTH;
@@ -173,7 +177,7 @@ module SHARE_SUPERALU(
                     xtemp <= 0;//X_IN;
                     ytemp <= Y_IN;
                     rsht_bits <= 1;
-                    step <= STEP_JUDGE;//STEP_LSHT;
+                    step <= STEP_MJUDGE;//STEP_MLSHT;
                     pre_work <= 0;
                     SEL_SRC <= 1;//SEL_Z <= 1;//post_work
                     index <= 8;//MULTIPLIER_WIDTH;
@@ -183,7 +187,7 @@ module SHARE_SUPERALU(
                     xtemp <= (X_IN << 1);
                     ytemp <= 0;
                     rsht_bits <= 0;
-                    step <= STEP_MEND;
+                    step <= STEP_MMEND;
                     pre_work <= 0;
                     SEL_SRC <= 0;//SEL_Z <= 0;
                     index <= 0;
@@ -191,43 +195,43 @@ module SHARE_SUPERALU(
             end
             else if (index != 0) begin
                 case (step)
-                STEP_LSHT:  begin
+                STEP_MLSHT:  begin
                     ytemp <= (ytemp >> 1);
                     index <= index - 1'b1;
-                    step <= STEP_JUDGE;
+                    step <= STEP_MJUDGE;
                 end
-                STEP_JUDGE: begin
+                STEP_MJUDGE: begin
                     if (ytemp[0]) begin
                     //iter_num <= iter_num - 1;
-                    step <= STEP_RSHT;
+                    step <= STEP_MRSHT;
                     end
                     else begin
                     //iter_num <= iter_num - 1;
                     rsht_bits <= rsht_bits + 1;
                     //multiplier_tmp <= (multiplier_tmp >> 1);
-                    //step <= STEP_JUDGE;
-                    step <= STEP_LSHT;
+                    //step <= STEP_MJUDGE;
+                    step <= STEP_MLSHT;
                     end
                 end
-                STEP_RSHT:  begin
+                STEP_MRSHT:  begin
                     if (rsht_bits) begin
                     xtemp <= (xtemp >> 1);
                     rsht_bits <= rsht_bits - 1;
-                    step <= STEP_RSHT;
+                    step <= STEP_MRSHT;
                     end
                     else begin
                     xtemp <= xtemp + X_IN;
                     rsht_bits <= 1;
                     //iter_num <= iter_num - 1;
                     //multiplier_tmp <= (multiplier_tmp >> 1);
-                    //step <= STEP_JUDGE;
-                    step <= STEP_LSHT;
+                    //step <= STEP_MJUDGE;
+                    step <= STEP_MLSHT;
                     end
                 end
                 default:    begin
                     index <= 0;
                     SEL_SRC <= 0;//SEL_Z <= 0;
-                    step <= STEP_MEND;
+                    step <= STEP_MMEND;
                 end
                 endcase
             end
@@ -240,8 +244,8 @@ module SHARE_SUPERALU(
                 SEL_SRC <= 0;//SEL_Z <= 0;
             end
             else begin
-            // multiply_done = (step == STEP_MEND)
-                step <= STEP_MEND;
+            // multiply_done = (step == STEP_MMEND)
+                step <= STEP_MMEND;
             end
         end
         else if (alu_type == ALU_DIVISION) begin
@@ -471,8 +475,8 @@ module SHARE_SUPERALU(
                     index <= index + 1'b1;
                 end
                 default:    begin
-                    //step <= SQRT_STEP11;
-                    step <= SQRT_STEP3;
+                    step <= SQRT_STEP12;
+                    //step <= SQRT_STEP3;
                     index <= SQRT_RSHT_WIDTH;
                  end
                 endcase
@@ -482,7 +486,7 @@ module SHARE_SUPERALU(
             // accurate within range [0~45]degree, following branch refines the final result. 
             ////////////////////////////////////////////////////////////////////
             //else if (index == SQRT_RSHT_WIDTH && (step == SQRT_STEP1 || step == SQRT_STEP2)) begin
-            else if (step != SQRT_STEP3) begin
+            else if (step != SQRT_STEP12) begin
                 // Output the process finish signal 
                 if (sign_x & sign_y) begin //both numbers are negative
                     if(XOR_SRC) begin// ztemp = 3pi/2- ztemp = -(-3pi/2+ztemp)
@@ -493,7 +497,7 @@ module SHARE_SUPERALU(
                         end
                         else if(step == SQRT_STEP2) begin
                             ztemp <= (~sum_ab+1'b1);
-                            step <= SQRT_STEP3;
+                            step <= SQRT_STEP12;
                         end
                     end
                     else begin// ztemp = pi + ztemp;
@@ -504,7 +508,7 @@ module SHARE_SUPERALU(
                         end
                         else if(step == SQRT_STEP2) begin
                             ztemp <= sum_ab;
-                            step <= SQRT_STEP3;
+                            step <= SQRT_STEP12;
                         end
                     end
                 end
@@ -518,7 +522,7 @@ module SHARE_SUPERALU(
                             end
                             else if(step == SQRT_STEP2) begin
                                 ztemp <= sum_ab;
-                                step <= SQRT_STEP3;
+                                step <= SQRT_STEP12;
                             end
                         end
                         else begin// ztemp = pi- ztemp = -(-pi + ztemp)
@@ -529,7 +533,7 @@ module SHARE_SUPERALU(
                             end
                             else if(step == SQRT_STEP2) begin
                                 ztemp <= (~sum_ab+1'b1);
-                                step <= SQRT_STEP3;
+                                step <= SQRT_STEP12;
                             end
                         end
                     end
@@ -542,7 +546,7 @@ module SHARE_SUPERALU(
                             end
                             else if(step == SQRT_STEP2) begin
                                 ztemp <= sum_ab;
-                                step <= SQRT_STEP3;
+                                step <= SQRT_STEP12;
                             end
                         end
                         else begin//ztemp = 2pi- ztemp = -(-2pi+ ztemp)
@@ -553,7 +557,7 @@ module SHARE_SUPERALU(
                             end
                             else if(step == SQRT_STEP2) begin
                                 ztemp <= (~sum_ab+1'b1);
-                                step <= SQRT_STEP3;
+                                step <= SQRT_STEP12;
                             end
                         end
                     end
@@ -567,22 +571,23 @@ module SHARE_SUPERALU(
                         end
                         else if(step == SQRT_STEP2) begin
                             ztemp <= (~sum_ab+1'b1);
-                            step <= SQRT_STEP3;
+                            step <= SQRT_STEP12;
                         end
                     end
                     else begin
                         //fundamental computation: nothing need to do here
-                        step <= SQRT_STEP3;
+                        step <= SQRT_STEP12;
                     end
                 end
             end
-            //else if (step == SQRT_STEP3) begin  //iter_num == SQRT_RSHT_WIDTH
+            //else if (step == SQRT_STEP12) begin  //iter_num == SQRT_RSHT_WIDTH
             else begin
                 //cordic_sqrt_is_done <= 1;
                 `ifdef  CF_DEBUG_ON
                 $display($time, " SQRT(%d(%b)** + %d(%b)**) = %d(%b)", X_IN, X_IN, Y_IN, Y_IN, FOUT, FOUT);
                 `endif
                 SEL_Z <=0;
+                step <= SQRT_SMEND;
             end
         end
         else begin
