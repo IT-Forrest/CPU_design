@@ -7,28 +7,18 @@
 // VERSION      : 1.0
 // PURPOSE      : testbench of the super ALU including *, / and sqrt
 // --------------------------------------------------------------------
-// ABSTRACT: simulation time XX us given each time period 10ns
+// ABSTRACT: loop-test simulation time 100ms given each time period 20ns
 // --------------------------------------------------------------------
 `timescale  1 ns / 100 ps
 
-// `include    "LFSR_A.v"
-// `include    "../COST_4D_DEFINE_418.v"
-// `include    "../SHARE_DIVISION_418.v"
-// `include    "../SQRT_POWSUM_418.v"
-// `include    "../CTRL_4D_LOGIC_418.v"
-// `include    "../COST_4D_CTRL_PATH_418.v"
-// `include    "../COST_4D_DATA_PATH_418.v"
-// `include    "../COST_4D_TOP_LEVEL_418.v"
-// `include    "../SA_4D_DEFINE_418.v"
-// `include    "../Q_4D_MULTIPLY_418.v"
-// `include    "../SA_4D_CTRL_PATH_418.v"
-// `include    "../SA_4D_DATA_PATH_418.v"
-// `include    "../SA_4D_TOP_LEVEL_418.v"
-// `include    "../CFSA_4D_TOP_LEVEL_418.v"
+
 `include    "../SHARE_SUPERALU.v"
 
 `define MAX_WIDTH   13
 `define CADC_WIDTH  10
+//`define MULT_LOOP_TEST
+//`define DIVI_LOOP_TEST
+//`define SQRT_LOOP_TEST
 
 module  SHARE_SUPERALU_TOP();
 
@@ -48,7 +38,8 @@ module  SHARE_SUPERALU_TOP();
     reg     [MAX_SQRT_WIDTH-1:0]  X_IN, Y_IN;
     reg     [9:0]   OFFSET;
     wire    [MAX_SQRT_WIDTH-1:0]  FOUT, POUT;
-    integer i,j;
+    integer i,j,e;
+    real    m,n;
     
     reg     multiply_start;
     reg     sqrt_pow_start;
@@ -127,11 +118,12 @@ module  SHARE_SUPERALU_TOP();
                  #CLK_PERIOD;
                  if (ALU_01.alu_is_done) begin
                      i = 1000; j = 1000;//$stop();
-                     $display($time, " %d result", multiplication);
+                     //$display($time, " result = %d", multiplication);
+                     $display($time, " result = %d\tactual = %d", multiplication, multiplicand*multiplier/256);
                  end
             end
         end
-
+        
         // test 2:  mode_type = 01; // * 1.4140625
         multiplicand = 240;//7
         multiplier = 8'b01101011;//0.4140625 or 106 out of 256
@@ -146,7 +138,8 @@ module  SHARE_SUPERALU_TOP();
                  #CLK_PERIOD;
                  if (ALU_01.alu_is_done) begin
                      i = 1000; j = 1000;//$stop();
-                     $display($time, " %d result", multiplication);
+                     //$display($time, " result = %d", multiplication);
+                     $display($time, " result = %d\tactual = %d", multiplication, multiplicand*{1'b1,multiplier}/256);
                  end
             end
         end
@@ -165,14 +158,48 @@ module  SHARE_SUPERALU_TOP();
                  #CLK_PERIOD;
                  if (ALU_01.alu_is_done) begin
                      i = 1000; j = 1000;//$stop();
-                     $display($time, " %d result", multiplication);
+                     //$display($time, " result = %d", multiplication);
+                     $display($time, " result = %d\tactual = %d", multiplication, {multiplicand, 1'b0});
                  end
             end
         end
+        
+        // test 4:  mode_type = XX; loop test
+`ifdef  MULT_LOOP_TEST
+        e = 0;
+        mode_type = 2'b11;//2'b01;//2b'00;
+        for (multiplicand = 0; multiplicand < (1<<MULTIPLICAND_WIDTH)-1; multiplicand = multiplicand + 1) begin
+            for (multiplier = 0; multiplier < (1<<MULTIPLIER_WIDTH)-1; multiplier = multiplier + 1) begin
+                X_IN = {1'b0, multiplicand};
+                Y_IN = {{5{1'b0}}, multiplier};
+                
+                #(CLK_PERIOD*2) multiply_start = 0;
+                #(CLK_PERIOD*2) multiply_start = 1;
+                for (i = 0; i <= 1000; i=i+1) begin
+                    for (j = 0; j <= 1000; j=j+1) begin
+                         #CLK_PERIOD;
+                         if (ALU_01.alu_is_done) begin
+                             i = 1000; j = 1000;//$stop();
+                             //$display($time, " %d*%d/256: result = %d\tactual = %d", multiplicand, multiplier, multiplication, multiplicand*multiplier/256);
+                             //$display($time, " %d*%d/256: wrong? %d", multiplicand, multiplier, multiplication - multiplicand*multiplier/256);
+                             m = multiplicand;//otherwise the result is integer
+                             m = m*((1<<MULTIPLIER_WIDTH)-1) + multiplier + 1;
+                             n = ((1<<MULTIPLICAND_WIDTH)-1)*((1<<MULTIPLIER_WIDTH)-1);
+                             //e = e + multiplication - multiplicand*multiplier/256;
+                             //e = e + multiplication - multiplicand*{1'b1,multiplier}/256;
+                             e = e + multiplication - {multiplicand, 1'b0};
+                             $display($time, " %f\twrong = %d", m/n, e);
+                         end
+                    end
+                end
+            end
+        end
+        $stop();
+`endif
         #(CLK_PERIOD*2) multiply_start = 0;//otherwise later process fail
         
         ////////////////////////////////////////////////////////
-        $display($time, "\n////// (2) Division test ////////");
+        $display($time, "\n//////// (2) Division test ////////");
         // parameter   SA_DIV          = 0, //deltaE/T, deltaE always smaller than T
                     // CF_T27          = 1, //9'b11_1111111
                     // CF_T36          = 2; //9'b100_000000
@@ -192,7 +219,7 @@ module  SHARE_SUPERALU_TOP();
                  #CLK_PERIOD;
                  if (ALU_01.alu_is_done) begin
                      i = 1000; j = 1000;//$stop();
-                     $display($time, " %d result", signed_division);
+                     $display($time, " result = %d\tactual = %d", signed_division, dividend*128/dividor);
                  end
             end
         end
@@ -211,7 +238,7 @@ module  SHARE_SUPERALU_TOP();
                  #CLK_PERIOD;
                  if (ALU_01.alu_is_done) begin
                      i = 1000; j = 1000;//$stop();
-                     $display($time, " %d result", signed_division);
+                     $display($time, " result = %d\tactual = %d", signed_division, dividend*64/dividor);
                  end
             end
         end
@@ -230,14 +257,14 @@ module  SHARE_SUPERALU_TOP();
                  #CLK_PERIOD;
                  if (ALU_01.alu_is_done) begin
                      i = 1000; j = 1000;//$stop();
-                     $display($time, " %d result", signed_division);
+                     $display($time, " result = %d\tactual = %d", signed_division, dividend*256/dividor);
                  end
             end
         end
         
         dividend = 42;
         dividor = 30;//42/30 * 256  (extrem case: deltaE/T always < 1)
-        mode_type = 2'b11;
+        mode_type = 2'b00;
         X_IN = {1'b0, dividend};
         Y_IN = {1'b0, dividor};
         
@@ -249,7 +276,7 @@ module  SHARE_SUPERALU_TOP();
                  #CLK_PERIOD;
                  if (ALU_01.alu_is_done) begin
                      i = 1000; j = 1000;//$stop();
-                     $display($time, " %d result", signed_division);
+                     $display($time, " result = %d\tactual = %d", signed_division, dividend*256/dividor);
                  end
             end
         end

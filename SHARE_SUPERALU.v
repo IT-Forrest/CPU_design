@@ -26,61 +26,27 @@ module SHARE_SUPERALU(
     CLK,
     RST_N,
     X_IN,//dividend or multiplicand or I
-    Y_IN,//dividor  or multiplier or Q
-    alu_start,
-    alu_type,
+    Y_IN,//dividor or multiplier or Q
+    alu_start,//enable signal
+    alu_type,//"*" or "/" or "sqrt"
     mode_type,//div_mode or mul_mode
     OFFSET,
     
     FOUT,//division or multiplication or amplitude
     POUT,//phase
-    alu_is_done
-    
-/*     /// multiply inout
-    CLK,
-    RST_N,
-    multiplicand,
-    multiplier,
-    multiply_start,
-    mul_mode,
-
-    multiplication,//[`RANDOM_WIDTH-1:0]
-    multiply_done
-    
-    /// SQRT inout
-    CLK,
-    RST_N,
-    enable,
-    X_IN,
-    Y_IN,
-    OFFSET,
-    FOUT,
-    POUT,
-    cordic_sqrt_is_done
-    
-    /// division inout
-    CLK,
-    RST_N,
-    dividend,
-    dividor,
-    division_start,
-    div_mode,
-    
-    //output
-    signed_division,
-    division_done//ready */
+    alu_is_done//finish signal
 );
+
+    parameter   ALU_MULTIPLY    = 4'b1000,
+                ALU_DIVISION    = 4'b0100,
+                ALU_SQRTPOWS    = 4'b0010,
+                ALU_UNKNOWN     = 4'b0001;
 
     // parameter   MULTIPLICAND_WIDTH  = 9,// the division of CF
                 // MULTIPLIER_WIDTH    = 8,// for the random value used by SA, it's the width of LFSR 
                 // EXTEND_WIDTH        = 3,
                 // MULTIPLICATION_WIDTH= 12,// multiplicand + extend width
                 // INDEX_WIDTH         = 4;// must can cover MULTIPLICATION_WIDTH
-
-    parameter   ALU_MULTIPLY    = 4'b1000,
-                ALU_DIVISION    = 4'b0100,
-                ALU_SQRTPOWS    = 4'b0010,
-                ALU_UNKNOWN     = 4'b0001;
                 
     parameter   INDEX_WIDTH     = 4,
                 CADC_WIDTH      = 10,
@@ -89,13 +55,13 @@ module SHARE_SUPERALU(
                 RANDOM_WIDTH    = 8;
 
     // multiplication
+    parameter   MULTI_PURE      = 0,// multiply a pure fraction
+                MULTI_FRAC      = 1,// multiply a fraction like 1.4
+                MULTI_MAXM      = 2;// multiply a fraction like 2.3, then bound to 2
     parameter   STEP_LSHT  = 4'b0000,
                 STEP_JUDGE = 4'b0001,
                 STEP_RSHT  = 4'b0010,
                 STEP_MEND  = 4'b0011;
-    parameter   MULTI_PURE      = 0,// multiply a pure fraction
-                MULTI_FRAC      = 1,// multiply a fraction like 1.4
-                MULTI_MAXM      = 2;// multiply a fraction like 2.3, then bound to 2
                 
     // division
     parameter   SA_DIV          = 0,
@@ -121,7 +87,7 @@ module SHARE_SUPERALU(
                 SQRT_STEP11 = 4'b1011,
                 INI_DEGREE = 13'b0000111100110;     //0.95*512
                 //INI_DEGREE = 13'b0000111110100;     //0.97*512=500
-    parameter   SQRT_RSHT_WIDTH = 4'b1000;
+    parameter   SQRT_RSHT_WIDTH = 4'b1000;// index
                 
     input   CLK;
     input   RST_N;
@@ -144,16 +110,17 @@ module SHARE_SUPERALU(
     reg     SEL_Z;
     reg     sign_x, sign_y;
     reg     pre_work;
-    reg     start_dly;//simply the connetion of CFSA_4D_TOP_LEVEL
+    //reg     start_dly;//simply the connetion of CFSA_4D_TOP_LEVEL
     
     // for multiplication
     wire    post_work;
-    assign  post_work = SEL_Z;
+    assign  post_work = SEL_SRC;//SEL_Z;//reuse this reg
     
     // for division
     wire    [QUOTIENT_WIDTH-1:0]    division_head;
     wire    [QUOTIENT_WIDTH-1:0]    division_rema;
-    assign  division_head = {xtemp[QUOTIENT_WIDTH-1:0],ytemp[MAX_SQRT_WIDTH-1:QUOTIENT_WIDTH]};//xtemp+ytemp store dividand; where the lowest QUOTIENT_WIDTH is for remain part
+    //xtemp+ytemp store dividand; where the lowest QUOTIENT_WIDTH is for remain part
+    assign  division_head = {xtemp[QUOTIENT_WIDTH-1:0],ytemp[MAX_SQRT_WIDTH-1:QUOTIENT_WIDTH]};
     assign  division_rema = ytemp[QUOTIENT_WIDTH-1:0];
     
     // for sqrt power sum
@@ -174,25 +141,6 @@ module SHARE_SUPERALU(
                             {MAX_SQRT_WIDTH{1'b0}};// since SQRT has enlarge X_IN/Y_IN X4
     assign  POUT    = (alu_type==ALU_SQRTPOWS)? ztemp:{MAX_SQRT_WIDTH{1'b0}};//only SQRT has two output
 
-    /*     input   [MULTIPLICAND_WIDTH-1:0] multiplicand;
-    input   [MULTIPLIER_WIDTH-1:0]  multiplier;
-    input   multiply_start;
-    input   [1:0]   mul_mode;//2: means X2;
-   
-    output  [MULTIPLICATION_WIDTH-1:0]  multiplication;
-    output  multiply_done;
-
-    reg     [MULTIPLICATION_WIDTH-1:0]  multiplication_tmp;
-    reg     [MULTIPLIER_WIDTH-1:0]  multiplier_tmp;
-    reg     [INDEX_WIDTH-1:0]       iter_num;
-    reg     [INDEX_WIDTH-1:0]       rsht_bits;
-    reg     [1:0] step;
-    reg     pre_work, post_work;
-    
-    // only positive multiplication is considered in this module
-    assign  multiplication  = multiplication_tmp;
-    assign  multiply_done   = (step == STEP_MEND); */
-   
     always @(posedge CLK or negedge RST_N)
     begin
         if ((RST_N == 0) || (alu_start == 0)) begin
@@ -209,26 +157,8 @@ module SHARE_SUPERALU(
             step <= 0;
             sign_x <= 0;
             sign_y <= 0;
-            //start_dly <= 1;//??
-        
-            // multiplication_tmp <= 0;
-            // multiplier_tmp <= 0;
-            // iter_num <= 0;
-            // rsht_bits <= 0;
-            // step <= 0;
-            // pre_work <= 0;
-            // post_work <= 0;
         end
         else if (alu_type == ALU_MULTIPLY) begin
-/*             if (start_dly) begin // (!alu_start)
-                start_dly <= 0;
-                pre_work <= 1;
-                //index <= 0;
-                //rsht_bits <= 1;
-                //step <= STEP_LSHT;
-                //SEL_Z <= 0;//post_work
-            end
-            else */
             if (pre_work) begin
                 if (MULTI_PURE == mode_type) begin //2'b00
                     xtemp <= 0;//X_IN;
@@ -236,7 +166,7 @@ module SHARE_SUPERALU(
                     rsht_bits <= 1;
                     step <= STEP_JUDGE;//STEP_LSHT;
                     pre_work <= 0;
-                    SEL_Z <= 0;//post_work
+                    SEL_SRC <= 0;//SEL_Z <= 0;//post_work
                     index <= 8;//MULTIPLIER_WIDTH;
                 end
                 else if (MULTI_FRAC == mode_type) begin //2'b01
@@ -245,7 +175,7 @@ module SHARE_SUPERALU(
                     rsht_bits <= 1;
                     step <= STEP_JUDGE;//STEP_LSHT;
                     pre_work <= 0;
-                    SEL_Z <= 1;//post_work
+                    SEL_SRC <= 1;//SEL_Z <= 1;//post_work
                     index <= 8;//MULTIPLIER_WIDTH;
                 end
                 else begin
@@ -255,7 +185,7 @@ module SHARE_SUPERALU(
                     rsht_bits <= 0;
                     step <= STEP_MEND;
                     pre_work <= 0;
-                    SEL_Z <= 0;
+                    SEL_SRC <= 0;//SEL_Z <= 0;
                     index <= 0;
                 end
             end
@@ -296,7 +226,7 @@ module SHARE_SUPERALU(
                 end
                 default:    begin
                     index <= 0;
-                    SEL_Z <= 0;
+                    SEL_SRC <= 0;//SEL_Z <= 0;
                     step <= STEP_MEND;
                 end
                 endcase
@@ -307,7 +237,7 @@ module SHARE_SUPERALU(
             end
             else if (post_work) begin
                 xtemp <= xtemp + X_IN;
-                SEL_Z <= 0;
+                SEL_SRC <= 0;//SEL_Z <= 0;
             end
             else begin
             // multiply_done = (step == STEP_MEND)
@@ -315,20 +245,6 @@ module SHARE_SUPERALU(
             end
         end
         else if (alu_type == ALU_DIVISION) begin
-/*             if (start_dly) begin // (!alu_start)
-                start_dly <= 0;
-                case (mode_type)
-                    CF_T27:     {xtemp,ytemp} <= {{6{1'b0}}, X_IN, {7{1'b0}}};
-                    CF_T36:     {xtemp,ytemp} <= {{7{1'b0}}, X_IN, {6{1'b0}}};
-                    default:    {xtemp,ytemp} <= {X_IN, {QUOTIENT_WIDTH{1'b0}}};//SA_DIV RANDOM_WIDTH
-                endcase
-                //dividor_tmp <= dividor;
-                //index <= 0;//length;
-                //division_done <= 0;
-                //step <= 0;
-                pre_work <= 1;
-            end
-            else */
             if (pre_work) begin
                 step <= STEP_DLSHT;//1;
                 pre_work <= 0;
@@ -356,7 +272,8 @@ module SHARE_SUPERALU(
                         index <= QUOTIENT_WIDTH;
                         end
                     end
-                    default: begin//this works for SA_DIV only because the division in SA is A/B where A is always smaller than B
+                    default: begin
+                        //this works for SA_DIV only because the division in SA is A/B where A is always smaller than B
                         {xtemp,ytemp} <= {X_IN, {QUOTIENT_WIDTH{1'b0}}};//SA_DIV RANDOM_WIDTH
                         index <= RANDOM_WIDTH;
                         // In SA, deltaE is always smaller than T; delatE/T
@@ -405,35 +322,8 @@ module SHARE_SUPERALU(
             else begin //(index == 0)
                 step <= STEP_DMEND;
             end
-            // else if ((index == 0) && (step == 1)) begin
-                // `ifdef DIV_DEBUG_ON
-                // $strobe($time, " division_done, result=%b", signed_division);
-                // `endif
-                // division_done <= 1;
-                // step <= step + 1;
-            // end
-            // else if ((index == 0) && (step == 0)) begin
-                // division_done <= 1;
-            // end
         end
         else if (alu_type == ALU_SQRTPOWS) begin
-/*             if (start_dly) begin // (!alu_start)
-                start_dly <= 0;
-                xtemp <= {X_IN, 2'b00};
-                ytemp <= {Y_IN, 2'b00};
-                wtemp <= {~{OFFSET, 2'b00} + 1'b1};
-                ztemp <= 0;
-                SEL_SRC <= 1;// choose xtemp
-                SEL_Z <= 0;
-                XOR_SRC <= 0;
-                pre_work <= 1;
-                index <= 0;
-                rsht_bits <= 0;
-                sign_x <= 0;
-                sign_y <= 0;
-                //cordic_sqrt_is_done <= 0;
-                step <= SQRT_STEP1;
-            end */
             ////////////////////////////////////////////////////////////////////
             // (0) pre_work is to remove the offset from X_IN and Y_IN
             // If sum_ab is negative(MSB=1) the complement a2 is appled; 
@@ -591,7 +481,8 @@ module SHARE_SUPERALU(
             // (2) Since the X/Y switching trick in Amplitude calc makes the Phase calc only 
             // accurate within range [0~45]degree, following branch refines the final result. 
             ////////////////////////////////////////////////////////////////////
-            else if (index == SQRT_RSHT_WIDTH && (step == SQRT_STEP1 || step == SQRT_STEP2)) begin
+            //else if (index == SQRT_RSHT_WIDTH && (step == SQRT_STEP1 || step == SQRT_STEP2)) begin
+            else if (step != SQRT_STEP3) begin
                 // Output the process finish signal 
                 if (sign_x & sign_y) begin //both numbers are negative
                     if(XOR_SRC) begin// ztemp = 3pi/2- ztemp = -(-3pi/2+ztemp)
@@ -680,11 +571,13 @@ module SHARE_SUPERALU(
                         end
                     end
                     else begin
+                        //fundamental computation: nothing need to do here
                         step <= SQRT_STEP3;
                     end
                 end
             end
-            else if (step == SQRT_STEP3) begin  //iter_num == SQRT_RSHT_WIDTH
+            //else if (step == SQRT_STEP3) begin  //iter_num == SQRT_RSHT_WIDTH
+            else begin
                 //cordic_sqrt_is_done <= 1;
                 `ifdef  CF_DEBUG_ON
                 $display($time, " SQRT(%d(%b)** + %d(%b)**) = %d(%b)", X_IN, X_IN, Y_IN, Y_IN, FOUT, FOUT);
