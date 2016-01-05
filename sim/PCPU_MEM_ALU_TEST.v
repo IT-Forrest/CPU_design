@@ -7,7 +7,7 @@
 // VERSION      : 1.0
 // PURPOSE      : simulate the CPU could control ALU
 // --------------------------------------------------------------------
-// ABSTRACT: simulation time XX given each time period 10ns
+// ABSTRACT: simulation time 10 us given each time period 10ns
 // --------------------------------------------------------------------
 `timescale 1ns / 1ps
 `include "../DEFINE_CPU.v"
@@ -141,53 +141,42 @@ module PCPU_MEM_ALU_TOP;
         #100;
         
         // Add stimulus here
-        $display("pc  :               id_ir                :reg_A :reg_B :reg_C\
-            : da  :  dd  : w : reC1 :  gr1  :  gr2  :  gr3   :zf :nf:cf");
+        $display("pc  :       id_ir      :reg_A :reg_B :reg_C : da :  dd  : w : reC1 :  gr1 :  gr2 :  gr3 : zf: nf: cf");
         $monitor("%3d : %b : %h : %h : %h : %h : %h : %b : %h : %h : %h : %h : %b : %b : %b", 
             uut.pc, uut.id_ir, uut.reg_A, uut.reg_B, uut.reg_C,
             d_addr, d_dataout, d_we, uut.reg_C1, uut.gr[1], uut.gr[2], uut.gr[3],
             uut.zf, uut.nf, uut.cf);
 
-        // i_mem.I_RAM[ 0] = {`SUB, `gr7, 1'b0, `gr7, 1'b0, `gr7};//reset the loop controller `gr7
-        // i_mem.I_RAM[ 1] = {`SUB, `gr6, 1'b0, `gr6, 1'b0, `gr6};//reset the loop controller `gr6
-        // i_mem.I_RAM[ 2] = {`SUB, `gr5, 1'b0, `gr5, 1'b0, `gr5};//reset the loop controller `gr5
-        // i_mem.I_RAM[ 3] = {`SUB, `gr1, 1'b0, `gr1, 1'b0, `gr1};//reset the loop controller `gr1
-        i_mem.I_RAM[ 0] = {`SET, `gr7, 4'b0000, 4'b0000};//reset the loop controller `gr7
-        i_mem.I_RAM[ 1] = {`SET, `gr6, 4'b0000, 4'b0000};//reset the loop controller `gr6
-        i_mem.I_RAM[ 2] = {`SET, `gr5, 4'b0000, 4'b0000};//reset the loop controller `gr5
-        i_mem.I_RAM[ 3] = {`SET, `gr1, 4'b0000, 4'b0000};//reset the loop controller `gr1
+        i_mem.I_RAM[ 0] = {`SET, `gr7, 4'b0000, 4'b1100};//set the loop controller `gr7 = 12
+        i_mem.I_RAM[ 1] = {`SET, `gr1, 1'b0, ALU_MULTIPLY, MULTI_FRAC, 1'b1};//IO control bits
+        i_mem.I_RAM[ 2] = {`SET, `gr6, 4'b0000, 4'b0001};//save IO status bits
+        i_mem.I_RAM[ 3] = {`LIOS, `gr5, 4'b0000, 4'b0000};//load status for comparision
         i_mem.I_RAM[ 4] = {`NOP, 11'b000_0000_0000};
         i_mem.I_RAM[ 5] = {`NOP, 11'b000_0000_0000};
         i_mem.I_RAM[ 6] = {`NOP, 11'b000_0000_0000};
-        i_mem.I_RAM[ 7] = {`ADDI, `gr7, 4'b0001, 4'b1001};//set the loop controller `gr7 = 25
-        i_mem.I_RAM[ 8] = {`SET, `gr1, 1'b0, ALU_MULTIPLY, MULTI_FRAC, 1'b1};//IO control bits
-        i_mem.I_RAM[ 9] = {`SET, `gr6, 4'b0000, 4'b0001};//save IO status bits
-        i_mem.I_RAM[10] = {`LIOS, `gr5, 4'b0000, 4'b0000};//load status for comparision
-        i_mem.I_RAM[11] = {`NOP, 11'b000_0000_0000};
+        i_mem.I_RAM[ 7] = {`CMP, 4'b0000, `gr5, 1'b0, `gr6};
+        i_mem.I_RAM[ 8] = {`NOP, 11'b000_0000_0000};
+        i_mem.I_RAM[ 9] = {`NOP, 11'b000_0000_0000};
+        i_mem.I_RAM[10] = {`NOP, 11'b000_0000_0000};
+        i_mem.I_RAM[11] = {`BZ, `gr0, 4'b0001, 4'b0111};//if (`gr5 == `gr6) go to I_RAM[23]; (if alu_is_done; jump out)
         i_mem.I_RAM[12] = {`NOP, 11'b000_0000_0000};
         i_mem.I_RAM[13] = {`NOP, 11'b000_0000_0000};
-        i_mem.I_RAM[14] = {`CMP, 4'b0000, `gr5, 1'b0, `gr6};
-        i_mem.I_RAM[15] = {`NOP, 11'b000_0000_0000};
+        i_mem.I_RAM[14] = {`NOP, 11'b000_0000_0000};
+        i_mem.I_RAM[15] = {`SUBI, `gr7, 4'b0000, 4'b0001};
         i_mem.I_RAM[16] = {`NOP, 11'b000_0000_0000};
         i_mem.I_RAM[17] = {`NOP, 11'b000_0000_0000};
-        i_mem.I_RAM[18] = {`BZ, `gr0, 4'b0001, 4'b1010};//if (`gr5 == `gr6) go to I_RAM[ 26]; (if alu_is_done; jump out)
-        i_mem.I_RAM[19] = {`NOP, 11'b000_0000_0000};
+        i_mem.I_RAM[18] = {`NOP, 11'b000_0000_0000};
+        i_mem.I_RAM[19] = {`BNZ, `gr0, 4'b0000, 4'b0011};//if (`gr7 != 0) go to I_RAM[ 3];
         i_mem.I_RAM[20] = {`NOP, 11'b000_0000_0000};
         i_mem.I_RAM[21] = {`NOP, 11'b000_0000_0000};
-        i_mem.I_RAM[22] = {`SUBI, `gr7, 4'b0000, 4'b0001};
-        i_mem.I_RAM[23] = {`NOP, 11'b000_0000_0000};
-        i_mem.I_RAM[24] = {`NOP, 11'b000_0000_0000};
-        i_mem.I_RAM[25] = {`NOP, 11'b000_0000_0000};
-        i_mem.I_RAM[26] = {`BNZ, `gr0, 4'b0000, 4'b1010};//if (`gr7 != 0) go to I_RAM[10];
+        i_mem.I_RAM[22] = {`NOP, 11'b000_0000_0000};
+        i_mem.I_RAM[23] = {`LIOA, `gr2, 4'b0000, 4'b0000};//load inputA for futher computation(overwrite gr2)
+        i_mem.I_RAM[24] = {`LIOB, `gr3, 4'b0000, 4'b0000};//load inputB for futher computation(overwrite gr3)
+        i_mem.I_RAM[25] = {`SET, `gr1, 4'b0000, 4'b0000};//clear IO control bits
+        i_mem.I_RAM[26] = {`NOP, 11'b000_0000_0000};
         i_mem.I_RAM[27] = {`NOP, 11'b000_0000_0000};
         i_mem.I_RAM[28] = {`NOP, 11'b000_0000_0000};
-        i_mem.I_RAM[29] = {`NOP, 11'b000_0000_0000};
-        i_mem.I_RAM[30] = {`LIOA, `gr4, 4'b0000, 4'b0000};
-        i_mem.I_RAM[31] = {`SET, `gr1, 4'b0000, 4'b0000};//IO control bits
-        i_mem.I_RAM[32] = {`NOP, 11'b000_0000_0000};
-        i_mem.I_RAM[33] = {`NOP, 11'b000_0000_0000};
-        i_mem.I_RAM[34] = {`NOP, 11'b000_0000_0000};
-        i_mem.I_RAM[35] = {`HALT, 11'b000_0000_0000};//due to the pipeline, we need to add many `NOP to the instruction set
+        i_mem.I_RAM[29] = {`HALT, 11'b000_0000_0000};//due to the pipeline, we need to add many `NOP to the instruction set
         
         d_mem.D_RAM[0] = 16'h00AB;
         d_mem.D_RAM[1] = 16'h3C00;
@@ -195,15 +184,15 @@ module PCPU_MEM_ALU_TOP;
 
         #10 rst_n = 0;
         #10 rst_n = 1;
-        uut.gr[2] = 240;
-        uut.gr[3] = 106;
+        uut.gr[2] = 240;// input X_IN for ALU
+        uut.gr[3] = 106;// input Y_IN for ALU
         // #CLKPERIOD  force NXT = 1'b1;
         // #(CLKPERIOD*2) release NXT;
         
         #10 enable = 1;
         #10 start =1;
         #10 start = 0;
-        for (i=0; i<100; i=i+1)
+        for (i=0; i<80; i=i+1)
             #10;
         $stop();
     end
