@@ -46,8 +46,8 @@ module  SHARE_SUPERALU_TOP();
     reg     division_start;
     
     reg     [1:0]   mode_type;
-    wire    [3:0]   alu_type;
-    assign  alu_type = {multiply_start, division_start, sqrt_pow_start, 1'b0};
+    wire    [2:0]   alu_type;
+    assign  alu_type = {multiply_start, division_start, sqrt_pow_start};
     
     reg     [MULTIPLICAND_WIDTH-1:0]    multiplicand;
     reg     [MULTIPLIER_WIDTH-1:0]      multiplier;

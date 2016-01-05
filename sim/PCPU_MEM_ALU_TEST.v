@@ -111,7 +111,7 @@ module PCPU_MEM_ALU_TOP;
                         .alu_start(alu_start),//multiply_start || division_start || sqrt_pow_start
                         .alu_type(alu_type),
                         .mode_type(mode_type),
-                        .OFFSET(10'd507),//OFFSET
+                        .OFFSET(10'd0),//OFFSET;//10'd507
 
                         .FOUT(FOUT),//multiplication
                         .POUT(POUT),
@@ -148,7 +148,7 @@ module PCPU_MEM_ALU_TOP;
             uut.zf, uut.nf, uut.cf);
 
         i_mem.I_RAM[ 0] = {`SET, `gr7, 4'b0000, 4'b1100};//set the loop controller `gr7 = 12
-        i_mem.I_RAM[ 1] = {`SET, `gr1, 3'b001, ALU_MULTIPLY, MULTI_FRAC};//IO control bits
+        i_mem.I_RAM[ 1] = {`SET, `gr1, 3'b001, ALU_SQRTPOWS, 2'b00};//IO control bits
         i_mem.I_RAM[ 2] = {`SET, `gr6, 4'b0000, 4'b0001};//save IO status bits
         i_mem.I_RAM[ 3] = {`LIOS, `gr5, 4'b0000, 4'b0000};//load status for comparision
         i_mem.I_RAM[ 4] = {`NOP, 11'b000_0000_0000};
@@ -184,15 +184,15 @@ module PCPU_MEM_ALU_TOP;
 
         #10 rst_n = 0;
         #10 rst_n = 1;
-        uut.gr[2] = 240;// input X_IN for ALU
-        uut.gr[3] = 106;// input Y_IN for ALU
+        uut.gr[2] = ~50+1;// input X_IN for ALU
+        uut.gr[3] = ~58+1;// input Y_IN for ALU
         // #CLKPERIOD  force NXT = 1'b1;
         // #(CLKPERIOD*2) release NXT;
         
         #10 enable = 1;
         #10 start =1;
         #10 start = 0;
-        for (i=0; i<80; i=i+1)
+        for (i=0; i<300; i=i+1) //80 for Multiply & Division; 300 for SQRT
             #10;
         $stop();
     end

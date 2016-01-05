@@ -266,8 +266,8 @@ module SHARE_SUPERALU(
                         end
                     end
                     CF_T36: begin
-                        if ((X_IN >> 2) >= Y_IN) begin
-                        ytemp[QUOTIENT_WIDTH-1:0] <= 9'b100_000000;
+                        if ((X_IN >> 3) >= Y_IN) begin
+                        ytemp[QUOTIENT_WIDTH-1:0] <= 9'b111_111111;
                         index <= 0;
                         end
                         else begin
@@ -276,11 +276,21 @@ module SHARE_SUPERALU(
                         end
                     end
                     default: begin
+                        if ((X_IN >> 1) >= Y_IN) begin
+                        ytemp[QUOTIENT_WIDTH-1:0] <= 9'b1_11111111;
+                        index <= 0;
+                        end
+                        else begin
+                        {xtemp,ytemp} <= {{5{1'b0}}, X_IN, {8{1'b0}}};
+                        index <= QUOTIENT_WIDTH;
+                        end
+                    end
+                    /* default: begin
                         //this works for SA_DIV only because the division in SA is A/B where A is always smaller than B
                         {xtemp,ytemp} <= {X_IN, {QUOTIENT_WIDTH{1'b0}}};//SA_DIV RANDOM_WIDTH
                         index <= RANDOM_WIDTH;
                         // In SA, deltaE is always smaller than T; delatE/T
-                    end
+                    end */
                 endcase
             end
             else if (index != 0) begin
