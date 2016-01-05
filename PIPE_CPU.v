@@ -28,7 +28,13 @@ module PIPE_CPU(
     i_addr,
     d_addr,
     d_we,
-    d_dataout
+    d_dataout,
+    io_status,
+    io_control,
+    io_datainA,
+    io_datainB,
+    io_dataoutA,
+    io_dataoutB
     );
 
     parameter   INSTRT_ADDR_WIDTH   = 8,
@@ -56,6 +62,13 @@ module PIPE_CPU(
     output  [D_MEM_ADDR_WIDTH-1:0]  d_addr;      //output memory data address 
     output  d_we;               //memory read or write signal, 1: write
     output  [D_MEM_DATA_WIDTH-1:0]  d_dataout;   //output memory data 
+    // for I/O control and data in&out
+    input   [GENERAL_REG_WIDTH-1:0]  io_status;
+    input   [GENERAL_REG_WIDTH-1:0]  io_datainA;
+    input   [GENERAL_REG_WIDTH-1:0]  io_datainB;
+    output  [GENERAL_REG_WIDTH-1:0]  io_control;
+    output  [GENERAL_REG_WIDTH-1:0]  io_dataoutA;
+    output  [GENERAL_REG_WIDTH-1:0]  io_dataoutB;
     
     reg     cf_buf;
     reg     [GENERAL_REG_WIDTH-1:0] ALUo;
@@ -67,6 +80,10 @@ module PIPE_CPU(
     reg     [GENERAL_REG_WIDTH-1:0] gr[7:0];
     wire    branch_flag;
 
+    assign  io_control  = gr[1];
+    assign  io_dataoutA = gr[2];
+    assign  io_dataoutB = gr[3];
+    
     //*********** Facilitate code learning ***********//
     wire    [4:0]   code_type;
     wire    [2:0]   oper1_r1;
@@ -188,6 +205,13 @@ module PIPE_CPU(
             
             else if (state == `exec)
                 begin
+                    if (ex_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `LIOA)
+                    reg_C <= io_datainA;
+                    else if (ex_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `LIOB)
+                    reg_C <= io_datainB;
+                    else if (ex_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `LIOS)
+                    reg_C <= io_status;
+                    else
                     reg_C <= ALUo;
                     mem_ir <= ex_ir;
                     
@@ -247,6 +271,7 @@ module PIPE_CPU(
                 `SRL:   {cf_buf, ALUo} <= {cf_buf, reg_A >> reg_B[MSB_OPER3_4B-1:0]};
                 `SLA:   {cf_buf, ALUo} <= {cf_buf, reg_A <<< reg_B[MSB_OPER3_4B-1:0]};
                 `SRA:   {cf_buf, ALUo} <= {cf_buf, reg_A >>> reg_B[MSB_OPER3_4B-1:0]};
+                `SET:   {cf_buf, ALUo} <= {1'b0, reg_B};
                 //`JUMP:  {cf_buf, ALUo} <= {cf_buf, reg_B};
                 //`LDIH:
                 `ADD:   {cf_buf, ALUo} <= reg_A + reg_B;
@@ -391,10 +416,15 @@ module PIPE_CPU(
                         || (op == `SLL)
                         || (op == `SRL)
                         || (op == `SLA)
-                        || (op == `SRA));
+                        || (op == `SRA)
+                        || (op == `LIOA)
+                        || (op == `LIOB)
+                        || (op == `LIOS)
+                        || (op == `SET));
             end
         endfunction
         
+       
         //************* R1 as reg_A *************//
         function I_R1_TYPE;
             input [OP_WIDTH_5B-1:0] op;
@@ -409,7 +439,8 @@ module PIPE_CPU(
                         || (op == `BN)
                         || (op == `BNN)
                         || (op == `BC)
-                        || (op == `BNC));
+                        || (op == `BNC)
+                        || (op == `SET));
             end
         endfunction
         
@@ -475,7 +506,8 @@ module PIPE_CPU(
                         || (op == `BN)
                         || (op == `BNN)
                         || (op == `BC)
-                        || (op == `BNC));
+                        || (op == `BNC)
+                        || (op == `SET));
             end
         endfunction
         
