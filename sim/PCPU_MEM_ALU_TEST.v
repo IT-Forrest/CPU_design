@@ -36,11 +36,12 @@ module PCPU_MEM_ALU_TOP;
     integer i;
 
     parameter   GENERAL_REG_WIDTH = 16;
-    parameter   IO_CTRL_STA         = 0,
-                IO_CTRL_MODEL_END   = 1,
-                IO_CTRL_MODEL_BGN   = 2,
-                IO_CTRL_ALU_END     = 3,
-                IO_CTRL_ALU_BGN     = 6;
+    parameter   IO_CTRL_MODEL_END   = 0,
+                IO_CTRL_MODEL_BGN   = 1,
+                IO_CTRL_ALU_END     = 2,
+                IO_CTRL_ALU_BGN     = 4,
+                IO_CTRL_STA         = 5;
+                
     parameter   IO_STAT_ALU_DONE    = 0;
 
     wire    [GENERAL_REG_WIDTH-1:0] io_status;
@@ -86,10 +87,9 @@ module PCPU_MEM_ALU_TOP;
         .dataout(d_datain)
     );
 
-    parameter   ALU_MULTIPLY    = 4'b1000,
-                ALU_DIVISION    = 4'b0100,
-                ALU_SQRTPOWS    = 4'b0010,
-                ALU_UNKNOWN     = 4'b0001;
+    parameter   ALU_MULTIPLY    = 3'b100,
+                ALU_DIVISION    = 3'b010,
+                ALU_SQRTPOWS    = 3'b001;
     parameter   MULTI_PURE      = 2'b00,// multiply a pure fraction
                 MULTI_FRAC      = 2'b01,// multiply a fraction like 1.4
                 MULTI_MAXM      = 2'b10;// multiply a fraction like 2.3, then bound to 2
@@ -100,7 +100,7 @@ module PCPU_MEM_ALU_TOP;
     parameter   MAX_SQRT_WIDTH  = 13;
     wire    [MAX_SQRT_WIDTH-1:0]  X_IN, Y_IN;
     wire    [MAX_SQRT_WIDTH-1:0]  FOUT, POUT;
-    wire    [3:0]   alu_type;
+    wire    [2:0]   alu_type;
     wire    [1:0]   mode_type;
     wire    alu_start, alu_is_done;
     
@@ -148,7 +148,7 @@ module PCPU_MEM_ALU_TOP;
             uut.zf, uut.nf, uut.cf);
 
         i_mem.I_RAM[ 0] = {`SET, `gr7, 4'b0000, 4'b1100};//set the loop controller `gr7 = 12
-        i_mem.I_RAM[ 1] = {`SET, `gr1, 1'b0, ALU_MULTIPLY, MULTI_FRAC, 1'b1};//IO control bits
+        i_mem.I_RAM[ 1] = {`SET, `gr1, 3'b001, ALU_MULTIPLY, MULTI_FRAC};//IO control bits
         i_mem.I_RAM[ 2] = {`SET, `gr6, 4'b0000, 4'b0001};//save IO status bits
         i_mem.I_RAM[ 3] = {`LIOS, `gr5, 4'b0000, 4'b0000};//load status for comparision
         i_mem.I_RAM[ 4] = {`NOP, 11'b000_0000_0000};

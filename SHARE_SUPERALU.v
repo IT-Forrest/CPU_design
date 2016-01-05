@@ -37,10 +37,9 @@ module SHARE_SUPERALU(
     alu_is_done//finish signal
 );
 
-    parameter   ALU_MULTIPLY    = 4'b1000,
-                ALU_DIVISION    = 4'b0100,
-                ALU_SQRTPOWS    = 4'b0010,
-                ALU_UNKNOWN     = 4'b0001;
+    parameter   ALU_MULTIPLY    = 3'b100,
+                ALU_DIVISION    = 3'b010,
+                ALU_SQRTPOWS    = 3'b001;
 
     // parameter   MULTIPLICAND_WIDTH  = 9,// the division of CF
                 // MULTIPLIER_WIDTH    = 8,// for the random value used by SA, it's the width of LFSR 
@@ -96,7 +95,7 @@ module SHARE_SUPERALU(
     input   [MAX_SQRT_WIDTH-1:0] X_IN; 
     input   [MAX_SQRT_WIDTH-1:0] Y_IN;
     input   alu_start;
-    input   [3:0]   alu_type;//4bits, 0x8 Multiply; 0x4 Division; 0x2 SQRT
+    input   [2:0]   alu_type;//4bits, 0x8 Multiply; 0x4 Division; 0x2 SQRT
     input   [1:0]   mode_type;
     input   [CADC_WIDTH-1:0]     OFFSET;
     output  [MAX_SQRT_WIDTH-1:0] FOUT;
