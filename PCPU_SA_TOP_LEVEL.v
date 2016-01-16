@@ -116,6 +116,7 @@ module PCPU_SA_TOP_LEVEL(
     wire        start;
     wire [15:0] i_datain;
     wire [15:0] d_datain;
+    wire        NXT;
     wire [7:0]  i_addr;
     wire [7:0]  d_addr;
     wire        d_we;
@@ -150,11 +151,13 @@ module PCPU_SA_TOP_LEVEL(
     // Instantiate the Unit Under Test (UUT)
     PIPE_CPU uut (
         .clk(CLK), 
-        .enable(1'b1),// enable
+        .enable(1'b1),// enable ; this signal will be removed from PIPE_CPU
         .rst_n(RST_N), 
-        .start(start), 
+        .start(start), // start is connected to RDY_after_mux 
         .i_datain(i_datain), 
         .d_datain(d_datain), 
+        // output
+        .nxt(NXT),
         .i_addr(i_addr), 
         .d_addr(d_addr), 
         .d_we(d_we), 
@@ -202,7 +205,6 @@ module PCPU_SA_TOP_LEVEL(
     wire        alu_start, alu_is_done;
     
     wire        TUNE_READY;
-    //wire        NXT;
     wire        NXT_after_mux;
     wire        RDY_after_mux;
     wire        STA_after_mux;
@@ -276,11 +278,12 @@ module PCPU_SA_TOP_LEVEL(
     // wire connections between SA module and CPU
     assign  STA_after_mux = TEST_MUX? TRG_TEST : meas_start;
     assign  RDY_after_mux = TEST_MUX? TRDY_TEST: TUNE_READY;//From SA
-    assign  NXT_after_mux = TEST_MUX? NXT_TEST : 1'b1;//NXT;//From CPU
+    assign  NXT_after_mux = TEST_MUX? NXT_TEST : NXT;//1'b1;//From CPU
     assign  multiply_is_done = alu_is_done;
     assign  division_is_done = alu_is_done;
     assign  multiplication  = FOUT[MULTIPLICATION_WIDTH-1:0];
     assign  signed_division = FOUT[QUOTIENT_WIDTH-1:0];
+    assign  start = RDY_after_mux;
     
     SA_4D_TOP_LEVEL_418   SA02(
                     .CLK(CLK),

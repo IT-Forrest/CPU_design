@@ -25,6 +25,7 @@ module PIPE_CPU(
     i_datain,
     d_datain,
     // output
+    nxt,
     i_addr,
     d_addr,
     d_we,
@@ -58,6 +59,7 @@ module PIPE_CPU(
     input   start;
     input   [INSTRT_DATA_WIDTH-1:0] i_datain;    //input instruction data
     input   [D_MEM_DATA_WIDTH-1:0]  d_datain;    //input memory data
+    output  nxt;
     output  [INSTRT_ADDR_WIDTH-1:0] i_addr;      //output instruction address
     output  [D_MEM_ADDR_WIDTH-1:0]  d_addr;      //output memory data address 
     output  d_we;               //memory read or write signal, 1: write
@@ -72,7 +74,7 @@ module PIPE_CPU(
     
     reg     cf_buf;
     reg     [GENERAL_REG_WIDTH-1:0] ALUo;
-    reg     state, next_state;
+    reg     state, next_state, nxt;
     reg     zf, nf, cf, dw;     //flag registers
     reg     [PC_MEM_ADDR_WIDTH-1:0] pc;
     reg     [GENERAL_REG_WIDTH-1:0] id_ir, ex_ir, mem_ir, wb_ir;// instruction registers
@@ -113,15 +115,23 @@ module PIPE_CPU(
         begin
             case (state)
                 `idle : 
-                    if ((enable == 1'b1) && (start == 1'b1))
+                    if ((enable == 1'b1) && (start == 1'b1)) begin
+                        nxt <= 1'b0;
                         next_state <= `exec;
-                    else    
+                    end
+                    else begin
+                        nxt <= 1'b0;
                         next_state <= `idle;
+                    end
                 `exec :
-                    if ((enable == 1'b0) || (wb_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `HALT))
+                    if ((enable == 1'b0) || (wb_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `HALT)) begin
+                        nxt <= 1'b1;
                         next_state <= `idle;
-                    else
+                    end
+                    else begin
+                        nxt <= 1'b0;
                         next_state <= `exec;
+                    end
             endcase
         end
         
