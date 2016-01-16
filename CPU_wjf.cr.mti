@@ -89,6 +89,22 @@ Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
 Top level modules:
 	SA_4D_DATA_PATH_418
 
+} {} {}} {F:/05. Code Battle/04. Verilog/CPU_design/sim/PCPU_MEM_SA_TEST.v} {1 {vlog -work work -stats=none {F:/05. Code Battle/04. Verilog/CPU_design/sim/PCPU_MEM_SA_TEST.v}
+Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
+-- Compiling module PIPE_CPU
+-- Compiling module I_MEMORY
+-- Compiling module D_MEMORY
+-- Compiling module SHARE_SUPERALU
+-- Compiling module CTRL_LOGIC
+-- Compiling module SA_4D_CTRL_PATH_418
+-- Compiling module SA_4D_DATA_PATH_418
+-- Compiling module SA_4D_TOP_LEVEL_418
+-- Compiling module PIPE_CPU_SA_TOP
+-- Compiling module PCPU_MEM_SA_TOP
+
+Top level modules:
+	PCPU_MEM_SA_TOP
+
 } {} {}} {F:/05. Code Battle/04. Verilog/CPU_design/sim/PCPU_SINGLE_TEST.v} {1 {vlog -work work -stats=none {F:/05. Code Battle/04. Verilog/CPU_design/sim/PCPU_SINGLE_TEST.v}
 Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
 -- Compiling module PIPE_CPU
@@ -110,6 +126,21 @@ Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
 
 Top level modules:
 	I_MEMORY
+
+} {} {}} {F:/05. Code Battle/04. Verilog/CPU_design/PIPE_CPU_SA_TOP.v} {1 {vlog -work work -stats=none {F:/05. Code Battle/04. Verilog/CPU_design/PIPE_CPU_SA_TOP.v}
+Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
+-- Compiling module PIPE_CPU
+-- Compiling module I_MEMORY
+-- Compiling module D_MEMORY
+-- Compiling module SHARE_SUPERALU
+-- Compiling module CTRL_LOGIC
+-- Compiling module SA_4D_CTRL_PATH_418
+-- Compiling module SA_4D_DATA_PATH_418
+-- Compiling module SA_4D_TOP_LEVEL_418
+-- Compiling module PIPE_CPU_SA_TOP
+
+Top level modules:
+	PIPE_CPU_SA_TOP
 
 } {} {}} {F:/05. Code Battle/04. Verilog/CPU_design/DEFINE_CPU.v} {1 {vlog -work work -stats=none {F:/05. Code Battle/04. Verilog/CPU_design/DEFINE_CPU.v}
 Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
