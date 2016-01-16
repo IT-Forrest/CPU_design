@@ -146,7 +146,22 @@ module SHARE_SUPERALU(
 
     always @(posedge CLK or negedge RST_N)
     begin
-        if ((RST_N == 0) || (alu_start == 0)) begin
+        if (RST_N == 0) begin
+            xtemp <= 0;
+            ytemp <= 0;
+            ztemp <= 0;
+            wtemp <= 0;
+            SEL_SRC <= 0;
+            XOR_SRC <= 0;
+            SEL_Z <= 0;
+            pre_work <= 1;
+            index <= 0;
+            rsht_bits <= 0;
+            step <= 0;
+            sign_x <= 0;
+            sign_y <= 0;
+        end
+        else if (alu_start == 0) begin
             xtemp <= 0;
             ytemp <= 0;
             ztemp <= 0;
