@@ -1,7 +1,7 @@
 //+FHDR****************************************************************
 // ECE department, TAMU
 // --------------------------------------------------------------------
-// FILE NAME    : PCPU_SA_TOP_LEVEL.v
+// FILE NAME    : PIPE_CPU_SA_TOP.v
 // AUTHER       : Jiafan Wang
 // DATE         : 01/07/2016
 // VERSION      : 1.0
@@ -23,10 +23,10 @@
 `include "SA_4D_TOP_LEVEL_418.v"
 
 
-`ifndef PCPU_SA_TOP_LEVEL_V
-`define PCPU_SA_TOP_LEVEL_V
+`ifndef PIPE_CPU_SA_TOP_V
+`define PIPE_CPU_SA_TOP_V
 
-module PCPU_SA_TOP_LEVEL(
+module PIPE_CPU_SA_TOP(
     // Input
     CLK,
     RST_N,
@@ -153,7 +153,7 @@ module PCPU_SA_TOP_LEVEL(
         .clk(CLK), 
         .enable(1'b1),// enable ; this signal will be removed from PIPE_CPU
         .rst_n(RST_N), 
-        .start(start), // start is connected to RDY_after_mux 
+        .start(start), //start is connected to RDY_after_mux 
         .i_datain(i_datain), 
         .d_datain(d_datain), 
         // output
@@ -327,5 +327,5 @@ module PCPU_SA_TOP_LEVEL(
                     );
       
 endmodule
-`endif//PCPU_SA_TOP_LEVEL_V
+`endif//PIPE_CPU_SA_TOP_V
 
