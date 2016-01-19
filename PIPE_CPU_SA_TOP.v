@@ -132,9 +132,9 @@ module PIPE_CPU_SA_TOP(
                 IO_CTRL_ALU_STA   = 5,
                 IO_CTRL_PLL_STA   = 6,
                 IO_CTRL_MEAS_STA  = 7,
-                IO_CTRL_ALG_SRC   = 8,
-                IO_CTRL_ALG_OSCD  = 9,
-                IO_CTRL_ALG_PHS   = 10,
+                IO_CTRL_ALG_OSCD  = 8,
+                IO_CTRL_ALG_PHS   = 9,
+                IO_CTRL_ALG_SRC   = 10,
                 IO_CTRL_ALG_FS_END  = 11,
                 IO_CTRL_ALG_FS_BGN  = 12;
 
@@ -262,6 +262,7 @@ module PIPE_CPU_SA_TOP(
     assign  alu_start = (io_control[IO_CTRL_ALU_STA] || set_multiply_start_SA || set_division_start_SA);
     assign  pll_start = io_control[IO_CTRL_PLL_STA];
     assign  meas_start = io_control[IO_CTRL_MEAS_STA];
+    assign  ANA_BITS_OUT = io_dataoutA[ANA_WIDTH-1:0];
     
     // wire connections between CTRL module and CPU and 
     assign  io_status = {{(GENERAL_REG_WIDTH-3){1'b0}}, meas_is_done & ADC_RDY, pll_is_done, alu_is_done};

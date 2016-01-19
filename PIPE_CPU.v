@@ -289,6 +289,7 @@ module PIPE_CPU(
                 `ADDC:  {cf_buf, ALUo} <= reg_A + reg_B + cf;
                 `SUB:   {cf_buf, ALUo} <= reg_A - reg_B;
                 `SUBI:  {cf_buf, ALUo} <= reg_A - reg_B;
+                `SUIH:  {cf_buf, ALUo} <= reg_A - reg_B;
                 `SUBC:  {cf_buf, ALUo} <= reg_A - reg_B - cf;
                 `CMP:   {cf_buf, ALUo} <= reg_A - reg_B;
                 //`LOAD:`STORE:`JMPR:
