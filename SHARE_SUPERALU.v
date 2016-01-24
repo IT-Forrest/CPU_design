@@ -9,7 +9,7 @@
 // --------------------------------------------------------------------
 // ABSTRACT
 // 
-// INPUT: alu_type = {Multiply_start, Division_start, Sqrtpow_start, 1'b0};
+// INPUT: alu_type = {Multiply_start, Division_start, Sqrtpow_start};
 // How to use this block:
 // (1) reset alu_type; then set a single start signal "1";
 // (2) wait until the alu_is_done is "1";
@@ -19,6 +19,8 @@
 
 `ifndef SHARE_SUPERALU_V
 `define SHARE_SUPERALU_V
+
+`define DIV_DEBUG_ON
 
 // Fixed-point Multiplication used for generating step from T_value
 module SHARE_SUPERALU(
@@ -118,7 +120,7 @@ module SHARE_SUPERALU(
     assign  post_work = SEL_SRC;//SEL_Z;//reuse this reg
     
     // for division
-    wire    [QUOTIENT_WIDTH-1:0]    division_head;
+    wire    [MAX_SQRT_WIDTH-1:0]    division_head;
     wire    [QUOTIENT_WIDTH-1:0]    division_rema;
     //xtemp+ytemp store dividand; where the lowest QUOTIENT_WIDTH is for remain part
     assign  division_head = {xtemp[QUOTIENT_WIDTH-1:0],ytemp[MAX_SQRT_WIDTH-1:QUOTIENT_WIDTH]};
@@ -356,12 +358,11 @@ module SHARE_SUPERALU(
             // (0) pre_work is to remove the offset from X_IN and Y_IN
             // If sum_ab is negative(MSB=1) the complement a2 is appled; 
             // else it is assigned to xtemp: takes the absolute value
-            //else
             if (pre_work) begin
                 if (step == SQRT_STEP0) begin
                     xtemp <= {X_IN, 2'b00};
                     ytemp <= {Y_IN, 2'b00};
-                    wtemp <= {~{OFFSET, 2'b00} + 1'b1};
+                    wtemp <= (~{OFFSET, 2'b00} + 1'b1);
                     ztemp <= 0;
                     SEL_SRC <= 1;// choose xtemp
                     SEL_Z <= 0;
@@ -510,7 +511,7 @@ module SHARE_SUPERALU(
             // accurate within range [0~45]degree, following branch refines the final result. 
             ////////////////////////////////////////////////////////////////////
             //else if (index == SQRT_RSHT_WIDTH && (step == SQRT_STEP1 || step == SQRT_STEP2)) begin
-            else if (step != SQRT_STEP12) begin
+            else if (step == SQRT_STEP1 || step == SQRT_STEP2) begin //(step != SQRT_STEP12)
                 // Output the process finish signal 
                 if (sign_x & sign_y) begin //both numbers are negative
                     if(XOR_SRC) begin// ztemp = 3pi/2- ztemp = -(-3pi/2+ztemp)
