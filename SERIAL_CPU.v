@@ -1,11 +1,11 @@
 //+FHDR****************************************************************
 // ECE department, TAMU
 // --------------------------------------------------------------------
-// FILE NAME    : PIPE_CPU.v
+// FILE NAME    : SERIAL_CPU.v
 // AUTHER       : Jiafan Wang
-// DATE         : 12/21/2015
+// DATE         : 01/23/2016
 // VERSION      : 1.0
-// PURPOSE      : the kernel of a pipeline CPU with five stages
+// PURPOSE      : the kernel of a serial CPU with five states
 // --------------------------------------------------------------------
 // ABSTRACT
 //
@@ -14,10 +14,10 @@
 `timescale 1ns / 1ps
 `include "DEFINE_CPU.v"
 
-`ifndef PIPE_CPU_V
-`define PIPE_CPU_V
+`ifndef SERIAL_CPU_V
+`define SERIAL_CPU_V
 
-module PIPE_CPU(
+module SERIAL_CPU(
     clk,
     enable,
     rst_n,
@@ -53,6 +53,13 @@ module PIPE_CPU(
                 MSB_VAL2_7B         = 7,
                 MSB_VAL3_3B         = 3;
     
+    parameter   STATE_IDLE          = 3'b000,
+                STATE_IF            = 3'b001,
+                STATE_ID            = 3'b011,
+                STATE_EX            = 3'b010,
+                STATE_MEM           = 3'b110,
+                STATE_WB            = 3'b100;
+    
     input   clk;
     input   enable;
     input   rst_n;
@@ -74,8 +81,8 @@ module PIPE_CPU(
     
     reg     cf_buf;
     reg     [GENERAL_REG_WIDTH-1:0] ALUo;
-    reg     state, next_state, nxt;
-    reg     zf, nf, cf, dw;     //flag registers
+    reg     [2:0] state, next_state;
+    reg     zf, nf, cf, dw, nxt;     //flag registers
     reg     [PC_MEM_ADDR_WIDTH-1:0] pc;
     reg     [GENERAL_REG_WIDTH-1:0] id_ir, ex_ir, mem_ir, wb_ir;// instruction registers
     reg     [GENERAL_REG_WIDTH-1:0] reg_A, reg_B, reg_C, reg_C1, smdr, smdr1;
@@ -105,7 +112,7 @@ module PIPE_CPU(
     always @(posedge clk)
         begin
             if (!rst_n)
-                state <= `idle;
+                state <= STATE_IDLE;
             else
                 state <= next_state;
         end
@@ -114,23 +121,27 @@ module PIPE_CPU(
     always @(*)
         begin
             case (state)
-                `idle : 
-                    if ((enable == 1'b1) && (start == 1'b1)) begin
+                STATE_IDLE: 
+                    if (start == 1'b1) begin
                         nxt <= 1'b0;
-                        next_state <= `exec;
+                        next_state <= STATE_IF;
                     end
                     else begin
                         nxt <= 1'b0;
-                        next_state <= `idle;
+                        next_state <= STATE_IDLE;
                     end
-                `exec :
-                    if ((enable == 1'b0) || (wb_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `HALT)) begin
+                STATE_IF:   next_state <= STATE_ID;
+                STATE_ID:   next_state <= STATE_EX;
+                STATE_EX:   next_state <= STATE_MEM;
+                STATE_MEM:  next_state <= STATE_WB;
+                STATE_WB:
+                    if (wb_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `HALT) begin
                         nxt <= 1'b1;
-                        next_state <= `idle;
+                        next_state <= STATE_IDLE;
                     end
                     else begin
                         nxt <= 1'b0;
-                        next_state <= `exec;
+                        next_state <= STATE_IF;
                     end
             endcase
         end
@@ -144,16 +155,16 @@ module PIPE_CPU(
             if (!rst_n)
                 begin
                     id_ir <= {`NOP, 11'b000_0000_0000};
-                    pc <= 8'b0000_0000;
+                    // pc <= 8'b0000_0000;
                 end
-            else if (state ==`exec)
+            else if (state == STATE_IF)
                 begin
                     id_ir <= i_datain;
                     
-                    if(branch_flag)
-                        pc <= reg_C[PC_MEM_ADDR_WIDTH-1:0];
-                    else
-                        pc <= pc + 1;
+                    // if(branch_flag)
+                        // pc <= reg_C[PC_MEM_ADDR_WIDTH-1:0];
+                    // else
+                        // pc <= pc + 1;
                 end
         end
         
@@ -168,7 +179,7 @@ module PIPE_CPU(
                     reg_B <= 16'b0000_0000_0000_0000;
                     smdr <= 16'b0000_0000_0000_0000;
                 end
-            else if (state == `exec)
+            else if (state == STATE_ID)
                 begin
                     ex_ir <= id_ir;
                     
@@ -213,7 +224,7 @@ module PIPE_CPU(
                     cf <= 1'b0;
                 end
             
-            else if (state == `exec)
+            else if (state == STATE_EX)
                 begin
                     if (ex_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `LIOA)
                     reg_C <= io_datainA;
@@ -353,7 +364,7 @@ module PIPE_CPU(
                     reg_C1 <= 16'b0000_0000_0000_0000;
                 end
             
-            else if (state == `exec)
+            else if (state == STATE_MEM)
                 begin
                     wb_ir <= mem_ir;
                     
@@ -377,12 +388,20 @@ module PIPE_CPU(
                     gr[5] <= 16'b0000_0000_0000_0000;
                     gr[6] <= 16'b0000_0000_0000_0000;
                     gr[7] <= 16'b0000_0000_0000_0000;
+                    
+                    pc <= 8'b0000_0000;
                 end
             
-            else if (state == `exec)
+            else if (state == STATE_WB)
                 begin
                     if (I_REG_TYPE(wb_ir[MSB_OP_16B-1:MSB_OPER1_11B]))
                         gr[wb_ir[MSB_OPER1_11B-1:MSB_OPER2_8B]] <= reg_C1;
+                        
+                    //the pc update could be move to MEM state to save time;
+                    if(branch_flag)
+                        pc <= reg_C[PC_MEM_ADDR_WIDTH-1:0];
+                    else
+                        pc <= pc + 1;
                 end
         end
         
@@ -532,4 +551,4 @@ module PIPE_CPU(
         endfunction
 
 endmodule
-`endif//PIPE_CPU_V
+`endif//SERIAL_CPU_V
