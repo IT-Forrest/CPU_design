@@ -105,11 +105,11 @@ module SHARE_SUPERALU(
     output  alu_is_done;
     
     reg     [MAX_SQRT_WIDTH-1:0] xtemp, ytemp, wtemp, ztemp; 
-    reg     [INDEX_WIDTH-1:0]    index;//2:0 for POWER
-    reg     [INDEX_WIDTH-1:0]    rsht_bits;//[2:0]
-    reg     [3:0]   step;
-    reg     SEL_SRC;
-    reg     XOR_SRC;
+    reg     [INDEX_WIDTH-1:0]    index;//range should cover from 1 to MAX_SQRT_ITER
+    reg     [INDEX_WIDTH-1:0]    rsht_bits;//right shift bit numbers
+    reg     [3:0]   step;        // time step in each iteration
+    reg     SEL_SRC;             // control signal to choose between xtemp and ytemp
+    reg     XOR_SRC;             // xor signal to make sure "xtemp" is bigger than "ytemp"
     reg     SEL_Z;
     reg     sign_x, sign_y;
     reg     pre_work;

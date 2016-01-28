@@ -9,7 +9,7 @@
 // --------------------------------------------------------------------
 // ABSTRACT
 //
-//   Not synthesizable, for simulation only
+//   Not synthesizable, for simulation only; simulation time 100us
 // --------------------------------------------------------------------
 
 `timescale 1 ns / 100 ps
@@ -122,7 +122,7 @@ $stop();
             //for (i=0; i<=8; i=i+1)  begin
             for (i=0; i<=8*16*2; i=i+1)  begin
                 #CLK_DELAY;
-                $display($time, " xtemp=%d, ytemp=%d, ztemp=%d", U2.xtemp, U2.ytemp, U2.ztemp);
+                //$display($time, " xtemp=%d, ytemp=%d, ztemp=%d", U2.xtemp, U2.ytemp, U2.ztemp);
                 if (U2.cordic_sqrt_is_done) begin
                     //$display($time, " Amp Result = %d", FOUT);
                 end
