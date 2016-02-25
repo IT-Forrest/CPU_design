@@ -4,7 +4,7 @@
 // FILE NAME    : SERIAL_CPU.v
 // AUTHER       : Jiafan Wang
 // DATE         : 01/23/2016
-// VERSION      : 1.0
+// VERSION      : 2.0
 // PURPOSE      : the kernel of a serial CPU with five states
 // --------------------------------------------------------------------
 // ABSTRACT
@@ -84,9 +84,9 @@ module SERIAL_CPU(
     reg     [2:0] state, next_state;
     reg     zf, nf, cf, dw, nxt;     //flag registers
     reg     [PC_MEM_ADDR_WIDTH-1:0] pc;
-    reg     [GENERAL_REG_WIDTH-1:0] id_ir, ex_ir, mem_ir, wb_ir;// instruction registers
-    reg     [GENERAL_REG_WIDTH-1:0] reg_A, reg_B, reg_C, reg_C1, smdr, smdr1;
-    reg     [GENERAL_REG_WIDTH-1:0] gr[7:0];
+    reg     [GENERAL_REG_WIDTH-1:0] id_ir;// instruction registers, ex_ir, mem_ir, wb_ir
+    reg     [GENERAL_REG_WIDTH-1:0] reg_A, reg_B, reg_C, smdr;// reg_C1, smdr1;
+    reg     [GENERAL_REG_WIDTH-1:0] gr[3:0];
     wire    branch_flag;
 
     assign  io_control  = gr[1];
@@ -132,10 +132,9 @@ module SERIAL_CPU(
                     end
                 STATE_IF:   next_state <= STATE_ID;
                 STATE_ID:   next_state <= STATE_EX;
-                STATE_EX:   next_state <= STATE_MEM;
-                STATE_MEM:  next_state <= STATE_WB;
+                STATE_EX:   next_state <= STATE_WB;//next_state <= STATE_MEM;
                 STATE_WB:
-                    if (wb_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `HALT) begin
+                    if (id_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `HALT) begin
                         nxt <= 1'b1;
                         next_state <= STATE_IDLE;
                     end
@@ -174,14 +173,14 @@ module SERIAL_CPU(
         begin
             if (!rst_n)
                 begin
-                    ex_ir <= {`NOP, 11'b000_0000_0000};
+                    //id_ir <= {`NOP, 11'b000_0000_0000};
                     reg_A <= 16'b0000_0000_0000_0000;
                     reg_B <= 16'b0000_0000_0000_0000;
                     smdr <= 16'b0000_0000_0000_0000;
                 end
             else if (state == STATE_ID)
                 begin
-                    ex_ir <= id_ir;
+                    //id_ir <= id_ir;
                     
                     if (id_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `STORE)
                         smdr <= gr[id_ir[MSB_OPER1_11B-1:MSB_OPER2_8B]];
@@ -215,9 +214,9 @@ module SERIAL_CPU(
         begin
             if (!rst_n)
                 begin
-                    mem_ir <= {`NOP, 11'b000_0000_0000};
+                    //id_ir <= {`NOP, 11'b000_0000_0000};
                     reg_C <= 16'b0000_0000_0000_0000;
-                    smdr1 <= 16'b0000_0000_0000_0000;
+                    //smdr <= 16'b0000_0000_0000_0000;
                     dw <= 1'b0;
                     zf <= 1'b0;
                     nf <= 1'b0;
@@ -226,32 +225,32 @@ module SERIAL_CPU(
             
             else if (state == STATE_EX)
                 begin
-                    if (ex_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `LIOA)
-                    reg_C <= io_datainA;
-                    else if (ex_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `LIOB)
-                    reg_C <= io_datainB;
-                    else if (ex_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `LIOS)
-                    reg_C <= io_status;
+                    if (id_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `LIOA)
+                        reg_C <= io_datainA;
+                    else if (id_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `LIOB)
+                        reg_C <= io_datainB;
+                    else if (id_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `LIOS)
+                        reg_C <= io_status;
                     else
-                    reg_C <= ALUo;
-                    mem_ir <= ex_ir;
+                        reg_C <= ALUo;
+                    //id_ir <= id_ir;
                     
-                    if ((ex_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `LDIH)
-                            || (ex_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `SUIH)
-                            || (ex_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `ADD)
-                            || (ex_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `ADDI)
-                            || (ex_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `ADDC)
-                            || (ex_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `SUB)
-                            || (ex_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `SUBI)
-                            || (ex_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `SUBC)
-                            || (ex_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `CMP)
-                            || (ex_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `AND)
-                            || (ex_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `OR)
-                            || (ex_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `XOR)
-                            || (ex_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `SLL)
-                            || (ex_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `SRL)
-                            || (ex_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `SLA)
-                            || (ex_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `SRA))
+                    if ((id_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `LDIH)
+                            || (id_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `SUIH)
+                            || (id_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `ADD)
+                            || (id_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `ADDI)
+                            || (id_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `ADDC)
+                            || (id_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `SUB)
+                            || (id_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `SUBI)
+                            || (id_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `SUBC)
+                            || (id_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `CMP)
+                            || (id_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `AND)
+                            || (id_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `OR)
+                            || (id_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `XOR)
+                            || (id_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `SLL)
+                            || (id_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `SRL)
+                            || (id_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `SLA)
+                            || (id_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `SRA))
                         begin
                             cf <= cf_buf;
                             if (ALUo == 16'b0000_0000_0000_0000)
@@ -270,21 +269,21 @@ module SERIAL_CPU(
                             cf <= cf;
                         end
                     
-                    if (ex_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `STORE)
+                    if (id_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `STORE)
                         begin
                             dw <= 1'b1;
-                            smdr1 <= smdr;
+                            //smdr <= smdr;
                         end
                     else
                         begin
                             dw <= 1'b0;
-                            smdr1 <= smdr1;
+                            //smdr <= smdr;
                         end
                 end
         end
     always @(*)
         begin
-            case(ex_ir[MSB_OP_16B-1:MSB_OPER1_11B])
+            case(id_ir[MSB_OP_16B-1:MSB_OPER1_11B])
                 `AND:   {cf_buf, ALUo} <= {1'b0, reg_A & reg_B};
                 `OR:    {cf_buf, ALUo} <= {1'b0, reg_A | reg_B};
                 `XOR:   {cf_buf, ALUo} <= {1'b0, reg_A ^ reg_B};
@@ -347,33 +346,33 @@ module SERIAL_CPU(
     //************* MEM *************//
     assign d_addr = reg_C[D_MEM_ADDR_WIDTH-1:0];
     assign d_we = dw;
-    assign d_dataout = smdr1;
-    assign branch_flag = ((mem_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `JUMP)
-                        || (mem_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `JMPR)
-                        || ((mem_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `BZ) && (zf == 1'b1))
-                        || ((mem_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `BNZ) && (zf == 1'b0))
-                        || ((mem_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `BN) && (nf == 1'b1))
-                        || ((mem_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `BNN) && (nf == 1'b0))
-                        || ((mem_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `BC) && (cf == 1'b1))
-                        || ((mem_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `BNC) && (cf == 1'b0)));
-    always @(posedge clk or negedge rst_n)
-        begin
-            if (!rst_n)
-                begin
-                    wb_ir <= {`NOP, 11'b000_0000_0000};
-                    reg_C1 <= 16'b0000_0000_0000_0000;
-                end
+    assign d_dataout = smdr;
+    assign branch_flag = ((id_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `JUMP)
+                        || (id_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `JMPR)
+                        || ((id_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `BZ) && (zf == 1'b1))
+                        || ((id_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `BNZ) && (zf == 1'b0))
+                        || ((id_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `BN) && (nf == 1'b1))
+                        || ((id_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `BNN) && (nf == 1'b0))
+                        || ((id_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `BC) && (cf == 1'b1))
+                        || ((id_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `BNC) && (cf == 1'b0)));
+    // always @(posedge clk or negedge rst_n)
+        // begin
+            // if (!rst_n)
+                // begin
+                    //id_ir <= {`NOP, 11'b000_0000_0000};
+                    // reg_C1 <= 16'b0000_0000_0000_0000;
+                // end
             
-            else if (state == STATE_MEM)
-                begin
-                    wb_ir <= mem_ir;
+            // else if (state == STATE_MEM)
+                // begin
+                    //id_ir <= id_ir;
                     
-                    if (mem_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `LOAD)
-                        reg_C1 <= d_datain;
-                    else
-                        reg_C1 <= reg_C;
-                end
-        end
+                    // if (id_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `LOAD)
+                        // reg_C1 <= d_datain;
+                    // else
+                        // reg_C1 <= reg_C;
+                // end
+        // end
             
     //************* WB *************//
     always @(posedge clk or negedge rst_n)
@@ -384,18 +383,20 @@ module SERIAL_CPU(
                     gr[1] <= 16'b0000_0000_0000_0000;
                     gr[2] <= 16'b0000_0000_0000_0000;
                     gr[3] <= 16'b0000_0000_0000_0000;
-                    gr[4] <= 16'b0000_0000_0000_0000;
-                    gr[5] <= 16'b0000_0000_0000_0000;
-                    gr[6] <= 16'b0000_0000_0000_0000;
-                    gr[7] <= 16'b0000_0000_0000_0000;
+                    // gr[4] <= 16'b0000_0000_0000_0000;
+                    // gr[5] <= 16'b0000_0000_0000_0000;
+                    // gr[6] <= 16'b0000_0000_0000_0000;
+                    // gr[7] <= 16'b0000_0000_0000_0000;
                     
                     pc <= 8'b0000_0000;
                 end
             
             else if (state == STATE_WB)
                 begin
-                    if (I_REG_TYPE(wb_ir[MSB_OP_16B-1:MSB_OPER1_11B]))
-                        gr[wb_ir[MSB_OPER1_11B-1:MSB_OPER2_8B]] <= reg_C1;
+                    if (id_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `LOAD)
+                        gr[id_ir[MSB_OPER1_11B-1:MSB_OPER2_8B]] <= d_datain;
+                    else if (I_REG_TYPE(id_ir[MSB_OP_16B-1:MSB_OPER1_11B]))
+                        gr[id_ir[MSB_OPER1_11B-1:MSB_OPER2_8B]] <= reg_C;
                         
                     //the pc update could be move to MEM state to save time;
                     if(branch_flag)

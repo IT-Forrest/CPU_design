@@ -28,9 +28,6 @@ add wave -noupdate /SCPU_MEM_LOOP_TOP/uut/cf
 add wave -noupdate /SCPU_MEM_LOOP_TOP/uut/dw
 add wave -noupdate -radix unsigned /SCPU_MEM_LOOP_TOP/uut/pc
 add wave -noupdate -radix hexadecimal /SCPU_MEM_LOOP_TOP/uut/id_ir
-add wave -noupdate -radix hexadecimal /SCPU_MEM_LOOP_TOP/uut/ex_ir
-add wave -noupdate -radix hexadecimal /SCPU_MEM_LOOP_TOP/uut/mem_ir
-add wave -noupdate -radix hexadecimal /SCPU_MEM_LOOP_TOP/uut/wb_ir
 add wave -noupdate -radix hexadecimal /SCPU_MEM_LOOP_TOP/uut/reg_A
 add wave -noupdate -radix hexadecimal /SCPU_MEM_LOOP_TOP/uut/reg_B
 add wave -noupdate -radix hexadecimal /SCPU_MEM_LOOP_TOP/uut/reg_C

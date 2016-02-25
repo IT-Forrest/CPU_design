@@ -77,27 +77,27 @@ module SCPU_MEM_LOOP_TOP;
         
         // Add stimulus here
         $display("pc  :               id_ir                :reg_A :reg_B :reg_C\
-            : da  :  dd  : w : reC1 :  gr1  :  gr2  :  gr3   :zf :nf:cf");
-        $monitor("%3d : %b : %h : %h : %h : %h : %h : %b : %h : %h : %h : %h : %b : %b : %b", 
+            : da  :  dd  : w :  gr1  :  gr2  :  gr3   :zf :nf:cf");
+        $monitor("%3d : %b : %h : %h : %h : %h : %h : %b : %h : %h : %h : %b : %b : %b", 
             uut.pc, uut.id_ir, uut.reg_A, uut.reg_B, uut.reg_C,
-            d_addr, d_dataout, d_we, uut.reg_C1, uut.gr[1], uut.gr[2], uut.gr[3],
+            d_addr, d_dataout, d_we, uut.gr[1], uut.gr[2], uut.gr[3],
             uut.zf, uut.nf, uut.cf);
 
-        i_mem.I_RAM[ 0] = {`SET, `gr7, 4'b0000, 4'b0100};//set the loop controller `gr7 = 25
+        i_mem.I_RAM[ 0] = {`SET, `gr3, 4'b0000, 4'b0100};//set the loop controller `gr3 = 25
         i_mem.I_RAM[ 1] = {`SET, `gr1, 4'b0000, 4'b0000};//reset the sum value
         // i_mem.I_RAM[ 2] = {`NOP, 11'b000_0000_0000};
         // i_mem.I_RAM[ 3] = {`NOP, 11'b000_0000_0000};
         // i_mem.I_RAM[ 4] = {`NOP, 11'b000_0000_0000};
-        // i_mem.I_RAM[ 2] = {`ADDI, `gr7, 4'b0001, 4'b1001};//set the loop controller `gr7 = 25
+        // i_mem.I_RAM[ 2] = {`ADDI, `gr7, 4'b0001, 4'b1001};//set the loop controller `gr3 = 25
         // i_mem.I_RAM[ 6] = {`NOP, 11'b000_0000_0000};
         // i_mem.I_RAM[ 7] = {`NOP, 11'b000_0000_0000};
         // i_mem.I_RAM[ 8] = {`NOP, 11'b000_0000_0000};
-        i_mem.I_RAM[ 2] = {`ADD, `gr1, 1'b0, `gr1, 1'b0, `gr7};//sum += `gr7
-        i_mem.I_RAM[ 3] = {`SUBI, `gr7, 4'b0000, 4'b0001};
+        i_mem.I_RAM[ 2] = {`ADD, `gr1, 1'b0, `gr1, 1'b0, `gr3};//sum += `gr7
+        i_mem.I_RAM[ 3] = {`SUBI, `gr3, 4'b0000, 4'b0001};
         // i_mem.I_RAM[11] = {`NOP, 11'b000_0000_0000};
         // i_mem.I_RAM[12] = {`NOP, 11'b000_0000_0000};
         // i_mem.I_RAM[13] = {`NOP, 11'b000_0000_0000};
-        i_mem.I_RAM[ 4] = {`BNZ, `gr0, 4'b0000, 4'b0010};//if (`gr7 != 0) go to I_RAM[ 9];
+        i_mem.I_RAM[ 4] = {`BNZ, `gr0, 4'b0000, 4'b0010};//if (`gr3 != 0) go to I_RAM[ 9];
         // i_mem.I_RAM[15] = {`NOP, 11'b000_0000_0000};
         // i_mem.I_RAM[16] = {`NOP, 11'b000_0000_0000};
         // i_mem.I_RAM[17] = {`NOP, 11'b000_0000_0000};
