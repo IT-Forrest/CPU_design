@@ -35,8 +35,9 @@ add wave -noupdate /SCPU_SINGLE_8BIT_TOP/uut/branch_flag
 add wave -noupdate -radix hexadecimal /SCPU_SINGLE_8BIT_TOP/uut/smdr
 add wave -noupdate -radix hexadecimal /SCPU_SINGLE_8BIT_TOP/tmpi_datain
 add wave -noupdate -radix hexadecimal /SCPU_SINGLE_8BIT_TOP/tmpd_datain
+add wave -noupdate /SCPU_SINGLE_8BIT_TOP/uut/is_i_addr
 TreeUpdate [SetDefaultTree]
-WaveRestoreCursors {{Cursor 1} {226319 ps} 0}
+WaveRestoreCursors {{Cursor 1} {623035 ps} 0}
 quietly wave cursor active 1
 configure wave -namecolwidth 227
 configure wave -valuecolwidth 200
@@ -52,4 +53,4 @@ configure wave -griddelta 40
 configure wave -timeline 0
 configure wave -timelineunits ps
 update
-WaveRestoreZoom {160975 ps} {244975 ps}
+WaveRestoreZoom {100282 ps} {184282 ps}

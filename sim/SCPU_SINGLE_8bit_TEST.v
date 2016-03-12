@@ -70,14 +70,14 @@ module SCPU_SINGLE_8BIT_TOP;
             i_datain = tmpi_datain[7:0];
         #10 i_datain = tmpi_datain[15:8];
         #40 tmpd_datain = 16'h10AB;  // 3 clk later from LOAD
-        #10 d_datain = tmpd_datain[15:8];
         #10 d_datain = tmpd_datain[7:0];
+        #10 d_datain = tmpd_datain[15:8];
         #10 tmpi_datain = {`LOAD, `gr2, 1'b0, `gr0, 4'b0001};
             i_datain = tmpi_datain[7:0];
         #10 i_datain = tmpi_datain[15:8];
         #40 tmpd_datain = 16'h3C00;  // 3 clk later from LOAD
-        #10 d_datain = tmpd_datain[15:8];
         #10 d_datain = tmpd_datain[7:0];
+        #10 d_datain = tmpd_datain[15:8];
         #10 tmpi_datain = {`ADD, `gr3, 1'b0, `gr1, 1'b0, `gr2};
             i_datain = tmpi_datain[7:0];
         #10 i_datain = tmpi_datain[15:8];

@@ -25,6 +25,7 @@ module SERIAL_CPU_8BIT(
     i_datain,
     d_datain,
     // output
+    is_i_addr,
     nxt,
     i_addr,
     d_addr,
@@ -72,6 +73,7 @@ module SERIAL_CPU_8BIT(
     input   start;
     input   [MEMORY_DATA_WIDTH-1:0] i_datain;    //input instruction data
     input   [MEMORY_DATA_WIDTH-1:0] d_datain;    //input memory data
+    output  is_i_addr;
     output  nxt;
     output  [MEMORY_ADDR_WIDTH-1:0] i_addr;      //output instruction address
     output  [MEMORY_ADDR_WIDTH-1:0] d_addr;      //output memory data address 
@@ -109,6 +111,7 @@ module SERIAL_CPU_8BIT(
     wire    [3:0]   oper3_r3;
     wire    oper3_is_val;
     
+    assign  is_i_addr = ((state == STATE_IF)||(state == STATE_IF2));
     assign  instr_over = (pc == {PC_MEM_ADDR_WIDTH{1'b1}});
     assign  code_type = id_ir[MSB_OP_16B-1:MSB_OPER1_11B];
     assign  oper1_r1 = id_ir[MSB_OPER1_11B-1:MSB_OPER2_8B];
@@ -459,13 +462,14 @@ module SERIAL_CPU_8BIT(
                 end
             else if (state == STATE_MEM2)
                 begin
+                    // save the d_datain to the low half
                     if (id_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `LOAD)
-                        gr[id_ir[MSB_OPER1_11B-1:MSB_OPER2_8B]] <= {d_datain, {MEMORY_DATA_WIDTH{1'b0}}};
+                        gr[id_ir[MSB_OPER1_11B-1:MSB_OPER2_8B]][MEMORY_DATA_WIDTH-1:0] <= d_datain;
                 end
             else if (state == STATE_WB)
                 begin
                     if (id_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `LOAD)
-                        gr[id_ir[MSB_OPER1_11B-1:MSB_OPER2_8B]][MEMORY_DATA_WIDTH-1:0] <= d_datain;
+                        gr[id_ir[MSB_OPER1_11B-1:MSB_OPER2_8B]][(MEMORY_DATA_WIDTH<<1)-1:MEMORY_DATA_WIDTH] <= d_datain;
                     else if (I_REG_TYPE(id_ir[MSB_OP_16B-1:MSB_OPER1_11B]))
                         gr[id_ir[MSB_OPER1_11B-1:MSB_OPER2_8B]] <= reg_C;
                         
