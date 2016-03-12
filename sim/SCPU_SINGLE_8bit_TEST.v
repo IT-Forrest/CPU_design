@@ -12,7 +12,8 @@ module SCPU_SINGLE_8BIT_TOP;
     reg start;
     reg [7:0] i_datain;
     reg [7:0] d_datain;
-    reg [15:0]  tmp_datain;
+    reg [15:0]  tmpi_datain;
+    reg [15:0]  tmpd_datain;
     reg select_y;
     
     // Outputs
@@ -36,6 +37,8 @@ module SCPU_SINGLE_8BIT_TOP;
         .d_dataout(d_dataout)
     );
 
+    defparam    uut.DEFAULT_PC_ADDR = 0;
+    
     initial begin
         // Initialize Inputs
         clk = 0;
@@ -63,34 +66,34 @@ module SCPU_SINGLE_8BIT_TOP;
         #10 enable = 1;
         #10 start = 1;
         #10 start = 0;
-            tmp_datain = {`LOAD, `gr1, 1'b0, `gr0, 4'b0000};
-            i_datain = tmp_datain[7:0];
-        #10 i_datain = tmp_datain[15:8];
-        #60 tmp_datain = 16'h00AB;  // 3 clk later from LOAD
-            d_datain = tmp_datain[7:0];
-        #10 d_datain = tmp_datain[15:8];
-        #10 tmp_datain = {`LOAD, `gr2, 1'b0, `gr0, 4'b0001};
-            i_datain = tmp_datain[7:0];
-        #10 i_datain = tmp_datain[15:8];
-        #60 tmp_datain = 16'h3C00;  // 3 clk later from LOAD
-            d_datain = tmp_datain[7:0];
-        #10 d_datain = tmp_datain[15:8];
-        #10 tmp_datain = {`ADD, `gr3, 1'b0, `gr1, 1'b0, `gr2};
-            i_datain = tmp_datain[7:0];
-        #10 i_datain = tmp_datain[15:8];
-        #70 tmp_datain = {`STORE, `gr3, 1'b0, `gr0, 4'b0010};
-            i_datain = tmp_datain[7:0];
-        #10 i_datain = tmp_datain[15:8];
-        #70 tmp_datain = {`BNZ, `gr1, 8'b00100001};
-            i_datain = tmp_datain[7:0];
-        #10 i_datain = tmp_datain[15:8];
-        #70 tmp_datain = {`CMP, 4'b0000, `gr1, 1'b0, `gr2};  // 4 clk later from BNZ
-            i_datain = tmp_datain[7:0];
-        #10 i_datain = tmp_datain[15:8];
-        #70 tmp_datain = {`HALT, 11'b000_0000_0000};
-            i_datain = tmp_datain[7:0];
-        #10 i_datain = tmp_datain[15:8];
-        #80;
+            tmpi_datain = {`LOAD, `gr1, 1'b0, `gr0, 4'b0000};
+            i_datain = tmpi_datain[7:0];
+        #10 i_datain = tmpi_datain[15:8];
+        #40 tmpd_datain = 16'h10AB;  // 3 clk later from LOAD
+        #10 d_datain = tmpd_datain[15:8];
+        #10 d_datain = tmpd_datain[7:0];
+        #10 tmpi_datain = {`LOAD, `gr2, 1'b0, `gr0, 4'b0001};
+            i_datain = tmpi_datain[7:0];
+        #10 i_datain = tmpi_datain[15:8];
+        #40 tmpd_datain = 16'h3C00;  // 3 clk later from LOAD
+        #10 d_datain = tmpd_datain[15:8];
+        #10 d_datain = tmpd_datain[7:0];
+        #10 tmpi_datain = {`ADD, `gr3, 1'b0, `gr1, 1'b0, `gr2};
+            i_datain = tmpi_datain[7:0];
+        #10 i_datain = tmpi_datain[15:8];
+        #50 tmpi_datain = {`STORE, `gr3, 1'b0, `gr0, 4'b0010};
+        #10 i_datain = tmpi_datain[7:0];
+        #10 i_datain = tmpi_datain[15:8];
+        #50 tmpi_datain = {`CMP, 4'b0000, `gr1, 1'b0, `gr2};
+        #10 i_datain = tmpi_datain[7:0];
+        #10 i_datain = tmpi_datain[15:8];
+        // #70 tmpi_datain = {`BNZ, `gr1, 8'b00100001};// 4 clk later from CMP
+            // i_datain = tmpi_datain[7:0];
+        // #10 i_datain = tmpi_datain[15:8];
+        #50 tmpi_datain = {`HALT, 11'b000_0000_0000};
+        #10 i_datain = tmpi_datain[7:0];
+        #10 i_datain = tmpi_datain[15:8];
+        #100;
         $stop();
     end
     

@@ -26,14 +26,17 @@ add wave -noupdate /SCPU_SINGLE_8BIT_TOP/uut/nf
 add wave -noupdate /SCPU_SINGLE_8BIT_TOP/uut/cf
 add wave -noupdate /SCPU_SINGLE_8BIT_TOP/uut/dw
 add wave -noupdate -radix unsigned /SCPU_SINGLE_8BIT_TOP/uut/pc
+add wave -noupdate /SCPU_SINGLE_8BIT_TOP/uut/lowest_bit
 add wave -noupdate -radix hexadecimal /SCPU_SINGLE_8BIT_TOP/uut/id_ir
 add wave -noupdate -radix hexadecimal /SCPU_SINGLE_8BIT_TOP/uut/reg_A
 add wave -noupdate -radix hexadecimal /SCPU_SINGLE_8BIT_TOP/uut/reg_B
 add wave -noupdate -radix hexadecimal /SCPU_SINGLE_8BIT_TOP/uut/reg_C
 add wave -noupdate /SCPU_SINGLE_8BIT_TOP/uut/branch_flag
 add wave -noupdate -radix hexadecimal /SCPU_SINGLE_8BIT_TOP/uut/smdr
+add wave -noupdate -radix hexadecimal /SCPU_SINGLE_8BIT_TOP/tmpi_datain
+add wave -noupdate -radix hexadecimal /SCPU_SINGLE_8BIT_TOP/tmpd_datain
 TreeUpdate [SetDefaultTree]
-WaveRestoreCursors {{Cursor 1} {284541 ps} 0}
+WaveRestoreCursors {{Cursor 1} {226319 ps} 0}
 quietly wave cursor active 1
 configure wave -namecolwidth 227
 configure wave -valuecolwidth 200
@@ -49,4 +52,4 @@ configure wave -griddelta 40
 configure wave -timeline 0
 configure wave -timelineunits ps
 update
-WaveRestoreZoom {50750 ps} {365750 ps}
+WaveRestoreZoom {160975 ps} {244975 ps}
