@@ -1,11 +1,11 @@
 //+FHDR****************************************************************
 // ECE department, TAMU
 // --------------------------------------------------------------------
-// FILE NAME    : SERIAL_CPU.v
+// FILE NAME    : SERIAL_CPU_8bit.v
 // AUTHER       : Jiafan Wang
-// DATE         : 01/23/2016
+// DATE         : 03/08/2016
 // VERSION      : 2.0
-// PURPOSE      : the kernel of a serial CPU with five states
+// PURPOSE      : the kernel of a serial CPU with 8bit word length
 // --------------------------------------------------------------------
 // ABSTRACT
 //
@@ -14,10 +14,10 @@
 `timescale 1ns / 1ps
 `include "DEFINE_CPU.v"
 
-`ifndef SERIAL_CPU_V
-`define SERIAL_CPU_V
+`ifndef SERIAL_CPU_8BIT_V
+`define SERIAL_CPU_8BIT_V
 
-module SERIAL_CPU(
+module SERIAL_CPU_8BIT(
     clk,
     enable,
     rst_n,
@@ -43,34 +43,40 @@ module SERIAL_CPU(
                 D_MEM_ADDR_WIDTH    = 8,
                 D_MEM_DATA_WIDTH    = 16,
                 GENERAL_REG_WIDTH   = 16,// width of the internal general registers
-                PC_MEM_ADDR_WIDTH   = 8;
+                PC_MEM_ADDR_WIDTH   = 8,
+                MEMORY_DATA_WIDTH   = 8,
+                MEMORY_ADDR_WIDTH   = 9;
+    parameter   DEFAULT_PC_ADDR     = 16;// default pc starting address (16*2 BYTE)
                 
-    parameter   MSB_OP_16B          = 16,
-                OP_WIDTH_5B         = 5,
-                MSB_OPER1_11B       = 11,
-                MSB_OPER2_8B        = 8,
-                MSB_OPER3_4B        = 4,
-                MSB_VAL2_7B         = 7,
-                MSB_VAL3_3B         = 3;
+    parameter   MSB_OP_16B          = 16,// index of the MSB bit of instruction ID
+                OP_WIDTH_5B         = 5,//  bit number of the instruction ID 
+                MSB_OPER1_11B       = 11,// index of the MSB bit of operand1
+                MSB_OPER2_8B        = 8,//  index of the MSB bit of operand2
+                MSB_OPER3_4B        = 4,//  index of the MSB bit of operand3
+                MSB_VAL2_7B         = 7,//  index of the MSB bit of value2
+                MSB_VAL3_3B         = 3;//  index of the MSB bit of value3
     
-    parameter   STATE_IDLE          = 3'b000,
-                STATE_IF            = 3'b001,
-                STATE_ID            = 3'b011,
-                STATE_EX            = 3'b010,
-                STATE_MEM           = 3'b110,
-                STATE_WB            = 3'b100;
+    parameter   STATE_IDLE          = 4'b0000,
+                STATE_IF            = 4'b0001,
+                STATE_IF2           = 4'b0011,
+                STATE_ID            = 4'b0010,
+                STATE_EX            = 4'b0110,
+                STATE_EX2           = 4'b0100,
+                STATE_MEM           = 4'b0101,
+                STATE_MEM2          = 4'b0111,
+                STATE_WB            = 4'b1111;
     
     input   clk;
     input   enable;
     input   rst_n;
     input   start;
-    input   [INSTRT_DATA_WIDTH-1:0] i_datain;    //input instruction data
-    input   [D_MEM_DATA_WIDTH-1:0]  d_datain;    //input memory data
+    input   [MEMORY_DATA_WIDTH-1:0] i_datain;    //input instruction data
+    input   [MEMORY_DATA_WIDTH-1:0] d_datain;    //input memory data
     output  nxt;
-    output  [INSTRT_ADDR_WIDTH-1:0] i_addr;      //output instruction address
-    output  [D_MEM_ADDR_WIDTH-1:0]  d_addr;      //output memory data address 
+    output  [MEMORY_ADDR_WIDTH-1:0] i_addr;      //output instruction address
+    output  [MEMORY_ADDR_WIDTH-1:0] d_addr;      //output memory data address 
     output  d_we;               //memory read or write signal, 1: write
-    output  [D_MEM_DATA_WIDTH-1:0]  d_dataout;   //output memory data 
+    output  [MEMORY_DATA_WIDTH-1:0] d_dataout;   //output memory data 
     // for I/O control and data in&out
     input   [GENERAL_REG_WIDTH-1:0]  io_status;
     input   [GENERAL_REG_WIDTH-1:0]  io_datainA;
@@ -79,9 +85,10 @@ module SERIAL_CPU(
     output  [GENERAL_REG_WIDTH-1:0]  io_dataoutA;
     output  [GENERAL_REG_WIDTH-1:0]  io_dataoutB;
     
+    reg     lowest_bit;
     reg     cf_buf;
     reg     [GENERAL_REG_WIDTH-1:0] ALUo;
-    reg     [2:0] state, next_state;
+    reg     [3:0] state, next_state;
     reg     zf, nf, cf, dw, nxt;     //flag registers
     reg     [PC_MEM_ADDR_WIDTH-1:0] pc;
     reg     [GENERAL_REG_WIDTH-1:0] id_ir;// instruction registers, ex_ir, mem_ir, wb_ir
@@ -94,6 +101,7 @@ module SERIAL_CPU(
     assign  io_dataoutB = gr[3];
     
     //*********** Facilitate code learning ***********//
+    wire    instr_over; // instructions in SRAM are over
     wire    [4:0]   code_type;
     wire    [2:0]   oper1_r1;
     wire    [3:0]   oper2_r2;
@@ -101,6 +109,7 @@ module SERIAL_CPU(
     wire    [3:0]   oper3_r3;
     wire    oper3_is_val;
     
+    assign  instr_over = (pc == {PC_MEM_ADDR_WIDTH{1'b1}});
     assign  code_type = id_ir[MSB_OP_16B-1:MSB_OPER1_11B];
     assign  oper1_r1 = id_ir[MSB_OPER1_11B-1:MSB_OPER2_8B];
     assign  oper2_r2 = id_ir[MSB_OPER2_8B-1:MSB_OPER3_4B];
@@ -130,25 +139,36 @@ module SERIAL_CPU(
                         nxt <= 1'b0;
                         next_state <= STATE_IDLE;
                     end
-                STATE_IF:   next_state <= STATE_ID;
+                STATE_IF:   next_state <= STATE_IF2;
+                STATE_IF2:  next_state <= STATE_ID;
                 STATE_ID:   next_state <= STATE_EX;
-                STATE_EX:   next_state <= STATE_WB;//next_state <= STATE_MEM;
+                STATE_EX:   next_state <= STATE_EX2;
+                STATE_EX2:  next_state <= STATE_MEM;
+                STATE_MEM:  next_state <= STATE_MEM2;
+                STATE_MEM2: next_state <= STATE_WB;//next_state <= STATE_MEM;
                 STATE_WB:
                     if (id_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `HALT) begin
                         nxt <= 1'b1;
+                        next_state <= STATE_IDLE;
+                    end
+                    else if (instr_over) begin
+                        nxt <= 1'b0;
                         next_state <= STATE_IDLE;
                     end
                     else begin
                         nxt <= 1'b0;
                         next_state <= STATE_IF;
                     end
+                default:
+                    begin
+                        nxt <= 1'b0;
+                        next_state <= STATE_IDLE;
+                    end
             endcase
         end
         
         
-        
-    //************* IF *************//
-    assign i_addr = pc;
+    //************* IF (&IF2) *************//
     always @(posedge clk or negedge rst_n)
         begin
             if (!rst_n)
@@ -158,15 +178,42 @@ module SERIAL_CPU(
                 end
             else if (state == STATE_IF)
                 begin
-                    id_ir <= i_datain;
+                    id_ir[MEMORY_DATA_WIDTH-1:0] <= i_datain;
                     
                     // if(branch_flag)
                         // pc <= reg_C[PC_MEM_ADDR_WIDTH-1:0];
                     // else
                         // pc <= pc + 1;
                 end
+            else if (state == STATE_IF2)
+                begin
+                    id_ir[(MEMORY_DATA_WIDTH<<1)-1:MEMORY_DATA_WIDTH] <= i_datain;
+                end
         end
-        
+
+    //************* lowest_bit ***************
+    assign i_addr = {pc, lowest_bit};
+    always @(posedge clk or negedge rst_n)
+        begin
+            if (!rst_n)
+                lowest_bit <= 0;
+            else if (state == STATE_IDLE)
+                lowest_bit <= 0;
+            else if (state == STATE_IF)
+                lowest_bit <= 1;
+            else if (state == STATE_IF2)
+                lowest_bit <= 0;
+            else if (state == STATE_EX)
+                lowest_bit <= 0;// could be omitted
+            else if (state == STATE_EX2)
+                lowest_bit <= 1;
+            else if (state == STATE_MEM)
+                lowest_bit <= 0;
+            else if (state == STATE_MEM2)
+                lowest_bit <= 1;
+            else if (state == STATE_WB)
+                lowest_bit <= 0;
+        end
         
     //************* ID *************//
     always @(posedge clk or negedge rst_n)
@@ -208,79 +255,7 @@ module SERIAL_CPU(
                         reg_B <= reg_B;
                 end
         end
-
-    //************* EX *************//
-    always @(posedge clk or negedge rst_n)
-        begin
-            if (!rst_n)
-                begin
-                    //id_ir <= {`NOP, 11'b000_0000_0000};
-                    reg_C <= 16'b0000_0000_0000_0000;
-                    //smdr <= 16'b0000_0000_0000_0000;
-                    dw <= 1'b0;
-                    zf <= 1'b0;
-                    nf <= 1'b0;
-                    cf <= 1'b0;
-                end
-            
-            else if (state == STATE_EX)
-                begin
-                    if (id_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `LIOA)
-                        reg_C <= io_datainA;
-                    else if (id_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `LIOB)
-                        reg_C <= io_datainB;
-                    else if (id_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `LIOS)
-                        reg_C <= io_status;
-                    else
-                        reg_C <= ALUo;
-                    //id_ir <= id_ir;
-                    
-                    if ((id_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `LDIH)
-                            || (id_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `SUIH)
-                            || (id_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `ADD)
-                            || (id_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `ADDI)
-                            || (id_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `ADDC)
-                            || (id_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `SUB)
-                            || (id_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `SUBI)
-                            || (id_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `SUBC)
-                            || (id_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `CMP)
-                            || (id_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `AND)
-                            || (id_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `OR)
-                            || (id_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `XOR)
-                            || (id_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `SLL)
-                            || (id_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `SRL)
-                            || (id_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `SLA)
-                            || (id_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `SRA))
-                        begin
-                            cf <= cf_buf;
-                            if (ALUo == 16'b0000_0000_0000_0000)
-                                zf <= 1'b1;
-                            else
-                                zf <= 1'b0;
-                            if (ALUo[GENERAL_REG_WIDTH-1] == 1'b1)
-                                nf <= 1'b1;
-                            else
-                                nf <= 1'b0;
-                        end
-                    else
-                        begin
-                            zf <= zf;
-                            nf <= nf;
-                            cf <= cf;
-                        end
-                    
-                    if (id_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `STORE)
-                        begin
-                            dw <= 1'b1;
-                            //smdr <= smdr;
-                        end
-                    else
-                        begin
-                            dw <= 1'b0;
-                            //smdr <= smdr;
-                        end
-                end
-        end
+    //************* Combinational ALU *************//
     always @(*)
         begin
             case(id_ir[MSB_OP_16B-1:MSB_OPER1_11B])
@@ -342,11 +317,103 @@ module SERIAL_CPU(
             // else
                 // {cf_buf, ALUo} <= reg_A + reg_B;
         end
-
-    //************* MEM *************//
-    assign d_addr = reg_C[D_MEM_ADDR_WIDTH-1:0];
+        
+    //************* EX (&EX2) *************//
+    assign d_addr = {reg_C[PC_MEM_ADDR_WIDTH-1:0],lowest_bit};//D_MEM_ADDR_WIDTH
     assign d_we = dw;
-    assign d_dataout = smdr;
+    assign d_dataout = (!lowest_bit)?
+                    smdr[MEMORY_DATA_WIDTH-1:0]:
+                    smdr[(MEMORY_DATA_WIDTH<<1)-1:MEMORY_DATA_WIDTH];
+    always @(posedge clk or negedge rst_n)
+        begin
+            if (!rst_n)
+                begin
+                    //id_ir <= {`NOP, 11'b000_0000_0000};
+                    reg_C <= 16'b0000_0000_0000_0000;
+                    //smdr <= 16'b0000_0000_0000_0000;
+                    //dw <= 1'b0;
+                    zf <= 1'b0;
+                    nf <= 1'b0;
+                    cf <= 1'b0;
+                end
+            
+            else if (state == STATE_EX)
+                begin
+                    if (id_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `LIOA)
+                        reg_C <= io_datainA;
+                    else if (id_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `LIOB)
+                        reg_C <= io_datainB;
+                    else if (id_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `LIOS)
+                        reg_C <= io_status;
+                    else
+                        reg_C <= ALUo;
+                    //id_ir <= id_ir;
+                    
+                    if (I_ZFNFCF_TYPE(id_ir[MSB_OP_16B-1:MSB_OPER1_11B]))
+                    // if ((id_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `LDIH)
+                            // || (id_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `SUIH)
+                            // || (id_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `ADD)
+                            // || (id_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `ADDI)
+                            // || (id_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `ADDC)
+                            // || (id_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `SUB)
+                            // || (id_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `SUBI)
+                            // || (id_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `SUBC)
+                            // || (id_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `CMP)
+                            // || (id_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `AND)
+                            // || (id_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `OR)
+                            // || (id_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `XOR)
+                            // || (id_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `SLL)
+                            // || (id_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `SRL)
+                            // || (id_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `SLA)
+                            // || (id_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `SRA))
+                        begin
+                            cf <= cf_buf;
+                            if (ALUo == 16'b0000_0000_0000_0000)
+                                zf <= 1'b1;
+                            else
+                                zf <= 1'b0;
+                            if (ALUo[GENERAL_REG_WIDTH-1] == 1'b1)
+                                nf <= 1'b1;
+                            else
+                                nf <= 1'b0;
+                        end
+                    else
+                        begin
+                            zf <= zf;
+                            nf <= nf;
+                            cf <= cf;
+                        end
+                    
+                    // if (id_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `STORE)
+                        // begin
+                            // dw <= 1'b1;
+                            // smdr <= smdr;
+                        // end
+                    // else
+                        // begin
+                            // dw <= 1'b0;
+                            // smdr <= smdr;
+                        // end
+                end
+        end
+
+    //************* dw SRAM write signal ***************
+    always @(posedge clk or negedge rst_n)
+        begin
+            if (!rst_n)
+                dw <= 1'b0;
+            else if (state == STATE_EX)
+                begin
+                    if (id_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `STORE)
+                        dw <= 1'b1;
+                    else
+                        dw <= 1'b0;
+                end
+            else if (state == STATE_MEM)
+                dw <= 1'b0;
+        end
+        
+    //************* MEM *************//
     assign branch_flag = ((id_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `JUMP)
                         || (id_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `JMPR)
                         || ((id_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `BZ) && (zf == 1'b1))
@@ -388,24 +455,29 @@ module SERIAL_CPU(
                     // gr[6] <= 16'b0000_0000_0000_0000;
                     // gr[7] <= 16'b0000_0000_0000_0000;
                     
-                    pc <= 8'b0000_0000;
+                    pc <= DEFAULT_PC_ADDR;//8'b0000_0000;
                 end
-            
+            else if (state == STATE_MEM2)
+                begin
+                    if (id_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `LOAD)
+                        gr[id_ir[MSB_OPER1_11B-1:MSB_OPER2_8B]] <= {d_datain, {MEMORY_DATA_WIDTH{1'b0}}};
+                end
             else if (state == STATE_WB)
                 begin
                     if (id_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `LOAD)
-                        gr[id_ir[MSB_OPER1_11B-1:MSB_OPER2_8B]] <= d_datain;
+                        gr[id_ir[MSB_OPER1_11B-1:MSB_OPER2_8B]][MEMORY_DATA_WIDTH-1:0] <= d_datain;
                     else if (I_REG_TYPE(id_ir[MSB_OP_16B-1:MSB_OPER1_11B]))
                         gr[id_ir[MSB_OPER1_11B-1:MSB_OPER2_8B]] <= reg_C;
                         
                     //the pc update could be move to MEM state to save time;
                     if(branch_flag)
                         pc <= reg_C[PC_MEM_ADDR_WIDTH-1:0];
+                    else if(instr_over)
+                        pc <= DEFAULT_PC_ADDR;
                     else
                         pc <= pc + 1;
                 end
         end
-        
         
     /**************select Y*****************/
     // always@(*)
@@ -427,6 +499,28 @@ module SERIAL_CPU(
         // end
     /***************************************/
         
+        //***** Judge an instruction whether needs to change zf, nf and cf *****//
+        function I_ZFNFCF_TYPE;
+            input [OP_WIDTH_5B-1:0] op;
+            begin
+                I_ZFNFCF_TYPE = ((op == `LDIH)
+                        || (op == `SUIH)
+                        || (op == `ADD)
+                        || (op == `ADDI)
+                        || (op == `ADDC)
+                        || (op == `SUB)
+                        || (op == `SUBI)
+                        || (op == `SUBC)
+                        || (op == `CMP)
+                        || (op == `AND)
+                        || (op == `OR)
+                        || (op == `XOR)
+                        || (op == `SLL)
+                        || (op == `SRL)
+                        || (op == `SLA)
+                        || (op == `SRA));
+            end
+        endfunction
         
         //***** Judge an instruction whether alter the value of a register *****//
         function I_REG_TYPE;
@@ -454,7 +548,6 @@ module SERIAL_CPU(
                         || (op == `SET));
             end
         endfunction
-        
        
         //************* R1 as reg_A *************//
         function I_R1_TYPE;
@@ -552,4 +645,4 @@ module SERIAL_CPU(
         endfunction
 
 endmodule
-`endif//SERIAL_CPU_V
+`endif//SERIAL_CPU_8BIT_V
