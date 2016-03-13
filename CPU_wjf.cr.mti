@@ -5,6 +5,15 @@ Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
 Top level modules:
 	D_MEMORY
 
+} {} {}} {F:/05. Code Battle/04. Verilog/CPU_design/sim/SRAM_IO_CTRL_TEST.v} {1 {vlog -work work -stats=none {F:/05. Code Battle/04. Verilog/CPU_design/sim/SRAM_IO_CTRL_TEST.v}
+Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
+-- Compiling module SRAM_IO_CTRL
+-- Compiling module I_MEMORY_8BIT
+-- Compiling module SRAM_IO_CTRL_TOP
+
+Top level modules:
+	SRAM_IO_CTRL_TOP
+
 } {} {}} {F:/05. Code Battle/04. Verilog/CPU_design/SERIAL_CPU_8bit.v} {1 {vlog -work work -stats=none {F:/05. Code Battle/04. Verilog/CPU_design/SERIAL_CPU_8bit.v}
 Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
 -- Compiling module SERIAL_CPU_8BIT
@@ -128,6 +137,13 @@ Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
 
 Top level modules:
 	SA_4D_DATA_PATH_418
+
+} {} {}} {F:/05. Code Battle/04. Verilog/CPU_design/SRAM_IO_CTRL.v} {1 {vlog -work work -stats=none {F:/05. Code Battle/04. Verilog/CPU_design/SRAM_IO_CTRL.v}
+Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
+-- Compiling module SRAM_IO_CTRL
+
+Top level modules:
+	SRAM_IO_CTRL
 
 } {} {}} {F:/05. Code Battle/04. Verilog/CPU_design/I_MEMORY_8bit.v} {1 {vlog -work work -stats=none {F:/05. Code Battle/04. Verilog/CPU_design/I_MEMORY_8bit.v}
 Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
