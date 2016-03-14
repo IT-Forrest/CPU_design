@@ -1,20 +1,21 @@
 //+FHDR****************************************************************
 // ECE department, TAMU
 // --------------------------------------------------------------------
-// FILE NAME    : SCPU_IO_CTRL_TEST.v
+// FILE NAME    : SCPU_IO_CTRL_RA1512_TEST.v
 // AUTHER       : Jiafan Wang
 // DATE         : 03/13/2016
 // VERSION      : 1.0
-// PURPOSE      : the SRAM and ctrl module tester
+// PURPOSE      : RA1SH 512x8 SRAM and ctrl module tester
 // --------------------------------------------------------------------
 // ABSTRACT: ModelSim simulation time 6us given each time period 10ns
 // --------------------------------------------------------------------
 `timescale 1ns / 1ps
 `include "../DEFINE_CPU.v"
 `include "../SRAM_IO_CTRL.v"
+`include "../RA1SHD_ibm512x8.v"
 `include "../I_MEMORY_8bit.v"
 
-module SRAM_IO_CTRL_TOP;
+module SRAM_IO_CTRL_RA1512_TOP;
 
    parameter    MEMORY_DATA_WIDTH   = 8,
                 MEMORY_ADDR_WIDTH   = 9,
@@ -65,13 +66,13 @@ module SRAM_IO_CTRL_TOP;
         .PO(m_datain)
     );
     
-    I_MEMORY_8BIT   sram (
-        .clk(clk),
-        .rst_n(CEN), 
-        .addr(m_addr),
-        .d_we(d_we),// need a seperate control signal; or instruction set will be overwritten when d_we=1
-        .datain(m_datain),//i_instruct
-        .dataout(m_dataout)
+    RA1SHD_ibm512x8   sram (
+        .CLK(clk),
+        .CEN(!CEN), 
+        .A(m_addr),
+        .WEN(!d_we),// need a seperate control signal; or instruction set will be overwritten when d_we=1
+        .D(m_datain),//i_instruct
+        .Q(m_dataout)
     );
 
     I_MEMORY_8BIT   i_mem(
@@ -205,7 +206,29 @@ module SRAM_IO_CTRL_TOP;
         #3130;
         
         // print the inner instructions
-        force   CEN = 0;//enable RA1SHD_ibm512x8
+        force   CEN = 1;//enable RA1SHD_ibm512x8
+        force   d_we = 1;//write module
+        for (i = DEFAULT_PC_ADDR; i<7+ DEFAULT_PC_ADDR; i=i+1) begin
+            //$write("%4x\t", (i<<1));
+            tmpi_adder = (i<<1) + 1;
+            #10 force   m_addr = tmpi_adder;
+                force   m_datain = i_mem.I_RAM[tmpi_adder];
+            #10;// a rising edge for SRAM
+            //$write("%8b ", m_dataout);
+            #10 release m_addr; release m_datain;
+            
+            tmpi_adder = (i<<1) + 0;
+            #10 force   m_addr = tmpi_adder;
+                force   m_datain = i_mem.I_RAM[tmpi_adder];
+            #10;// a rising edge for SRAM
+            //$write("%8b ", m_dataout);
+            #10 release m_addr; release m_datain;
+            //$display("");
+        end
+        #10 release CEN; release d_we;
+        #1000;
+        
+        force   CEN = 1;//enable RA1SHD_ibm512x8
         force   d_we = 0;//read module
         for (i = DEFAULT_PC_ADDR; i<7+ DEFAULT_PC_ADDR; i=i+1) begin
             $write("%4x\t", (i<<1));

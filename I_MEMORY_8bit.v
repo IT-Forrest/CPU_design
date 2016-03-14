@@ -10,8 +10,8 @@
 // ABSTRACT: simulation time 85 us given each time period 20ns
 // --------------------------------------------------------------------
 
-`timescale 1ns / 1ps
-`include "DEFINE_CPU.v"
+//`timescale 1ns / 1ps
+//`include "DEFINE_CPU.v"
 
 `ifndef I_MEMORY_8BIT_V
 `define I_MEMORY_8BIT_V
