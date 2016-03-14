@@ -183,9 +183,9 @@ module SRAM_IO_CTRL_RA1512_TOP;
                 end
                 #10;
             end
-            force   m_addr = tmpi_adder;
+            //force   m_addr = tmpi_adder;
             #10 enable = 0;
-            release m_addr;
+            //release m_addr;
             
             #10 enable = 1;
             tmpi_adder = tmpi_adder + 1;
@@ -199,9 +199,9 @@ module SRAM_IO_CTRL_RA1512_TOP;
                 end
                 #10;
             end
-            force   m_addr = tmpi_adder;
+            //force   m_addr = tmpi_adder;
             #10 enable = 0;
-            release m_addr;
+            //release m_addr;
         end
         // #10 start =1;
         // #10 start = 0;
@@ -209,9 +209,9 @@ module SRAM_IO_CTRL_RA1512_TOP;
             // #100;
         #3130;
         
-        #5;
+        //#5;
         // print the inner instructions
-        force   CEN = 1;//enable RA1SHD_ibm512x8
+/*         force   CEN = 1;//enable RA1SHD_ibm512x8
         force   d_we = 1;//write module
         for (i = DEFAULT_PC_ADDR; i<7+ DEFAULT_PC_ADDR; i=i+1) begin
             //$write("%4x\t", (i<<1));
@@ -231,7 +231,7 @@ module SRAM_IO_CTRL_RA1512_TOP;
             //$display("");
         end
         #10 release CEN; release d_we;
-        #1000;
+        #1000; */
         
         force   CEN = 1;//enable RA1SHD_ibm512x8
         force   d_we = 0;//read module

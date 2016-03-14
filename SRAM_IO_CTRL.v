@@ -4,7 +4,7 @@
 // FILE NAME    : SRAM_IO_CTRL.v
 // AUTHER       : Jiafan Wang
 // DATE         : 03/12/2016
-// VERSION      : 1.0
+// VERSION      : 2.0
 // PURPOSE      : the I/O module used to load and fetch instructions
 // --------------------------------------------------------------------
 // ABSTRACT     :
@@ -41,6 +41,7 @@ module SRAM_IO_CTRL(CLK, BGN, SI, LOAD_N, CTRL, PI, RDY, D_WE, CEN, SO, A, PO);
     output  [MEMORY_ADDR_WIDTH-1:0] A;
     output  [MEMORY_DATA_WIDTH-1:0] PO;// write to SRAM
 
+    reg     D_WE, CEN;
     reg [1:0]   ctrl_state;
     reg [4:0]   cnt_bit_load;
     reg [REG_BITS_WIDTH-1:0] reg_bits;
@@ -48,12 +49,28 @@ module SRAM_IO_CTRL(CLK, BGN, SI, LOAD_N, CTRL, PI, RDY, D_WE, CEN, SO, A, PO);
     // notify the outside process
     assign  RDY = (ctrl_state == IO_MRDY);
     // Write data to SRAM
-    assign  D_WE = (ctrl_state == IO_SEND);
-    assign  CEN = (ctrl_state != IO_IDLE);
     assign  SO  = reg_bits[0];
     assign  A   = D_WE?(reg_bits[REG_BITS_WIDTH-1:MEMORY_DATA_WIDTH]):0;
     assign  PO  = D_WE?(reg_bits[MEMORY_DATA_WIDTH-1:0]):0;
     // Read data from SRAM
+    
+    //************* The negedge WEN & CEN signal *************//
+    //assign  D_WE = (ctrl_state == IO_SEND);
+    always @(negedge CLK)
+    begin
+        if (ctrl_state == IO_SEND)
+            D_WE <= 1;
+        else
+            D_WE <= 0;
+    end
+    //assign  CEN = (ctrl_state != IO_IDLE);
+    always @(negedge CLK)
+    begin
+        if (ctrl_state != IO_IDLE)
+            CEN <= 1;
+        else
+            CEN <= 0;
+    end
     
     //************* IO shift process *************//
     always @(posedge CLK)
@@ -70,7 +87,7 @@ module SRAM_IO_CTRL(CLK, BGN, SI, LOAD_N, CTRL, PI, RDY, D_WE, CEN, SO, A, PO);
         else if (!cnt_bit_load) begin
             case (ctrl_state)
                 IO_IDLE:    cnt_bit_load <= REG_BITS_WIDTH - 1;
-                IO_LOAD:    cnt_bit_load <= 1;//cnt=1 makes SEND state last 2 cycles
+                IO_LOAD:    cnt_bit_load <= 0;//cnt=1 makes SEND state last 2 cycles
                 IO_SEND:    cnt_bit_load <= 0;
                 default:    cnt_bit_load <= 0;
             endcase
