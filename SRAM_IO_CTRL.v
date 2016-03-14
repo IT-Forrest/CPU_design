@@ -70,7 +70,7 @@ module SRAM_IO_CTRL(CLK, BGN, SI, LOAD_N, CTRL, PI, RDY, D_WE, CEN, SO, A, PO);
         else if (!cnt_bit_load) begin
             case (ctrl_state)
                 IO_IDLE:    cnt_bit_load <= REG_BITS_WIDTH - 1;
-                IO_LOAD:    cnt_bit_load <= 0;//cnt=1 makes SEND state last 2 cycles
+                IO_LOAD:    cnt_bit_load <= 1;//cnt=1 makes SEND state last 2 cycles
                 IO_SEND:    cnt_bit_load <= 0;
                 default:    cnt_bit_load <= 0;
             endcase

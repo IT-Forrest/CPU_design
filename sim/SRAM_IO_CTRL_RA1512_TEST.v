@@ -183,7 +183,9 @@ module SRAM_IO_CTRL_RA1512_TOP;
                 end
                 #10;
             end
+            force   m_addr = tmpi_adder;
             #10 enable = 0;
+            release m_addr;
             
             #10 enable = 1;
             tmpi_adder = tmpi_adder + 1;
@@ -197,7 +199,9 @@ module SRAM_IO_CTRL_RA1512_TOP;
                 end
                 #10;
             end
+            force   m_addr = tmpi_adder;
             #10 enable = 0;
+            release m_addr;
         end
         // #10 start =1;
         // #10 start = 0;
@@ -205,6 +209,7 @@ module SRAM_IO_CTRL_RA1512_TOP;
             // #100;
         #3130;
         
+        #5;
         // print the inner instructions
         force   CEN = 1;//enable RA1SHD_ibm512x8
         force   d_we = 1;//write module
