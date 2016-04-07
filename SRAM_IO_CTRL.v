@@ -50,8 +50,8 @@ module SRAM_IO_CTRL(CLK, BGN, SI, LOAD_N, CTRL, PI, RDY, D_WE, CEN, SO, A, PO);
     assign  RDY = (ctrl_state == IO_MRDY);
     // Write data to SRAM
     assign  SO  = reg_bits[0];
-    assign  A   = D_WE?(reg_bits[REG_BITS_WIDTH-1:MEMORY_DATA_WIDTH]):0;
-    assign  PO  = D_WE?(reg_bits[MEMORY_DATA_WIDTH-1:0]):0;
+    assign  A   = (!D_WE)?(reg_bits[REG_BITS_WIDTH-1:MEMORY_DATA_WIDTH]):0;
+    assign  PO  = (!D_WE)?(reg_bits[MEMORY_DATA_WIDTH-1:0]):0;
     // Read data from SRAM
     
     //************* The negedge WEN & CEN signal *************//
@@ -59,17 +59,17 @@ module SRAM_IO_CTRL(CLK, BGN, SI, LOAD_N, CTRL, PI, RDY, D_WE, CEN, SO, A, PO);
     always @(negedge CLK)
     begin
         if (ctrl_state == IO_SEND)
-            D_WE <= 1;
+            D_WE <= 0;/* low enable */
         else
-            D_WE <= 0;
+            D_WE <= 1;
     end
     //assign  CEN = (ctrl_state != IO_IDLE);
     always @(negedge CLK)
     begin
         if (ctrl_state != IO_IDLE)
-            CEN <= 1;
+            CEN <= 0;/* low enable */
         else
-            CEN <= 0;
+            CEN <= 1;
     end
     
     //************* IO shift process *************//

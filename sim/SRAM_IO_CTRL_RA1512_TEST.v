@@ -49,6 +49,7 @@ module SRAM_IO_CTRL_RA1512_TOP;
     reg  [8:0]  tmpi_adder;
     reg  SI;
     reg  LOAD_N;
+    integer error_cnt;
    
     // Instantiate the Unit Under Test (UUT)
     SRAM_IO_CTRL cct (
@@ -68,9 +69,9 @@ module SRAM_IO_CTRL_RA1512_TOP;
     
     RA1SHD_ibm512x8   sram (
         .CLK(clk),
-        .CEN(!CEN), 
+        .CEN(CEN), 
         .A(m_addr),
-        .WEN(!d_we),// need a seperate control signal; or instruction set will be overwritten when d_we=1
+        .WEN(d_we),// need a seperate control signal; or instruction set will be overwritten when d_we=1
         .D(m_datain),//i_instruct
         .Q(m_dataout)
     );
@@ -93,24 +94,17 @@ module SRAM_IO_CTRL_RA1512_TOP;
     //assign  d_datain = (is_i_addr)?0:m_dataout;
     
     initial begin
-        // Initialize Inputs
+        // Initialize Inputs Signals
         clk = 0;
         rst_n = 0;
         enable = 0;
         start = 0;
         LOAD_N = 1;
-
-        // Wait 100 ns for global rst_n to finish
+        error_cnt = 0;
         #100;
-        
-        // Add stimulus here
-        // $display("pc  :               id_ir                :reg_A :reg_B :reg_C\
-            // : da  :  dd  : w :  gr1  :  gr2  :  gr3   :zf :nf:cf");
-        // $monitor("%3d : %b : %h : %h : %h : %h : %h : %b : %h : %h : %h : %b : %b : %b", 
-            // uut.pc, uut.id_ir, uut.reg_A, uut.reg_B, uut.reg_C,
-            // d_addr, d_dataout, d_we, uut.gr[1], uut.gr[2], uut.gr[3],
-            // uut.zf, uut.nf, uut.cf);
+        // Wait 100 ns for global rst_n to finish
 
+        /* Add stimulus here: Using a pseudo memory to load instruction*/ 
         i= DEFAULT_PC_ADDR*2;
         tmpi_datain = {`SET, `gr3, 4'b0000, 4'b0100};//reset the loop controller `gr7
         i_mem.I_RAM[ i] = tmpi_datain[7:0];  i = 1 + DEFAULT_PC_ADDR*2;
@@ -169,6 +163,7 @@ module SRAM_IO_CTRL_RA1512_TOP;
         #10 rst_n = 0; LOAD_N = 0;
         #10 rst_n = 1;
 
+        /* Serially Input the address & Instruction to CTRL and then to SRAM */
         for (i = DEFAULT_PC_ADDR; i<7+ DEFAULT_PC_ADDR; i=i+1) begin
             tmpi_adder = (i<<1);
             tmpi_all = {tmpi_adder, i_mem.I_RAM[tmpi_adder]};
@@ -210,47 +205,37 @@ module SRAM_IO_CTRL_RA1512_TOP;
         #3130;
         
         //#5;
-        // print the inner instructions
-/*         force   CEN = 1;//enable RA1SHD_ibm512x8
-        force   d_we = 1;//write module
-        for (i = DEFAULT_PC_ADDR; i<7+ DEFAULT_PC_ADDR; i=i+1) begin
-            //$write("%4x\t", (i<<1));
-            tmpi_adder = (i<<1) + 1;
-            #10 force   m_addr = tmpi_adder;
-                force   m_datain = i_mem.I_RAM[tmpi_adder];
-            #10;// a rising edge for SRAM
-            //$write("%8b ", m_dataout);
-            #10 release m_addr; release m_datain;
-            
-            tmpi_adder = (i<<1) + 0;
-            #10 force   m_addr = tmpi_adder;
-                force   m_datain = i_mem.I_RAM[tmpi_adder];
-            #10;// a rising edge for SRAM
-            //$write("%8b ", m_dataout);
-            #10 release m_addr; release m_datain;
-            //$display("");
-        end
-        #10 release CEN; release d_we;
-        #1000; */
-        
-        force   CEN = 1;//enable RA1SHD_ibm512x8
-        force   d_we = 0;//read module
+        /*  print the inner instructions */ 
+        force   CEN = 0;//enable RA1SHD_ibm512x8
+        force   d_we = 1;//read module
         for (i = DEFAULT_PC_ADDR; i<7+ DEFAULT_PC_ADDR; i=i+1) begin
             $write("%4x\t", (i<<1));
             tmpi_adder = (i<<1) + 1;
             #10 force   m_addr = tmpi_adder;
             #10;// a rising edge for SRAM
-            $write("%8b ", m_dataout);
+            $write("%8b ", m_dataout); i_mem.I_RAM[tmpi_adder+(DEFAULT_PC_ADDR<<1)] = m_dataout;
             #10 release m_addr;
             
             tmpi_adder = (i<<1) + 0;
             #10 force   m_addr = tmpi_adder;
             #10;// a rising edge for SRAM
-            $write("%8b ", m_dataout);
+            $write("%8b ", m_dataout); i_mem.I_RAM[tmpi_adder+(DEFAULT_PC_ADDR<<1)] = m_dataout;
             #10 release m_addr;
+            
+            if ((i_mem.I_RAM[tmpi_adder] == i_mem.I_RAM[tmpi_adder+(DEFAULT_PC_ADDR<<1)])
+                && (i_mem.I_RAM[tmpi_adder+1] == i_mem.I_RAM[tmpi_adder+1+(DEFAULT_PC_ADDR<<1)]))
+                $write("\t<--- Inst Correct!");
+            else begin
+                $write("\t<--- Inst Wrong!");
+                error_cnt = error_cnt + 1;
+            end
             $display("");
         end
         
+        if (error_cnt)
+            $display("Test Failed!");
+        else
+            $display("Test Passed!");
         #10 release CEN; release d_we;
         $stop();//
     end
