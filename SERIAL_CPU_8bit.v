@@ -87,7 +87,7 @@ module SERIAL_CPU_8BIT(
     output  [GENERAL_REG_WIDTH-1:0]  io_dataoutA;
     output  [GENERAL_REG_WIDTH-1:0]  io_dataoutB;
     
-    reg     is_i_addr;
+    //reg     is_i_addr;
     reg     lowest_bit;
     reg     cf_buf;
     reg     [GENERAL_REG_WIDTH-1:0] ALUo;
@@ -112,7 +112,7 @@ module SERIAL_CPU_8BIT(
     wire    [3:0]   oper3_r3;
     wire    oper3_is_val;
     
-    //assign  is_i_addr = ((state == STATE_IF)||(state == STATE_IF2));
+    assign  is_i_addr = ((state == STATE_IF)||(state == STATE_IF2));
     assign  instr_over = (pc == {PC_MEM_ADDR_WIDTH{1'b1}});
     assign  code_type = id_ir[MSB_OP_16B-1:MSB_OPER1_11B];
     assign  oper1_r1 = id_ir[MSB_OPER1_11B-1:MSB_OPER2_8B];
@@ -121,16 +121,8 @@ module SERIAL_CPU_8BIT(
     assign  oper2_is_val = id_ir[MSB_OPER2_8B-1];
     assign  oper3_is_val = id_ir[MSB_OPER3_4B-1];
     
-    always @(negedge clk)
-        begin
-            if ((state == STATE_IF)||(state == STATE_IF2))
-                is_i_addr = 1;
-            else
-                is_i_addr = 0;
-        end
-    
     //************* CPU Control *************//
-    always @(posedge clk)
+    always @(negedge clk or negedge rst_n)
         begin
             if (!rst_n)
                 state <= STATE_IDLE;
@@ -181,7 +173,7 @@ module SERIAL_CPU_8BIT(
         
         
     //************* IF (&IF2) *************//
-    always @(posedge clk or negedge rst_n)
+    always @(negedge clk or negedge rst_n)
         begin
             if (!rst_n)
                 begin
@@ -336,7 +328,7 @@ module SERIAL_CPU_8BIT(
     assign d_dataout = (!lowest_bit)?
                     smdr[MEMORY_DATA_WIDTH-1:0]:
                     smdr[(MEMORY_DATA_WIDTH<<1)-1:MEMORY_DATA_WIDTH];
-    always @(posedge clk or negedge rst_n)
+    always @(negedge clk or negedge rst_n)
         begin
             if (!rst_n)
                 begin
