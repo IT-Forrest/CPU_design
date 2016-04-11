@@ -43,30 +43,35 @@ module SRAM_IO_CTRL(CLK, BGN, SI, LOAD_N, CTRL, PI, RDY, D_WE, CEN, SO, A, PO);
 
     reg     D_WE, CEN;
     reg [1:0]   ctrl_state;
-    reg [4:0]   cnt_bit_load;
+    reg         cnt_bit_load;
     reg [REG_BITS_WIDTH-1:0] reg_bits;
-
+    reg [1:0]   reg_LOAD;
+    
+    wire    is_write;
+    wire    is_LOAD;
     // notify the outside process
-    assign  RDY = (ctrl_state == IO_MRDY);
+    assign  is_write = CTRL[1];
+    assign  is_LOAD = reg_LOAD[0];
+    assign  RDY = (ctrl_state == IO_IDLE);
     // Write data to SRAM
     assign  SO  = reg_bits[0];
-    assign  A   = (!D_WE)?(reg_bits[REG_BITS_WIDTH-1:MEMORY_DATA_WIDTH]):0;
-    assign  PO  = (!D_WE)?(reg_bits[MEMORY_DATA_WIDTH-1:0]):0;
+    assign  A   = (!CEN)?(reg_bits[REG_BITS_WIDTH-1:MEMORY_DATA_WIDTH]):0;
+    assign  PO  = (!CEN && !D_WE)?(reg_bits[MEMORY_DATA_WIDTH-1:0]):0;
     // Read data from SRAM
     
     //************* The negedge WEN & CEN signal *************//
     //assign  D_WE = (ctrl_state == IO_SEND);
     always @(negedge CLK)
     begin
-        if (ctrl_state == IO_SEND)
-            D_WE <= 0;/* low enable */
+        if ((ctrl_state == IO_SEND) && is_write)
+            D_WE <= 0;/* low write */
         else
             D_WE <= 1;
     end
     //assign  CEN = (ctrl_state != IO_IDLE);
     always @(negedge CLK)
     begin
-        if (ctrl_state != IO_IDLE)
+        if (ctrl_state == IO_SEND)
             CEN <= 0;/* low enable */
         else
             CEN <= 1;
@@ -75,8 +80,27 @@ module SRAM_IO_CTRL(CLK, BGN, SI, LOAD_N, CTRL, PI, RDY, D_WE, CEN, SO, A, PO);
     //************* IO shift process *************//
     always @(posedge CLK)
     begin
-        if (ctrl_state == IO_LOAD)
+        if (!BGN)
+            reg_bits <= {REG_BITS_WIDTH{1'b0}};
+        else if ((ctrl_state == IO_LOAD) && (!cnt_bit_load))
             reg_bits <= {SI, reg_bits[REG_BITS_WIDTH-1:1]};
+        else if ((ctrl_state == IO_SEND) && (!cnt_bit_load) && !is_write)
+            reg_bits[MEMORY_DATA_WIDTH-1:0] <= PI;
+    end
+    
+    //************* make LOAD_N only works for one cycle *************//
+    always @(posedge CLK)
+    begin
+        if ((!BGN) || (LOAD_N))
+        begin
+            reg_LOAD <= 2'b00;
+        end else if ((!LOAD_N) & (reg_LOAD == 2'b00))
+        begin
+            reg_LOAD <= 2'b01;//is_LOAD = reg_LOAD[0];
+        end else 
+        begin
+            reg_LOAD <= 2'b10;
+        end
     end
     
     //************* IO shift cnt *************//
@@ -86,9 +110,14 @@ module SRAM_IO_CTRL(CLK, BGN, SI, LOAD_N, CTRL, PI, RDY, D_WE, CEN, SO, A, PO);
             cnt_bit_load <= 0;
         else if (!cnt_bit_load) begin
             case (ctrl_state)
-                IO_IDLE:    cnt_bit_load <= REG_BITS_WIDTH - 1;
+                IO_IDLE:    cnt_bit_load <= 0;
                 IO_LOAD:    cnt_bit_load <= 0;//cnt=1 makes SEND state last 2 cycles
                 IO_SEND:    cnt_bit_load <= 0;
+                IO_MRDY:    
+                    if (CTRL[0] && !is_write)
+                        cnt_bit_load <= 1;//read SRAM need 2 cycles
+                    else
+                        cnt_bit_load <= 0;
                 default:    cnt_bit_load <= 0;
             endcase
         end
@@ -103,10 +132,15 @@ module SRAM_IO_CTRL(CLK, BGN, SI, LOAD_N, CTRL, PI, RDY, D_WE, CEN, SO, A, PO);
             ctrl_state <= IO_IDLE;
         else begin
             case (ctrl_state)
-                IO_IDLE: if (!LOAD_N)       ctrl_state <= IO_LOAD;
-                IO_LOAD: if (!cnt_bit_load) ctrl_state <= IO_SEND;
-                IO_SEND: if (!cnt_bit_load) ctrl_state <= IO_MRDY;
-                default: ctrl_state <= IO_MRDY;
+                IO_IDLE: if (is_LOAD) ctrl_state <= IO_MRDY;//Can be omitted
+                IO_MRDY:
+                    if (!CTRL[0])
+                        ctrl_state <= IO_LOAD;
+                    else//CTRL[0] == 1
+                        ctrl_state <= IO_SEND;
+                IO_LOAD: if (!cnt_bit_load) ctrl_state <= IO_IDLE;
+                IO_SEND: if (!cnt_bit_load) ctrl_state <= IO_IDLE;
+                default: ctrl_state <= IO_IDLE;
             endcase
         end
     end

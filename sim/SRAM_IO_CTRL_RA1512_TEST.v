@@ -23,9 +23,10 @@ module SRAM_IO_CTRL_RA1512_TOP;
 
     // Inputs
     reg clk;
-    reg enable;// enable signal for CTRL_SRAM
+    reg CTRL_BGN;// enable signal for CTRL_SRAM
     reg rst_n;//no use here
     reg start;// enable signal for SERIAL_CPU_8bit
+    reg [1:0]   CTRL_MODE;
     
     // Wires
     // wire is_i_addr;
@@ -43,7 +44,7 @@ module SRAM_IO_CTRL_RA1512_TOP;
     wire SO;
     wire RDY;
     
-    integer i,j;
+    integer i,j,k;
     reg  [15:0] tmpi_datain;
     reg  [REG_BITS_WIDTH-1:0]  tmpi_all;//addr+instruction
     reg  [8:0]  tmpi_adder;
@@ -54,10 +55,10 @@ module SRAM_IO_CTRL_RA1512_TOP;
     // Instantiate the Unit Under Test (UUT)
     SRAM_IO_CTRL cct (
         .CLK(clk),
-        .BGN(enable),
+        .BGN(CTRL_BGN),
         .SI(SI),
         .LOAD_N(LOAD_N),
-        .CTRL(2'b00),
+        .CTRL(CTRL_MODE),//2'b00
         .PI(m_dataout),
         .RDY(RDY),
         .D_WE(d_we),
@@ -97,11 +98,12 @@ module SRAM_IO_CTRL_RA1512_TOP;
         // Initialize Inputs Signals
         clk = 0;
         rst_n = 0;
-        enable = 0;
+        CTRL_BGN = 0;
         start = 0;
         LOAD_N = 1;
         error_cnt = 0;
-        #100;
+        CTRL_MODE = 2'b00;
+        #50;
         // Wait 100 ns for global rst_n to finish
 
         /* Add stimulus here: Using a pseudo memory to load instruction*/ 
@@ -160,70 +162,171 @@ module SRAM_IO_CTRL_RA1512_TOP;
         // i_mem.D_RAM[1] = 16'h3C00;
         // i_mem.D_RAM[2] = 16'h0000;
 
-        #10 rst_n = 0; LOAD_N = 0;
-        #10 rst_n = 1;
+        #10 rst_n = 0; CTRL_BGN = 1;
+        #10 rst_n = 1; 
 
         /* Serially Input the address & Instruction to CTRL and then to SRAM */
         for (i = DEFAULT_PC_ADDR; i<7+ DEFAULT_PC_ADDR; i=i+1) begin
+            #10 CTRL_MODE = 2'b00;
             tmpi_adder = (i<<1);
             tmpi_all = {tmpi_adder, i_mem.I_RAM[tmpi_adder]};
             
-            #10 enable = 1;
+            //Load data to CTRL
             for (j = 0; j < REG_BITS_WIDTH; j=j+1) begin
-                #10; SI = tmpi_all[j];
+                SI = tmpi_all[j];
+                #10 LOAD_N = 0;
+                #30;
+                for (k = 0; k < 5; k=k+1) begin
+                    if (RDY) begin
+                        k = 5;
+                    end
+                    #10;
+                end
+                #10 LOAD_N = 1;
             end
-            for (j = 0; j < REG_BITS_WIDTH; j=j+1) begin
+            //Send data to SRAM
+            #10 CTRL_MODE = 2'b11;
+            #10 LOAD_N = 0;
+            #30;
+            for (k = 0; k < 5; k=k+1) begin
                 if (RDY) begin
-                    j = REG_BITS_WIDTH;
+                    k = 5;
                 end
                 #10;
             end
-            //force   m_addr = tmpi_adder;
-            #10 enable = 0;
+            #10 LOAD_N = 1;
             //release m_addr;
             
-            #10 enable = 1;
+            #10 CTRL_MODE = 2'b00;
             tmpi_adder = tmpi_adder + 1;
             tmpi_all = {tmpi_adder, i_mem.I_RAM[tmpi_adder]};
             for (j = 0; j < REG_BITS_WIDTH; j=j+1) begin
-                #10; SI = tmpi_all[j];
+                SI = tmpi_all[j];
+                #10 LOAD_N = 0;
+                #30;
+                for (k = 0; k < 5; k=k+1) begin
+                    if (RDY) begin
+                        k = 5;
+                    end
+                    #10;
+                end
+                #10 LOAD_N = 1;
             end
-            for (j = 0; j < REG_BITS_WIDTH; j=j+1) begin
+            //Send data to SRAM;
+            #10 CTRL_MODE = 2'b11;
+            #10 LOAD_N = 0;
+            #30;
+            for (k = 0; k < 5; k=k+1) begin
                 if (RDY) begin
-                    j = REG_BITS_WIDTH;
+                    k = 5;
                 end
                 #10;
             end
-            //force   m_addr = tmpi_adder;
-            #10 enable = 0;
+            #10 LOAD_N = 1;
             //release m_addr;
         end
         // #10 start =1;
         // #10 start = 0;
         // for (j=1; j<40; j=j+1)
             // #100;
-        #3130;
+        #1600;
         
         //#5;
         /*  print the inner instructions */ 
-        force   CEN = 0;//enable RA1SHD_ibm512x8
-        force   d_we = 1;//read module
+        //force   CEN = 0;//enable RA1SHD_ibm512x8
+        //force   d_we = 1;//read module
         for (i = DEFAULT_PC_ADDR; i<7+ DEFAULT_PC_ADDR; i=i+1) begin
             $write("%4x\t", (i<<1));
-            tmpi_adder = (i<<1) + 1;
-            #10 force   m_addr = tmpi_adder;
-            #10;// a rising edge for SRAM
-            $write("%8b ", m_dataout); i_mem.I_RAM[tmpi_adder+(DEFAULT_PC_ADDR<<1)] = m_dataout;
-            #10 release m_addr;
-            
+            #10 CTRL_MODE = 2'b00;
             tmpi_adder = (i<<1) + 0;
-            #10 force   m_addr = tmpi_adder;
-            #10;// a rising edge for SRAM
-            $write("%8b ", m_dataout); i_mem.I_RAM[tmpi_adder+(DEFAULT_PC_ADDR<<1)] = m_dataout;
-            #10 release m_addr;
+            for (j = 0; j < MEMORY_ADDR_WIDTH; j=j+1) begin
+                SI = tmpi_adder[j];
+                #10 LOAD_N = 0;
+                #30;
+                for (k = 0; k < 5; k=k+1) begin
+                    if (RDY) begin
+                        k = 5;
+                    end
+                    #10;
+                end
+                #10 LOAD_N = 1;
+            end
+            //Read data from SRAM;
+            #10 CTRL_MODE = 2'b01;
+            #10 LOAD_N = 0;
+            #30;
+            for (k = 0; k < 5; k=k+1) begin
+                if (RDY) begin
+                    k = 5;
+                end
+                #10;
+            end
+            #10 LOAD_N = 1;
+            //Serial Output of SRAM content;
+            #10 CTRL_MODE = 2'b00;
+            for (j = 0; j < MEMORY_DATA_WIDTH; j=j+1) begin
+                tmpi_datain = {SO,tmpi_datain[(MEMORY_DATA_WIDTH<<1)-1:1]};
+                #10 LOAD_N = 0;
+                #30;
+                for (k = 0; k < 5; k=k+1) begin
+                    if (RDY) begin
+                        k = 5;
+                    end
+                    #10;
+                end
+                #10 LOAD_N = 1;
+            end
+            // #10 force   m_addr = tmpi_adder;
+            // #10;// a rising edge for SRAM
+            // $write("%8b ", m_dataout); i_mem.I_RAM[tmpi_adder+(DEFAULT_PC_ADDR<<1)] = m_dataout;
+            // #10 release m_addr;
+
+            #10 CTRL_MODE = 2'b00;
+            tmpi_adder = (i<<1) + 1;
+            for (j = 0; j < MEMORY_ADDR_WIDTH; j=j+1) begin
+                SI = tmpi_adder[j];
+                #10 LOAD_N = 0;
+                #30;
+                for (k = 0; k < 5; k=k+1) begin
+                    if (RDY) begin
+                        k = 5;
+                    end
+                    #10;
+                end
+                #10 LOAD_N = 1;
+            end
+            //Read data from SRAM;
+            #10 CTRL_MODE = 2'b01;
+            #10 LOAD_N = 0;
+            #30;
+            for (k = 0; k < 5; k=k+1) begin
+                if (RDY) begin
+                    k = 5;
+                end
+                #10;
+            end
+            #10 LOAD_N = 1;
+            //Serial Output of SRAM content;
+            #10 CTRL_MODE = 2'b00;
+            for (j = 0; j < MEMORY_DATA_WIDTH; j=j+1) begin
+                tmpi_datain = {SO,tmpi_datain[(MEMORY_DATA_WIDTH<<1)-1:1]};
+                #10 LOAD_N = 0;
+                #30;
+                for (k = 0; k < 5; k=k+1) begin
+                    if (RDY) begin
+                        k = 5;
+                    end
+                    #10;
+                end
+                #10 LOAD_N = 1;
+            end
+            // #10 force   m_addr = tmpi_adder;
+            // #10;// a rising edge for SRAM
+            // $write("%8b ", m_dataout); i_mem.I_RAM[tmpi_adder+(DEFAULT_PC_ADDR<<1)] = m_dataout;
+            // #10 release m_addr;
+            $write("%b ", tmpi_datain);
             
-            if ((i_mem.I_RAM[tmpi_adder] == i_mem.I_RAM[tmpi_adder+(DEFAULT_PC_ADDR<<1)])
-                && (i_mem.I_RAM[tmpi_adder+1] == i_mem.I_RAM[tmpi_adder+1+(DEFAULT_PC_ADDR<<1)]))
+            if ({i_mem.I_RAM[(i<<1)+1],i_mem.I_RAM[(i<<1)]} == tmpi_datain)
                 $write("\t<--- Inst Correct!");
             else begin
                 $write("\t<--- Inst Wrong!");
@@ -236,7 +339,7 @@ module SRAM_IO_CTRL_RA1512_TOP;
             $display("Test Failed!");
         else
             $display("Test Passed!");
-        #10 release CEN; release d_we;
+        //#10 release CEN; release d_we;
         $stop();//
     end
     
