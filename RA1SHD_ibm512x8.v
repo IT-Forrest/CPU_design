@@ -15,11 +15,11 @@
 //           			IBM CMRF8SF-RVT Process
 //      version:		2009Q1V1
 //      comment:		
-//      configuration:	 -instname "RA1SHD_ibm512x8" -words 512 -bits 8 -frequency 100 -ring_width 2.0 -mux 8 -write_mask off -wp_size 8 -top_layer met4 -power_type rings -horiz met2 -vert met3 -cust_comment "" -bus_notation on -left_bus_delim "[" -right_bus_delim "]" -pwr_gnd_rename "VDD:VDD,GND:GND" -prefix "" -pin_space 0.0 -name_case upper -check_instname on -diodes on -inside_ring_type GND -drive 6 -asvm on -corners ff_1p32v_m40c,ff_1p65v_125c,tt_1p2v_25c,ss_1p08v_125c
+//      configuration:	 -instname "RA1SHD_IBM512X8" -words 512 -bits 8 -frequency 100 -ring_width 3.0 -mux 8 -write_mask off -wp_size 8 -top_layer met4 -power_type rings -horiz met2 -vert met3 -cust_comment "" -bus_notation on -left_bus_delim "[" -right_bus_delim "]" -pwr_gnd_rename "VDD:VDD,GND:VSS" -prefix "" -pin_space 0.0 -name_case upper -check_instname on -diodes on -inside_ring_type GND -drive 6 -asvm on -corners ff_1p32v_m40c,ff_1p65v_125c,tt_1p2v_25c,ss_1p08v_125c
 //
 //      Verilog model for Synchronous Single-Port Ram
 //
-//      Instance Name:              RA1SHD_ibm512x8
+//      Instance Name:              RA1SHD_IBM512X8
 //      Words:                      512
 //      Bits:                       8
 //      Mux:                        8
@@ -31,7 +31,7 @@
 //      Redundant Columns:          0
 //      Test Muxes                  Off
 //
-//      Creation Date:  2016-03-14 00:03:39Z
+//      Creation Date:  2016-04-15 20:37:02Z
 //      Version: 	2009Q1V1
 //
 //      Modeling Assumptions: This model supports full gate level simulation
@@ -50,7 +50,7 @@
 //
 `timescale 1 ns/1 ps
 `celldefine
-  module RA1SHD_ibm512x8 (
+  module RA1SHD_IBM512X8 (
                 Q,
                 CLK,
                 CEN,

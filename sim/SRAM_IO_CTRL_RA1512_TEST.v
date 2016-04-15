@@ -12,7 +12,7 @@
 `timescale 1ns / 1ps
 `include "../DEFINE_CPU.v"
 `include "../SRAM_IO_CTRL.v"
-`include "../RA1SHD_ibm512x8.v"
+`include "../RA1SHD_IBM512X8.v"
 `include "../I_MEMORY_8bit.v"
 
 module SRAM_IO_CTRL_RA1512_TOP;
@@ -68,7 +68,7 @@ module SRAM_IO_CTRL_RA1512_TOP;
         .PO(m_datain)
     );
     
-    RA1SHD_ibm512x8   sram (
+    RA1SHD_IBM512X8   sram (
         .CLK(clk),
         .CEN(CEN), 
         .A(m_addr),
@@ -77,6 +77,7 @@ module SRAM_IO_CTRL_RA1512_TOP;
         .Q(m_dataout)
     );
 
+    // only used for testbench
     I_MEMORY_8BIT   i_mem(
         // .clk(clk),
         // .rst_n(CEN), 
@@ -335,6 +336,7 @@ module SRAM_IO_CTRL_RA1512_TOP;
             $display("");
         end
         
+        // Judge Final Test Result
         if (error_cnt)
             $display("Test Failed!");
         else
