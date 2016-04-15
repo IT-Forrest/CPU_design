@@ -119,7 +119,7 @@ module SRAM_IO_CTRL_RA1512_SCPU_8BIT_TOP;
 
     /* Mux & Demux from CTRL and CPU to SRAM */
     assign  LOAD_MUX = CTRL_BGN;
-    assign  CEN_after_mux = (LOAD_MUX)?CEN:0'b0;//enable
+    assign  CEN_after_mux = (LOAD_MUX)?CEN:1'b0;//enable
     assign  WEN_after_mux = (LOAD_MUX)?WEN:(!D_WE); //low active
     assign  D_after_mux = (LOAD_MUX)?PO_from_CTRL:m_datain;
     assign  A_after_mux = (LOAD_MUX)?A_from_CTRL:m_addr;

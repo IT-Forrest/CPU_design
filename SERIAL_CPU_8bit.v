@@ -74,7 +74,7 @@ module SERIAL_CPU_8BIT(
     input   [MEMORY_DATA_WIDTH-1:0] i_datain;    //input instruction data
     input   [MEMORY_DATA_WIDTH-1:0] d_datain;    //input memory data
     output  is_i_addr;
-    output  nxt;
+    output  [1:0] nxt;
     output  [MEMORY_ADDR_WIDTH-1:0] i_addr;      //output instruction address
     output  [MEMORY_ADDR_WIDTH-1:0] d_addr;      //output memory data address 
     output  d_we;               //memory read or write signal, 1: write
@@ -92,7 +92,8 @@ module SERIAL_CPU_8BIT(
     reg     cf_buf;
     reg     [GENERAL_REG_WIDTH-1:0] ALUo;
     reg     [3:0] state, next_state;
-    reg     zf, nf, cf, dw, nxt;     //flag registers
+    reg     zf, nf, cf, dw;     //flag registers
+    reg     [1:0] nxt;
     reg     [PC_MEM_ADDR_WIDTH-1:0] pc;
     reg     [GENERAL_REG_WIDTH-1:0] id_ir;// instruction registers, ex_ir, mem_ir, wb_ir
     reg     [GENERAL_REG_WIDTH-1:0] reg_A, reg_B, reg_C, smdr;// reg_C1, smdr1;
@@ -136,11 +137,11 @@ module SERIAL_CPU_8BIT(
             case (state)
                 STATE_IDLE: 
                     if (start == 1'b1) begin
-                        nxt <= 1'b0;
+                        nxt <= 2'b00;
                         next_state <= STATE_IF;
                     end
                     else begin
-                        nxt <= 1'b0;
+                        nxt <= 2'b00;
                         next_state <= STATE_IDLE;
                     end
                 STATE_IF:   next_state <= STATE_IF2;
@@ -152,20 +153,20 @@ module SERIAL_CPU_8BIT(
                 STATE_MEM2: next_state <= STATE_WB;//next_state <= STATE_MEM;
                 STATE_WB:
                     if (id_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `HALT) begin
-                        nxt <= 1'b1;
+                        nxt <= 2'b01;
                         next_state <= STATE_IDLE;
                     end
                     else if (instr_over) begin
-                        nxt <= 1'b0;
+                        nxt <= 2'b00;
                         next_state <= STATE_IDLE;
                     end
                     else begin
-                        nxt <= 1'b0;
+                        nxt <= 2'b00;
                         next_state <= STATE_IF;
                     end
                 default:
                     begin
-                        nxt <= 1'b0;
+                        nxt <= 2'b00;
                         next_state <= STATE_IDLE;
                     end
             endcase
@@ -651,3 +652,4 @@ module SERIAL_CPU_8BIT(
 
 endmodule
 `endif//SERIAL_CPU_8BIT_V
+
