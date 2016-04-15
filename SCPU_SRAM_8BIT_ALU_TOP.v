@@ -14,6 +14,7 @@
 `include "SERIAL_CPU_8bit.v"
 `include "SRAM_IO_CTRL.v"
 `include "SHARE_SUPERALU.v"
+`include "CTRL_LOGIC.v"
 //`include "RA1SHD_ibm512x8.v"
 
 module SCPU_SRAM_8BIT_ALU_TOP(
@@ -98,9 +99,11 @@ module SCPU_SRAM_8BIT_ALU_TOP(
                 IO_CTRL_MODEL_BGN   = 1,
                 IO_CTRL_ALU_END     = 2,
                 IO_CTRL_ALU_BGN     = 4,
-                IO_CTRL_STA         = 5;
-                
-    parameter   IO_STAT_ALU_DONE    = 0;
+                IO_ALU_STA          = 5,
+                IO_PLL_STA          = 6,
+                IO_MEAS_STA         = 7;
+    parameter   IO_STAT_ALU_DONE    = 0,
+                IO_STAT_CTRL_DONE   = 1;
    
     wire    [GENERAL_REG_WIDTH-1:0] io_status;
     wire    [GENERAL_REG_WIDTH-1:0] io_control;
@@ -183,23 +186,39 @@ module SCPU_SRAM_8BIT_ALU_TOP(
                         .alu_type(alu_type),
                         .mode_type(mode_type),
                         .OFFSET(10'd0),//OFFSET;//10'd507
+                        //where to get offset??
 
                         .FOUT(FOUT),//multiplication
                         .POUT(POUT),
                         .alu_is_done(alu_is_done));
 
+    CTRL_LOGIC  CTRL_02(
+                    // Input
+                    .CLK(CLK),
+                    .set_wait_pll_start(pll_start),
+                    .set_meas_adc_start(meas_start),
+                    
+                    // Output
+                    .meas_adc_is_done(meas_is_done),
+                    .wait_pll_is_done(pll_is_done),
+                    .RSTN_ADC(RSTN_ADC),
+                    .CLK_ADC(CLK_ADC),
+                    .CLRN(CLRN));
+                        
     // wire connections between ALU and CPU
     assign  X_IN = io_dataoutA[MAX_SQRT_WIDTH-1:0];
     assign  Y_IN = io_dataoutB[MAX_SQRT_WIDTH-1:0];
-    assign  alu_start = io_control[IO_CTRL_STA];
+    assign  alu_start = io_control[IO_ALU_STA];
     assign  alu_type = io_control[IO_CTRL_ALU_BGN:IO_CTRL_ALU_END];
     assign  mode_type = io_control[IO_CTRL_MODEL_BGN:IO_CTRL_MODEL_END];
+    assign  pll_start = io_control[IO_PLL_STA];
+    assign  meas_start = io_control[IO_MEAS_STA];
     
     // wire connections between CTRL module and CPU
-    assign  io_status = {{(GENERAL_REG_WIDTH-1){1'b0}}, alu_is_done};
+    assign  io_status = {{(GENERAL_REG_WIDTH-3){1'b0}}, meas_is_done, pll_is_done, alu_is_done};
     assign  io_datainA = {{(GENERAL_REG_WIDTH-MAX_SQRT_WIDTH){1'b0}},FOUT};
     assign  io_datainB = {{(GENERAL_REG_WIDTH-MAX_SQRT_WIDTH){1'b0}},POUT};
-
+    // how to get the ADC value??????
 
     parameter   DEFAULT_PC_ADDR = 16;
     //defparam    uut.DEFAULT_PC_ADDR = DEFAULT_PC_ADDR;
