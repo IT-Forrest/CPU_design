@@ -36,6 +36,645 @@ Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
 Top level modules:
 	SHARE_SUPERALU_TOP
 
+} {} {}} {F:/05. Code Battle/04. Verilog/CPU_design/SCPU_SRAM_8BIT_ALU_TOP.v} {1 {vlog -work work -stats=none {F:/05. Code Battle/04. Verilog/CPU_design/SCPU_SRAM_8BIT_ALU_TOP.v}
+Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
+-- Compiling module SERIAL_CPU_8BIT
+-- Compiling module SHARE_SUPERALU
+-- Compiling module SRAM_IO_CTRL
+-- Compiling module CTRL_LOGIC
+-- Compiling module SCPU_8BIT_ALU_CTRL
+-- Compiling module RA1SHD_IBM512X8
+-- Compiling module PBCOC12A
+-- Compiling module PBCOC12B
+-- Compiling module PBCOC12C
+-- Compiling module PBCOC16A
+-- Compiling module PBCOC16B
+-- Compiling module PBCOC16C
+-- Compiling module PBCOC24A
+-- Compiling module PBCOC24B
+-- Compiling module PBCOC24C
+-- Compiling module PBCOC2A
+-- Compiling module PBCOC2C
+-- Compiling module PBCOC4A
+-- Compiling module PBCOC4C
+-- Compiling module PBCOC8A
+-- Compiling module PBCOC8B
+-- Compiling module PBCOC8C
+-- Compiling module PBCSOC12A
+-- Compiling module PBCSOC12B
+-- Compiling module PBCSOC12C
+-- Compiling module PBCSOC16A
+-- Compiling module PBCSOC16B
+-- Compiling module PBCSOC16C
+-- Compiling module PBCSOC24A
+-- Compiling module PBCSOC24B
+-- Compiling module PBCSOC24C
+-- Compiling module PBCSOC2A
+-- Compiling module PBCSOC2C
+-- Compiling module PBCSOC4A
+-- Compiling module PBCSOC4C
+-- Compiling module PBCSOC8A
+-- Compiling module PBCSOC8B
+-- Compiling module PBCSOC8C
+-- Compiling module PBCOD12A
+-- Compiling module PBCOD12B
+-- Compiling module PBCOD12C
+-- Compiling module PBCOD16A
+-- Compiling module PBCOD16B
+-- Compiling module PBCOD16C
+-- Compiling module PBCOD24A
+-- Compiling module PBCOD24B
+-- Compiling module PBCOD24C
+-- Compiling module PBCOD2A
+-- Compiling module PBCOD2C
+-- Compiling module PBCOD4A
+-- Compiling module PBCOD4C
+-- Compiling module PBCOD8A
+-- Compiling module PBCOD8B
+-- Compiling module PBCOD8C
+-- Compiling module PBCSOD12A
+-- Compiling module PBCSOD12B
+-- Compiling module PBCSOD12C
+-- Compiling module PBCSOD16A
+-- Compiling module PBCSOD16B
+-- Compiling module PBCSOD16C
+-- Compiling module PBCSOD24A
+-- Compiling module PBCSOD24B
+-- Compiling module PBCSOD24C
+-- Compiling module PBCSOD2A
+-- Compiling module PBCSOD2C
+-- Compiling module PBCSOD4A
+-- Compiling module PBCSOD4C
+-- Compiling module PBCSOD8A
+-- Compiling module PBCSOD8B
+-- Compiling module PBCSOD8C
+-- Compiling module PBCCT12A
+-- Compiling module PBCCT12B
+-- Compiling module PBCCT12C
+-- Compiling module PBCCT16A
+-- Compiling module PBCCT16B
+-- Compiling module PBCCT16C
+-- Compiling module PBCCT24A
+-- Compiling module PBCCT24B
+-- Compiling module PBCCT24C
+-- Compiling module PBCCT2A
+-- Compiling module PBCCT2C
+-- Compiling module PBCCT4A
+-- Compiling module PBCCT4C
+-- Compiling module PBCCT8A
+-- Compiling module PBCCT8B
+-- Compiling module PBCCT8C
+-- Compiling module PBCSCT12A
+-- Compiling module PBCSCT12B
+-- Compiling module PBCSCT12C
+-- Compiling module PBCSCT16A
+-- Compiling module PBCSCT16B
+-- Compiling module PBCSCT16C
+-- Compiling module PBCSCT24A
+-- Compiling module PBCSCT24B
+-- Compiling module PBCSCT24C
+-- Compiling module PBCSCT2A
+-- Compiling module PBCSCT2C
+-- Compiling module PBCSCT4A
+-- Compiling module PBCSCT4C
+-- Compiling module PBCSCT8A
+-- Compiling module PBCSCT8B
+-- Compiling module PBCSCT8C
+-- Compiling module PBCODD12A
+-- Compiling module PBCODD12B
+-- Compiling module PBCODD12C
+-- Compiling module PBCODD16A
+-- Compiling module PBCODD16B
+-- Compiling module PBCODD16C
+-- Compiling module PBCODD24A
+-- Compiling module PBCODD24B
+-- Compiling module PBCODD24C
+-- Compiling module PBCODD2A
+-- Compiling module PBCODD2C
+-- Compiling module PBCODD4A
+-- Compiling module PBCODD4C
+-- Compiling module PBCODD8A
+-- Compiling module PBCODD8B
+-- Compiling module PBCODD8C
+-- Compiling module PBCSODD12A
+-- Compiling module PBCSODD12B
+-- Compiling module PBCSODD12C
+-- Compiling module PBCSODD16A
+-- Compiling module PBCSODD16B
+-- Compiling module PBCSODD16C
+-- Compiling module PBCSODD24A
+-- Compiling module PBCSODD24B
+-- Compiling module PBCSODD24C
+-- Compiling module PBCSODD2A
+-- Compiling module PBCSODD2C
+-- Compiling module PBCSODD4A
+-- Compiling module PBCSODD4C
+-- Compiling module PBCSODD8A
+-- Compiling module PBCSODD8B
+-- Compiling module PBCSODD8C
+-- Compiling module PBCCTD12A
+-- Compiling module PBCCTD12B
+-- Compiling module PBCCTD12C
+-- Compiling module PBCCTD16A
+-- Compiling module PBCCTD16B
+-- Compiling module PBCCTD16C
+-- Compiling module PBCCTD24A
+-- Compiling module PBCCTD24B
+-- Compiling module PBCCTD24C
+-- Compiling module PBCCTD2A
+-- Compiling module PBCCTD2C
+-- Compiling module PBCCTD4A
+-- Compiling module PBCCTD4C
+-- Compiling module PBCCTD8A
+-- Compiling module PBCCTD8B
+-- Compiling module PBCCTD8C
+-- Compiling module PBCSCTD12A
+-- Compiling module PBCSCTD12B
+-- Compiling module PBCSCTD12C
+-- Compiling module PBCSCTD16A
+-- Compiling module PBCSCTD16B
+-- Compiling module PBCSCTD16C
+-- Compiling module PBCSCTD24A
+-- Compiling module PBCSCTD24B
+-- Compiling module PBCSCTD24C
+-- Compiling module PBCSCTD2A
+-- Compiling module PBCSCTD2C
+-- Compiling module PBCSCTD4A
+-- Compiling module PBCSCTD4C
+-- Compiling module PBCSCTD8A
+-- Compiling module PBCSCTD8B
+-- Compiling module PBCSCTD8C
+-- Compiling module PBCOCU12A
+-- Compiling module PBCOCU12B
+-- Compiling module PBCOCU12C
+-- Compiling module PBCOCU16A
+-- Compiling module PBCOCU16B
+-- Compiling module PBCOCU16C
+-- Compiling module PBCOCU24A
+-- Compiling module PBCOCU24B
+-- Compiling module PBCOCU24C
+-- Compiling module PBCOCU2A
+-- Compiling module PBCOCU2C
+-- Compiling module PBCOCU4A
+-- Compiling module PBCOCU4C
+-- Compiling module PBCOCU8A
+-- Compiling module PBCOCU8B
+-- Compiling module PBCOCU8C
+-- Compiling module PBCSOCU12A
+-- Compiling module PBCSOCU12B
+-- Compiling module PBCSOCU12C
+-- Compiling module PBCSOCU16A
+-- Compiling module PBCSOCU16B
+-- Compiling module PBCSOCU16C
+-- Compiling module PBCSOCU24A
+-- Compiling module PBCSOCU24B
+-- Compiling module PBCSOCU24C
+-- Compiling module PBCSOCU2A
+-- Compiling module PBCSOCU2C
+-- Compiling module PBCSOCU4A
+-- Compiling module PBCSOCU4C
+-- Compiling module PBCSOCU8A
+-- Compiling module PBCSOCU8B
+-- Compiling module PBCSOCU8C
+-- Compiling module PBCCTU12A
+-- Compiling module PBCCTU12B
+-- Compiling module PBCCTU12C
+-- Compiling module PBCCTU16A
+-- Compiling module PBCCTU16B
+-- Compiling module PBCCTU16C
+-- Compiling module PBCCTU24A
+-- Compiling module PBCCTU24B
+-- Compiling module PBCCTU24C
+-- Compiling module PBCCTU2A
+-- Compiling module PBCCTU2C
+-- Compiling module PBCCTU4A
+-- Compiling module PBCCTU4C
+-- Compiling module PBCCTU8A
+-- Compiling module PBCCTU8B
+-- Compiling module PBCCTU8C
+-- Compiling module PBCSCTU12A
+-- Compiling module PBCSCTU12B
+-- Compiling module PBCSCTU12C
+-- Compiling module PBCSCTU16A
+-- Compiling module PBCSCTU16B
+-- Compiling module PBCSCTU16C
+-- Compiling module PBCSCTU24A
+-- Compiling module PBCSCTU24B
+-- Compiling module PBCSCTU24C
+-- Compiling module PBCSCTU2A
+-- Compiling module PBCSCTU2C
+-- Compiling module PBCSCTU4A
+-- Compiling module PBCSCTU4C
+-- Compiling module PBCSCTU8A
+-- Compiling module PBCSCTU8B
+-- Compiling module PBCSCTU8C
+-- Compiling module PIC
+-- Compiling module PICS
+-- Compiling module PICD
+-- Compiling module PICSD
+-- Compiling module PICSU
+-- Compiling module PICU
+-- Compiling module POC12A
+-- Compiling module POC12B
+-- Compiling module POC12C
+-- Compiling module POC16A
+-- Compiling module POC16B
+-- Compiling module POC16C
+-- Compiling module POC24A
+-- Compiling module POC24B
+-- Compiling module POC24C
+-- Compiling module POC2A
+-- Compiling module POC2C
+-- Compiling module POC4A
+-- Compiling module POC4C
+-- Compiling module POC8A
+-- Compiling module POC8B
+-- Compiling module POC8C
+-- Compiling module POOC12A
+-- Compiling module POOC12B
+-- Compiling module POOC12C
+-- Compiling module POOC16A
+-- Compiling module POOC16B
+-- Compiling module POOC16C
+-- Compiling module POOC24A
+-- Compiling module POOC24B
+-- Compiling module POOC24C
+-- Compiling module POOC2A
+-- Compiling module POOC2C
+-- Compiling module POOC4A
+-- Compiling module POOC4C
+-- Compiling module POOC8A
+-- Compiling module POOC8B
+-- Compiling module POOC8C
+-- Compiling module POOD12A
+-- Compiling module POOD12B
+-- Compiling module POOD12C
+-- Compiling module POOD16A
+-- Compiling module POOD16B
+-- Compiling module POOD16C
+-- Compiling module POOD24A
+-- Compiling module POOD24B
+-- Compiling module POOD24C
+-- Compiling module POOD2A
+-- Compiling module POOD2C
+-- Compiling module POOD4A
+-- Compiling module POOD4C
+-- Compiling module POOD8A
+-- Compiling module POOD8B
+-- Compiling module POOD8C
+-- Compiling module POCT12A
+-- Compiling module POCT12B
+-- Compiling module POCT12C
+-- Compiling module POCT16A
+-- Compiling module POCT16B
+-- Compiling module POCT16C
+-- Compiling module POCT24A
+-- Compiling module POCT24B
+-- Compiling module POCT24C
+-- Compiling module POCT2A
+-- Compiling module POCT2C
+-- Compiling module POCT4A
+-- Compiling module POCT4C
+-- Compiling module POCT8A
+-- Compiling module POCT8B
+-- Compiling module POCT8C
+-- Compiling module PBREAK
+-- Compiling module PBREAKBF
+-- Compiling module PBREAKDVDDR
+-- Compiling module PBREAKBFDVDDR
+-- Compiling module PCORNER
+-- Compiling module PFILL1
+-- Compiling module PFILLH
+-- Compiling module PFILLQ
+-- Compiling module PDVSS
+-- Compiling module PDVDD
+-- Compiling module PVSS
+-- Compiling module PVDD
+-- Compiling module PAVDD
+-- Compiling module PAVSS
+-- Compiling module PANALOG
+-- Compiling module PBAREWIRE
+-- Compiling module POSC1
+-- Compiling module POSC2
+-- Compiling module POSC3
+-- Compiling module POSC4
+-- Compiling module SCPU_SRAM_8BIT_ALU_TOP
+
+Top level modules:
+	PBCOC12A
+	PBCOC12B
+	PBCOC12C
+	PBCOC16A
+	PBCOC16B
+	PBCOC16C
+	PBCOC24A
+	PBCOC24B
+	PBCOC24C
+	PBCOC2A
+	PBCOC2C
+	PBCOC4A
+	PBCOC4C
+	PBCOC8A
+	PBCOC8B
+	PBCOC8C
+	PBCSOC12A
+	PBCSOC12B
+	PBCSOC12C
+	PBCSOC16A
+	PBCSOC16B
+	PBCSOC16C
+	PBCSOC24A
+	PBCSOC24B
+	PBCSOC24C
+	PBCSOC2A
+	PBCSOC2C
+	PBCSOC4A
+	PBCSOC4C
+	PBCSOC8A
+	PBCSOC8B
+	PBCSOC8C
+	PBCOD12A
+	PBCOD12B
+	PBCOD12C
+	PBCOD16A
+	PBCOD16B
+	PBCOD16C
+	PBCOD24A
+	PBCOD24B
+	PBCOD24C
+	PBCOD2A
+	PBCOD2C
+	PBCOD4A
+	PBCOD4C
+	PBCOD8A
+	PBCOD8B
+	PBCOD8C
+	PBCSOD12A
+	PBCSOD12B
+	PBCSOD12C
+	PBCSOD16A
+	PBCSOD16B
+	PBCSOD16C
+	PBCSOD24A
+	PBCSOD24B
+	PBCSOD24C
+	PBCSOD2A
+	PBCSOD2C
+	PBCSOD4A
+	PBCSOD4C
+	PBCSOD8A
+	PBCSOD8B
+	PBCSOD8C
+	PBCCT12A
+	PBCCT12B
+	PBCCT12C
+	PBCCT16A
+	PBCCT16B
+	PBCCT16C
+	PBCCT24A
+	PBCCT24B
+	PBCCT24C
+	PBCCT2A
+	PBCCT2C
+	PBCCT4A
+	PBCCT4C
+	PBCCT8A
+	PBCCT8B
+	PBCCT8C
+	PBCSCT12A
+	PBCSCT12B
+	PBCSCT12C
+	PBCSCT16A
+	PBCSCT16B
+	PBCSCT16C
+	PBCSCT24A
+	PBCSCT24B
+	PBCSCT24C
+	PBCSCT2A
+	PBCSCT2C
+	PBCSCT4A
+	PBCSCT4C
+	PBCSCT8A
+	PBCSCT8B
+	PBCSCT8C
+	PBCODD12A
+	PBCODD12B
+	PBCODD12C
+	PBCODD16A
+	PBCODD16B
+	PBCODD16C
+	PBCODD24A
+	PBCODD24B
+	PBCODD24C
+	PBCODD2A
+	PBCODD2C
+	PBCODD4A
+	PBCODD4C
+	PBCODD8A
+	PBCODD8B
+	PBCODD8C
+	PBCSODD12A
+	PBCSODD12B
+	PBCSODD12C
+	PBCSODD16A
+	PBCSODD16B
+	PBCSODD16C
+	PBCSODD24A
+	PBCSODD24B
+	PBCSODD24C
+	PBCSODD2A
+	PBCSODD2C
+	PBCSODD4A
+	PBCSODD4C
+	PBCSODD8A
+	PBCSODD8B
+	PBCSODD8C
+	PBCCTD12A
+	PBCCTD12B
+	PBCCTD12C
+	PBCCTD16A
+	PBCCTD16B
+	PBCCTD16C
+	PBCCTD24A
+	PBCCTD24B
+	PBCCTD24C
+	PBCCTD2A
+	PBCCTD2C
+	PBCCTD4A
+	PBCCTD4C
+	PBCCTD8A
+	PBCCTD8B
+	PBCCTD8C
+	PBCSCTD12A
+	PBCSCTD12B
+	PBCSCTD12C
+	PBCSCTD16A
+	PBCSCTD16B
+	PBCSCTD16C
+	PBCSCTD24A
+	PBCSCTD24B
+	PBCSCTD24C
+	PBCSCTD2A
+	PBCSCTD2C
+	PBCSCTD4A
+	PBCSCTD4C
+	PBCSCTD8A
+	PBCSCTD8B
+	PBCSCTD8C
+	PBCOCU12A
+	PBCOCU12B
+	PBCOCU12C
+	PBCOCU16A
+	PBCOCU16B
+	PBCOCU16C
+	PBCOCU24A
+	PBCOCU24B
+	PBCOCU24C
+	PBCOCU2A
+	PBCOCU2C
+	PBCOCU4A
+	PBCOCU4C
+	PBCOCU8A
+	PBCOCU8B
+	PBCOCU8C
+	PBCSOCU12A
+	PBCSOCU12B
+	PBCSOCU12C
+	PBCSOCU16A
+	PBCSOCU16B
+	PBCSOCU16C
+	PBCSOCU24A
+	PBCSOCU24B
+	PBCSOCU24C
+	PBCSOCU2A
+	PBCSOCU2C
+	PBCSOCU4A
+	PBCSOCU4C
+	PBCSOCU8A
+	PBCSOCU8B
+	PBCSOCU8C
+	PBCCTU12A
+	PBCCTU12B
+	PBCCTU12C
+	PBCCTU16A
+	PBCCTU16B
+	PBCCTU16C
+	PBCCTU24A
+	PBCCTU24B
+	PBCCTU24C
+	PBCCTU2A
+	PBCCTU2C
+	PBCCTU4A
+	PBCCTU4C
+	PBCCTU8A
+	PBCCTU8B
+	PBCCTU8C
+	PBCSCTU12A
+	PBCSCTU12B
+	PBCSCTU12C
+	PBCSCTU16A
+	PBCSCTU16B
+	PBCSCTU16C
+	PBCSCTU24A
+	PBCSCTU24B
+	PBCSCTU24C
+	PBCSCTU2A
+	PBCSCTU2C
+	PBCSCTU4A
+	PBCSCTU4C
+	PBCSCTU8A
+	PBCSCTU8B
+	PBCSCTU8C
+	PICS
+	PICD
+	PICSD
+	PICSU
+	PICU
+	POC12A
+	POC12B
+	POC12C
+	POC16A
+	POC16B
+	POC16C
+	POC24A
+	POC24B
+	POC24C
+	POC2A
+	POC2C
+	POC4A
+	POC4C
+	POC8A
+	POC8C
+	POOC12A
+	POOC12B
+	POOC12C
+	POOC16A
+	POOC16B
+	POOC16C
+	POOC24A
+	POOC24B
+	POOC24C
+	POOC2A
+	POOC2C
+	POOC4A
+	POOC4C
+	POOC8A
+	POOC8B
+	POOC8C
+	POOD12A
+	POOD12B
+	POOD12C
+	POOD16A
+	POOD16B
+	POOD16C
+	POOD24A
+	POOD24B
+	POOD24C
+	POOD2A
+	POOD2C
+	POOD4A
+	POOD4C
+	POOD8A
+	POOD8B
+	POOD8C
+	POCT12A
+	POCT12B
+	POCT12C
+	POCT16A
+	POCT16B
+	POCT16C
+	POCT24A
+	POCT24B
+	POCT24C
+	POCT2A
+	POCT2C
+	POCT4A
+	POCT4C
+	POCT8A
+	POCT8B
+	POCT8C
+	PBREAK
+	PBREAKBF
+	PBREAKDVDDR
+	PBREAKBFDVDDR
+	PCORNER
+	PFILL1
+	PFILLH
+	PFILLQ
+	PDVSS
+	PDVDD
+	PVSS
+	PVDD
+	PAVDD
+	PAVSS
+	PANALOG
+	PBAREWIRE
+	POSC1
+	POSC2
+	POSC3
+	POSC4
+	SCPU_SRAM_8BIT_ALU_TOP
+
 } {} {}} {F:/05. Code Battle/04. Verilog/CPU_design/SCPU_8BIT_ALU_CTRL.v} {1 {vlog -work work -stats=none {F:/05. Code Battle/04. Verilog/CPU_design/SCPU_8BIT_ALU_CTRL.v}
 Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
 -- Compiling module SERIAL_CPU_8BIT
@@ -46,17 +685,6 @@ Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
 
 Top level modules:
 	SCPU_8BIT_ALU_CTRL
-
-} {} {}} {F:/05. Code Battle/04. Verilog/CPU_design/SCPU_SRAM_8BIT_ALU_TOP.v} {1 {vlog -work work -stats=none {F:/05. Code Battle/04. Verilog/CPU_design/SCPU_SRAM_8BIT_ALU_TOP.v}
-Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
--- Compiling module SERIAL_CPU_8BIT
--- Compiling module SRAM_IO_CTRL
--- Compiling module SHARE_SUPERALU
--- Compiling module CTRL_LOGIC
--- Compiling module SCPU_SRAM_8BIT_ALU_TOP
-
-Top level modules:
-	SCPU_SRAM_8BIT_ALU_TOP
 
 } {} {}} {F:/05. Code Battle/04. Verilog/CPU_design/sim/PCPU_MEM_ALU_TEST.v} {1 {vlog -work work -stats=none {F:/05. Code Battle/04. Verilog/CPU_design/sim/PCPU_MEM_ALU_TEST.v}
 Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
@@ -106,6 +734,13 @@ Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
 Top level modules:
 	SCPU_MEM_LOOP_8BIT_TOP
 
+} {} {}} {F:/05. Code Battle/04. Verilog/CPU_design/SQRT_POWSUM_418.v} {1 {vlog -work work -stats=none {F:/05. Code Battle/04. Verilog/CPU_design/SQRT_POWSUM_418.v}
+Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
+-- Compiling module SQRT_POWSUM_418
+
+Top level modules:
+	SQRT_POWSUM_418
+
 } {} {}} {F:/05. Code Battle/04. Verilog/CPU_design/sim/PCPU_MEM_INIT_TEST.v} {1 {vlog -work work -stats=none {F:/05. Code Battle/04. Verilog/CPU_design/sim/PCPU_MEM_INIT_TEST.v}
 Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
 -- Compiling module PIPE_CPU
@@ -116,12 +751,8 @@ Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
 Top level modules:
 	PCPU_MEM_INIT_TOP
 
-} {} {}} {F:/05. Code Battle/04. Verilog/CPU_design/SQRT_POWSUM_418.v} {1 {vlog -work work -stats=none {F:/05. Code Battle/04. Verilog/CPU_design/SQRT_POWSUM_418.v}
+} {} {}} {F:/05. Code Battle/04. Verilog/CPU_design/SA_4D_DEFINE_418.v} {1 {vlog -work work -stats=none {F:/05. Code Battle/04. Verilog/CPU_design/SA_4D_DEFINE_418.v}
 Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
--- Compiling module SQRT_POWSUM_418
-
-Top level modules:
-	SQRT_POWSUM_418
 
 } {} {}} {F:/05. Code Battle/04. Verilog/CPU_design/sim/PCPU_MEM_CTRL_TEST.v} {1 {vlog -work work -stats=none {F:/05. Code Battle/04. Verilog/CPU_design/sim/PCPU_MEM_CTRL_TEST.v}
 Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
@@ -135,15 +766,19 @@ Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
 Top level modules:
 	PCPU_MEM_CTRL_TOP
 
-} {} {}} {F:/05. Code Battle/04. Verilog/CPU_design/SA_4D_DEFINE_418.v} {1 {vlog -work work -stats=none {F:/05. Code Battle/04. Verilog/CPU_design/SA_4D_DEFINE_418.v}
-Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
-
 } {} {}} {F:/05. Code Battle/04. Verilog/CPU_design/RA1SHD_IBM512X8.v} {1 {vlog -work work -stats=none {F:/05. Code Battle/04. Verilog/CPU_design/RA1SHD_IBM512X8.v}
 Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
 -- Compiling module RA1SHD_IBM512X8
 
 Top level modules:
 	RA1SHD_IBM512X8
+
+} {} {}} {F:/05. Code Battle/04. Verilog/CPU_design/SHARE_SUPERALU.v} {1 {vlog -work work -stats=none {F:/05. Code Battle/04. Verilog/CPU_design/SHARE_SUPERALU.v}
+Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
+-- Compiling module SHARE_SUPERALU
+
+Top level modules:
+	SHARE_SUPERALU
 
 } {} {}} {F:/05. Code Battle/04. Verilog/CPU_design/sim/tb_Sqrt_418.v} {1 {vlog -work work -stats=none {F:/05. Code Battle/04. Verilog/CPU_design/sim/tb_Sqrt_418.v}
 Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
@@ -153,19 +788,653 @@ Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
 Top level modules:
 	TEST_CORDIC_TOP
 
-} {} {}} {F:/05. Code Battle/04. Verilog/CPU_design/SHARE_SUPERALU.v} {1 {vlog -work work -stats=none {F:/05. Code Battle/04. Verilog/CPU_design/SHARE_SUPERALU.v}
-Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
--- Compiling module SHARE_SUPERALU
-
-Top level modules:
-	SHARE_SUPERALU
-
 } {} {}} {F:/05. Code Battle/04. Verilog/CPU_design/SA_4D_DATA_PATH_418.v} {1 {vlog -work work -stats=none {F:/05. Code Battle/04. Verilog/CPU_design/SA_4D_DATA_PATH_418.v}
 Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
 -- Compiling module SA_4D_DATA_PATH_418
 
 Top level modules:
 	SA_4D_DATA_PATH_418
+
+} {} {}} {F:/05. Code Battle/04. Verilog/CPU_design/sim/SCPU_SRAM_8BIT_ALU_TOP_TEST.v} {1 {vlog -work work -stats=none {F:/05. Code Battle/04. Verilog/CPU_design/sim/SCPU_SRAM_8BIT_ALU_TOP_TEST.v}
+Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
+-- Compiling module SERIAL_CPU_8BIT
+-- Compiling module SHARE_SUPERALU
+-- Compiling module SRAM_IO_CTRL
+-- Compiling module CTRL_LOGIC
+-- Compiling module SCPU_8BIT_ALU_CTRL
+-- Compiling module RA1SHD_IBM512X8
+-- Compiling module PBCOC12A
+-- Compiling module PBCOC12B
+-- Compiling module PBCOC12C
+-- Compiling module PBCOC16A
+-- Compiling module PBCOC16B
+-- Compiling module PBCOC16C
+-- Compiling module PBCOC24A
+-- Compiling module PBCOC24B
+-- Compiling module PBCOC24C
+-- Compiling module PBCOC2A
+-- Compiling module PBCOC2C
+-- Compiling module PBCOC4A
+-- Compiling module PBCOC4C
+-- Compiling module PBCOC8A
+-- Compiling module PBCOC8B
+-- Compiling module PBCOC8C
+-- Compiling module PBCSOC12A
+-- Compiling module PBCSOC12B
+-- Compiling module PBCSOC12C
+-- Compiling module PBCSOC16A
+-- Compiling module PBCSOC16B
+-- Compiling module PBCSOC16C
+-- Compiling module PBCSOC24A
+-- Compiling module PBCSOC24B
+-- Compiling module PBCSOC24C
+-- Compiling module PBCSOC2A
+-- Compiling module PBCSOC2C
+-- Compiling module PBCSOC4A
+-- Compiling module PBCSOC4C
+-- Compiling module PBCSOC8A
+-- Compiling module PBCSOC8B
+-- Compiling module PBCSOC8C
+-- Compiling module PBCOD12A
+-- Compiling module PBCOD12B
+-- Compiling module PBCOD12C
+-- Compiling module PBCOD16A
+-- Compiling module PBCOD16B
+-- Compiling module PBCOD16C
+-- Compiling module PBCOD24A
+-- Compiling module PBCOD24B
+-- Compiling module PBCOD24C
+-- Compiling module PBCOD2A
+-- Compiling module PBCOD2C
+-- Compiling module PBCOD4A
+-- Compiling module PBCOD4C
+-- Compiling module PBCOD8A
+-- Compiling module PBCOD8B
+-- Compiling module PBCOD8C
+-- Compiling module PBCSOD12A
+-- Compiling module PBCSOD12B
+-- Compiling module PBCSOD12C
+-- Compiling module PBCSOD16A
+-- Compiling module PBCSOD16B
+-- Compiling module PBCSOD16C
+-- Compiling module PBCSOD24A
+-- Compiling module PBCSOD24B
+-- Compiling module PBCSOD24C
+-- Compiling module PBCSOD2A
+-- Compiling module PBCSOD2C
+-- Compiling module PBCSOD4A
+-- Compiling module PBCSOD4C
+-- Compiling module PBCSOD8A
+-- Compiling module PBCSOD8B
+-- Compiling module PBCSOD8C
+-- Compiling module PBCCT12A
+-- Compiling module PBCCT12B
+-- Compiling module PBCCT12C
+-- Compiling module PBCCT16A
+-- Compiling module PBCCT16B
+-- Compiling module PBCCT16C
+-- Compiling module PBCCT24A
+-- Compiling module PBCCT24B
+-- Compiling module PBCCT24C
+-- Compiling module PBCCT2A
+-- Compiling module PBCCT2C
+-- Compiling module PBCCT4A
+-- Compiling module PBCCT4C
+-- Compiling module PBCCT8A
+-- Compiling module PBCCT8B
+-- Compiling module PBCCT8C
+-- Compiling module PBCSCT12A
+-- Compiling module PBCSCT12B
+-- Compiling module PBCSCT12C
+-- Compiling module PBCSCT16A
+-- Compiling module PBCSCT16B
+-- Compiling module PBCSCT16C
+-- Compiling module PBCSCT24A
+-- Compiling module PBCSCT24B
+-- Compiling module PBCSCT24C
+-- Compiling module PBCSCT2A
+-- Compiling module PBCSCT2C
+-- Compiling module PBCSCT4A
+-- Compiling module PBCSCT4C
+-- Compiling module PBCSCT8A
+-- Compiling module PBCSCT8B
+-- Compiling module PBCSCT8C
+-- Compiling module PBCODD12A
+-- Compiling module PBCODD12B
+-- Compiling module PBCODD12C
+-- Compiling module PBCODD16A
+-- Compiling module PBCODD16B
+-- Compiling module PBCODD16C
+-- Compiling module PBCODD24A
+-- Compiling module PBCODD24B
+-- Compiling module PBCODD24C
+-- Compiling module PBCODD2A
+-- Compiling module PBCODD2C
+-- Compiling module PBCODD4A
+-- Compiling module PBCODD4C
+-- Compiling module PBCODD8A
+-- Compiling module PBCODD8B
+-- Compiling module PBCODD8C
+-- Compiling module PBCSODD12A
+-- Compiling module PBCSODD12B
+-- Compiling module PBCSODD12C
+-- Compiling module PBCSODD16A
+-- Compiling module PBCSODD16B
+-- Compiling module PBCSODD16C
+-- Compiling module PBCSODD24A
+-- Compiling module PBCSODD24B
+-- Compiling module PBCSODD24C
+-- Compiling module PBCSODD2A
+-- Compiling module PBCSODD2C
+-- Compiling module PBCSODD4A
+-- Compiling module PBCSODD4C
+-- Compiling module PBCSODD8A
+-- Compiling module PBCSODD8B
+-- Compiling module PBCSODD8C
+-- Compiling module PBCCTD12A
+-- Compiling module PBCCTD12B
+-- Compiling module PBCCTD12C
+-- Compiling module PBCCTD16A
+-- Compiling module PBCCTD16B
+-- Compiling module PBCCTD16C
+-- Compiling module PBCCTD24A
+-- Compiling module PBCCTD24B
+-- Compiling module PBCCTD24C
+-- Compiling module PBCCTD2A
+-- Compiling module PBCCTD2C
+-- Compiling module PBCCTD4A
+-- Compiling module PBCCTD4C
+-- Compiling module PBCCTD8A
+-- Compiling module PBCCTD8B
+-- Compiling module PBCCTD8C
+-- Compiling module PBCSCTD12A
+-- Compiling module PBCSCTD12B
+-- Compiling module PBCSCTD12C
+-- Compiling module PBCSCTD16A
+-- Compiling module PBCSCTD16B
+-- Compiling module PBCSCTD16C
+-- Compiling module PBCSCTD24A
+-- Compiling module PBCSCTD24B
+-- Compiling module PBCSCTD24C
+-- Compiling module PBCSCTD2A
+-- Compiling module PBCSCTD2C
+-- Compiling module PBCSCTD4A
+-- Compiling module PBCSCTD4C
+-- Compiling module PBCSCTD8A
+-- Compiling module PBCSCTD8B
+-- Compiling module PBCSCTD8C
+-- Compiling module PBCOCU12A
+-- Compiling module PBCOCU12B
+-- Compiling module PBCOCU12C
+-- Compiling module PBCOCU16A
+-- Compiling module PBCOCU16B
+-- Compiling module PBCOCU16C
+-- Compiling module PBCOCU24A
+-- Compiling module PBCOCU24B
+-- Compiling module PBCOCU24C
+-- Compiling module PBCOCU2A
+-- Compiling module PBCOCU2C
+-- Compiling module PBCOCU4A
+-- Compiling module PBCOCU4C
+-- Compiling module PBCOCU8A
+-- Compiling module PBCOCU8B
+-- Compiling module PBCOCU8C
+-- Compiling module PBCSOCU12A
+-- Compiling module PBCSOCU12B
+-- Compiling module PBCSOCU12C
+-- Compiling module PBCSOCU16A
+-- Compiling module PBCSOCU16B
+-- Compiling module PBCSOCU16C
+-- Compiling module PBCSOCU24A
+-- Compiling module PBCSOCU24B
+-- Compiling module PBCSOCU24C
+-- Compiling module PBCSOCU2A
+-- Compiling module PBCSOCU2C
+-- Compiling module PBCSOCU4A
+-- Compiling module PBCSOCU4C
+-- Compiling module PBCSOCU8A
+-- Compiling module PBCSOCU8B
+-- Compiling module PBCSOCU8C
+-- Compiling module PBCCTU12A
+-- Compiling module PBCCTU12B
+-- Compiling module PBCCTU12C
+-- Compiling module PBCCTU16A
+-- Compiling module PBCCTU16B
+-- Compiling module PBCCTU16C
+-- Compiling module PBCCTU24A
+-- Compiling module PBCCTU24B
+-- Compiling module PBCCTU24C
+-- Compiling module PBCCTU2A
+-- Compiling module PBCCTU2C
+-- Compiling module PBCCTU4A
+-- Compiling module PBCCTU4C
+-- Compiling module PBCCTU8A
+-- Compiling module PBCCTU8B
+-- Compiling module PBCCTU8C
+-- Compiling module PBCSCTU12A
+-- Compiling module PBCSCTU12B
+-- Compiling module PBCSCTU12C
+-- Compiling module PBCSCTU16A
+-- Compiling module PBCSCTU16B
+-- Compiling module PBCSCTU16C
+-- Compiling module PBCSCTU24A
+-- Compiling module PBCSCTU24B
+-- Compiling module PBCSCTU24C
+-- Compiling module PBCSCTU2A
+-- Compiling module PBCSCTU2C
+-- Compiling module PBCSCTU4A
+-- Compiling module PBCSCTU4C
+-- Compiling module PBCSCTU8A
+-- Compiling module PBCSCTU8B
+-- Compiling module PBCSCTU8C
+-- Compiling module PIC
+-- Compiling module PICS
+-- Compiling module PICD
+-- Compiling module PICSD
+-- Compiling module PICSU
+-- Compiling module PICU
+-- Compiling module POC12A
+-- Compiling module POC12B
+-- Compiling module POC12C
+-- Compiling module POC16A
+-- Compiling module POC16B
+-- Compiling module POC16C
+-- Compiling module POC24A
+-- Compiling module POC24B
+-- Compiling module POC24C
+-- Compiling module POC2A
+-- Compiling module POC2C
+-- Compiling module POC4A
+-- Compiling module POC4C
+-- Compiling module POC8A
+-- Compiling module POC8B
+-- Compiling module POC8C
+-- Compiling module POOC12A
+-- Compiling module POOC12B
+-- Compiling module POOC12C
+-- Compiling module POOC16A
+-- Compiling module POOC16B
+-- Compiling module POOC16C
+-- Compiling module POOC24A
+-- Compiling module POOC24B
+-- Compiling module POOC24C
+-- Compiling module POOC2A
+-- Compiling module POOC2C
+-- Compiling module POOC4A
+-- Compiling module POOC4C
+-- Compiling module POOC8A
+-- Compiling module POOC8B
+-- Compiling module POOC8C
+-- Compiling module POOD12A
+-- Compiling module POOD12B
+-- Compiling module POOD12C
+-- Compiling module POOD16A
+-- Compiling module POOD16B
+-- Compiling module POOD16C
+-- Compiling module POOD24A
+-- Compiling module POOD24B
+-- Compiling module POOD24C
+-- Compiling module POOD2A
+-- Compiling module POOD2C
+-- Compiling module POOD4A
+-- Compiling module POOD4C
+-- Compiling module POOD8A
+-- Compiling module POOD8B
+-- Compiling module POOD8C
+-- Compiling module POCT12A
+-- Compiling module POCT12B
+-- Compiling module POCT12C
+-- Compiling module POCT16A
+-- Compiling module POCT16B
+-- Compiling module POCT16C
+-- Compiling module POCT24A
+-- Compiling module POCT24B
+-- Compiling module POCT24C
+-- Compiling module POCT2A
+-- Compiling module POCT2C
+-- Compiling module POCT4A
+-- Compiling module POCT4C
+-- Compiling module POCT8A
+-- Compiling module POCT8B
+-- Compiling module POCT8C
+-- Compiling module PBREAK
+-- Compiling module PBREAKBF
+-- Compiling module PBREAKDVDDR
+-- Compiling module PBREAKBFDVDDR
+-- Compiling module PCORNER
+-- Compiling module PFILL1
+-- Compiling module PFILLH
+-- Compiling module PFILLQ
+-- Compiling module PDVSS
+-- Compiling module PDVDD
+-- Compiling module PVSS
+-- Compiling module PVDD
+-- Compiling module PAVDD
+-- Compiling module PAVSS
+-- Compiling module PANALOG
+-- Compiling module PBAREWIRE
+-- Compiling module POSC1
+-- Compiling module POSC2
+-- Compiling module POSC3
+-- Compiling module POSC4
+-- Compiling module SCPU_SRAM_8BIT_ALU_TOP
+-- Compiling module I_MEMORY_8BIT
+-- Compiling module SCPU_SRAM_8BIT_ALU_TOP_TEST
+
+Top level modules:
+	PBCOC12A
+	PBCOC12B
+	PBCOC12C
+	PBCOC16A
+	PBCOC16B
+	PBCOC16C
+	PBCOC24A
+	PBCOC24B
+	PBCOC24C
+	PBCOC2A
+	PBCOC2C
+	PBCOC4A
+	PBCOC4C
+	PBCOC8A
+	PBCOC8B
+	PBCOC8C
+	PBCSOC12A
+	PBCSOC12B
+	PBCSOC12C
+	PBCSOC16A
+	PBCSOC16B
+	PBCSOC16C
+	PBCSOC24A
+	PBCSOC24B
+	PBCSOC24C
+	PBCSOC2A
+	PBCSOC2C
+	PBCSOC4A
+	PBCSOC4C
+	PBCSOC8A
+	PBCSOC8B
+	PBCSOC8C
+	PBCOD12A
+	PBCOD12B
+	PBCOD12C
+	PBCOD16A
+	PBCOD16B
+	PBCOD16C
+	PBCOD24A
+	PBCOD24B
+	PBCOD24C
+	PBCOD2A
+	PBCOD2C
+	PBCOD4A
+	PBCOD4C
+	PBCOD8A
+	PBCOD8B
+	PBCOD8C
+	PBCSOD12A
+	PBCSOD12B
+	PBCSOD12C
+	PBCSOD16A
+	PBCSOD16B
+	PBCSOD16C
+	PBCSOD24A
+	PBCSOD24B
+	PBCSOD24C
+	PBCSOD2A
+	PBCSOD2C
+	PBCSOD4A
+	PBCSOD4C
+	PBCSOD8A
+	PBCSOD8B
+	PBCSOD8C
+	PBCCT12A
+	PBCCT12B
+	PBCCT12C
+	PBCCT16A
+	PBCCT16B
+	PBCCT16C
+	PBCCT24A
+	PBCCT24B
+	PBCCT24C
+	PBCCT2A
+	PBCCT2C
+	PBCCT4A
+	PBCCT4C
+	PBCCT8A
+	PBCCT8B
+	PBCCT8C
+	PBCSCT12A
+	PBCSCT12B
+	PBCSCT12C
+	PBCSCT16A
+	PBCSCT16B
+	PBCSCT16C
+	PBCSCT24A
+	PBCSCT24B
+	PBCSCT24C
+	PBCSCT2A
+	PBCSCT2C
+	PBCSCT4A
+	PBCSCT4C
+	PBCSCT8A
+	PBCSCT8B
+	PBCSCT8C
+	PBCODD12A
+	PBCODD12B
+	PBCODD12C
+	PBCODD16A
+	PBCODD16B
+	PBCODD16C
+	PBCODD24A
+	PBCODD24B
+	PBCODD24C
+	PBCODD2A
+	PBCODD2C
+	PBCODD4A
+	PBCODD4C
+	PBCODD8A
+	PBCODD8B
+	PBCODD8C
+	PBCSODD12A
+	PBCSODD12B
+	PBCSODD12C
+	PBCSODD16A
+	PBCSODD16B
+	PBCSODD16C
+	PBCSODD24A
+	PBCSODD24B
+	PBCSODD24C
+	PBCSODD2A
+	PBCSODD2C
+	PBCSODD4A
+	PBCSODD4C
+	PBCSODD8A
+	PBCSODD8B
+	PBCSODD8C
+	PBCCTD12A
+	PBCCTD12B
+	PBCCTD12C
+	PBCCTD16A
+	PBCCTD16B
+	PBCCTD16C
+	PBCCTD24A
+	PBCCTD24B
+	PBCCTD24C
+	PBCCTD2A
+	PBCCTD2C
+	PBCCTD4A
+	PBCCTD4C
+	PBCCTD8A
+	PBCCTD8B
+	PBCCTD8C
+	PBCSCTD12A
+	PBCSCTD12B
+	PBCSCTD12C
+	PBCSCTD16A
+	PBCSCTD16B
+	PBCSCTD16C
+	PBCSCTD24A
+	PBCSCTD24B
+	PBCSCTD24C
+	PBCSCTD2A
+	PBCSCTD2C
+	PBCSCTD4A
+	PBCSCTD4C
+	PBCSCTD8A
+	PBCSCTD8B
+	PBCSCTD8C
+	PBCOCU12A
+	PBCOCU12B
+	PBCOCU12C
+	PBCOCU16A
+	PBCOCU16B
+	PBCOCU16C
+	PBCOCU24A
+	PBCOCU24B
+	PBCOCU24C
+	PBCOCU2A
+	PBCOCU2C
+	PBCOCU4A
+	PBCOCU4C
+	PBCOCU8A
+	PBCOCU8B
+	PBCOCU8C
+	PBCSOCU12A
+	PBCSOCU12B
+	PBCSOCU12C
+	PBCSOCU16A
+	PBCSOCU16B
+	PBCSOCU16C
+	PBCSOCU24A
+	PBCSOCU24B
+	PBCSOCU24C
+	PBCSOCU2A
+	PBCSOCU2C
+	PBCSOCU4A
+	PBCSOCU4C
+	PBCSOCU8A
+	PBCSOCU8B
+	PBCSOCU8C
+	PBCCTU12A
+	PBCCTU12B
+	PBCCTU12C
+	PBCCTU16A
+	PBCCTU16B
+	PBCCTU16C
+	PBCCTU24A
+	PBCCTU24B
+	PBCCTU24C
+	PBCCTU2A
+	PBCCTU2C
+	PBCCTU4A
+	PBCCTU4C
+	PBCCTU8A
+	PBCCTU8B
+	PBCCTU8C
+	PBCSCTU12A
+	PBCSCTU12B
+	PBCSCTU12C
+	PBCSCTU16A
+	PBCSCTU16B
+	PBCSCTU16C
+	PBCSCTU24A
+	PBCSCTU24B
+	PBCSCTU24C
+	PBCSCTU2A
+	PBCSCTU2C
+	PBCSCTU4A
+	PBCSCTU4C
+	PBCSCTU8A
+	PBCSCTU8B
+	PBCSCTU8C
+	PICS
+	PICD
+	PICSD
+	PICSU
+	PICU
+	POC12A
+	POC12B
+	POC12C
+	POC16A
+	POC16B
+	POC16C
+	POC24A
+	POC24B
+	POC24C
+	POC2A
+	POC2C
+	POC4A
+	POC4C
+	POC8A
+	POC8C
+	POOC12A
+	POOC12B
+	POOC12C
+	POOC16A
+	POOC16B
+	POOC16C
+	POOC24A
+	POOC24B
+	POOC24C
+	POOC2A
+	POOC2C
+	POOC4A
+	POOC4C
+	POOC8A
+	POOC8B
+	POOC8C
+	POOD12A
+	POOD12B
+	POOD12C
+	POOD16A
+	POOD16B
+	POOD16C
+	POOD24A
+	POOD24B
+	POOD24C
+	POOD2A
+	POOD2C
+	POOD4A
+	POOD4C
+	POOD8A
+	POOD8B
+	POOD8C
+	POCT12A
+	POCT12B
+	POCT12C
+	POCT16A
+	POCT16B
+	POCT16C
+	POCT24A
+	POCT24B
+	POCT24C
+	POCT2A
+	POCT2C
+	POCT4A
+	POCT4C
+	POCT8A
+	POCT8B
+	POCT8C
+	PBREAK
+	PBREAKBF
+	PBREAKDVDDR
+	PBREAKBFDVDDR
+	PCORNER
+	PFILL1
+	PFILLH
+	PFILLQ
+	PDVSS
+	PDVDD
+	PVSS
+	PVDD
+	PAVDD
+	PAVSS
+	PANALOG
+	PBAREWIRE
+	POSC1
+	POSC2
+	POSC3
+	POSC4
+	SCPU_SRAM_8BIT_ALU_TOP_TEST
 
 } {} {}} {F:/05. Code Battle/04. Verilog/CPU_design/SRAM_IO_CTRL.v} {1 {vlog -work work -stats=none {F:/05. Code Battle/04. Verilog/CPU_design/SRAM_IO_CTRL.v}
 Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
@@ -180,6 +1449,42 @@ Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
 
 Top level modules:
 	I_MEMORY_8BIT
+
+} {} {}} {F:/05. Code Battle/04. Verilog/CPU_design/sim/SRAM_IO_CTRL_RA1512_SCPU_8bit_TEST.v} {1 {vlog -work work -stats=none {F:/05. Code Battle/04. Verilog/CPU_design/sim/SRAM_IO_CTRL_RA1512_SCPU_8bit_TEST.v}
+Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
+-- Compiling module SERIAL_CPU_8BIT
+-- Compiling module SRAM_IO_CTRL
+-- Compiling module RA1SHD_IBM512X8
+-- Compiling module I_MEMORY_8BIT
+-- Compiling module SRAM_IO_CTRL_RA1512_SCPU_8BIT_TOP
+
+Top level modules:
+	SRAM_IO_CTRL_RA1512_SCPU_8BIT_TOP
+
+} {} {}} {F:/05. Code Battle/04. Verilog/CPU_design/sim/SRAM_IO_CTRL_RA1512_TEST.v} {1 {vlog -work work -stats=none {F:/05. Code Battle/04. Verilog/CPU_design/sim/SRAM_IO_CTRL_RA1512_TEST.v}
+Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
+-- Compiling module SRAM_IO_CTRL
+-- Compiling module RA1SHD_IBM512X8
+-- Compiling module I_MEMORY_8BIT
+-- Compiling module SRAM_IO_CTRL_RA1512_TOP
+
+Top level modules:
+	SRAM_IO_CTRL_RA1512_TOP
+
+} {} {}} {F:/05. Code Battle/04. Verilog/CPU_design/SA_4D_TOP_LEVEL_418.v} {1 {vlog -work work -stats=none {F:/05. Code Battle/04. Verilog/CPU_design/SA_4D_TOP_LEVEL_418.v}
+Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
+-- Compiling module SA_4D_TOP_LEVEL_418
+
+Top level modules:
+	SA_4D_TOP_LEVEL_418
+
+} {} {}} {F:/05. Code Battle/04. Verilog/CPU_design/sim/PCPU_SINGLE_TEST.v} {1 {vlog -work work -stats=none {F:/05. Code Battle/04. Verilog/CPU_design/sim/PCPU_SINGLE_TEST.v}
+Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
+-- Compiling module PIPE_CPU
+-- Compiling module PCPU_SINGLE_TOP
+
+Top level modules:
+	PCPU_SINGLE_TOP
 
 } {} {}} {F:/05. Code Battle/04. Verilog/CPU_design/sim/PCPU_MEM_SA_TEST.v} {1 {vlog -work work -stats=none {F:/05. Code Battle/04. Verilog/CPU_design/sim/PCPU_MEM_SA_TEST.v}
 Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
@@ -197,41 +1502,20 @@ Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
 Top level modules:
 	PCPU_MEM_SA_TOP
 
-} {} {}} {F:/05. Code Battle/04. Verilog/CPU_design/sim/PCPU_SINGLE_TEST.v} {1 {vlog -work work -stats=none {F:/05. Code Battle/04. Verilog/CPU_design/sim/PCPU_SINGLE_TEST.v}
+} {} {}} {F:/05. Code Battle/04. Verilog/CPU_design/I_MEMORY.v} {1 {vlog -work work -stats=none {F:/05. Code Battle/04. Verilog/CPU_design/I_MEMORY.v}
 Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
--- Compiling module PIPE_CPU
--- Compiling module PCPU_SINGLE_TOP
+-- Compiling module I_MEMORY
 
 Top level modules:
-	PCPU_SINGLE_TOP
+	I_MEMORY
 
-} {} {}} {F:/05. Code Battle/04. Verilog/CPU_design/SA_4D_TOP_LEVEL_418.v} {1 {vlog -work work -stats=none {F:/05. Code Battle/04. Verilog/CPU_design/SA_4D_TOP_LEVEL_418.v}
-Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
--- Compiling module SA_4D_TOP_LEVEL_418
-
-Top level modules:
-	SA_4D_TOP_LEVEL_418
-
-} {} {}} {F:/05. Code Battle/04. Verilog/CPU_design/sim/SRAM_IO_CTRL_RA1512_TEST.v} {1 {vlog -work work -stats=none {F:/05. Code Battle/04. Verilog/CPU_design/sim/SRAM_IO_CTRL_RA1512_TEST.v}
-Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
--- Compiling module SRAM_IO_CTRL
--- Compiling module RA1SHD_IBM512X8
--- Compiling module I_MEMORY_8BIT
--- Compiling module SRAM_IO_CTRL_RA1512_TOP
-
-Top level modules:
-	SRAM_IO_CTRL_RA1512_TOP
-
-} {} {}} {F:/05. Code Battle/04. Verilog/CPU_design/sim/SRAM_IO_CTRL_RA1512_SCPU_8bit_TEST.v} {1 {vlog -work work -stats=none {F:/05. Code Battle/04. Verilog/CPU_design/sim/SRAM_IO_CTRL_RA1512_SCPU_8bit_TEST.v}
+} {} {}} {F:/05. Code Battle/04. Verilog/CPU_design/sim/SCPU_SINGLE_8bit_TEST.v} {1 {vlog -work work -stats=none {F:/05. Code Battle/04. Verilog/CPU_design/sim/SCPU_SINGLE_8bit_TEST.v}
 Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
 -- Compiling module SERIAL_CPU_8BIT
--- Compiling module SRAM_IO_CTRL
--- Compiling module RA1SHD_IBM512X8
--- Compiling module I_MEMORY_8BIT
--- Compiling module SRAM_IO_CTRL_RA1512_SCPU_8BIT_TOP
+-- Compiling module SCPU_SINGLE_8BIT_TOP
 
 Top level modules:
-	SRAM_IO_CTRL_RA1512_SCPU_8BIT_TOP
+	SCPU_SINGLE_8BIT_TOP
 
 } {} {}} {F:/05. Code Battle/04. Verilog/CPU_design/sim/SCPU_MEM_LOOP_TEST.v} {2 {vlog -work work -stats=none {F:/05. Code Battle/04. Verilog/CPU_design/sim/SCPU_MEM_LOOP_TEST.v}
 Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
@@ -244,24 +1528,6 @@ Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
 
 Top level modules:
 	SCPU_MEM_LOOP_TOP
-
-} {} {}} {F:/05. Code Battle/04. Verilog/CPU_design/sim/SCPU_SINGLE_8bit_TEST.v} {1 {vlog -work work -stats=none {F:/05. Code Battle/04. Verilog/CPU_design/sim/SCPU_SINGLE_8bit_TEST.v}
-Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
--- Compiling module SERIAL_CPU_8BIT
--- Compiling module SCPU_SINGLE_8BIT_TOP
-
-Top level modules:
-	SCPU_SINGLE_8BIT_TOP
-
-} {} {}} {F:/05. Code Battle/04. Verilog/CPU_design/I_MEMORY.v} {1 {vlog -work work -stats=none {F:/05. Code Battle/04. Verilog/CPU_design/I_MEMORY.v}
-Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
--- Compiling module I_MEMORY
-
-Top level modules:
-	I_MEMORY
-
-} {} {}} {F:/05. Code Battle/04. Verilog/CPU_design/DEFINE_CPU.v} {1 {vlog -work work -stats=none {F:/05. Code Battle/04. Verilog/CPU_design/DEFINE_CPU.v}
-Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
 
 } {} {}} {F:/05. Code Battle/04. Verilog/CPU_design/PIPE_CPU_SA_TOP.v} {1 {vlog -work work -stats=none {F:/05. Code Battle/04. Verilog/CPU_design/PIPE_CPU_SA_TOP.v}
 Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
@@ -277,5 +1543,8 @@ Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
 
 Top level modules:
 	PIPE_CPU_SA_TOP
+
+} {} {}} {F:/05. Code Battle/04. Verilog/CPU_design/DEFINE_CPU.v} {1 {vlog -work work -stats=none {F:/05. Code Battle/04. Verilog/CPU_design/DEFINE_CPU.v}
+Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
 
 } {} {}}
