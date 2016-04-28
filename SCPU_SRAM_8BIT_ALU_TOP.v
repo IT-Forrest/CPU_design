@@ -15,7 +15,10 @@
 `include "SRAM_IO_CTRL.v"
 `include "SHARE_SUPERALU.v"
 `include "CTRL_LOGIC.v"
-//`include "RA1SHD_ibm512x8.v"
+//`include "RA1SHD_IBM512X8.v"
+
+`ifndef SCPU_SRAM_8BIT_ALU_TOP_V
+`define SCPU_SRAM_8BIT_ALU_TOP_V
 
 module SCPU_SRAM_8BIT_ALU_TOP(
     CLK,
@@ -151,7 +154,7 @@ module SCPU_SRAM_8BIT_ALU_TOP(
         .PO(PO_from_CTRL)
     );
     
-    RA1SHD_ibm512x8   sram (
+    RA1SHD_IBM512X8   sram (
         .CLK(CLK),
         .CEN(CEN_after_mux), 
         .A(A_after_mux),
@@ -204,7 +207,9 @@ module SCPU_SRAM_8BIT_ALU_TOP(
                     .RSTN_ADC(RSTN_ADC),
                     .CLK_ADC(CLK_ADC),
                     .CLRN(CLRN));
-                        
+
+    //// Analog Control Module
+                    
     // wire connections between ALU and CPU
     assign  X_IN = io_dataoutA[MAX_SQRT_WIDTH-1:0];
     assign  Y_IN = io_dataoutB[MAX_SQRT_WIDTH-1:0];
@@ -239,4 +244,4 @@ module SCPU_SRAM_8BIT_ALU_TOP(
     assign  d_datain = (is_i_addr)?0:m_dataout;
      
 endmodule
-
+`endif//SCPU_SRAM_8BIT_ALU_TOP_V
