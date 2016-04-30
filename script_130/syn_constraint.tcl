@@ -25,7 +25,7 @@ set_ideal_network [get_ports ${ideal_net}]
 #set_false_path -to [get_ports ${fs_path_to}]
 
  ## Define the drving cell
-set_driving_cell -library ${synopsys_typ_db_name} -lib_cel ${drv_cell} -pin ${drv_cell_pin} [remove_from_collection [all_inputs] [get_ports ${ideal_net}]]
+#set_driving_cell -library ${synopsys_typ_db_name} -lib_cel ${drv_cell} -pin ${drv_cell_pin} [remove_from_collection [all_inputs] [get_ports ${ideal_net}]]
 
  ## Define the output load
 set_load ${out_load} [all_outputs]
@@ -34,7 +34,12 @@ set_load ${out_load} [all_outputs]
 set_max_fanout ${glb_max_fan} $my_design
 set_max_transition ${glb_max_tran} $my_design
 #set_max_capacitance ${glb_max_cap} $my_design
+#set_max_capacitance 2 SCPU_8BIT_ALU_CTRL
 #set_operating_conditions ${glb_op_con}
-set_operating_conditions -min_library ${ibm_sram_min_db_name}.db:RA1SHD_IBM512X8 -min ff_1p32v_m40c -max_library ${ibm_sram_max_db_name}.db:RA1SHD_IBM512X8 -max ss_1p08v_125c
+set_min_library ${synopsys_max_db_name}.db -min_version ${synopsys_min_db_name}.db
+set_min_library ${ibm_sram_max_db_name}.db -min_version ${ibm_sram_min_db_name}.db
+set_min_library ${iopad_max_db_name}.db -min_version ${iopad_min_db_name}.db
+set_operating_conditions -min_library ${ibm_sram_min_db_name}.db:RA1SHD_IBM512X8 -min ff_1p32v_m40c -max_library ${ibm_sram_max_db_name}.db:RA1SHD_IBM512X8 -max ss_1p08v_125c -analysis_type on_chip_variation
 set_wire_load_mode top
 set auto_wire_load_selection "true"
+

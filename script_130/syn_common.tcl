@@ -20,16 +20,23 @@ set synopsys_max_db_name scx3_cmos8rf_rvt_ss_1p08v_125c
 set synopsys_min_db_name scx3_cmos8rf_rvt_ff_1p32v_m40c
 set synopsys_typ_db_name scx3_cmos8rf_rvt_tt_1p2v_25c
 
+set iopad_path  "/disk/amsc/IBM_PDK/cmrf8sf/digital/RVt/aci/io"
+set iopad_db_path   ${iopad_path}/synopsys
+set iopad_sdb_path  ${iopad_path}/symbols/synopsys
+set iopad_max_db_name iogpil_cmrf8sf_rvt_ss_1p08v_2p3v_125c  
+set iopad_min_db_name iogpil_cmrf8sf_rvt_ff_1p32v_2p7v_m40c
+set iopad_typ_db_name iogpil_cmrf8sf_rvt_tt_1p2v_2p5v_25c
+
 set macro_db_path "./macros"
 set ibm_sram_max_db_name RA1SHD_IBM512X8_ss_1p08v_125c_syn
 set ibm_sram_min_db_name RA1SHD_IBM512X8_ff_1p32v_m40c_syn
 set ibm_sram_typ_db_name RA1SHD_IBM512X8_tt_1p2v_25c_syn
 
-set search_path [list . ${synopsys_root}/libraries/syn ${synopsys_root}/dw/sim_ver ${synopsys_db_path} ${macro_db_path}]
+set search_path [list . ${synopsys_root}/libraries/syn ${synopsys_root}/dw/sim_ver ${synopsys_db_path} ${iopad_db_path} ${macro_db_path}]
 
  ## Set libraries
-set target_library  [list ${synopsys_db_path}/${synopsys_typ_db_name}.db ${synopsys_db_path}/${synopsys_max_db_name}.db ${synopsys_db_path}/${synopsys_min_db_name}.db ${ibm_sram_typ_db_name}.db ${ibm_sram_max_db_name}.db ${ibm_sram_min_db_name}.db]
-set symbol_library  ${synopsys_sdb_path}/ibm13rfrvt.sdb
+set target_library  [list ${synopsys_typ_db_name}.db ${synopsys_max_db_name}.db ${synopsys_min_db_name}.db ${iopad_typ_db_name}.db ${iopad_max_db_name}.db ${iopad_min_db_name}.db ${ibm_sram_typ_db_name}.db ${ibm_sram_max_db_name}.db ${ibm_sram_min_db_name}.db]
+set symbol_library  [list ${synopsys_sdb_path}/ibm13rfrvt.sdb ${iopad_sdb_path}/iogpil_cmrf8sf_rvt.sdb]
 set synthetic_library  ""
 set link_library "* $target_library $synthetic_library"
  
@@ -90,16 +97,16 @@ set rst_port RST_N
 #set ideal_net ${fs_path_from}
 set ideal_net ${rst_port}
  ## Set port constraint ##
-set in_delay 1
-set out_delay 1.9
+set in_delay 2
+set out_delay 2
  ## Set load ##
 set drv_cell BUFX6TF
 set drv_cell_pin Y
 set out_load 0.8
  ## Set global constraint ##
-set glb_max_fan 30
+set glb_max_fan 10
 set glb_max_tran 1
-# set glb_max_cap 0
+#set glb_max_cap 5
 set glb_op_con ${synopsys_typ_db_name}
 #set glb_op_con scx3_cmos8rf_rvt_tt_1p2v_25c
 

@@ -37,6 +37,7 @@ redirect -tee ${syn_rpt_dir}/read_files.report {read_verilog ./src/SERIAL_CPU_8b
 redirect -tee ${syn_rpt_dir}/read_files.report {read_verilog ./src/SRAM_IO_CTRL.v}
 redirect -tee ${syn_rpt_dir}/read_files.report {read_verilog ./src/SHARE_SUPERALU.v}
 redirect -tee ${syn_rpt_dir}/read_files.report {read_verilog ./src/CTRL_LOGIC.v}
+redirect -tee ${syn_rpt_dir}/read_files.report {read_verilog ./src/SCPU_8BIT_ALU_CTRL.v}
 redirect -tee ${syn_rpt_dir}/read_files.report {read_verilog ./src/SCPU_SRAM_8BIT_ALU_TOP.v}
 #redirect -tee ${syn_rpt_dir}/read_files.report {read_verilog ./src/SA_4D_DEFINE_418.v}
 #redirect -tee ${syn_rpt_dir}/read_files.report {read_verilog ./src/SA_4D_CTRL_PATH_418.v}
@@ -48,7 +49,6 @@ redirect -tee ${syn_rpt_dir}/read_files.report {read_verilog ./src/SCPU_SRAM_8BI
  ## Design Preprocess ##
 current_design ${my_design}
 redirect -tee ${syn_rpt_dir}/uniquify.report {uniquify}
-
 
 #####################
 # Timing Constraint #
