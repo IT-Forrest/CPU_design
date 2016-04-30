@@ -102,9 +102,6 @@ module SCPU_8BIT_ALU_CTRL(
     wire [7:0]  PI_from_SRAM;
     wire [8:0]  A_from_CTRL;
     wire [7:0]  PO_from_CTRL;
-    wire [8:0]  A_after_mux;
-    wire [7:0]  D_after_mux;
-    wire [7:0]  Q_from_SRAM;
    
     // Super ALU's connection
     parameter   GENERAL_REG_WIDTH = 16;
