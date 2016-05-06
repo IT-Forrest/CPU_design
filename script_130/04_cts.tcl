@@ -1,0 +1,1 @@
+check_physical_design -stage pre_clock_opt
