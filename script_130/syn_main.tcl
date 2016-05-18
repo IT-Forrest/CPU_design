@@ -8,7 +8,11 @@
 ###################################
 
  ## Setup Environment ##
-source ./script_130/syn_common.tcl
+if {![info exists script_path]} {
+set script_path  "../script_130"
+#set script_path  "../script"
+source ${script_path}/all_common.tcl
+}
 
 ######################
 # Pre-syn Processing #
@@ -17,7 +21,7 @@ source ./script_130/syn_common.tcl
  ## Set SVF Report for Formality ##
 set_svf ${syn_db_dir}/${my_design}.svf
 
- ## Read Files ##
+ ## 2 Ways to Read Files ##
 ##set all_verilog [list \
 ##    ./src/DEFINE_CPU.v \
 ##    ./src/PIPE_CPU.v \
@@ -54,8 +58,8 @@ redirect -tee ${syn_rpt_dir}/uniquify.report {uniquify}
 # Timing Constraint #
 #####################
 
-##source ./script/BD_SPI.script
-source ./script_130/syn_constraint.tcl
+##source ../script/BD_SPI.script
+source ${script_path}/syn_constraint.tcl
 
 ##############
 # Synthesize #
@@ -100,5 +104,4 @@ redirect -tee ${syn_rpt_dir}/constraint.report {report_constraints}
 redirect -tee ${syn_rpt_dir}/violation.report {report_constraints -all_vio}
 redirect -tee ${syn_rpt_dir}/area.report {report_area}
 redirect -tee ${syn_rpt_dir}/timing.report {report_timing -path full -nets -input_pins -transition -nosplit -max_paths 10}
-
 

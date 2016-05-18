@@ -1,7 +1,16 @@
+###################################
+#   All Common Script for Design  #
+#     Compiler and IC Compiler    #
+###################################
+# Author:	Congyin Shi       #
+# Modify:	Jiafan Wang       #
+# Version:	1.0 for IBM130    #
+# Update:	2016-05-12        #
+###################################
 
-############################################
-# This File is obsoleted by all_common.tcl #
-############################################
+######################
+# Set DC Environment #
+######################
 
 set link_force_case  "check_reference"
 
@@ -56,10 +65,14 @@ set icc_tlu_map ${icc_tech_dir}/tluplus/cmos8rf_8MA_32.icc_maskname.map
 set icc_max_lib ${synopsys_max_db_name}.db
 set icc_min_lib ${synopsys_min_db_name}.db
 set icc_plib_file ${apollo_path}/plib/ibm13_8lm_2thick_3rf.plib
-set icc_tdf_file ./src/${my_design}.tdf
+#set icc_tdf_file ./src/${my_design}.tdf
 set icc_gds_layermap ${apollo_path}/gds2OutLayer_8lm_2thick_3rf.map
 set icc_lef_lib ${library_path}/lef
 set icc_lef_file ${icc_lef_lib}/ibm13_8lm_2thick_3rf_tech.lef
+#/disk/amsc/IBM_PDK/cmrf8sf/digital/RVt/aci/sc-x/astro/tf/ibm13_8lm_2thick_3rf.tf
+#/disk/amsc/IBM_PDK/cmrf8sf/digital/RVt/aci/io/apollo/iogpil_cmrf8sf_rvt_M2_3_3
+#/disk/amsc/IBM_PDK/cmrf8sf/digital/RVt/aci/sc-x/lef/ibm13_8lm_2thick_3rf_tech.lef 
+
 
 #############################
 # Build Directory Structure #
