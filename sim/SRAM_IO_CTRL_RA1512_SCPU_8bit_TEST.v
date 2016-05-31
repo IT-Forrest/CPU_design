@@ -179,9 +179,19 @@ module SRAM_IO_CTRL_RA1512_SCPU_8BIT_TOP;
         // i_mem.I_RAM[15] = {`NOP, 11'b000_0000_0000};
         // i_mem.I_RAM[16] = {`NOP, 11'b000_0000_0000};
         // i_mem.I_RAM[17] = {`NOP, 11'b000_0000_0000};
-        tmpi_datain = {`HALT, 11'b000_0000_0000};//due to the pipeline, we need to add many `NOP to the instruction set
+        tmpi_datain = {`LDIH, `gr1, 4'b1111, 4'b0000};//`gr4 = LFSR[`gr1];
         i_mem.I_RAM[ i] = tmpi_datain[7:0];  i = 13+ DEFAULT_PC_ADDR*2;
         i_mem.I_RAM[ i] = tmpi_datain[15:8]; i = 14+ DEFAULT_PC_ADDR*2;
+        tmpi_datain = {`LFSR, `gr4, 4'b0000, 1'b0, `gr1};//`gr4 = LFSR[`gr4];
+        i_mem.I_RAM[ i] = tmpi_datain[7:0];  i = 15+ DEFAULT_PC_ADDR*2;
+        i_mem.I_RAM[ i] = tmpi_datain[15:8]; i = 16+ DEFAULT_PC_ADDR*2;
+        tmpi_datain = {`LFSR, `gr4, 4'b0000, 1'b0, `gr4};//`gr4 = LFSR[`gr4];
+        i_mem.I_RAM[ i] = tmpi_datain[7:0];  i = 17+ DEFAULT_PC_ADDR*2;
+        i_mem.I_RAM[ i] = tmpi_datain[15:8]; i = 18+ DEFAULT_PC_ADDR*2;
+
+        tmpi_datain = {`HALT, 11'b000_0000_0000};//due to the pipeline, we need to add many `NOP to the instruction set
+        i_mem.I_RAM[ i] = tmpi_datain[7:0];  i = 19+ DEFAULT_PC_ADDR*2;
+        i_mem.I_RAM[ i] = tmpi_datain[15:8]; i = 20+ DEFAULT_PC_ADDR*2;
         // i_mem.I_RAM[19] = {`NOP, 11'b000_0000_0000};
         // i_mem.I_RAM[20] = {`NOP, 11'b000_0000_0000};
         // i_mem.I_RAM[21] = {`NOP, 11'b000_0000_0000};
@@ -208,7 +218,7 @@ module SRAM_IO_CTRL_RA1512_SCPU_8BIT_TOP;
 
         first_flag = 1;
         /* (1) Serially Input the address & Instruction to CTRL and then to SRAM */
-        for (i = DEFAULT_PC_ADDR; i<7+ DEFAULT_PC_ADDR; i=i+1) begin
+        for (i = DEFAULT_PC_ADDR; i<10+ DEFAULT_PC_ADDR; i=i+1) begin
             if (first_flag == 1)    i = 0;
             
             #10 CTRL_MODE = 2'b00;
@@ -285,7 +295,7 @@ module SRAM_IO_CTRL_RA1512_SCPU_8BIT_TOP;
         #10     start = 1;
         #10     start = 0;
         for (i = 0; i< 180; i=i+1) begin
-            if (nxt) begin
+            if (nxt[0]) begin
                 i = 1000;
             end
             #10;
@@ -295,7 +305,7 @@ module SRAM_IO_CTRL_RA1512_SCPU_8BIT_TOP;
         // force   CEN_after_mux = 0;//enable RA1SHD_ibm512x8
         // force   WEN_after_mux = 1;//read module
         #10     CTRL_BGN = 1;
-        for (i = DEFAULT_PC_ADDR; i<7+ DEFAULT_PC_ADDR; i=i+1) begin
+        for (i = DEFAULT_PC_ADDR; i<10+ DEFAULT_PC_ADDR; i=i+1) begin
             $write("%4x\t", (i<<1));
             #10 CTRL_MODE = 2'b00;
             tmpi_adder = (i<<1) + 0;
