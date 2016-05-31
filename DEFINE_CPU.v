@@ -22,9 +22,9 @@
 `define LOAD    5'b0_0010
 `define STORE   5'b0_0011
 `define SLL     5'b0_0100
-`define SLA     5'b0_0101
+`define LFSR    5'b0_0101//SLA
 `define SRL     5'b0_0110
-`define SRA     5'b0_0111
+//`define SRA     5'b0_0111
 `define ADD     5'b0_1000
 `define ADDI    5'b0_1001
 `define SUB     5'b0_1010
@@ -34,8 +34,8 @@
 `define OR      5'b0_1110
 `define XOR     5'b0_1111
 `define LDIH    5'b1_0000
-`define ADDC    5'b1_0001
-`define SUBC    5'b1_0010
+//`define ADDC    5'b1_0001
+//`define SUBC    5'b1_0010
 `define SUIH    5'b1_0011
 `define LIOA    5'b1_0100
 `define LIOB    5'b1_0101

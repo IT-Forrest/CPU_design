@@ -229,18 +229,18 @@ module PIPE_CPU(
                             || (ex_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `SUIH)
                             || (ex_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `ADD)
                             || (ex_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `ADDI)
-                            || (ex_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `ADDC)
+                            //|| (ex_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `ADDC)
                             || (ex_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `SUB)
                             || (ex_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `SUBI)
-                            || (ex_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `SUBC)
+                            //|| (ex_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `SUBC)
                             || (ex_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `CMP)
                             || (ex_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `AND)
                             || (ex_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `OR)
                             || (ex_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `XOR)
                             || (ex_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `SLL)
-                            || (ex_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `SRL)
-                            || (ex_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `SLA)
-                            || (ex_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `SRA))
+                            || (ex_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `SRL))
+                            //|| (ex_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `SLA)
+                            //|| (ex_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `SRA))
                         begin
                             cf <= cf_buf;
                             if (ALUo == 16'b0000_0000_0000_0000)
@@ -279,18 +279,18 @@ module PIPE_CPU(
                 `XOR:   {cf_buf, ALUo} <= {1'b0, reg_A ^ reg_B};
                 `SLL:   {cf_buf, ALUo} <= {cf_buf, reg_A << reg_B[MSB_OPER3_4B-1:0]};
                 `SRL:   {cf_buf, ALUo} <= {cf_buf, reg_A >> reg_B[MSB_OPER3_4B-1:0]};
-                `SLA:   {cf_buf, ALUo} <= {cf_buf, reg_A <<< reg_B[MSB_OPER3_4B-1:0]};
-                `SRA:   {cf_buf, ALUo} <= {cf_buf, reg_A >>> reg_B[MSB_OPER3_4B-1:0]};
+                //`SLA:   {cf_buf, ALUo} <= {cf_buf, reg_A <<< reg_B[MSB_OPER3_4B-1:0]};
+                //`SRA:   {cf_buf, ALUo} <= {cf_buf, reg_A >>> reg_B[MSB_OPER3_4B-1:0]};
                 `SET:   {cf_buf, ALUo} <= {1'b0, reg_B};
                 //`JUMP:  {cf_buf, ALUo} <= {cf_buf, reg_B};
                 //`LDIH:
                 `ADD:   {cf_buf, ALUo} <= reg_A + reg_B;
                 `ADDI:  {cf_buf, ALUo} <= reg_A + reg_B;
-                `ADDC:  {cf_buf, ALUo} <= reg_A + reg_B + cf;
+                //`ADDC:  {cf_buf, ALUo} <= reg_A + reg_B + cf;
                 `SUB:   {cf_buf, ALUo} <= reg_A - reg_B;
                 `SUBI:  {cf_buf, ALUo} <= reg_A - reg_B;
                 `SUIH:  {cf_buf, ALUo} <= reg_A - reg_B;
-                `SUBC:  {cf_buf, ALUo} <= reg_A - reg_B - cf;
+                //`SUBC:  {cf_buf, ALUo} <= reg_A - reg_B - cf;
                 `CMP:   {cf_buf, ALUo} <= reg_A - reg_B;
                 //`LOAD:`STORE:`JMPR:
                 //`BZ:`BNZ:`BN:`BNN:`BC:`BNC:
@@ -416,18 +416,18 @@ module PIPE_CPU(
                         || (op == `LDIH)
                         || (op == `ADD)
                         || (op == `ADDI)
-                        || (op == `ADDC)
+                        //|| (op == `ADDC)
                         || (op == `SUIH)
                         || (op == `SUB)
                         || (op == `SUBI)
-                        || (op == `SUBC)
+                        //|| (op == `SUBC)
                         || (op == `AND)
                         || (op == `OR)
                         || (op == `XOR)
                         || (op == `SLL)
                         || (op == `SRL)
-                        || (op == `SLA)
-                        || (op == `SRA)
+                        //|| (op == `SLA)
+                        //|| (op == `SRA)
                         || (op == `LIOA)
                         || (op == `LIOB)
                         || (op == `LIOS)
@@ -462,17 +462,17 @@ module PIPE_CPU(
                 I_R2_TYPE = ((op == `LOAD)
                         || (op == `STORE)
                         || (op == `ADD)
-                        || (op == `ADDC)
+                        //|| (op == `ADDC)
                         || (op == `SUB)
-                        || (op == `SUBC)
+                        //|| (op == `SUBC)
                         || (op == `CMP)
                         || (op == `AND)
                         || (op == `OR)
                         || (op == `XOR)
                         || (op == `SLL)
-                        || (op == `SRL)
-                        || (op == `SLA)
-                        || (op == `SRA));
+                        || (op == `SRL));
+                        //|| (op == `SLA)
+                        //|| (op == `SRA));
             end
         endfunction
         
@@ -481,9 +481,9 @@ module PIPE_CPU(
             input [OP_WIDTH_5B-1:0] op;
             begin
                 I_R3_TYPE = ((op == `ADD)
-                        || (op == `ADDC)
+                        //|| (op == `ADDC)
                         || (op == `SUB)
-                        || (op == `SUBC)
+                        //|| (op == `SUBC)
                         || (op == `CMP)
                         || (op == `AND)
                         || (op == `OR)
@@ -498,9 +498,9 @@ module PIPE_CPU(
                 I_V3_TYPE = ((op == `LOAD)
                         || (op == `STORE)
                         || (op == `SLL)
-                        || (op == `SRL)
-                        || (op == `SLA)
-                        || (op == `SRA));
+                        || (op == `SRL));
+                        //|| (op == `SLA)
+                        //|| (op == `SRA));
             end
         endfunction
         

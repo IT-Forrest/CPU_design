@@ -97,7 +97,7 @@ module SERIAL_CPU_8BIT(
     reg     [PC_MEM_ADDR_WIDTH-1:0] pc;
     reg     [GENERAL_REG_WIDTH-1:0] id_ir;// instruction registers, ex_ir, mem_ir, wb_ir
     reg     [GENERAL_REG_WIDTH-1:0] reg_A, reg_B, reg_C, smdr;// reg_C1, smdr1;
-    reg     [GENERAL_REG_WIDTH-1:0] gr[3:0];
+    reg     [GENERAL_REG_WIDTH-1:0] gr[4:0];
     wire    branch_flag;
 
     assign  io_control  = gr[1];
@@ -141,7 +141,7 @@ module SERIAL_CPU_8BIT(
                         next_state <= STATE_IF;
                     end
                     else begin
-                        nxt <= 2'b00;
+                        //nxt <= 2'b00;
                         next_state <= STATE_IDLE;
                     end
                 STATE_IF:   next_state <= STATE_IF2;
@@ -157,7 +157,7 @@ module SERIAL_CPU_8BIT(
                         next_state <= STATE_IDLE;
                     end
                     else if (instr_over) begin
-                        nxt <= 2'b00;
+                        nxt <= 2'b10;
                         next_state <= STATE_IDLE;
                     end
                     else begin
@@ -269,58 +269,25 @@ module SERIAL_CPU_8BIT(
                 `XOR:   {cf_buf, ALUo} <= {1'b0, reg_A ^ reg_B};
                 `SLL:   {cf_buf, ALUo} <= {cf_buf, reg_A << reg_B[MSB_OPER3_4B-1:0]};
                 `SRL:   {cf_buf, ALUo} <= {cf_buf, reg_A >> reg_B[MSB_OPER3_4B-1:0]};
-                `SLA:   {cf_buf, ALUo} <= {cf_buf, reg_A <<< reg_B[MSB_OPER3_4B-1:0]};
-                `SRA:   {cf_buf, ALUo} <= {cf_buf, reg_A >>> reg_B[MSB_OPER3_4B-1:0]};
+                //`SLA:   {cf_buf, ALUo} <= {cf_buf, reg_A <<< reg_B[MSB_OPER3_4B-1:0]};
+                //`SRA:   {cf_buf, ALUo} <= {cf_buf, reg_A >>> reg_B[MSB_OPER3_4B-1:0]};
+                `LFSR:  {cf_buf, ALUo} <= {1'b0, reg_B};
                 `SET:   {cf_buf, ALUo} <= {1'b0, reg_B};
-                //`JUMP:  {cf_buf, ALUo} <= {cf_buf, reg_B};
+                `JUMP:  {cf_buf, ALUo} <= {cf_buf, reg_B};
                 //`LDIH:
                 `ADD:   {cf_buf, ALUo} <= reg_A + reg_B;
                 `ADDI:  {cf_buf, ALUo} <= reg_A + reg_B;
-                `ADDC:  {cf_buf, ALUo} <= reg_A + reg_B + cf;
+                //`LDIH:
+                //`ADDC:  {cf_buf, ALUo} <= reg_A + reg_B + cf;
                 `SUB:   {cf_buf, ALUo} <= reg_A - reg_B;
                 `SUBI:  {cf_buf, ALUo} <= reg_A - reg_B;
                 `SUIH:  {cf_buf, ALUo} <= reg_A - reg_B;
-                `SUBC:  {cf_buf, ALUo} <= reg_A - reg_B - cf;
+                //`SUBC:  {cf_buf, ALUo} <= reg_A - reg_B - cf;
                 `CMP:   {cf_buf, ALUo} <= reg_A - reg_B;
                 //`LOAD:`STORE:`JMPR:
                 //`BZ:`BNZ:`BN:`BNN:`BC:`BNC:
                 default:{cf_buf, ALUo} <= {cf_buf, reg_A + reg_B};
             endcase
-        
-            // if (ex_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `AND)
-                // begin
-                    // cf_buf <= 1'b0;
-                    // ALUo <= reg_A & reg_B;
-                // end
-            // else if (ex_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `OR)
-                // begin
-                    // cf_buf <= 1'b0;
-                    // ALUo <= reg_A | reg_B;
-                // end
-            // else if (ex_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `XOR)
-                // begin
-                    // cf_buf <= 1'b0;
-                    // ALUo <= reg_A ^ reg_B;
-                // end
-            // else if (ex_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `SLL)
-                // {cf_buf, ALUo[GENERAL_REG_WIDTH-1:0]} <= {cf, reg_A[GENERAL_REG_WIDTH-1:0]} << reg_B[MSB_OPER3_4B-1:0];
-            // else if (ex_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `SRL)
-                // {ALUo[GENERAL_REG_WIDTH-1:0], cf_buf} <= {reg_A[GENERAL_REG_WIDTH-1:0], cf} >> reg_B[MSB_OPER3_4B-1:0];
-            // else if (ex_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `SLA)
-                // {cf_buf, ALUo[GENERAL_REG_WIDTH-1:0]} <= {cf, reg_A[GENERAL_REG_WIDTH-1:0]} <<< reg_B[MSB_OPER3_4B-1:0];
-            // else if (ex_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `SRA)
-                // {ALUo[GENERAL_REG_WIDTH-1:0], cf_buf} <= {reg_A[GENERAL_REG_WIDTH-1:0], cf} >>> reg_B[MSB_OPER3_4B-1:0];
-            // else if ((ex_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `SUB)
-                    // || (ex_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `SUBI)
-                    // || (ex_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `CMP)
-                    // || (ex_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `SUIH))
-                // {cf_buf, ALUo} <= reg_A - reg_B;
-            // else if (ex_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `SUBC)
-                // {cf_buf, ALUo} <= reg_A - reg_B - cf;
-            // else if (ex_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `ADDC)
-                // {cf_buf, ALUo} <= reg_A + reg_B + cf;
-            // else
-                // {cf_buf, ALUo} <= reg_A + reg_B;
         end
         
     //************* EX (&EX2) *************//
@@ -333,7 +300,6 @@ module SERIAL_CPU_8BIT(
         begin
             if (!rst_n)
                 begin
-                    //id_ir <= {`NOP, 11'b000_0000_0000};
                     reg_C <= 16'b0000_0000_0000_0000;
                     //smdr <= 16'b0000_0000_0000_0000;
                     //dw <= 1'b0;
@@ -350,27 +316,12 @@ module SERIAL_CPU_8BIT(
                         reg_C <= io_datainB;
                     else if (id_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `LIOS)
                         reg_C <= io_status;
+                    else if (id_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `LFSR)
+                        reg_C <= {ALUo[14:0], (ALUo[15] ^ ALUo[13] ^ ALUo[12] ^ ALUo[10])}; //16 bits
                     else
                         reg_C <= ALUo;
-                    //id_ir <= id_ir;
                     
                     if (I_ZFNFCF_TYPE(id_ir[MSB_OP_16B-1:MSB_OPER1_11B]))
-                    // if ((id_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `LDIH)
-                            // || (id_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `SUIH)
-                            // || (id_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `ADD)
-                            // || (id_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `ADDI)
-                            // || (id_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `ADDC)
-                            // || (id_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `SUB)
-                            // || (id_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `SUBI)
-                            // || (id_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `SUBC)
-                            // || (id_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `CMP)
-                            // || (id_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `AND)
-                            // || (id_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `OR)
-                            // || (id_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `XOR)
-                            // || (id_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `SLL)
-                            // || (id_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `SRL)
-                            // || (id_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `SLA)
-                            // || (id_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `SRA))
                         begin
                             cf <= cf_buf;
                             if (ALUo == 16'b0000_0000_0000_0000)
@@ -427,25 +378,7 @@ module SERIAL_CPU_8BIT(
                         || ((id_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `BNN) && (nf == 1'b0))
                         || ((id_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `BC) && (cf == 1'b1))
                         || ((id_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `BNC) && (cf == 1'b0)));
-    // always @(posedge clk or negedge rst_n)
-        // begin
-            // if (!rst_n)
-                // begin
-                    //id_ir <= {`NOP, 11'b000_0000_0000};
-                    // reg_C1 <= 16'b0000_0000_0000_0000;
-                // end
-            
-            // else if (state == STATE_MEM)
-                // begin
-                    //id_ir <= id_ir;
-                    
-                    // if (id_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `LOAD)
-                        // reg_C1 <= d_datain;
-                    // else
-                        // reg_C1 <= reg_C;
-                // end
-        // end
-            
+
     //************* WB *************//
     always @(negedge clk or negedge rst_n)
         begin
@@ -455,12 +388,12 @@ module SERIAL_CPU_8BIT(
                     gr[1] <= 16'b0000_0000_0000_0000;
                     gr[2] <= 16'b0000_0000_0000_0000;
                     gr[3] <= 16'b0000_0000_0000_0000;
-                    // gr[4] <= 16'b0000_0000_0000_0000;
+                    gr[4] <= 16'b0000_0000_0000_0000;
                     // gr[5] <= 16'b0000_0000_0000_0000;
                     // gr[6] <= 16'b0000_0000_0000_0000;
                     // gr[7] <= 16'b0000_0000_0000_0000;
                     
-                    pc <= DEFAULT_PC_ADDR;//8'b0000_0000;
+                    pc <= {PC_MEM_ADDR_WIDTH{1'b0}};//DEFAULT_PC_ADDR;
                 end
             else if (state == STATE_MEM2)
                 begin
@@ -479,31 +412,11 @@ module SERIAL_CPU_8BIT(
                     if(branch_flag)
                         pc <= reg_C[PC_MEM_ADDR_WIDTH-1:0];
                     else if(instr_over)
-                        pc <= DEFAULT_PC_ADDR;
+                        pc <= {PC_MEM_ADDR_WIDTH{1'b0}};//DEFAULT_PC_ADDR
                     else
                         pc <= pc + 1;
                 end
         end
-        
-    /**************select Y*****************/
-    // always@(*)
-        // begin
-            // case(select_y)
-                // 4'b0000:    y <= reg_C;
-                // 4'b0001:    y <= reg_A;
-                // 4'b0010:    y <= reg_B;
-                // 4'b0011:    y <= {pc, 8'b0000_0000};
-                // 4'b0100:    y <= id_ir;
-                // 4'b0101:    y <= smdr;
-                // 4'b0110:    y <= reg_C1;
-                // 4'b0111:    y <= smdr1;
-                // 4'b1000:    y <= ex_ir;
-                // 4'b1001:    y <= mem_ir;
-                // 4'b1010:    y <= wb_ir;
-                // default:    y <= reg_C;
-            // endcase
-        // end
-    /***************************************/
         
         //***** Judge an instruction whether needs to change zf, nf and cf *****//
         function I_ZFNFCF_TYPE;
@@ -513,18 +426,18 @@ module SERIAL_CPU_8BIT(
                         || (op == `SUIH)
                         || (op == `ADD)
                         || (op == `ADDI)
-                        || (op == `ADDC)
+                        //|| (op == `ADDC)
                         || (op == `SUB)
                         || (op == `SUBI)
-                        || (op == `SUBC)
+                        //|| (op == `SUBC)
                         || (op == `CMP)
                         || (op == `AND)
                         || (op == `OR)
                         || (op == `XOR)
                         || (op == `SLL)
-                        || (op == `SRL)
-                        || (op == `SLA)
-                        || (op == `SRA));
+                        || (op == `SRL));
+                        //|| (op == `SLA)
+                        //|| (op == `SRA));
             end
         endfunction
         
@@ -536,22 +449,23 @@ module SERIAL_CPU_8BIT(
                         || (op == `LDIH)
                         || (op == `ADD)
                         || (op == `ADDI)
-                        || (op == `ADDC)
+                        //|| (op == `ADDC)
                         || (op == `SUIH)
                         || (op == `SUB)
                         || (op == `SUBI)
-                        || (op == `SUBC)
+                        //|| (op == `SUBC)
                         || (op == `AND)
                         || (op == `OR)
                         || (op == `XOR)
                         || (op == `SLL)
                         || (op == `SRL)
-                        || (op == `SLA)
-                        || (op == `SRA)
+                        //|| (op == `SLA)
+                        //|| (op == `SRA)
                         || (op == `LIOA)
                         || (op == `LIOB)
                         || (op == `LIOS)
-                        || (op == `SET));
+                        || (op == `SET)
+                        || (op == `LFSR));
             end
         endfunction
        
@@ -581,17 +495,17 @@ module SERIAL_CPU_8BIT(
                 I_R2_TYPE = ((op == `LOAD)
                         || (op == `STORE)
                         || (op == `ADD)
-                        || (op == `ADDC)
+                        //|| (op == `ADDC)
                         || (op == `SUB)
-                        || (op == `SUBC)
+                        //|| (op == `SUBC)
                         || (op == `CMP)
                         || (op == `AND)
                         || (op == `OR)
                         || (op == `XOR)
                         || (op == `SLL)
-                        || (op == `SRL)
-                        || (op == `SLA)
-                        || (op == `SRA));
+                        || (op == `SRL));
+                        //|| (op == `SLA)
+                        //|| (op == `SRA));
             end
         endfunction
         
@@ -600,13 +514,14 @@ module SERIAL_CPU_8BIT(
             input [OP_WIDTH_5B-1:0] op;
             begin
                 I_R3_TYPE = ((op == `ADD)
-                        || (op == `ADDC)
+                        //|| (op == `ADDC)
                         || (op == `SUB)
-                        || (op == `SUBC)
+                        //|| (op == `SUBC)
                         || (op == `CMP)
                         || (op == `AND)
                         || (op == `OR)
-                        || (op == `XOR));
+                        || (op == `XOR)
+                        || (op == `LFSR));
             end
         endfunction
         
@@ -617,9 +532,9 @@ module SERIAL_CPU_8BIT(
                 I_V3_TYPE = ((op == `LOAD)
                         || (op == `STORE)
                         || (op == `SLL)
-                        || (op == `SRL)
-                        || (op == `SLA)
-                        || (op == `SRA));
+                        || (op == `SRL));
+                        //|| (op == `SLA)
+                        //|| (op == `SRA));
             end
         endfunction
         

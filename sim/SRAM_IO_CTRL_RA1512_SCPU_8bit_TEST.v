@@ -28,7 +28,7 @@ module SRAM_IO_CTRL_RA1512_SCPU_8BIT_TOP;
     reg  start;// enable signal for SERIAL_CPU_8bit
     reg [1:0]   CTRL_MODE;
     
-    integer i,j,k;
+    integer i,j,k,first_flag;
     reg  CTRL_BGN;
     reg  [15:0] tmpi_datain;
     reg  [REG_BITS_WIDTH-1:0]  tmpi_all;//addr+instruction
@@ -38,7 +38,7 @@ module SRAM_IO_CTRL_RA1512_SCPU_8BIT_TOP;
     integer error_cnt;
     
     // Wires
-    // wire is_i_addr;
+    wire [1:0]  nxt;
     wire enable;// enable signal for CTRL_SRAM
     wire [7:0]  i_datain;
     wire [7:0]  d_datain;
@@ -173,7 +173,7 @@ module SRAM_IO_CTRL_RA1512_SCPU_8BIT_TOP;
         // i_mem.I_RAM[11] = {`NOP, 11'b000_0000_0000};
         // i_mem.I_RAM[12] = {`NOP, 11'b000_0000_0000};
         // i_mem.I_RAM[13] = {`NOP, 11'b000_0000_0000};
-        tmpi_datain = {`STORE, `gr1, 1'b0, `gr0, 4'b0010};//if (`gr7 != 0) go to I_RAM[ 9];
+        tmpi_datain = {`STORE, `gr1, 1'b0, `gr0, 4'b0011};//if (`gr7 != 0) go to I_RAM[ 9];
         i_mem.I_RAM[ i] = tmpi_datain[7:0];  i = 11+ DEFAULT_PC_ADDR*2;
         i_mem.I_RAM[ i] = tmpi_datain[15:8]; i = 12+ DEFAULT_PC_ADDR*2;
         // i_mem.I_RAM[15] = {`NOP, 11'b000_0000_0000};
@@ -187,15 +187,18 @@ module SRAM_IO_CTRL_RA1512_SCPU_8BIT_TOP;
         // i_mem.I_RAM[21] = {`NOP, 11'b000_0000_0000};
         
         i = 0;
-        tmpi_datain = 16'h00AB;
+        tmpi_datain = {`JUMP, 3'b000, 4'b0001, 4'b0000};//Reserve space for data calculation
         i_mem.I_RAM[ i] = tmpi_datain[7:0];  i = 1;
         i_mem.I_RAM[ i] = tmpi_datain[15:8]; i = 2;
-        tmpi_datain = 16'h3C00;
+        tmpi_datain = 16'h00AB;
         i_mem.I_RAM[ i] = tmpi_datain[7:0];  i = 3;
         i_mem.I_RAM[ i] = tmpi_datain[15:8]; i = 4;
-        tmpi_datain = 16'h0000;
+        tmpi_datain = 16'h3C00;
         i_mem.I_RAM[ i] = tmpi_datain[7:0];  i = 5;
         i_mem.I_RAM[ i] = tmpi_datain[15:8]; i = 6;
+        tmpi_datain = 16'h0000;
+        i_mem.I_RAM[ i] = tmpi_datain[7:0];  i = 7;
+        i_mem.I_RAM[ i] = tmpi_datain[15:8]; i = 8;
         // i_mem.D_RAM[0] = 16'h00AB;
         // i_mem.D_RAM[1] = 16'h3C00;
         // i_mem.D_RAM[2] = 16'h0000;
@@ -203,8 +206,11 @@ module SRAM_IO_CTRL_RA1512_SCPU_8BIT_TOP;
         #10 rst_n = 0; CTRL_BGN = 1;
         #10 rst_n = 1; 
 
+        first_flag = 1;
         /* (1) Serially Input the address & Instruction to CTRL and then to SRAM */
         for (i = DEFAULT_PC_ADDR; i<7+ DEFAULT_PC_ADDR; i=i+1) begin
+            if (first_flag == 1)    i = 0;
+            
             #10 CTRL_MODE = 2'b00;
             tmpi_adder = (i<<1);
             tmpi_all = {tmpi_adder, i_mem.I_RAM[tmpi_adder]};
@@ -262,6 +268,11 @@ module SRAM_IO_CTRL_RA1512_SCPU_8BIT_TOP;
             end
             #10 LOAD_N = 1;
             //release m_addr;
+            if (first_flag == 1) begin
+                i = DEFAULT_PC_ADDR - 1;
+                first_flag = 0;
+                #10;
+            end
         end
         // #10 start =1;
         // #10 start = 0;
@@ -388,7 +399,7 @@ module SRAM_IO_CTRL_RA1512_SCPU_8BIT_TOP;
         if (error_cnt)
             $display("Test Failed!");
         else begin
-            i = 2;
+            i = 3;
             $write("%4x\t", (i<<1));
             #10 CTRL_MODE = 2'b00;
             tmpi_adder = (i<<1)+0;

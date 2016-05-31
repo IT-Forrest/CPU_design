@@ -239,18 +239,18 @@ module SERIAL_CPU(
                             || (id_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `SUIH)
                             || (id_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `ADD)
                             || (id_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `ADDI)
-                            || (id_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `ADDC)
+                            //|| (id_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `ADDC)
                             || (id_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `SUB)
                             || (id_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `SUBI)
-                            || (id_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `SUBC)
+                            //|| (id_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `SUBC)
                             || (id_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `CMP)
                             || (id_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `AND)
                             || (id_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `OR)
                             || (id_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `XOR)
                             || (id_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `SLL)
-                            || (id_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `SRL)
-                            || (id_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `SLA)
-                            || (id_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `SRA))
+                            || (id_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `SRL))
+                            //|| (id_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `SLA)
+                            //|| (id_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `SRA))
                         begin
                             cf <= cf_buf;
                             if (ALUo == 16'b0000_0000_0000_0000)
@@ -289,18 +289,18 @@ module SERIAL_CPU(
                 `XOR:   {cf_buf, ALUo} <= {1'b0, reg_A ^ reg_B};
                 `SLL:   {cf_buf, ALUo} <= {cf_buf, reg_A << reg_B[MSB_OPER3_4B-1:0]};
                 `SRL:   {cf_buf, ALUo} <= {cf_buf, reg_A >> reg_B[MSB_OPER3_4B-1:0]};
-                `SLA:   {cf_buf, ALUo} <= {cf_buf, reg_A <<< reg_B[MSB_OPER3_4B-1:0]};
-                `SRA:   {cf_buf, ALUo} <= {cf_buf, reg_A >>> reg_B[MSB_OPER3_4B-1:0]};
+                //`SLA:   {cf_buf, ALUo} <= {cf_buf, reg_A <<< reg_B[MSB_OPER3_4B-1:0]};
+                //`SRA:   {cf_buf, ALUo} <= {cf_buf, reg_A >>> reg_B[MSB_OPER3_4B-1:0]};
                 `SET:   {cf_buf, ALUo} <= {1'b0, reg_B};
                 //`JUMP:  {cf_buf, ALUo} <= {cf_buf, reg_B};
                 //`LDIH:
                 `ADD:   {cf_buf, ALUo} <= reg_A + reg_B;
                 `ADDI:  {cf_buf, ALUo} <= reg_A + reg_B;
-                `ADDC:  {cf_buf, ALUo} <= reg_A + reg_B + cf;
+                //`ADDC:  {cf_buf, ALUo} <= reg_A + reg_B + cf;
                 `SUB:   {cf_buf, ALUo} <= reg_A - reg_B;
                 `SUBI:  {cf_buf, ALUo} <= reg_A - reg_B;
                 `SUIH:  {cf_buf, ALUo} <= reg_A - reg_B;
-                `SUBC:  {cf_buf, ALUo} <= reg_A - reg_B - cf;
+                //`SUBC:  {cf_buf, ALUo} <= reg_A - reg_B - cf;
                 `CMP:   {cf_buf, ALUo} <= reg_A - reg_B;
                 //`LOAD:`STORE:`JMPR:
                 //`BZ:`BNZ:`BN:`BNN:`BC:`BNC:
@@ -436,18 +436,18 @@ module SERIAL_CPU(
                         || (op == `LDIH)
                         || (op == `ADD)
                         || (op == `ADDI)
-                        || (op == `ADDC)
+                        //|| (op == `ADDC)
                         || (op == `SUIH)
                         || (op == `SUB)
                         || (op == `SUBI)
-                        || (op == `SUBC)
+                        //|| (op == `SUBC)
                         || (op == `AND)
                         || (op == `OR)
                         || (op == `XOR)
                         || (op == `SLL)
                         || (op == `SRL)
-                        || (op == `SLA)
-                        || (op == `SRA)
+                        //|| (op == `SLA)
+                        //|| (op == `SRA)
                         || (op == `LIOA)
                         || (op == `LIOB)
                         || (op == `LIOS)
@@ -482,17 +482,17 @@ module SERIAL_CPU(
                 I_R2_TYPE = ((op == `LOAD)
                         || (op == `STORE)
                         || (op == `ADD)
-                        || (op == `ADDC)
+                        //|| (op == `ADDC)
                         || (op == `SUB)
-                        || (op == `SUBC)
+                        //|| (op == `SUBC)
                         || (op == `CMP)
                         || (op == `AND)
                         || (op == `OR)
                         || (op == `XOR)
                         || (op == `SLL)
-                        || (op == `SRL)
-                        || (op == `SLA)
-                        || (op == `SRA));
+                        || (op == `SRL));
+                        //|| (op == `SLA)
+                        //|| (op == `SRA));
             end
         endfunction
         
@@ -501,9 +501,9 @@ module SERIAL_CPU(
             input [OP_WIDTH_5B-1:0] op;
             begin
                 I_R3_TYPE = ((op == `ADD)
-                        || (op == `ADDC)
+                        //|| (op == `ADDC)
                         || (op == `SUB)
-                        || (op == `SUBC)
+                        //|| (op == `SUBC)
                         || (op == `CMP)
                         || (op == `AND)
                         || (op == `OR)
@@ -518,9 +518,9 @@ module SERIAL_CPU(
                 I_V3_TYPE = ((op == `LOAD)
                         || (op == `STORE)
                         || (op == `SLL)
-                        || (op == `SRL)
-                        || (op == `SLA)
-                        || (op == `SRA));
+                        || (op == `SRL));
+                        //|| (op == `SLA)
+                        //|| (op == `SRA));
             end
         endfunction
         
