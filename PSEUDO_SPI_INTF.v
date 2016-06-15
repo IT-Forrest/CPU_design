@@ -1,0 +1,242 @@
+//+FHDR****************************************************************
+// ECE department, TAMU
+// --------------------------------------------------------------------
+// FILE NAME    : PSEUDO_SPT_INTF.v
+// AUTHER       : Jiafan Wang
+// DATE         : 06/07/2016
+// VERSION      : 1.0
+// PURPOSE      : Given the starting address and data length; then
+//                generate the clock signals and SRAM control signals
+//                to send the data to analog device bit by bit.
+//
+// --------------------------------------------------------------------
+// ABSTRACT: ModelSim simulation time 6us given each time period 10ns
+// --------------------------------------------------------------------
+
+`timescale 1ns / 1ps
+`include "DEFINE_CPU.v"
+
+`ifndef PSEUDO_SPI_OUT_V
+`define PSEUDO_SPI_OUT_V
+
+module PSEUDO_SPT_INTF(
+/*     //input 
+    CLK,
+    RST_N,
+    X_IN,//dividend or multiplicand or I
+    Y_IN,//dividor or multiplier or Q
+    alu_start,//enable signal
+    alu_type,//"*" or "/" or "sqrt"
+    mode_type,//div_mode or mul_mode
+    OFFSET,
+    
+    FOUT,//division or multiplication or amplitude
+    POUT,//phase
+    alu_is_done//finish signal */
+    
+    // input
+    CLK,
+    //RST_N,
+    BGN,
+    ADDR_BGN,
+    DATA_LEN,
+    FREQ_DIV,
+    //i_datain,
+    PI,
+    
+    // output
+    SCLK1,
+    SCLK2,
+    LAT,//LAT for read; SEL for write
+    SPI_SO,
+    
+    is_i_addr,
+    A,
+    //i_addr,      //output instruction address
+    //d_addr,      //output memory data address 
+    D_WE,        //memory read or write signal, 1: write
+    //d_dataout,   //output memory data 
+    spi_is_done
+);
+
+    parameter   MEMORY_DATA_WIDTH   = 8,
+                MEMORY_ADDR_WIDTH   = 9,
+                RESERVED_DATA_LEN   = 8;
+                
+    input   CLK;
+    //input   RST_N;
+    input   BGN;
+    input   [MEMORY_ADDR_WIDTH-1:0] ADDR_BGN;
+    input   [RESERVED_DATA_LEN-1:0] DATA_LEN;    //each data width = MEMORY_DATA_WIDTH
+    input   [7:0]   FREQ_DIV;
+    //input   [MEMORY_DATA_WIDTH-1:0] i_datain;    //input instruction data
+    input   [MEMORY_DATA_WIDTH-1:0] PI;         // read from SRAM
+    
+    output  SCLK1;
+    output  SCLK2;
+    output  LAT;
+    output  SPI_SO;
+    output  is_i_addr;
+    output  [MEMORY_ADDR_WIDTH-1:0] A;
+    //output  [MEMORY_ADDR_WIDTH-1:0] i_addr;     //output instruction address
+    //output  [MEMORY_ADDR_WIDTH-1:0] d_addr;     //output memory data address 
+    output  D_WE;               //memory read or write signal, 1: write
+    //output  [MEMORY_DATA_WIDTH-1:0] d_dataout;  //output memory data 
+    output  spi_is_done;
+
+    // State Machine Parameters
+    parameter   SPI_IDLE = 3'b000,
+                SPI_ADDR = 3'b001,
+                SPI_READ = 3'b011,
+                SPI_SOUT = 3'b010,
+                SPI_LOOP = 3'b110,
+                SPI_RDY  = 3'b100,
+                SPI_DONE = 3'b101;
+    
+    reg     [MEMORY_ADDR_WIDTH-1:0] sram_addr;
+    reg     [MEMORY_DATA_WIDTH-1:0] sram_regs;
+    
+    reg     [3:0]   spi_state;
+    reg     [2:0]   cnt_state;
+    reg     [4:0]   cnt_bit_sent;
+    reg     [4:0]   cnt_addr_len;
+    reg     [4:0]   cnt_freq_div;
+    //reg     [2:0]  sclk_state;
+    reg     CEN;
+    
+    assign  SPI_SO  = sram_regs[0];
+    assign  A       = (!CEN)?(sram_addr):0;
+    assign  D_WE    = 1'b1;/* low write */
+    assign  SCLK1   = (cnt_state[0] & cnt_state[1]);
+    assign  SCLK2   = (cnt_state[0] & ~cnt_state[1]);
+    assign  LAT     = (spi_state == SPI_RDY);
+    assign  spi_is_done = (spi_state == SPI_DONE);
+    assign  is_i_addr   = 1'b0;
+    
+    //******** Negedge WEN/CEN signals to SRAM ********//
+    // always @(negedge CLK)
+    // begin
+        // if ((ctrl_state == IO_SEND) && is_write)
+            // D_WE <= 0;/* low write */
+        // else
+            // D_WE <= 1;
+    // end
+    always @(negedge CLK)
+    begin
+        if (spi_state == SPI_IDLE)
+            CEN <= 1;
+        else
+            CEN <= 0;/* low enable */
+    end
+    
+    //******** Frequency Divisior ********//
+    always @(posedge CLK or negedge BGN)
+    begin
+        if (!BGN)
+            cnt_freq_div <= FREQ_DIV;
+        else if (SPI_SOUT == spi_state)
+            cnt_freq_div <= cnt_freq_div - 1;
+        else if (SPI_LOOP == spi_state)
+            cnt_freq_div <= FREQ_DIV;
+        else
+            cnt_freq_div <= cnt_freq_div;
+    end
+    
+    //************* Addr & Buffer Update *************//
+    always @(posedge CLK)
+    begin
+        if (!BGN)
+            sram_addr <= ADDR_BGN;
+            // sclk_state <= 0;
+        else if (SPI_ADDR == spi_state)
+            sram_addr <= sram_addr - 1;
+        else
+            sram_addr <= sram_addr;
+    end
+    
+    always @(posedge CLK)
+    begin
+        if (!BGN)
+            sram_regs <= 0;
+        else if (SPI_READ == spi_state)
+            sram_regs <= PI;
+        else if (SPI_SOUT == spi_state)
+            sram_regs <= {1'b0, sram_regs[MEMORY_DATA_WIDTH-1:1]};
+        else
+            sram_regs <= sram_regs;
+    end
+
+    //************* Bit & Length cnt *************//
+    always @(posedge CLK or negedge BGN)
+    begin
+        if (!BGN)
+            cnt_bit_sent <= 0;
+        else if (SPI_READ == spi_state)
+            cnt_bit_sent <= RESERVED_DATA_LEN;
+        else if (SPI_LOOP == spi_state)
+            cnt_bit_sent <= cnt_bit_sent - 1;
+        else
+            cnt_bit_sent <= cnt_bit_sent;
+    end
+    
+    always @(posedge CLK or negedge BGN)
+    begin
+        if (!BGN)
+            cnt_addr_len <= DATA_LEN;
+        else if (SPI_ADDR == spi_state)
+            cnt_addr_len <= cnt_addr_len - 1;
+        else
+            cnt_addr_len <= cnt_addr_len;
+    end
+    
+    //************* State Cycle cnt *************//
+    always @(posedge CLK or negedge BGN)
+    begin
+        if (!BGN)
+            cnt_state <= 0;
+        else if (!cnt_state) begin
+            case (spi_state)
+                SPI_IDLE:   cnt_state <= 0;
+                SPI_READ:   cnt_state <= 4;
+                SPI_SOUT:   cnt_state <= 0;
+                SPI_LOOP:   cnt_state <= 0;
+                SPI_ADDR:   cnt_state <= 0;
+            endcase
+        end
+        else
+            cnt_state <= cnt_state - 1;
+    end
+    
+    //************* State Machine *************//
+    always @(posedge CLK or negedge BGN)
+    begin
+        if (!BGN)
+            spi_state <= SPI_IDLE;
+        else begin
+            case (spi_state)
+                SPI_IDLE:   if (!cnt_state) spi_state <= SPI_READ;
+                SPI_READ:   if (!cnt_state) spi_state <= SPI_SOUT;
+                SPI_SOUT:   if (!cnt_state) spi_state <= SPI_LOOP;
+                SPI_LOOP:
+                    if (!cnt_state) begin
+                        if (cnt_bit_sent)
+                            spi_state <= SPI_SOUT;
+                        else
+                            spi_state <= SPI_ADDR;
+                    end
+                SPI_ADDR:
+                    if (!cnt_state) begin
+                        if (cnt_addr_len)
+                            spi_state <= SPI_READ;
+                        else
+                            spi_state <= SPI_RDY;
+                        end
+                default:    spi_state <= SPI_DONE;
+            endcase
+        end
+    end
+    
+endmodule
+
+`endif//PSEUDO_SPT_INTF
+
