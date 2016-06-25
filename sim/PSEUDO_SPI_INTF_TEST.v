@@ -126,8 +126,8 @@ module PSEUDO_SPI_INTF_TEST;
         CLK = 0;
         rst_n = 0;
         BGN = 0;
-        ADDR_BGN = 0;
-        DATA_LEN = 7*2;
+        ADDR_BGN = (7*2 - 1);
+        DATA_LEN = (7*2 - 1);
         
         LOAD_N = 1;
         error_cnt = 0;
@@ -202,7 +202,7 @@ module PSEUDO_SPI_INTF_TEST;
         // i_mem.D_RAM[1] = 16'h3C00;
         // i_mem.D_RAM[2] = 16'h0000;
 
-        #10 BGN = 1;
+        #10 BGN = 1; rst_n = 1;
 
         /* fetch SRAM info & print inner instructions */ 
         //force   CEN = 0;//enable RA1SHD_ibm512x8

@@ -148,7 +148,7 @@ module PSEUDO_SPT_INTF(
         if (!BGN)
             sram_addr <= ADDR_BGN;
             // sclk_state <= 0;
-        else if (SPI_ADDR == spi_state)
+        else if ((SPI_ADDR == spi_state) && sram_addr)
             sram_addr <= sram_addr - 1;
         else
             sram_addr <= sram_addr;
@@ -160,7 +160,7 @@ module PSEUDO_SPT_INTF(
             sram_regs <= 0;
         else if (SPI_READ == spi_state)
             sram_regs <= PI;
-        else if (SPI_SOUT == spi_state)
+        else if (SPI_LOOP == spi_state)
             sram_regs <= {1'b0, sram_regs[MEMORY_DATA_WIDTH-1:1]};
         else
             sram_regs <= sram_regs;
@@ -172,8 +172,8 @@ module PSEUDO_SPT_INTF(
         if (!BGN)
             cnt_bit_sent <= 0;
         else if (SPI_READ == spi_state)
-            cnt_bit_sent <= RESERVED_DATA_LEN;
-        else if (SPI_LOOP == spi_state)
+            cnt_bit_sent <= (RESERVED_DATA_LEN - 1); // RESERVED_DATA_LEN bit
+        else if ((SPI_LOOP == spi_state) && cnt_bit_sent)
             cnt_bit_sent <= cnt_bit_sent - 1;
         else
             cnt_bit_sent <= cnt_bit_sent;
@@ -183,7 +183,7 @@ module PSEUDO_SPT_INTF(
     begin
         if (!BGN)
             cnt_addr_len <= DATA_LEN;
-        else if (SPI_ADDR == spi_state)
+        else if ((SPI_ADDR == spi_state) && cnt_addr_len)
             cnt_addr_len <= cnt_addr_len - 1;
         else
             cnt_addr_len <= cnt_addr_len;
@@ -199,7 +199,7 @@ module PSEUDO_SPT_INTF(
                 SPI_IDLE:   cnt_state <= 0;
                 SPI_READ:   cnt_state <= 4;
                 SPI_SOUT:   cnt_state <= 0;
-                SPI_LOOP:   cnt_state <= 0;
+                SPI_LOOP:   cnt_state <= (cnt_bit_sent)?4:0;
                 SPI_ADDR:   cnt_state <= 0;
             endcase
         end
@@ -230,7 +230,7 @@ module PSEUDO_SPT_INTF(
                             spi_state <= SPI_READ;
                         else
                             spi_state <= SPI_RDY;
-                        end
+                    end
                 default:    spi_state <= SPI_DONE;
             endcase
         end
