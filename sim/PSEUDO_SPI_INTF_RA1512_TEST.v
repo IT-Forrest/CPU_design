@@ -23,7 +23,8 @@ module PSEUDO_SPI_INTF_RA1512_TEST;
 
     // Inputs
     reg CLK;
-    reg CTRL_BGN;// enable signal for PSEUDO_SPI
+    reg BGN;// enable signal for PSEUDO_SPI
+    reg CTRL_BGN;// enable signal for CTRL_SRAM
     reg rst_n;//no use here
     reg [1:0]   CTRL_MODE;
     
@@ -41,6 +42,7 @@ module PSEUDO_SPI_INTF_RA1512_TEST;
     wire d_we;
     wire CEN;
     wire SO;
+    wire SPI_SO;
     wire RDY;
     
     integer i,j,k;
@@ -53,9 +55,9 @@ module PSEUDO_SPI_INTF_RA1512_TEST;
    
     parameter   RESERVED_DATA_LEN   = 8;
                 
-    reg   [MEMORY_ADDR_WIDTH-1:0] ADDR_BGN;
-    reg   [RESERVED_DATA_LEN-1:0] DATA_LEN;    //each data width = MEMORY_DATA_WIDTH
-    reg   [7:0]   FREQ_DIV;
+    reg   [MEMORY_ADDR_WIDTH-1:0] addr_end;
+    reg   [RESERVED_DATA_LEN-1:0] data_len;    //each data width = MEMORY_DATA_WIDTH
+    reg   [7:0]   freq_div;
     reg   [MEMORY_DATA_WIDTH-1:0] PI;         // read from SRAM
     
     wire  SCLK1;
@@ -65,23 +67,38 @@ module PSEUDO_SPI_INTF_RA1512_TEST;
     wire  spi_is_done;
 
     // Instantiate the Unit Under Test (UUT)
-    PSEUDO_SPT_INTF(
-        // input
-        .CLK        (CLK     ),
-        .BGN        (BGN     ),
-        .ADDR_BGN   (ADDR_BGN),
-        .DATA_LEN   (DATA_LEN),
-        .FREQ_DIV   (FREQ_DIV),
-        .PI         (m_dataout  ),
-        // output
-        .SCLK1      (SCLK1   ),
-        .SCLK2      (SCLK2   ),
-        .LAT        (LAT     )//LAT for read; SEL for write
-        .SPI_SO     (SO      ),
-        .is_i_addr  (is_i_addr  ),
-        .A          (m_addr     ),
-        .D_WE       (d_we       ),//memory read or write signal, 1: write
-        .spi_is_done(spi_is_done)
+    SRAM_IO_CTRL cct (
+        .CLK(CLK),
+        .BGN(CTRL_BGN),
+        .SI(SI),
+        .LOAD_N(LOAD_N),
+        .CTRL(CTRL_MODE),//2'b00
+        .PI(m_dataout),
+        .RDY(RDY),
+        .D_WE(d_we),
+        .CEN(CEN),
+        .SO(SO),
+        .A(m_addr),
+        .PO(m_datain)
+    );
+    
+    PSEUDO_SPT_INTF     put(
+        //input
+        // .CLK        (CLK     ),
+        // .BGN        (BGN     ),
+        // .ADDR_BGN   (addr_end),
+        // .DATA_LEN   (data_len),
+        // .FREQ_DIV   (freq_div),
+        // .PI         (m_dataout  ),
+        //output
+        // .SCLK1      (SCLK1   ),
+        // .SCLK2      (SCLK2   ),
+        // .LAT        (LAT     ),//LAT for read; SEL for write
+        // .SPI_SO     (SPI_SO  ),
+        // .is_i_addr  (is_i_addr  ),
+        // .A          (m_addr     ),
+        // .D_WE       (d_we       ),//memory read or write signal, 1: write
+        // .spi_is_done(spi_is_done)
     );
   
     RA1SHD_IBM512X8   sram (
@@ -103,7 +120,14 @@ module PSEUDO_SPI_INTF_RA1512_TEST;
         // .dataout(m_dataout)
     );
     
-    parameter   DEFAULT_PC_ADDR = 16;
+    parameter   SPI_IDLE = 3'b000,
+                SPI_ADDR = 3'b001,
+                SPI_READ = 3'b011,
+                SPI_SOUT = 3'b010,
+                SPI_LOOP = 3'b110,
+                SPI_RDY  = 3'b100,
+                SPI_DONE = 3'b101;
+                
     //defparam    uut.DEFAULT_PC_ADDR = DEFAULT_PC_ADDR;
     
     //assign  m_addr = (is_i_addr)?i_addr:d_addr;
@@ -111,12 +135,18 @@ module PSEUDO_SPI_INTF_RA1512_TEST;
     //assign  i_datain = (is_i_addr)?m_dataout:0;
     //assign  d_datain = (is_i_addr)?0:m_dataout;
     
+    parameter   DEFAULT_PC_ADDR = 16,
+                MEM_BGN_ADDR    = 0,
+                TRANSFER_LEN    = 7*2;
+    
     initial begin
         // Initialize Inputs Signals
         CLK = 0;
         rst_n = 0;
+        BGN = 0;
+        addr_end = MEM_BGN_ADDR + TRANSFER_LEN - 1;
+        data_len = TRANSFER_LEN;
         CTRL_BGN = 0;
-        start = 0;
         LOAD_N = 1;
         error_cnt = 0;
         CTRL_MODE = 2'b00;
@@ -146,7 +176,6 @@ module PSEUDO_SPI_INTF_RA1512_TEST;
         //if (`gr3 != 0) go to I_RAM[ 9];
         //make sure to include the offset for DATA SRAM
         tmpi_datain = {`BNZ, `gr0, 4'b0001, 4'b0010};
-        
         i_mem.I_RAM[ i] = tmpi_datain[7:0];  i = 9 + DEFAULT_PC_ADDR*2;
         i_mem.I_RAM[ i] = tmpi_datain[15:8]; i = 10+ DEFAULT_PC_ADDR*2;
         // i_mem.I_RAM[11] = {`NOP, 11'b000_0000_0000};
@@ -165,22 +194,34 @@ module PSEUDO_SPI_INTF_RA1512_TEST;
         // i_mem.I_RAM[20] = {`NOP, 11'b000_0000_0000};
         // i_mem.I_RAM[21] = {`NOP, 11'b000_0000_0000};
         
-        i = 0;
+        i = 0; j = 0; k = 0;
         tmpi_datain = 16'h00AB;
         i_mem.I_RAM[ i] = tmpi_datain[7:0];  i = 1;
         i_mem.I_RAM[ i] = tmpi_datain[15:8]; i = 2;
         tmpi_datain = 16'h3C00;
         i_mem.I_RAM[ i] = tmpi_datain[7:0];  i = 3;
         i_mem.I_RAM[ i] = tmpi_datain[15:8]; i = 4;
-        tmpi_datain = 16'h0000;
+        tmpi_datain = 16'h0500;
         i_mem.I_RAM[ i] = tmpi_datain[7:0];  i = 5;
         i_mem.I_RAM[ i] = tmpi_datain[15:8]; i = 6;
+        tmpi_datain = 16'h9E3D;
+        i_mem.I_RAM[ i] = tmpi_datain[7:0];  i = 7;
+        i_mem.I_RAM[ i] = tmpi_datain[15:8]; i = 8;
+        tmpi_datain = 16'hD7C3;
+        i_mem.I_RAM[ i] = tmpi_datain[7:0];  i = 9;
+        i_mem.I_RAM[ i] = tmpi_datain[15:8]; i = 10;
+        tmpi_datain = 16'h7A58;
+        i_mem.I_RAM[ i] = tmpi_datain[7:0];  i = 11;
+        i_mem.I_RAM[ i] = tmpi_datain[15:8]; i = 12;
+        tmpi_datain = 16'hC201;
+        i_mem.I_RAM[ i] = tmpi_datain[7:0];  i = 13;
+        i_mem.I_RAM[ i] = tmpi_datain[15:8]; i = 14;
         // i_mem.D_RAM[0] = 16'h00AB;
         // i_mem.D_RAM[1] = 16'h3C00;
         // i_mem.D_RAM[2] = 16'h0000;
 
-        #10 rst_n = 0; CTRL_BGN = 1;
-        #10 rst_n = 1; 
+        #10 rst_n = 0;
+        #10 BGN = 1; rst_n = 1; CTRL_BGN = 1;
 
         /* Serially Input the address & Instruction to CTRL and then to SRAM */
         for (i = DEFAULT_PC_ADDR; i<7+ DEFAULT_PC_ADDR; i=i+1) begin
