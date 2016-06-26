@@ -25,7 +25,6 @@ module PSEUDO_SPI_INTF_TEST;
     reg CLK;
     reg BGN;// enable signal for PSEUDO_SPI
     reg rst_n;//no use here
-    reg [1:0]   CTRL_MODE;
     
     // Wires
     // wire is_i_addr;
@@ -51,9 +50,9 @@ module PSEUDO_SPI_INTF_TEST;
    
     parameter   RESERVED_DATA_LEN   = 8;
                 
-    reg   [MEMORY_ADDR_WIDTH-1:0] ADDR_BGN;
-    reg   [RESERVED_DATA_LEN-1:0] DATA_LEN;    //each data width = MEMORY_DATA_WIDTH
-    reg   [7:0]   FREQ_DIV;
+    reg   [MEMORY_ADDR_WIDTH-1:0] addr_end;
+    reg   [RESERVED_DATA_LEN-1:0] data_len;    //each data width = MEMORY_DATA_WIDTH
+    reg   [7:0]   freq_div;
     reg   [MEMORY_DATA_WIDTH-1:0] PI;         // read from SRAM
     
     wire  SCLK1;
@@ -67,9 +66,9 @@ module PSEUDO_SPI_INTF_TEST;
         // input
         .CLK        (CLK     ),
         .BGN        (BGN     ),
-        .ADDR_BGN   (ADDR_BGN),
-        .DATA_LEN   (DATA_LEN),
-        .FREQ_DIV   (FREQ_DIV),
+        .ADDR_BGN   (addr_end),
+        .DATA_LEN   (data_len),
+        .FREQ_DIV   (freq_div),
         .PI         (m_dataout  ),
         // output
         .SCLK1      (SCLK1   ),
@@ -104,8 +103,6 @@ module PSEUDO_SPI_INTF_TEST;
     
     I_MEMORY_8BIT   c_mem();
     
-    parameter   DEFAULT_PC_ADDR = 16;
-    
     parameter   SPI_IDLE = 3'b000,
                 SPI_ADDR = 3'b001,
                 SPI_READ = 3'b011,
@@ -120,119 +117,116 @@ module PSEUDO_SPI_INTF_TEST;
     //assign  m_datain = d_dataout;
     //assign  i_datain = (is_i_addr)?m_dataout:0;
     //assign  d_datain = (is_i_addr)?0:m_dataout;
+
+    parameter   DEFAULT_PC_ADDR = 16,
+                MEM_BGN_ADDR    = 0,
+                TRANSFER_LEN    = 7*2;
     
     initial begin
         // Initialize Inputs Signals
         CLK = 0;
         rst_n = 0;
         BGN = 0;
-        ADDR_BGN = (7*2 - 1);
-        DATA_LEN = (7*2 - 1);
+        addr_end = MEM_BGN_ADDR + TRANSFER_LEN - 1;
+        data_len = TRANSFER_LEN;
         
         LOAD_N = 1;
         error_cnt = 0;
-        CTRL_MODE = 2'b00;
         #50;
         // Wait 100 ns for global rst_n to finish
 
         /* Add stimulus here: Using a pseudo memory to load instruction*/ 
         i= DEFAULT_PC_ADDR*2;
         tmpi_datain = {`SET, `gr3, 4'b0000, 4'b0100};//reset the loop controller `gr7
-        c_mem.I_RAM[ i] = tmpi_datain[7:0];  i_mem.I_RAM[ i] = tmpi_datain[7:0];  i = 1 + DEFAULT_PC_ADDR*2;
-        c_mem.I_RAM[ i] = tmpi_datain[15:8]; i_mem.I_RAM[ i] = tmpi_datain[15:8]; i = 2 + DEFAULT_PC_ADDR*2;
+        i_mem.I_RAM[ i] = tmpi_datain[7:0];  i = 1 + DEFAULT_PC_ADDR*2;
+        i_mem.I_RAM[ i] = tmpi_datain[15:8]; i = 2 + DEFAULT_PC_ADDR*2;
         tmpi_datain = {`SET, `gr1, 4'b0000, 4'b0000};//reset the sum value
-        c_mem.I_RAM[ i] = tmpi_datain[7:0];  i_mem.I_RAM[ i] = tmpi_datain[7:0];  i = 3 + DEFAULT_PC_ADDR*2;
-        c_mem.I_RAM[ i] = tmpi_datain[15:8]; i_mem.I_RAM[ i] = tmpi_datain[15:8]; i = 4 + DEFAULT_PC_ADDR*2;
+        i_mem.I_RAM[ i] = tmpi_datain[7:0];  i = 3 + DEFAULT_PC_ADDR*2;
+        i_mem.I_RAM[ i] = tmpi_datain[15:8]; i = 4 + DEFAULT_PC_ADDR*2;
         // i_mem.I_RAM[ 2] = {`NOP, 11'b000_0000_0000};
         // i_mem.I_RAM[ 3] = {`NOP, 11'b000_0000_0000};
         // i_mem.I_RAM[ 4] = {`NOP, 11'b000_0000_0000};
         tmpi_datain = {`ADD, `gr1, 1'b0, `gr1, 1'b0, `gr3};//set the loop controller `gr7 = 25
-        c_mem.I_RAM[ i] = tmpi_datain[7:0];  i_mem.I_RAM[ i] = tmpi_datain[7:0];  i = 5 + DEFAULT_PC_ADDR*2;
-        c_mem.I_RAM[ i] = tmpi_datain[15:8]; i_mem.I_RAM[ i] = tmpi_datain[15:8]; i = 6 + DEFAULT_PC_ADDR*2;
+        i_mem.I_RAM[ i] = tmpi_datain[7:0];  i = 5 + DEFAULT_PC_ADDR*2;
+        i_mem.I_RAM[ i] = tmpi_datain[15:8]; i = 6 + DEFAULT_PC_ADDR*2;
         // i_mem.I_RAM[ 7] = {`NOP, 11'b000_0000_0000};
         // i_mem.I_RAM[ 8] = {`NOP, 11'b000_0000_0000};
         tmpi_datain = {`SUBI, `gr3, 4'b0000, 4'b0001};//sum += `gr7
-        c_mem.I_RAM[ i] = tmpi_datain[7:0];  i_mem.I_RAM[ i] = tmpi_datain[7:0];  i = 7 + DEFAULT_PC_ADDR*2;
-        c_mem.I_RAM[ i] = tmpi_datain[15:8]; i_mem.I_RAM[ i] = tmpi_datain[15:8]; i = 8 + DEFAULT_PC_ADDR*2;
+        i_mem.I_RAM[ i] = tmpi_datain[7:0];  i = 7 + DEFAULT_PC_ADDR*2;
+        i_mem.I_RAM[ i] = tmpi_datain[15:8]; i = 8 + DEFAULT_PC_ADDR*2;
         
         //if (`gr3 != 0) go to I_RAM[ 9];
         //make sure to include the offset for DATA SRAM
         tmpi_datain = {`BNZ, `gr0, 4'b0001, 4'b0010};
-        c_mem.I_RAM[ i] = tmpi_datain[7:0];  i_mem.I_RAM[ i] = tmpi_datain[7:0];  i = 9 + DEFAULT_PC_ADDR*2;
-        c_mem.I_RAM[ i] = tmpi_datain[15:8]; i_mem.I_RAM[ i] = tmpi_datain[15:8]; i = 10+ DEFAULT_PC_ADDR*2;
+        i_mem.I_RAM[ i] = tmpi_datain[7:0];  i = 9 + DEFAULT_PC_ADDR*2;
+        i_mem.I_RAM[ i] = tmpi_datain[15:8]; i = 10+ DEFAULT_PC_ADDR*2;
         // i_mem.I_RAM[11] = {`NOP, 11'b000_0000_0000};
         // i_mem.I_RAM[12] = {`NOP, 11'b000_0000_0000};
         // i_mem.I_RAM[13] = {`NOP, 11'b000_0000_0000};
         tmpi_datain = {`STORE, `gr1, 1'b0, `gr0, 4'b0010};//if (`gr7 != 0) go to I_RAM[ 9];
-        c_mem.I_RAM[ i] = tmpi_datain[7:0];  i_mem.I_RAM[ i] = tmpi_datain[7:0];  i = 11+ DEFAULT_PC_ADDR*2;
-        c_mem.I_RAM[ i] = tmpi_datain[15:8]; i_mem.I_RAM[ i] = tmpi_datain[15:8]; i = 12+ DEFAULT_PC_ADDR*2;
+        i_mem.I_RAM[ i] = tmpi_datain[7:0];  i = 11+ DEFAULT_PC_ADDR*2;
+        i_mem.I_RAM[ i] = tmpi_datain[15:8]; i = 12+ DEFAULT_PC_ADDR*2;
         // i_mem.I_RAM[15] = {`NOP, 11'b000_0000_0000};
         // i_mem.I_RAM[16] = {`NOP, 11'b000_0000_0000};
         // i_mem.I_RAM[17] = {`NOP, 11'b000_0000_0000};
         tmpi_datain = {`HALT, 11'b000_0000_0000};//due to the pipeline, we need to add many `NOP to the instruction set
-        c_mem.I_RAM[ i] = tmpi_datain[7:0];  i_mem.I_RAM[ i] = tmpi_datain[7:0];  i = 13+ DEFAULT_PC_ADDR*2;
-        c_mem.I_RAM[ i] = tmpi_datain[15:8]; i_mem.I_RAM[ i] = tmpi_datain[15:8]; i = 14+ DEFAULT_PC_ADDR*2;
+        i_mem.I_RAM[ i] = tmpi_datain[7:0];  i = 13+ DEFAULT_PC_ADDR*2;
+        i_mem.I_RAM[ i] = tmpi_datain[15:8]; i = 14+ DEFAULT_PC_ADDR*2;
         // i_mem.I_RAM[19] = {`NOP, 11'b000_0000_0000};
         // i_mem.I_RAM[20] = {`NOP, 11'b000_0000_0000};
         // i_mem.I_RAM[21] = {`NOP, 11'b000_0000_0000};
         
-        i = 0;
+        i = 0; j = 0; k = 0;
         tmpi_datain = 16'h00AB;
-        c_mem.I_RAM[ i] = tmpi_datain[7:0];  i_mem.I_RAM[ i] = tmpi_datain[7:0];  i = 1;
-        c_mem.I_RAM[ i] = tmpi_datain[15:8]; i_mem.I_RAM[ i] = tmpi_datain[15:8]; i = 2;
+        i_mem.I_RAM[ i] = tmpi_datain[7:0];  i = 1;
+        i_mem.I_RAM[ i] = tmpi_datain[15:8]; i = 2;
         tmpi_datain = 16'h3C00;
-        c_mem.I_RAM[ i] = tmpi_datain[7:0];  i_mem.I_RAM[ i] = tmpi_datain[7:0];  i = 3;
-        c_mem.I_RAM[ i] = tmpi_datain[15:8]; i_mem.I_RAM[ i] = tmpi_datain[15:8]; i = 4;
+        i_mem.I_RAM[ i] = tmpi_datain[7:0];  i = 3;
+        i_mem.I_RAM[ i] = tmpi_datain[15:8]; i = 4;
         tmpi_datain = 16'h0500;
-        c_mem.I_RAM[ i] = tmpi_datain[7:0];  i_mem.I_RAM[ i] = tmpi_datain[7:0];  i = 5;
-        c_mem.I_RAM[ i] = tmpi_datain[15:8]; i_mem.I_RAM[ i] = tmpi_datain[15:8]; i = 6;
+        i_mem.I_RAM[ i] = tmpi_datain[7:0];  i = 5;
+        i_mem.I_RAM[ i] = tmpi_datain[15:8]; i = 6;
         tmpi_datain = 16'h9E3D;
-        c_mem.I_RAM[ i] = tmpi_datain[7:0];  i_mem.I_RAM[ i] = tmpi_datain[7:0];  i = 7;
-        c_mem.I_RAM[ i] = tmpi_datain[15:8]; i_mem.I_RAM[ i] = tmpi_datain[15:8]; i = 8;
+        i_mem.I_RAM[ i] = tmpi_datain[7:0];  i = 7;
+        i_mem.I_RAM[ i] = tmpi_datain[15:8]; i = 8;
         tmpi_datain = 16'hD7C3;
-        c_mem.I_RAM[ i] = tmpi_datain[7:0];  i_mem.I_RAM[ i] = tmpi_datain[7:0];  i = 9;
-        c_mem.I_RAM[ i] = tmpi_datain[15:8]; i_mem.I_RAM[ i] = tmpi_datain[15:8]; i = 10;
+        i_mem.I_RAM[ i] = tmpi_datain[7:0];  i = 9;
+        i_mem.I_RAM[ i] = tmpi_datain[15:8]; i = 10;
         tmpi_datain = 16'h7A58;
-        c_mem.I_RAM[ i] = tmpi_datain[7:0];  i_mem.I_RAM[ i] = tmpi_datain[7:0];  i = 11;
-        c_mem.I_RAM[ i] = tmpi_datain[15:8]; i_mem.I_RAM[ i] = tmpi_datain[15:8]; i = 12;
+        i_mem.I_RAM[ i] = tmpi_datain[7:0];  i = 11;
+        i_mem.I_RAM[ i] = tmpi_datain[15:8]; i = 12;
         tmpi_datain = 16'hC201;
-        c_mem.I_RAM[ i] = tmpi_datain[7:0];  i_mem.I_RAM[ i] = tmpi_datain[7:0];  i = 13;
-        c_mem.I_RAM[ i] = tmpi_datain[15:8]; i_mem.I_RAM[ i] = tmpi_datain[15:8]; i = 14;
+        i_mem.I_RAM[ i] = tmpi_datain[7:0];  i = 13;
+        i_mem.I_RAM[ i] = tmpi_datain[15:8]; i = 14;
         // i_mem.D_RAM[0] = 16'h00AB;
         // i_mem.D_RAM[1] = 16'h3C00;
         // i_mem.D_RAM[2] = 16'h0000;
 
-        #10 BGN = 1; rst_n = 1;
+        #10 BGN = 1; rst_n = 1; 
 
-        /* fetch SRAM info & print inner instructions */ 
-        //force   CEN = 0;//enable RA1SHD_ibm512x8
-        //force   d_we = 1;//read module
-        for (i = DEFAULT_PC_ADDR; i<7*2+ DEFAULT_PC_ADDR; i=i+1) begin
-            $write("%4x\t", (i<<1));
-            // wait for read;
+        /* Fetch SRAM info & print inner instructions */
+        for (i = MEM_BGN_ADDR + TRANSFER_LEN + 1; i > (MEM_BGN_ADDR + 1); i=i-1) begin
+            $write("%4x\t", i); tmpi_datain = 0;
+            // Wait for data read from real SRAM;
             #10;
             for (j = 0; j < MEMORY_DATA_WIDTH; j=j+1) begin
                 // Serial OUT;
                 for (k = 0; k < 10; k=k+1) begin
-                    if (put.cnt_state == SPI_LOOP) begin
+                    if (put.spi_state == SPI_LOOP) begin
                         k = 10;
-                        tmpi_datain = {tmpi_datain[MEMORY_DATA_WIDTH-2:0], SO};
+                        tmpi_datain = {SO, tmpi_datain[MEMORY_DATA_WIDTH-1:1]};
                     end
                     #10;
                 end
                 #10 LOAD_N = 1;
             end
-            c_mem.I_RAM[ i] = tmpi_datain[MEMORY_DATA_WIDTH-1:0];
-            // wait for Addr change
+            // Write data to tmp SRAM for later comparison
+            c_mem.I_RAM[ i-2] = tmpi_datain[MEMORY_DATA_WIDTH-1:0];
             #10;
             
-            // #10 force   m_addr = tmpi_adder;
-            // #10;// a rising edge for SRAM
-            // $write("%8b ", m_dataout); i_mem.I_RAM[tmpi_adder+(DEFAULT_PC_ADDR<<1)] = m_dataout;
-            // #10 release m_addr;
-            $write("%b ", c_mem.I_RAM[ i]);
+            $write("%b ", c_mem.I_RAM[ i-2]);
             
-            if (i_mem.I_RAM[ i] == c_mem.I_RAM[ i])
+            if (i_mem.I_RAM[ i-2] == c_mem.I_RAM[ i-2])
                 $write("\t<--- Data Correct!");
             else begin
                 $write("\t<--- Data Wrong!");

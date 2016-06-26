@@ -25,8 +25,12 @@ add wave -noupdate -divider MEM
 add wave -noupdate /PSEUDO_SPI_INTF_TEST/i_mem/addr
 add wave -noupdate /PSEUDO_SPI_INTF_TEST/i_mem/dataout
 add wave -noupdate /PSEUDO_SPI_INTF_TEST/i_mem/rst_n
+add wave -noupdate /PSEUDO_SPI_INTF_TEST/i
+add wave -noupdate /PSEUDO_SPI_INTF_TEST/j
+add wave -noupdate /PSEUDO_SPI_INTF_TEST/k
+add wave -noupdate /PSEUDO_SPI_INTF_TEST/tmpi_datain
 TreeUpdate [SetDefaultTree]
-WaveRestoreCursors {{Cursor 1} {7051937 ps} 0}
+WaveRestoreCursors {{Cursor 1} {118142 ps} 0}
 quietly wave cursor active 1
 configure wave -namecolwidth 218
 configure wave -valuecolwidth 100
@@ -42,4 +46,4 @@ configure wave -griddelta 40
 configure wave -timeline 0
 configure wave -timelineunits ps
 update
-WaveRestoreZoom {6948085 ps} {7155789 ps}
+WaveRestoreZoom {30300 ps} {156300 ps}
