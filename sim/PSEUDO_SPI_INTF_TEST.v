@@ -38,7 +38,6 @@ module PSEUDO_SPI_INTF_TEST;
     // wire [8:0]  i_addr;
     // wire [8:0]  d_addr;
     wire d_we;
-    wire CEN;
     wire SO;
     wire RDY;
     
@@ -58,7 +57,7 @@ module PSEUDO_SPI_INTF_TEST;
     wire  SCLK1;
     wire  SCLK2;
     wire  LAT;
-    wire  is_i_addr;
+    wire  CEN;
     wire  spi_is_done;
     
     // Instantiate the Unit Under Test (UUT)
@@ -76,7 +75,7 @@ module PSEUDO_SPI_INTF_TEST;
         .LAT        (LAT     ),//LAT for read; SEL for write
 
         .SPI_SO     (SO      ),
-        .is_i_addr  (is_i_addr  ),
+        .CEN        (CEN     ),
         .A          (m_addr     ),
         .D_WE       (d_we       ),//memory read or write signal, 1: write
         .spi_is_done(spi_is_done)
@@ -128,7 +127,7 @@ module PSEUDO_SPI_INTF_TEST;
         rst_n = 0;
         BGN = 0;
         addr_end = MEM_BGN_ADDR + TRANSFER_LEN - 1;
-        data_len = TRANSFER_LEN;
+        data_len = TRANSFER_LEN - 1;
         
         LOAD_N = 1;
         error_cnt = 0;
@@ -206,7 +205,7 @@ module PSEUDO_SPI_INTF_TEST;
 
         /* Fetch SRAM info & print inner instructions */
         for (i = MEM_BGN_ADDR + TRANSFER_LEN + 1; i > (MEM_BGN_ADDR + 1); i=i-1) begin
-            $write("%4x\t", i); tmpi_datain = 0;
+            $write("%4x\t", i-2); tmpi_datain = 0;
             // Wait for data read from real SRAM;
             #10;
             for (j = 0; j < MEMORY_DATA_WIDTH; j=j+1) begin
@@ -241,7 +240,7 @@ module PSEUDO_SPI_INTF_TEST;
         else
             $display("Test Passed!");
         //#10 release CEN; release d_we;
-        $stop();//
+        #50 $stop();//
     end
     
     always #5

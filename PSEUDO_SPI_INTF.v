@@ -52,6 +52,7 @@ module PSEUDO_SPT_INTF(
     
     is_i_addr,
     A,
+    CEN,
     //i_addr,      //output instruction address
     //d_addr,      //output memory data address 
     D_WE,        //memory read or write signal, 1: write
@@ -78,6 +79,7 @@ module PSEUDO_SPT_INTF(
     output  SPI_SO;
     output  is_i_addr;
     output  [MEMORY_ADDR_WIDTH-1:0] A;
+    output  CEN;
     //output  [MEMORY_ADDR_WIDTH-1:0] i_addr;     //output instruction address
     //output  [MEMORY_ADDR_WIDTH-1:0] d_addr;     //output memory data address 
     output  D_WE;               //memory read or write signal, 1: write
@@ -123,10 +125,10 @@ module PSEUDO_SPT_INTF(
     // end
     always @(negedge CLK)
     begin
-        if (spi_state == SPI_IDLE)
-            CEN <= 1;
-        else
+        if ((spi_state == SPI_ADDR) || (spi_state == SPI_READ))
             CEN <= 0;/* low enable */
+        else
+            CEN <= 1;
     end
     
     //******** Frequency Divisior ********//
@@ -143,12 +145,12 @@ module PSEUDO_SPT_INTF(
     end
     
     //************* Addr & Buffer Update *************//
-    always @(posedge CLK)
+    always @(negedge CLK)
     begin
         if (!BGN)
             sram_addr <= ADDR_BGN;
             // sclk_state <= 0;
-        else if ((SPI_ADDR == spi_state) && sram_addr)
+        else if ((SPI_ADDR == spi_state) && cnt_addr_len)//sram_addr
             sram_addr <= sram_addr - 1;
         else
             sram_addr <= sram_addr;

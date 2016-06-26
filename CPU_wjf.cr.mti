@@ -139,13 +139,6 @@ Top level modules:
 } {} {}} {F:/05. Code Battle/04. Verilog/CPU_design/SA_4D_DEFINE_418.v} {1 {vlog -work work -stats=none {F:/05. Code Battle/04. Verilog/CPU_design/SA_4D_DEFINE_418.v}
 Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
 
-} {} {}} {F:/05. Code Battle/04. Verilog/CPU_design/RA1SHD_IBM512X8.v} {1 {vlog -work work -stats=none {F:/05. Code Battle/04. Verilog/CPU_design/RA1SHD_IBM512X8.v}
-Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
--- Compiling module RA1SHD_IBM512X8
-
-Top level modules:
-	RA1SHD_IBM512X8
-
 } {} {}} {F:/05. Code Battle/04. Verilog/CPU_design/sim/PSEUDO_SPI_INTF_TEST.v} {1 {vlog -work work -stats=none {F:/05. Code Battle/04. Verilog/CPU_design/sim/PSEUDO_SPI_INTF_TEST.v}
 Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
 -- Compiling module PSEUDO_SPT_INTF
@@ -154,6 +147,13 @@ Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
 
 Top level modules:
 	PSEUDO_SPI_INTF_TEST
+
+} {} {}} {F:/05. Code Battle/04. Verilog/CPU_design/RA1SHD_IBM512X8.v} {1 {vlog -work work -stats=none {F:/05. Code Battle/04. Verilog/CPU_design/RA1SHD_IBM512X8.v}
+Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
+-- Compiling module RA1SHD_IBM512X8
+
+Top level modules:
+	RA1SHD_IBM512X8
 
 } {} {}} {F:/05. Code Battle/04. Verilog/CPU_design/PSEUDO_SPI_INTF.v} {1 {vlog -work work -stats=none {F:/05. Code Battle/04. Verilog/CPU_design/PSEUDO_SPI_INTF.v}
 Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014

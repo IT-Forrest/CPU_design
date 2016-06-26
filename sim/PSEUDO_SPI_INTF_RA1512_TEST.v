@@ -23,27 +23,32 @@ module PSEUDO_SPI_INTF_RA1512_TEST;
 
     // Inputs
     reg CLK;
-    reg BGN;// enable signal for PSEUDO_SPI
+    reg SPI_BGN;// enable signal for PSEUDO_SPI
     reg CTRL_BGN;// enable signal for CTRL_SRAM
     reg rst_n;//no use here
     reg [1:0]   CTRL_MODE;
+    reg is_intf_flag;
     
     // Wires
     // wire is_i_addr;
     // wire [7:0]  i_datain;
     // wire [7:0]  d_datain;
     // wire [7:0]  d_dataout;
-    wire [7:0]  m_datain;
 
-    wire [7:0]  m_dataout;
+    wire [7:0]  m_datain;
+    wire [7:0]  m_dataout;  // read from SRAM
     wire [8:0]  m_addr;     //MEMORY_ADDR_WIDTH
-    // wire [8:0]  i_addr;
-    // wire [8:0]  d_addr;
+    wire [8:0]  m_addr_cct;
+    wire [8:0]  m_addr_put;
     wire d_we;
+    wire d_we_cct;
+    wire d_we_put;
     wire CEN;
-    wire SO;
-    wire SPI_SO;
+    wire CEN_cct;
+    wire CEN_put;
+    wire CTRL_SO;
     wire RDY;
+    wire SPI_SO;
     
     integer i,j,k;
     reg  [15:0] tmpi_datain;
@@ -58,7 +63,6 @@ module PSEUDO_SPI_INTF_RA1512_TEST;
     reg   [MEMORY_ADDR_WIDTH-1:0] addr_end;
     reg   [RESERVED_DATA_LEN-1:0] data_len;    //each data width = MEMORY_DATA_WIDTH
     reg   [7:0]   freq_div;
-    reg   [MEMORY_DATA_WIDTH-1:0] PI;         // read from SRAM
     
     wire  SCLK1;
     wire  SCLK2;
@@ -75,30 +79,30 @@ module PSEUDO_SPI_INTF_RA1512_TEST;
         .CTRL(CTRL_MODE),//2'b00
         .PI(m_dataout),
         .RDY(RDY),
-        .D_WE(d_we),
-        .CEN(CEN),
-        .SO(SO),
-        .A(m_addr),
+        .D_WE(d_we_cct),
+        .CEN(CEN_cct),
+        .SO(CTRL_SO),
+        .A(m_addr_cct),
         .PO(m_datain)
     );
     
     PSEUDO_SPT_INTF     put(
         //input
-        // .CLK        (CLK     ),
-        // .BGN        (BGN     ),
-        // .ADDR_BGN   (addr_end),
-        // .DATA_LEN   (data_len),
-        // .FREQ_DIV   (freq_div),
-        // .PI         (m_dataout  ),
+        .CLK        (CLK     ),
+        .BGN        (SPI_BGN ),
+        .ADDR_BGN   (addr_end),
+        .DATA_LEN   (data_len),
+        .FREQ_DIV   (freq_div),
+        .PI         (m_dataout  ),
         //output
-        // .SCLK1      (SCLK1   ),
-        // .SCLK2      (SCLK2   ),
-        // .LAT        (LAT     ),//LAT for read; SEL for write
-        // .SPI_SO     (SPI_SO  ),
-        // .is_i_addr  (is_i_addr  ),
-        // .A          (m_addr     ),
-        // .D_WE       (d_we       ),//memory read or write signal, 1: write
-        // .spi_is_done(spi_is_done)
+        .SCLK1      (SCLK1   ),
+        .SCLK2      (SCLK2   ),
+        .LAT        (LAT     ),//LAT for read; SEL for write
+        .SPI_SO     (SPI_SO  ),
+        .CEN        (CEN_put ),
+        .A          (m_addr_put ),
+        .D_WE       (d_we_put   ),//memory read or write signal, 1: write
+        .spi_is_done(spi_is_done)
     );
   
     RA1SHD_IBM512X8   sram (
@@ -120,6 +124,8 @@ module PSEUDO_SPI_INTF_RA1512_TEST;
         // .dataout(m_dataout)
     );
     
+    I_MEMORY_8BIT   c_mem();
+    
     parameter   SPI_IDLE = 3'b000,
                 SPI_ADDR = 3'b001,
                 SPI_READ = 3'b011,
@@ -130,30 +136,32 @@ module PSEUDO_SPI_INTF_RA1512_TEST;
                 
     //defparam    uut.DEFAULT_PC_ADDR = DEFAULT_PC_ADDR;
     
-    //assign  m_addr = (is_i_addr)?i_addr:d_addr;
-    //assign  m_datain = d_dataout;
+    assign  m_addr  = (is_intf_flag)? m_addr_put: m_addr_cct;
+    assign  CEN     = (is_intf_flag)? CEN_put: CEN_cct;
+    assign  d_we    = (is_intf_flag)? d_we_put: d_we_cct;
     //assign  i_datain = (is_i_addr)?m_dataout:0;
     //assign  d_datain = (is_i_addr)?0:m_dataout;
     
     parameter   DEFAULT_PC_ADDR = 16,
-                MEM_BGN_ADDR    = 0,
+                MEM_BGN_ADDR    = DEFAULT_PC_ADDR*2,
                 TRANSFER_LEN    = 7*2;
     
     initial begin
         // Initialize Inputs Signals
         CLK = 0;
         rst_n = 0;
-        BGN = 0;
-        addr_end = MEM_BGN_ADDR + TRANSFER_LEN - 1;
-        data_len = TRANSFER_LEN;
+        SPI_BGN = 0;
         CTRL_BGN = 0;
+        addr_end = MEM_BGN_ADDR + TRANSFER_LEN - 1;
+        data_len = TRANSFER_LEN - 1;
         LOAD_N = 1;
         error_cnt = 0;
         CTRL_MODE = 2'b00;
+        
+        is_intf_flag = 0;
         #50;
-        // Wait 100 ns for global rst_n to finish
 
-        /* Add stimulus here: Using a pseudo memory to load instruction*/ 
+        /* (0) Using a pseudo memory to keep instructions*/ 
         i= DEFAULT_PC_ADDR*2;
         tmpi_datain = {`SET, `gr3, 4'b0000, 4'b0100};//reset the loop controller `gr7
         i_mem.I_RAM[ i] = tmpi_datain[7:0];  i = 1 + DEFAULT_PC_ADDR*2;
@@ -221,9 +229,9 @@ module PSEUDO_SPI_INTF_RA1512_TEST;
         // i_mem.D_RAM[2] = 16'h0000;
 
         #10 rst_n = 0;
-        #10 BGN = 1; rst_n = 1; CTRL_BGN = 1;
+        #10 rst_n = 1; CTRL_BGN = 1;
 
-        /* Serially Input the address & Instruction to CTRL and then to SRAM */
+        /* (1) Import address & Instruction to SRAM via CTRL_SRAM */
         for (i = DEFAULT_PC_ADDR; i<7+ DEFAULT_PC_ADDR; i=i+1) begin
             #10 CTRL_MODE = 2'b00;
             tmpi_adder = (i<<1);
@@ -287,107 +295,38 @@ module PSEUDO_SPI_INTF_RA1512_TEST;
         // #10 start = 0;
         // for (j=1; j<40; j=j+1)
             // #100;
-        #1600;
+        #800;
         
-        //#5;
-        /* fetch SRAM info & print inner instructions */ 
-        //force   CEN = 0;//enable RA1SHD_ibm512x8
-        //force   d_we = 1;//read module
-        for (i = DEFAULT_PC_ADDR; i<7+ DEFAULT_PC_ADDR; i=i+1) begin
-            $write("%4x\t", (i<<1));
-            #10 CTRL_MODE = 2'b00;
-            tmpi_adder = (i<<1) + 0;
-            for (j = 0; j < MEMORY_ADDR_WIDTH; j=j+1) begin
-                SI = tmpi_adder[j];
-                #10 LOAD_N = 0;
-                #30;
-                for (k = 0; k < 5; k=k+1) begin
-                    if (RDY) begin
-                        k = 5;
-                    end
-                    #10;
-                end
-                #10 LOAD_N = 1;
-            end
-            //Read data from SRAM;
-            #10 CTRL_MODE = 2'b01;
-            #10 LOAD_N = 0;
-            #30;
-            for (k = 0; k < 5; k=k+1) begin
-                if (RDY) begin
-                    k = 5;
-                end
-                #10;
-            end
-            #10 LOAD_N = 1;
-            //Serial Output of SRAM content;
-            #10 CTRL_MODE = 2'b00;
+        /* (3) fetch info from Real SRAM & compare with Baseline */ 
+        error_cnt = 0;
+        is_intf_flag = 1;
+        CTRL_BGN = 0;
+        SPI_BGN = 1; 
+        for (i = MEM_BGN_ADDR + TRANSFER_LEN + 1; i > (MEM_BGN_ADDR + 1); i=i-1) begin
+            $write("%4x\t", i-2); tmpi_datain = 0;
+            // Wait for data read from real SRAM;
+            #10;
             for (j = 0; j < MEMORY_DATA_WIDTH; j=j+1) begin
-                tmpi_datain = {SO,tmpi_datain[(MEMORY_DATA_WIDTH<<1)-1:1]};
-                #10 LOAD_N = 0;
-                #30;
-                for (k = 0; k < 5; k=k+1) begin
-                    if (RDY) begin
-                        k = 5;
+                // Serial OUT;
+                for (k = 0; k < 10; k=k+1) begin
+                    if (put.spi_state == SPI_LOOP) begin
+                        k = 10;
+                        tmpi_datain = {SPI_SO, tmpi_datain[MEMORY_DATA_WIDTH-1:1]};
                     end
                     #10;
                 end
                 #10 LOAD_N = 1;
             end
-            // #10 force   m_addr = tmpi_adder;
-            // #10;// a rising edge for SRAM
-            // $write("%8b ", m_dataout); i_mem.I_RAM[tmpi_adder+(DEFAULT_PC_ADDR<<1)] = m_dataout;
-            // #10 release m_addr;
-
-            #10 CTRL_MODE = 2'b00;
-            tmpi_adder = (i<<1) + 1;
-            for (j = 0; j < MEMORY_ADDR_WIDTH; j=j+1) begin
-                SI = tmpi_adder[j];
-                #10 LOAD_N = 0;
-                #30;
-                for (k = 0; k < 5; k=k+1) begin
-                    if (RDY) begin
-                        k = 5;
-                    end
-                    #10;
-                end
-                #10 LOAD_N = 1;
-            end
-            //Read data from SRAM;
-            #10 CTRL_MODE = 2'b01;
-            #10 LOAD_N = 0;
-            #30;
-            for (k = 0; k < 5; k=k+1) begin
-                if (RDY) begin
-                    k = 5;
-                end
-                #10;
-            end
-            #10 LOAD_N = 1;
-            //Serial Output of SRAM content;
-            #10 CTRL_MODE = 2'b00;
-            for (j = 0; j < MEMORY_DATA_WIDTH; j=j+1) begin
-                tmpi_datain = {SO,tmpi_datain[(MEMORY_DATA_WIDTH<<1)-1:1]};
-                #10 LOAD_N = 0;
-                #30;
-                for (k = 0; k < 5; k=k+1) begin
-                    if (RDY) begin
-                        k = 5;
-                    end
-                    #10;
-                end
-                #10 LOAD_N = 1;
-            end
-            // #10 force   m_addr = tmpi_adder;
-            // #10;// a rising edge for SRAM
-            // $write("%8b ", m_dataout); i_mem.I_RAM[tmpi_adder+(DEFAULT_PC_ADDR<<1)] = m_dataout;
-            // #10 release m_addr;
-            $write("%b ", tmpi_datain);
+            // Write data to tmp SRAM for later comparison
+            c_mem.I_RAM[ i-2] = tmpi_datain[MEMORY_DATA_WIDTH-1:0];
+            #10;
             
-            if ({i_mem.I_RAM[(i<<1)+1],i_mem.I_RAM[(i<<1)]} == tmpi_datain)
-                $write("\t<--- Inst Correct!");
+            $write("%b ", c_mem.I_RAM[ i-2]);
+            
+            if (i_mem.I_RAM[ i-2] == c_mem.I_RAM[ i-2])
+                $write("\t<--- Data Correct!");
             else begin
-                $write("\t<--- Inst Wrong!");
+                $write("\t<--- Data Wrong!");
                 error_cnt = error_cnt + 1;
             end
             $display("");
@@ -399,7 +338,7 @@ module PSEUDO_SPI_INTF_RA1512_TEST;
         else
             $display("Test Passed!");
         //#10 release CEN; release d_we;
-        $stop();//
+        #50 $stop();//
     end
     
     always #5
