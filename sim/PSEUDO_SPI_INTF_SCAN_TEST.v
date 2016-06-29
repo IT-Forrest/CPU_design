@@ -61,7 +61,7 @@ module PSEUDO_SPI_INTF_SCAN_TEST;
     wire  CEN;
     wire  spi_is_done;
     
-    reg   SEL_B;
+    wire  SEL_B;
     reg   [9:0]   ADC ;
     wire  [9:0]   CFSA_ADC;
     
@@ -133,10 +133,11 @@ module PSEUDO_SPI_INTF_SCAN_TEST;
     SC_CELL_V3	CS220( .SIN(M11), .SO(M12 ), .PO(CFSA_ADC[8]), .PIN(ADC[8]   ), .SEL(SEL_B), .LAT(LAT_B), .SCK1(SCK1_B), .SCK2(SCK2), .BYP_N(1'b0) );
     SC_CELL_V3	CS221( .SIN(M12), .SO(SO_B), .PO(CFSA_ADC[9]), .PIN(ADC[9]   ), .SEL(SEL_B), .LAT(LAT_B), .SCK1(SCK1_B), .SCK2(SCK2), .BYP_N(1'b0) );
 
-    assign  SIN = SPI_SO;
-    assign  SCK1_B = SCLK1;
-    assign  SCK2   = SCLK2;
-    assign  LAT_B  = LAT;
+    assign  SIN     = SPI_SO;
+    assign  SCK1_B  = SCLK1;
+    assign  SCK2    = SCLK2;
+    assign  LAT_B   = LAT;
+    assign  SEL_B   = 1'b0;
     //assign  m_addr = (is_i_addr)?i_addr:d_addr;
     //assign  m_datain = d_dataout;
     //assign  i_datain = (is_i_addr)?m_dataout:0;
@@ -202,7 +203,7 @@ module PSEUDO_SPI_INTF_SCAN_TEST;
         // i_mem.I_RAM[21] = {`NOP, 11'b000_0000_0000};
         
         i = 0; j = 0; k = 0;
-        tmpi_datain = 16'h00AB;
+        tmpi_datain = 16'b111110_00_1010_0111;//510
         i_mem.I_RAM[ i] = tmpi_datain[7:0];  i = 1;
         i_mem.I_RAM[ i] = tmpi_datain[15:8]; i = 2;
         tmpi_datain = 16'h3C00;
@@ -262,7 +263,8 @@ module PSEUDO_SPI_INTF_SCAN_TEST;
         
         // Judge Bits Correct Result
         tmpi_datain = {c_mem.I_RAM[1], c_mem.I_RAM[0]};
-        if (tmpi_datain[11:2] == CFSA_ADC)
+        if ((10'd510 == {CFSA_ADC[9],CFSA_ADC[8],CFSA_ADC[7],CFSA_ADC[6],CFSA_ADC[5],CFSA_ADC[4],CFSA_ADC[3],CFSA_ADC[2],CFSA_ADC[1],CFSA_ADC[0]})
+            && ({tmpi_datain[3:0],tmpi_datain[15:10]} == {CFSA_ADC[9],CFSA_ADC[8],CFSA_ADC[7],CFSA_ADC[6],CFSA_ADC[5],CFSA_ADC[4],CFSA_ADC[3],CFSA_ADC[2],CFSA_ADC[1],CFSA_ADC[0]}))
             $write("\tScan Chain Correct!\n");
         else begin
             $write("\tScan Chain Wrong!\n");
