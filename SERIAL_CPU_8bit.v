@@ -36,7 +36,8 @@ module SERIAL_CPU_8BIT(
     io_datainA,
     io_datainB,
     io_dataoutA,
-    io_dataoutB
+    io_dataoutB,
+    io_offset
     );
 
     parameter   INSTRT_ADDR_WIDTH   = 8,
@@ -86,6 +87,7 @@ module SERIAL_CPU_8BIT(
     output  [GENERAL_REG_WIDTH-1:0]  io_control;
     output  [GENERAL_REG_WIDTH-1:0]  io_dataoutA;
     output  [GENERAL_REG_WIDTH-1:0]  io_dataoutB;
+    output  [GENERAL_REG_WIDTH-1:0]  io_offset;
     
     //reg     is_i_addr;
     reg     lowest_bit;
@@ -103,6 +105,7 @@ module SERIAL_CPU_8BIT(
     assign  io_control  = gr[1];
     assign  io_dataoutA = gr[2];
     assign  io_dataoutB = gr[3];
+    assign  io_offset   = gr[4];
     
     //*********** Facilitate code learning ***********//
     wire    instr_over; // instructions in SRAM are over

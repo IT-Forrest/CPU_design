@@ -63,12 +63,12 @@ module PSEUDO_SPT_INTF(
     parameter   MEMORY_DATA_WIDTH   = 8,
                 MEMORY_ADDR_WIDTH   = 9,
                 RESERVED_DATA_LEN   = 8;
-                
+
     input   CLK;
     //input   RST_N;
     input   BGN;
     input   [MEMORY_ADDR_WIDTH-1:0] ADDR_BGN;
-    input   [RESERVED_DATA_LEN-1:0] DATA_LEN;    //each data width = MEMORY_DATA_WIDTH
+    input   [RESERVED_DATA_LEN-1:0] DATA_LEN;    //1 data = (MEMORY_DATA_WIDTH bits)
     input   [7:0]   FREQ_DIV;
     //input   [MEMORY_DATA_WIDTH-1:0] i_datain;    //input instruction data
     input   [MEMORY_DATA_WIDTH-1:0] PI;         // read from SRAM
@@ -174,7 +174,7 @@ module PSEUDO_SPT_INTF(
         if (!BGN)
             cnt_bit_sent <= 0;
         else if (SPI_READ == spi_state)
-            cnt_bit_sent <= (RESERVED_DATA_LEN - 1); // RESERVED_DATA_LEN bit
+            cnt_bit_sent <= (MEMORY_DATA_WIDTH - 1); // bit# for each address
         else if ((SPI_LOOP == spi_state) && cnt_bit_sent)
             cnt_bit_sent <= cnt_bit_sent - 1;
         else
