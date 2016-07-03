@@ -35,28 +35,25 @@ module SCPU_8BIT_ALU_CTRL_SPI(
     CPU_BGN,
     LOAD_N,
     CTRL_SI,
-    ANA_SI,
+    //ANA_SI,
     ADC_PI,
     // output
     CTRL_RDY,
-    ANA_RDY,
+    //ANA_RDY,
     CTRL_SO,
-    ANA_SO,
+    //ANA_SO,
     NXT,
-    SEL,
+    //SEL,
     SCLK1,
     SCLK2,
     LAT,
     SPI_SO
-    // CLRN,
-    // CLK_ADC,
-    // RSTN_ADC
     );
 
     parameter   MEMORY_DATA_WIDTH   = 8,
                 MEMORY_ADDR_WIDTH   = 9,
                 RESERVED_DATA_LEN   = 8;
-    parameter   GENERAL_REG_WIDTH = 16;
+    parameter   GENERAL_REG_WIDTH   = 16;
 
     // Inputs
     input   CLK;
@@ -66,23 +63,20 @@ module SCPU_8BIT_ALU_CTRL_SPI(
     input   CPU_BGN;
     input   LOAD_N;
     input   CTRL_SI;
-    input   ANA_SI;
+    //input   ANA_SI;
     input   [GENERAL_REG_WIDTH-1:0] ADC_PI;
     
     // Output
     output  CTRL_RDY;
-    output  ANA_RDY;
+    //output  ANA_RDY;
     output  CTRL_SO;
-    output  ANA_SO;
+    //output  ANA_SO;
     output  [1:0]   NXT;
-    output  SEL;
+    //output  SEL;
     output  SCLK1;
     output  SCLK2;
     output  LAT;
     output  SPI_SO;
-    // output  CLRN;
-    // output  CLK_ADC;
-    // output  RSTN_ADC;
     
     // I/O with SRAM
     output  CEN_after_mux;
@@ -166,16 +160,6 @@ module SCPU_8BIT_ALU_CTRL_SPI(
         .PO(PO_from_CTRL)
     );
     
-    // RA1SHD_IBM512X8   sram (
-        // .CLK(CLK),
-        // .CEN(CEN_after_mux), 
-        // .A(A_after_mux),
-        // //need a seperate control signal; or instruction set will be overwritten when d_we=1
-        // .WEN(WEN_after_mux),
-        // .D(D_after_mux),//i_instruct
-        // .Q(Q_from_SRAM)
-    // );
-
     parameter   ALU_MULTIPLY    = 3'b100,
                 ALU_DIVISION    = 3'b010,
                 ALU_SQRTPOWS    = 3'b001;
@@ -203,28 +187,17 @@ module SCPU_8BIT_ALU_CTRL_SPI(
                         .alu_type(alu_type),
                         .mode_type(mode_type),
                         .OFFSET(OFFSET),//10'd0;//10'd507
-                        //where to get offset??
-
+                        //output
                         .FOUT(FOUT),//multiplication
                         .POUT(POUT),
                         .alu_is_done(alu_is_done));
 
-     /*CTRL_LOGIC  CTRL_02(
-                    // Input
-                    .CLK(CLK),
-                    .set_wait_pll_start(pll_start),
-                    .set_meas_adc_start(meas_start),
-                    
-                    // Output
-                    .meas_adc_is_done(meas_is_done),
-                    .wait_pll_is_done(pll_is_done),
-                    .RSTN_ADC(RSTN_ADC),
-                    .CLK_ADC(CLK_ADC),
-                    .CLRN(CLRN)); */
-
-    wire    spi_start, spi_is_done;
-                    
     //// Analog Control Module
+    wire    spi_start;
+    wire    spi_is_done;
+    wire    [MEMORY_ADDR_WIDTH-1:0] A_from_SPI;
+    wire    [MEMORY_ADDR_WIDTH-1:0] A_spi;
+                    
     PSEUDO_SPT_INTF     put(
         //input
         .CLK        (CLK        ),
@@ -234,13 +207,12 @@ module SCPU_8BIT_ALU_CTRL_SPI(
         //.FREQ_DIV   (freq_div   ),
         .PI         (m_dataout  ),
         //output
-        //.SEL        (SEL        ),
         .SCLK1      (SCLK1      ),
         .SCLK2      (SCLK2      ),
-        .LAT        (LAT        ),//LAT for read; SEL for write
+        .LAT        (LAT        ),//LAT for write; SEL for read
         .SPI_SO     (SPI_SO     ),
         .CEN        (CEN_spi    ),
-        .A          (m_addr_spi ),
+        .A          (A_spi ),
         .D_WE       (d_we_spi   ),//memory read or write signal, 1: write
         .spi_is_done(spi_is_done)
     );
@@ -263,7 +235,7 @@ module SCPU_8BIT_ALU_CTRL_SPI(
     assign  data_len   = io_dataoutB[RESERVED_DATA_LEN-1:0];
     assign  spi_start       = io_control[IO_SPI_STA];
     assign  CEN_from_SPI    = (spi_start)?CEN_spi:1'b0;//enable
-    assign  A_from_SPI      = (spi_start)?m_addr_spi:m_addr;
+    assign  A_from_SPI      = (spi_start)?A_spi:m_addr;
     assign  WEN_from_SPI    = (spi_start)?1'b1:(!D_WE);
     
     /* Mux & Demux from CTRL and CPU to SRAM */
@@ -281,9 +253,6 @@ module SCPU_8BIT_ALU_CTRL_SPI(
     assign  m_datain = d_dataout;
     assign  i_datain = (is_i_addr)?m_dataout:0;
     assign  d_datain = (is_i_addr)?0:m_dataout;
-
-    parameter   DEFAULT_PC_ADDR = 16;
-    //defparam    uut.DEFAULT_PC_ADDR = DEFAULT_PC_ADDR;
     
 endmodule
 `endif//SCPU_8BIT_ALU_CTRL_SPI_V

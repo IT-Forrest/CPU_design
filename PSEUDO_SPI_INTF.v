@@ -20,43 +20,23 @@
 `define PSEUDO_SPI_OUT_V
 
 module PSEUDO_SPT_INTF(
-/*     //input 
-    CLK,
-    RST_N,
-    X_IN,//dividend or multiplicand or I
-    Y_IN,//dividor or multiplier or Q
-    alu_start,//enable signal
-    alu_type,//"*" or "/" or "sqrt"
-    mode_type,//div_mode or mul_mode
-    OFFSET,
-    
-    FOUT,//division or multiplication or amplitude
-    POUT,//phase
-    alu_is_done//finish signal */
-    
     // input
     CLK,
-    //RST_N,
     BGN,
     ADDR_BGN,
     DATA_LEN,
     FREQ_DIV,
-    //i_datain,
     PI,
     
     // output
     SCLK1,
     SCLK2,
-    LAT,//LAT for read; SEL for write
+    LAT,//LAT for write; SEL for read
     SPI_SO,
     
-    is_i_addr,
     A,
     CEN,
-    //i_addr,      //output instruction address
-    //d_addr,      //output memory data address 
-    D_WE,        //memory read or write signal, 1: write
-    //d_dataout,   //output memory data 
+    D_WE,//memory read or write signal, 1: write
     spi_is_done
 );
 
@@ -65,25 +45,19 @@ module PSEUDO_SPT_INTF(
                 RESERVED_DATA_LEN   = 8;
 
     input   CLK;
-    //input   RST_N;
     input   BGN;
     input   [MEMORY_ADDR_WIDTH-1:0] ADDR_BGN;
     input   [RESERVED_DATA_LEN-1:0] DATA_LEN;    //1 data = (MEMORY_DATA_WIDTH bits)
     input   [7:0]   FREQ_DIV;
-    //input   [MEMORY_DATA_WIDTH-1:0] i_datain;    //input instruction data
     input   [MEMORY_DATA_WIDTH-1:0] PI;         // read from SRAM
     
     output  SCLK1;
     output  SCLK2;
     output  LAT;
     output  SPI_SO;
-    output  is_i_addr;
     output  [MEMORY_ADDR_WIDTH-1:0] A;
     output  CEN;
-    //output  [MEMORY_ADDR_WIDTH-1:0] i_addr;     //output instruction address
-    //output  [MEMORY_ADDR_WIDTH-1:0] d_addr;     //output memory data address 
-    output  D_WE;               //memory read or write signal, 1: write
-    //output  [MEMORY_DATA_WIDTH-1:0] d_dataout;  //output memory data 
+    output  D_WE;//memory read or write signal, 1: write
     output  spi_is_done;
 
     // State Machine Parameters
@@ -113,7 +87,6 @@ module PSEUDO_SPT_INTF(
     assign  SCLK2   = (cnt_state[0] & ~cnt_state[1]);
     assign  LAT     = (spi_state == SPI_RDY);
     assign  spi_is_done = (spi_state == SPI_DONE);
-    assign  is_i_addr   = 1'b0;
     
     //******** Negedge WEN/CEN signals to SRAM ********//
     // always @(negedge CLK)
