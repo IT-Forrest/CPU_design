@@ -49,10 +49,10 @@ module PCPU_SINGLE_TOP;
         
         // Add stimulus here
         $display("pc  :     id_ir      : reg_A : reg_B : reg_C : da : dd : w : reC1 : gr1 : gr2 : gr3 : zf : nf : cf");
-        $monitor("%3d : %b : %h : %h : %h : %h : %h : %b : %h : %h : %h : %h: %b: %b: %b", 
-            uut.pc, uut.id_ir, uut.reg_A, uut.reg_B, uut.reg_C,
-            d_addr, d_dataout, d_we, uut.reg_C1, uut.gr[1], uut.gr[2], uut.gr[3],
-            uut.zf, uut.nf, uut.cf);
+        // $monitor("%3d : %b : %h : %h : %h : %h : %h : %b : %h : %h : %h : %h: %b: %b: %b", 
+            // uut.pc, uut.id_ir, uut.reg_A, uut.reg_B, uut.reg_C,
+            // d_addr, d_dataout, d_we, uut.reg_C1, uut.gr[1], uut.gr[2], uut.gr[3],
+            // uut.zf, uut.nf, uut.cf);
         
         enable = 1; start = 0; i_datain = 0; d_datain = 0; select_y = 0;
 
@@ -79,6 +79,14 @@ module PCPU_SINGLE_TOP;
         #10 i_datain = {`NOP, 11'b000_0000_0000};
         #10 i_datain = {`CMP, 4'b0000, `gr1, 1'b0, `gr2};  // 4 clk later from BNZ
         #10 i_datain = {`HALT, 11'b000_0000_0000};
+        if (uut.gr[3] == 16'h3CAB) begin
+            $write("\tSum = 0x%x\n", uut.gr[3]);
+            $display("Test Passed!");
+        end
+        else begin
+            $write("\tSum = 0x%x\n", uut.gr[3]);
+            $display("Test Failed!");
+        end
         $stop();
     end
     

@@ -54,10 +54,10 @@ module SCPU_SINGLE_8BIT_TOP;
         
         // Add stimulus here
         $display("pc  :     id_ir      : reg_A : reg_B : reg_C : da : dd : w : reg_C : gr1 : gr2 : gr3 : zf : nf : cf");
-        $monitor("%3d : %b : %h : %h : %h : %h : %h : %b : %h : %h : %h : %h: %b: %b: %b", 
-            uut.pc, uut.id_ir, uut.reg_A, uut.reg_B, uut.reg_C,
-            d_addr, d_dataout, d_we, uut.reg_C, uut.gr[1], uut.gr[2], uut.gr[3],
-            uut.zf, uut.nf, uut.cf);
+        // $monitor("%3d : %b : %h : %h : %h : %h : %h : %b : %h : %h : %h : %h: %b: %b: %b", 
+            // uut.pc, uut.id_ir, uut.reg_A, uut.reg_B, uut.reg_C,
+            // d_addr, d_dataout, d_we, uut.reg_C, uut.gr[1], uut.gr[2], uut.gr[3],
+            // uut.zf, uut.nf, uut.cf);
         
         //enable = 1; 
         start = 0; i_datain = 0; d_datain = 0; select_y = 0;
@@ -68,7 +68,7 @@ module SCPU_SINGLE_8BIT_TOP;
         #10 start = 1;
         #10 start = 0;
             tmpi_datain = {`LOAD, `gr1, 1'b0, `gr0, 4'b0000};
-            i_datain = tmpi_datain[7:0];
+        #10 i_datain = tmpi_datain[7:0];
         #10 i_datain = tmpi_datain[15:8];
         #40 tmpd_datain = 16'h10AB;  // 3 clk later from LOAD
         #10 d_datain = tmpd_datain[7:0];

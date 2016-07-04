@@ -78,10 +78,10 @@ module PCPU_MEM_LOOP_TOP;
         // Add stimulus here
         $display("pc  :               id_ir                :reg_A :reg_B :reg_C\
             : da  :  dd  : w : reC1 :  gr1  :  gr2  :  gr3   :zf :nf:cf");
-        $monitor("%3d : %b : %h : %h : %h : %h : %h : %b : %h : %h : %h : %h : %b : %b : %b", 
-            uut.pc, uut.id_ir, uut.reg_A, uut.reg_B, uut.reg_C,
-            d_addr, d_dataout, d_we, uut.reg_C1, uut.gr[1], uut.gr[2], uut.gr[3],
-            uut.zf, uut.nf, uut.cf);
+        // $monitor("%3d : %b : %h : %h : %h : %h : %h : %b : %h : %h : %h : %h : %b : %b : %b", 
+            // uut.pc, uut.id_ir, uut.reg_A, uut.reg_B, uut.reg_C,
+            // d_addr, d_dataout, d_we, uut.reg_C1, uut.gr[1], uut.gr[2], uut.gr[3],
+            // uut.zf, uut.nf, uut.cf);
 
         i_mem.I_RAM[ 0] = {`SUB, `gr7, 1'b0, `gr7, 1'b0, `gr7};//reset the loop controller `gr7
         i_mem.I_RAM[ 1] = {`SUB, `gr1, 1'b0, `gr1, 1'b0, `gr1};//reset the sum value
@@ -116,7 +116,16 @@ module PCPU_MEM_LOOP_TOP;
         #10 enable = 1;
         #10 start =1;
         #10 start = 0;
-        #3130 $stop();
+        #3130;
+        if (d_mem.D_RAM[2] == 16'd325) begin
+            $write("\tSum = %d\n", d_mem.D_RAM[2]);
+            $display("Test Passed!");
+        end
+        else begin
+            $write("\tSum = %d\n", d_mem.D_RAM[2]);
+            $display("Test Failed!");
+        end
+        $stop();
     end
     
     always #5

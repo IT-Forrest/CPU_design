@@ -142,7 +142,7 @@ module SCPU_SRAM_8BIT_ALU_TOP_TEST;
         // i_mem.I_RAM[21] = {`NOP, 11'b000_0000_0000};
         
         i = 0;
-        tmpi_datain = 16'h00AB;
+        tmpi_datain = {`JUMP, 3'b000, 4'b0001, 4'b0000};// Jump to certain address
         i_mem.I_RAM[ i] = tmpi_datain[7:0];  i = 1;
         i_mem.I_RAM[ i] = tmpi_datain[15:8]; i = 2;
         tmpi_datain = 16'h3C00;
@@ -159,7 +159,7 @@ module SCPU_SRAM_8BIT_ALU_TOP_TEST;
         #10 RST_N = 1; 
 
         /* (1) Serially Input the address & Instruction to CTRL and then to SRAM */
-        for (i = DEFAULT_PC_ADDR; i<7+ DEFAULT_PC_ADDR; i=i+1) begin
+        for (i = 0; i<7+ DEFAULT_PC_ADDR; ) begin
             #10 CTRL_MODE = 2'b00;
             tmpi_adder = (i<<1);
             tmpi_all = {tmpi_adder, i_mem.I_RAM[tmpi_adder]};
@@ -217,6 +217,10 @@ module SCPU_SRAM_8BIT_ALU_TOP_TEST;
             end
             #10 LOAD_N = 1;
             //release m_addr;
+            if (i == 0)
+                i = DEFAULT_PC_ADDR;
+            else
+                i = i + 1;
         end
         // #10 CPU_BGN =1;
         // #10 CPU_BGN = 0;

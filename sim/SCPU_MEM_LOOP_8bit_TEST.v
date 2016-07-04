@@ -85,10 +85,10 @@ module SCPU_MEM_LOOP_8BIT_TOP;
         // Add stimulus here
         $display("pc  :               id_ir                :reg_A :reg_B :reg_C\
             : da  :  dd  : w :  gr1  :  gr2  :  gr3   :zf :nf:cf");
-        $monitor("%3d : %b : %h : %h : %h : %h : %h : %b : %h : %h : %h : %b : %b : %b", 
-            uut.pc, uut.id_ir, uut.reg_A, uut.reg_B, uut.reg_C,
-            d_addr, d_dataout, d_we, uut.gr[1], uut.gr[2], uut.gr[3],
-            uut.zf, uut.nf, uut.cf);
+        // $monitor("%3d : %b : %h : %h : %h : %h : %h : %b : %h : %h : %h : %b : %b : %b", 
+            // uut.pc, uut.id_ir, uut.reg_A, uut.reg_B, uut.reg_C,
+            // d_addr, d_dataout, d_we, uut.gr[1], uut.gr[2], uut.gr[3],
+            // uut.zf, uut.nf, uut.cf);
 
         i= DEFAULT_PC_ADDR*2;
         tmpi_datain = {`SET, `gr3, 4'b0000, 4'b0100};//reset the loop controller `gr7
@@ -152,7 +152,16 @@ module SCPU_MEM_LOOP_8BIT_TOP;
         #10 start = 0;
         // for (j=1; j<40; j=j+1)
             // #100;
-        #3130 $stop();//
+        #3130;
+        if ({i_mem.I_RAM[5], i_mem.I_RAM[4]} == 16'd10) begin
+            $write("\tSum = %d\n", {i_mem.I_RAM[5], i_mem.I_RAM[4]});
+            $display("Test Passed!");
+        end
+        else begin
+            $write("\tSum = %d\n", {i_mem.I_RAM[5], i_mem.I_RAM[4]});
+            $display("Test Failed!");
+        end
+        $stop();//
     end
     
     always #5
