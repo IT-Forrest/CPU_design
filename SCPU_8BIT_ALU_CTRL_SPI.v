@@ -195,6 +195,8 @@ module SCPU_8BIT_ALU_CTRL_SPI(
     //// Analog Control Module
     wire    spi_start;
     wire    spi_is_done;
+    wire    [MEMORY_ADDR_WIDTH-1:0] addr_end;
+    wire    [RESERVED_DATA_LEN-1:0] data_len;
     wire    [MEMORY_ADDR_WIDTH-1:0] A_from_SPI;
     wire    [MEMORY_ADDR_WIDTH-1:0] A_spi;
                     

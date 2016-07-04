@@ -92,7 +92,7 @@ module PSEUDO_SPI_INTF_RA1512_TEST;
         .BGN        (SPI_BGN ),
         .ADDR_BGN   (addr_end),
         .DATA_LEN   (data_len),
-        .FREQ_DIV   (freq_div),
+        //.FREQ_DIV   (freq_div),
         .PI         (m_dataout  ),
         //output
         .SCLK1      (SCLK1   ),

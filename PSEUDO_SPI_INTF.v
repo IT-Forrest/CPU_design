@@ -25,7 +25,7 @@ module PSEUDO_SPT_INTF(
     BGN,
     ADDR_BGN,
     DATA_LEN,
-    FREQ_DIV,
+    //FREQ_DIV,
     PI,
     
     // output
@@ -48,7 +48,7 @@ module PSEUDO_SPT_INTF(
     input   BGN;
     input   [MEMORY_ADDR_WIDTH-1:0] ADDR_BGN;
     input   [RESERVED_DATA_LEN-1:0] DATA_LEN;    //1 data = (MEMORY_DATA_WIDTH bits)
-    input   [7:0]   FREQ_DIV;
+    //input   [7:0]   FREQ_DIV;
     input   [MEMORY_DATA_WIDTH-1:0] PI;         // read from SRAM
     
     output  SCLK1;
@@ -105,17 +105,17 @@ module PSEUDO_SPT_INTF(
     end
     
     //******** Frequency Divisior ********//
-    always @(posedge CLK or negedge BGN)
-    begin
-        if (!BGN)
-            cnt_freq_div <= FREQ_DIV;
-        else if (SPI_SOUT == spi_state)
-            cnt_freq_div <= cnt_freq_div - 1;
-        else if (SPI_LOOP == spi_state)
-            cnt_freq_div <= FREQ_DIV;
-        else
-            cnt_freq_div <= cnt_freq_div;
-    end
+    // always @(posedge CLK or negedge BGN)
+    // begin
+        // if (!BGN)
+            // cnt_freq_div <= FREQ_DIV;
+        // else if (SPI_SOUT == spi_state)
+            // cnt_freq_div <= cnt_freq_div - 1;
+        // else if (SPI_LOOP == spi_state)
+            // cnt_freq_div <= FREQ_DIV;
+        // else
+            // cnt_freq_div <= cnt_freq_div;
+    // end
     
     //************* Addr & Buffer Update *************//
     always @(negedge CLK)
