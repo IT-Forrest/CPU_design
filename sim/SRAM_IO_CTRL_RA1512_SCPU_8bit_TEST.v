@@ -16,7 +16,7 @@
 `include "../RA1SHD_IBM512X8.v"
 `include "../I_MEMORY_8bit.v"
 
-module SRAM_IO_CTRL_RA1512_SCPU_8BIT_TOP;
+module SRAM_IO_CTRL_RA1512_SCPU_8BIT_TEST;
 
    parameter    MEMORY_DATA_WIDTH   = 8,
                 MEMORY_ADDR_WIDTH   = 9,

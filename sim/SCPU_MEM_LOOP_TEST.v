@@ -15,7 +15,7 @@
 `include "../I_MEMORY.v"
 `include "../D_MEMORY.v"
 
-module SCPU_MEM_LOOP_TOP;
+module SCPU_MEM_LOOP_TEST;
 
     // Inputs
     reg clk;

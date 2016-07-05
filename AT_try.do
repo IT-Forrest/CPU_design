@@ -14,6 +14,11 @@
 
 # Write simulation log to file
 vsim -l vsim.log 
+#set systemTime [clock seconds]
+#puts "The time is: [clock format $systemTime -format %H:%M:%S]"
+#puts "The date is: [clock format $systemTime -format %D]"
+#puts [clock format $systemTime -format {Today is: %A, the %d of %B, %Y}]
+#puts "\n the default format for the time is: [clock format $systemTime]\n"
 
 # Create the work library
 vlib work
@@ -28,6 +33,7 @@ vlog -work work SRAM_IO_CTRL.v
 vlog -work work PSEUDO_SPI_INTF.v
 vlog -work work SCPU_8BIT_ALU_CTRL_SPI.v
 vlog -work work SCPU_SRAM_8BIT_ALU_SPI_TOP.v
+#vlog +acc -work work "../src/*.v"
 
 vlog -work work ./sim/SCPU_SRAM_8BIT_ALU_SPI_TOP_TEST.v
 
@@ -37,6 +43,7 @@ vsim -lib work SCPU_SRAM_8BIT_ALU_SPI_TOP_TEST
 
 # Open the view windows & load signal list files
 view wave
+#delete wave *
 #do {F:/05. Code Battle/04. Verilog/CPU_design/scpu_io_ctrl_ra1512_serial8bit_alu_spi_top_test.do}
 do ./scpu_io_ctrl_ra1512_serial8bit_alu_spi_top_test.do
 

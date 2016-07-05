@@ -14,7 +14,7 @@
 `include "../SERIAL_CPU_8bit.v"
 `include "../I_MEMORY_8bit.v"
 
-module SCPU_MEM_LOOP_8BIT_TOP;
+module SCPU_MEM_LOOP_8BIT_TEST;
 
     // Inputs
     reg clk;

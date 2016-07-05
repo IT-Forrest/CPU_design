@@ -12,7 +12,7 @@
 
 # Usage: do AT_compile_all.do
 
-# Compile the verilog files & testbench files
+# Compile the verilog files
 vlog -work work DEFINE_CPU.v
 vlog -work work I_MEMORY_8bit.v
 vlog -work work SERIAL_CPU_8bit.v
@@ -23,11 +23,18 @@ vlog -work work SCPU_8BIT_ALU_CTRL_SPI.v
 vlog -work work iogpil_cmrf8sf_rvt.v
 vlog -work work SCPU_SRAM_8BIT_ALU_SPI_TOP.v
 
-vlog -work work ./sim/PSEUDO_SPI_INTF_RA1512_TEST.v
-vlog -work work ./sim/PSEUDO_SPI_INTF_SCAN_TEST.v
-vlog -work work ./sim/PSEUDO_SPI_INTF_TEST.v
-vlog -work work ./sim/SCPU_MEM_LOOP_8bit_TEST.v
-vlog -work work ./sim/SCPU_MEM_LOOP_TEST.v
-vlog -work work ./sim/SRAM_IO_CTRL_RA1512_SCPU_8bit_TEST.v
-vlog -work work ./sim/SRAM_IO_CTRL_RA1512_TEST.v
-vlog -work work ./sim/SCPU_SRAM_8BIT_ALU_SPI_TOP_TEST.v
+# Set & Compile testbench files
+set testcases   [list\
+PSEUDO_SPI_INTF_RA1512_TEST\
+PSEUDO_SPI_INTF_SCAN_TEST\
+PSEUDO_SPI_INTF_TEST\
+SCPU_MEM_LOOP_8BIT_TEST\
+SCPU_MEM_LOOP_TEST\
+SRAM_IO_CTRL_RA1512_SCPU_8BIT_TEST\
+SRAM_IO_CTRL_RA1512_TEST\
+SCPU_SRAM_8BIT_ALU_SPI_TOP_TEST\
+]
+
+foreach case $testcases {
+    vlog -work work ./sim/$case.v
+}

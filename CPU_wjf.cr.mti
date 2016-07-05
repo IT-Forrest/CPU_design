@@ -82,6 +82,17 @@ Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
 Top level modules:
 	PCPU_MEM_LOOP_TOP
 
+} {} {}} {F:/05. Code Battle/04. Verilog/CPU_design/sim/SCPU_MEM_LOOP_8BIT_TEST.v} {2 {vlog -work work -stats=none {F:/05. Code Battle/04. Verilog/CPU_design/sim/SCPU_MEM_LOOP_8BIT_TEST.v}
+Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
+-- Compiling module SERIAL_CPU_8BIT
+-- Compiling module I_MEMORY_8BIT
+-- Compiling module SCPU_MEM_LOOP_8BIT_TEST
+** Warning: F:/05. Code Battle/04. Verilog/CPU_design/sim/SCPU_MEM_LOOP_8BIT_TEST.v(86): (vlog-2643) Unterminated string literal continues onto next line.
+
+
+Top level modules:
+	SCPU_MEM_LOOP_8BIT_TEST
+
 } {} {}} {F:/05. Code Battle/04. Verilog/CPU_design/SERIAL_CPU.v} {1 {vlog -work work -stats=none {F:/05. Code Battle/04. Verilog/CPU_design/SERIAL_CPU.v}
 Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
 -- Compiling module SERIAL_CPU
@@ -95,17 +106,6 @@ Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
 
 Top level modules:
 	SA_4D_CTRL_PATH_418
-
-} {} {}} {F:/05. Code Battle/04. Verilog/CPU_design/sim/SCPU_MEM_LOOP_8bit_TEST.v} {2 {vlog -work work -stats=none {F:/05. Code Battle/04. Verilog/CPU_design/sim/SCPU_MEM_LOOP_8bit_TEST.v}
-Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
--- Compiling module SERIAL_CPU_8BIT
--- Compiling module I_MEMORY_8BIT
--- Compiling module SCPU_MEM_LOOP_8BIT_TOP
-** Warning: F:/05. Code Battle/04. Verilog/CPU_design/sim/SCPU_MEM_LOOP_8bit_TEST.v(86): (vlog-2643) Unterminated string literal continues onto next line.
-
-
-Top level modules:
-	SCPU_MEM_LOOP_8BIT_TOP
 
 } {} {}} {F:/05. Code Battle/04. Verilog/CPU_design/SQRT_POWSUM_418.v} {1 {vlog -work work -stats=none {F:/05. Code Battle/04. Verilog/CPU_design/SQRT_POWSUM_418.v}
 Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
@@ -275,15 +275,26 @@ Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
 Top level modules:
 	I_MEMORY_8BIT
 
+} {} {}} {F:/05. Code Battle/04. Verilog/CPU_design/sim/SRAM_IO_CTRL_RA1512_SCPU_8BIT_TEST.v} {1 {vlog -work work -stats=none {F:/05. Code Battle/04. Verilog/CPU_design/sim/SRAM_IO_CTRL_RA1512_SCPU_8BIT_TEST.v}
+Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
+-- Compiling module SERIAL_CPU_8BIT
+-- Compiling module SRAM_IO_CTRL
+-- Compiling module RA1SHD_IBM512X8
+-- Compiling module I_MEMORY_8BIT
+-- Compiling module SRAM_IO_CTRL_RA1512_SCPU_8BIT_TEST
+
+Top level modules:
+	SRAM_IO_CTRL_RA1512_SCPU_8BIT_TEST
+
 } {} {}} {F:/05. Code Battle/04. Verilog/CPU_design/sim/SRAM_IO_CTRL_RA1512_TEST.v} {1 {vlog -work work -stats=none {F:/05. Code Battle/04. Verilog/CPU_design/sim/SRAM_IO_CTRL_RA1512_TEST.v}
 Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
 -- Compiling module SRAM_IO_CTRL
 -- Compiling module RA1SHD_IBM512X8
 -- Compiling module I_MEMORY_8BIT
--- Compiling module SRAM_IO_CTRL_RA1512_TOP
+-- Compiling module SRAM_IO_CTRL_RA1512_TEST
 
 Top level modules:
-	SRAM_IO_CTRL_RA1512_TOP
+	SRAM_IO_CTRL_RA1512_TEST
 
 } {} {}} {F:/05. Code Battle/04. Verilog/CPU_design/sim/PCPU_SINGLE_TEST.v} {1 {vlog -work work -stats=none {F:/05. Code Battle/04. Verilog/CPU_design/sim/PCPU_SINGLE_TEST.v}
 Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
@@ -316,17 +327,6 @@ Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
 Top level modules:
 	SA_4D_TOP_LEVEL_418
 
-} {} {}} {F:/05. Code Battle/04. Verilog/CPU_design/sim/SRAM_IO_CTRL_RA1512_SCPU_8bit_TEST.v} {1 {vlog -work work -stats=none {F:/05. Code Battle/04. Verilog/CPU_design/sim/SRAM_IO_CTRL_RA1512_SCPU_8bit_TEST.v}
-Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
--- Compiling module SERIAL_CPU_8BIT
--- Compiling module SRAM_IO_CTRL
--- Compiling module RA1SHD_IBM512X8
--- Compiling module I_MEMORY_8BIT
--- Compiling module SRAM_IO_CTRL_RA1512_SCPU_8BIT_TOP
-
-Top level modules:
-	SRAM_IO_CTRL_RA1512_SCPU_8BIT_TOP
-
 } {} {}} {F:/05. Code Battle/04. Verilog/CPU_design/sim/SCPU_SINGLE_8bit_TEST.v} {1 {vlog -work work -stats=none {F:/05. Code Battle/04. Verilog/CPU_design/sim/SCPU_SINGLE_8bit_TEST.v}
 Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
 -- Compiling module SERIAL_CPU_8BIT
@@ -340,12 +340,12 @@ Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
 -- Compiling module SERIAL_CPU
 -- Compiling module I_MEMORY
 -- Compiling module D_MEMORY
--- Compiling module SCPU_MEM_LOOP_TOP
+-- Compiling module SCPU_MEM_LOOP_TEST
 ** Warning: F:/05. Code Battle/04. Verilog/CPU_design/sim/SCPU_MEM_LOOP_TEST.v(79): (vlog-2643) Unterminated string literal continues onto next line.
 
 
 Top level modules:
-	SCPU_MEM_LOOP_TOP
+	SCPU_MEM_LOOP_TEST
 
 } {} {}} {F:/05. Code Battle/04. Verilog/CPU_design/I_MEMORY.v} {1 {vlog -work work -stats=none {F:/05. Code Battle/04. Verilog/CPU_design/I_MEMORY.v}
 Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
