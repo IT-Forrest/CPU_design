@@ -16,7 +16,8 @@
 # Write simulation log to file
 .main clear
 set systemTime [clock seconds]
-vsim -l "vsim_[clock format $systemTime -format %m%d%y]_[clock format $systemTime -format %H%M].log"
+set logname "vsim_[clock format $systemTime -format %m%d%y]_[clock format $systemTime -format %H%M].log"
+vsim -l $logname
 
 # (1) Create the work library
 vlib work
@@ -27,7 +28,7 @@ vmap work work
 do AT_compile_all.do
 
 # (3) Load design & Run
-set i 1
+set i 0
 foreach case $testcases {
     puts "BGN Test Case ($i): $case"
     vsim -lib work $case
@@ -37,8 +38,21 @@ foreach case $testcases {
     run -all
     quit -sim
     
-    puts "END Test Case: $case\n\n"
+    puts "END Test Case: $case\n"
     incr i
 }
 
-puts "\n\nAll $i Test Cases Finished"
+# (4) Read Log & Report Results
+puts "\nAll $i Test Cases Finished"
+
+set fp [open $logname r]
+set err_cnt 0
+while {[gets $fp data] >= 0} {
+    #for greedy match, * instead of .*
+    if {[string match "*Failed*" $data] == 1} {
+        incr err_cnt
+    }
+}
+close $fp
+
+puts "Success: [expr $i-$err_cnt], Errors: $err_cnt"

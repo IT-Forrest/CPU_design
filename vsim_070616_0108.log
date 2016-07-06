@@ -5,57 +5,57 @@
 # vmap -modelsim_quiet work work 
 # Modifying F:/05. Code Battle/04. Verilog/CPU_design/CPU_wjf.mpf
 # Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
-# Start time: 17:07:03 on Jul 04,2016
+# Start time: 01:08:37 on Jul 06,2016
 # vlog -reportprogress 300 -work work DEFINE_CPU.v 
-# End time: 17:07:03 on Jul 04,2016, Elapsed time: 0:00:00
+# End time: 01:08:37 on Jul 06,2016, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
-# Start time: 17:07:03 on Jul 04,2016
+# Start time: 01:08:37 on Jul 06,2016
 # vlog -reportprogress 300 -work work I_MEMORY_8bit.v 
 # -- Compiling module I_MEMORY_8BIT
 # 
 # Top level modules:
 # 	I_MEMORY_8BIT
-# End time: 17:07:03 on Jul 04,2016, Elapsed time: 0:00:00
+# End time: 01:08:37 on Jul 06,2016, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
-# Start time: 17:07:03 on Jul 04,2016
+# Start time: 01:08:37 on Jul 06,2016
 # vlog -reportprogress 300 -work work SERIAL_CPU_8bit.v 
 # -- Compiling module SERIAL_CPU_8BIT
 # 
 # Top level modules:
 # 	SERIAL_CPU_8BIT
-# End time: 17:07:03 on Jul 04,2016, Elapsed time: 0:00:00
+# End time: 01:08:37 on Jul 06,2016, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
-# Start time: 17:07:03 on Jul 04,2016
+# Start time: 01:08:37 on Jul 06,2016
 # vlog -reportprogress 300 -work work SHARE_SUPERALU.v 
 # -- Compiling module SHARE_SUPERALU
 # 
 # Top level modules:
 # 	SHARE_SUPERALU
-# End time: 17:07:03 on Jul 04,2016, Elapsed time: 0:00:00
+# End time: 01:08:37 on Jul 06,2016, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
-# Start time: 17:07:03 on Jul 04,2016
+# Start time: 01:08:37 on Jul 06,2016
 # vlog -reportprogress 300 -work work SRAM_IO_CTRL.v 
 # -- Compiling module SRAM_IO_CTRL
 # 
 # Top level modules:
 # 	SRAM_IO_CTRL
-# End time: 17:07:03 on Jul 04,2016, Elapsed time: 0:00:00
+# End time: 01:08:37 on Jul 06,2016, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
-# Start time: 17:07:03 on Jul 04,2016
+# Start time: 01:08:37 on Jul 06,2016
 # vlog -reportprogress 300 -work work PSEUDO_SPI_INTF.v 
 # -- Compiling module PSEUDO_SPT_INTF
 # 
 # Top level modules:
 # 	PSEUDO_SPT_INTF
-# End time: 17:07:03 on Jul 04,2016, Elapsed time: 0:00:00
+# End time: 01:08:37 on Jul 06,2016, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
-# Start time: 17:07:03 on Jul 04,2016
+# Start time: 01:08:37 on Jul 06,2016
 # vlog -reportprogress 300 -work work SCPU_8BIT_ALU_CTRL_SPI.v 
 # -- Compiling module SERIAL_CPU_8BIT
 # -- Compiling module SHARE_SUPERALU
@@ -65,10 +65,10 @@
 # 
 # Top level modules:
 # 	SCPU_8BIT_ALU_CTRL_SPI
-# End time: 17:07:03 on Jul 04,2016, Elapsed time: 0:00:00
+# End time: 01:08:37 on Jul 06,2016, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
-# Start time: 17:07:03 on Jul 04,2016
+# Start time: 01:08:37 on Jul 06,2016
 # vlog -reportprogress 300 -work work iogpil_cmrf8sf_rvt.v 
 # -- Compiling module PBCOC12A
 # -- Compiling module PBCOC12B
@@ -700,10 +700,10 @@
 # 	POSC2
 # 	POSC3
 # 	POSC4
-# End time: 17:07:06 on Jul 04,2016, Elapsed time: 0:00:03
+# End time: 01:08:38 on Jul 06,2016, Elapsed time: 0:00:01
 # Errors: 0, Warnings: 0
 # Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
-# Start time: 17:07:08 on Jul 04,2016
+# Start time: 01:08:41 on Jul 06,2016
 # vlog -reportprogress 300 -work work SCPU_SRAM_8BIT_ALU_SPI_TOP.v 
 # -- Compiling module SERIAL_CPU_8BIT
 # -- Compiling module SHARE_SUPERALU
@@ -715,11 +715,41 @@
 # 
 # Top level modules:
 # 	SCPU_SRAM_8BIT_ALU_SPI_TOP
-# End time: 17:07:09 on Jul 04,2016, Elapsed time: 0:00:01
+# End time: 01:08:41 on Jul 06,2016, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
-# PSEUDO_SPI_INTF_RA1512_TEST PSEUDO_SPI_INTF_SCAN_TEST PSEUDO_SPI_INTF_TEST SCPU_MEM_LOOP_8BIT_TEST SCPU_MEM_LOOP_TEST SRAM_IO_CTRL_RA1512_SCPU_8BIT_TEST SRAM_IO_CTRL_RA1512_TEST SCPU_SRAM_8BIT_ALU_SPI_TOP_TEST
+# SHARE_SUPERALU_MULT_TEST SHARE_SUPERALU_DIV_TEST SHARE_SUPERALU_CORDIC_TEST PSEUDO_SPI_INTF_RA1512_TEST PSEUDO_SPI_INTF_SCAN_TEST PSEUDO_SPI_INTF_TEST SCPU_MEM_LOOP_8BIT_TEST SCPU_MEM_LOOP_TEST SRAM_IO_CTRL_RA1512_SCPU_8BIT_TEST SRAM_IO_CTRL_RA1512_TEST SRAM_IO_CTRL_TEST SCPU_SRAM_8BIT_ALU_SPI_TOP_TEST
 # Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
-# Start time: 17:07:09 on Jul 04,2016
+# Start time: 01:08:41 on Jul 06,2016
+# vlog -reportprogress 300 -work work ./sim/SHARE_SUPERALU_MULT_TEST.v 
+# -- Compiling module SHARE_SUPERALU
+# -- Compiling module SHARE_SUPERALU_MULT_TEST
+# 
+# Top level modules:
+# 	SHARE_SUPERALU_MULT_TEST
+# End time: 01:08:41 on Jul 06,2016, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
+# Start time: 01:08:41 on Jul 06,2016
+# vlog -reportprogress 300 -work work ./sim/SHARE_SUPERALU_DIV_TEST.v 
+# -- Compiling module SHARE_SUPERALU
+# -- Compiling module SHARE_SUPERALU_DIV_TEST
+# 
+# Top level modules:
+# 	SHARE_SUPERALU_DIV_TEST
+# End time: 01:08:41 on Jul 06,2016, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
+# Start time: 01:08:41 on Jul 06,2016
+# vlog -reportprogress 300 -work work ./sim/SHARE_SUPERALU_CORDIC_TEST.v 
+# -- Compiling module SHARE_SUPERALU
+# -- Compiling module SHARE_SUPERALU_CORDIC_TEST
+# 
+# Top level modules:
+# 	SHARE_SUPERALU_CORDIC_TEST
+# End time: 01:08:41 on Jul 06,2016, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
+# Start time: 01:08:41 on Jul 06,2016
 # vlog -reportprogress 300 -work work ./sim/PSEUDO_SPI_INTF_RA1512_TEST.v 
 # -- Compiling module PSEUDO_SPT_INTF
 # -- Compiling module RA1SHD_IBM512X8
@@ -728,10 +758,10 @@
 # 
 # Top level modules:
 # 	PSEUDO_SPI_INTF_RA1512_TEST
-# End time: 17:07:09 on Jul 04,2016, Elapsed time: 0:00:00
+# End time: 01:08:41 on Jul 06,2016, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
-# Start time: 17:07:09 on Jul 04,2016
+# Start time: 01:08:41 on Jul 06,2016
 # vlog -reportprogress 300 -work work ./sim/PSEUDO_SPI_INTF_SCAN_TEST.v 
 # -- Compiling module PSEUDO_SPT_INTF
 # -- Compiling module I_MEMORY_8BIT
@@ -740,10 +770,10 @@
 # 
 # Top level modules:
 # 	PSEUDO_SPI_INTF_SCAN_TEST
-# End time: 17:07:09 on Jul 04,2016, Elapsed time: 0:00:00
+# End time: 01:08:41 on Jul 06,2016, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
-# Start time: 17:07:09 on Jul 04,2016
+# Start time: 01:08:41 on Jul 06,2016
 # vlog -reportprogress 300 -work work ./sim/PSEUDO_SPI_INTF_TEST.v 
 # -- Compiling module PSEUDO_SPT_INTF
 # -- Compiling module I_MEMORY_8BIT
@@ -751,10 +781,10 @@
 # 
 # Top level modules:
 # 	PSEUDO_SPI_INTF_TEST
-# End time: 17:07:09 on Jul 04,2016, Elapsed time: 0:00:00
+# End time: 01:08:41 on Jul 06,2016, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
-# Start time: 17:07:09 on Jul 04,2016
+# Start time: 01:08:41 on Jul 06,2016
 # vlog -reportprogress 300 -work work ./sim/SCPU_MEM_LOOP_8BIT_TEST.v 
 # -- Compiling module SERIAL_CPU_8BIT
 # -- Compiling module I_MEMORY_8BIT
@@ -764,10 +794,10 @@
 # 
 # Top level modules:
 # 	SCPU_MEM_LOOP_8BIT_TEST
-# End time: 17:07:09 on Jul 04,2016, Elapsed time: 0:00:00
+# End time: 01:08:42 on Jul 06,2016, Elapsed time: 0:00:01
 # Errors: 0, Warnings: 1
 # Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
-# Start time: 17:07:09 on Jul 04,2016
+# Start time: 01:08:42 on Jul 06,2016
 # vlog -reportprogress 300 -work work ./sim/SCPU_MEM_LOOP_TEST.v 
 # -- Compiling module SERIAL_CPU
 # -- Compiling module I_MEMORY
@@ -778,10 +808,10 @@
 # 
 # Top level modules:
 # 	SCPU_MEM_LOOP_TEST
-# End time: 17:07:09 on Jul 04,2016, Elapsed time: 0:00:00
+# End time: 01:08:42 on Jul 06,2016, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 1
 # Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
-# Start time: 17:07:09 on Jul 04,2016
+# Start time: 01:08:42 on Jul 06,2016
 # vlog -reportprogress 300 -work work ./sim/SRAM_IO_CTRL_RA1512_SCPU_8BIT_TEST.v 
 # -- Compiling module SERIAL_CPU_8BIT
 # -- Compiling module SRAM_IO_CTRL
@@ -791,10 +821,10 @@
 # 
 # Top level modules:
 # 	SRAM_IO_CTRL_RA1512_SCPU_8BIT_TEST
-# End time: 17:07:09 on Jul 04,2016, Elapsed time: 0:00:00
+# End time: 01:08:42 on Jul 06,2016, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
-# Start time: 17:07:09 on Jul 04,2016
+# Start time: 01:08:42 on Jul 06,2016
 # vlog -reportprogress 300 -work work ./sim/SRAM_IO_CTRL_RA1512_TEST.v 
 # -- Compiling module SRAM_IO_CTRL
 # -- Compiling module RA1SHD_IBM512X8
@@ -803,10 +833,21 @@
 # 
 # Top level modules:
 # 	SRAM_IO_CTRL_RA1512_TEST
-# End time: 17:07:10 on Jul 04,2016, Elapsed time: 0:00:01
+# End time: 01:08:42 on Jul 06,2016, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
-# Start time: 17:07:10 on Jul 04,2016
+# Start time: 01:08:42 on Jul 06,2016
+# vlog -reportprogress 300 -work work ./sim/SRAM_IO_CTRL_TEST.v 
+# -- Compiling module SRAM_IO_CTRL
+# -- Compiling module I_MEMORY_8BIT
+# -- Compiling module SRAM_IO_CTRL_TEST
+# 
+# Top level modules:
+# 	SRAM_IO_CTRL_TEST
+# End time: 01:08:42 on Jul 06,2016, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
+# Start time: 01:08:42 on Jul 06,2016
 # vlog -reportprogress 300 -work work ./sim/SCPU_SRAM_8BIT_ALU_SPI_TOP_TEST.v 
 # -- Compiling module SERIAL_CPU_8BIT
 # -- Compiling module SHARE_SUPERALU
@@ -822,10 +863,150 @@
 # 
 # Top level modules:
 # 	SCPU_SRAM_8BIT_ALU_SPI_TOP_TEST
-# End time: 17:07:10 on Jul 04,2016, Elapsed time: 0:00:00
+# End time: 01:08:42 on Jul 06,2016, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 1
-# 1
-# BGN Test Case (1): PSEUDO_SPI_INTF_RA1512_TEST
+# 0
+# BGN Test Case (0): SHARE_SUPERALU_MULT_TEST
+# vsim 
+# Start time: 01:08:46 on Jul 06,2016
+# Loading work.SHARE_SUPERALU_MULT_TEST
+# Loading work.SHARE_SUPERALU
+#                   20
+# //////// (1) Multiplication test /////////
+#                  740 result =  100	actual =        100
+#                 1480 result =  340	actual =        340
+#                 1580 result =   14	actual =   14
+# Test Passed!
+# ** Note: $stop    : ./sim/SHARE_SUPERALU_MULT_TEST.v(215)
+#    Time: 1620 ns  Iteration: 0  Instance: /SHARE_SUPERALU_MULT_TEST
+# Break in Module SHARE_SUPERALU_MULT_TEST at ./sim/SHARE_SUPERALU_MULT_TEST.v line 215
+# END Test Case: SHARE_SUPERALU_MULT_TEST
+# 
+# BGN Test Case (1): SHARE_SUPERALU_DIV_TEST
+# vsim 
+# Start time: 01:08:56 on Jul 06,2016
+# Loading work.SHARE_SUPERALU_DIV_TEST
+# Loading work.SHARE_SUPERALU
+#                   20
+# //////// (2) Division test ////////
+#                  110 dividend = 0000000101010, dividor = 0000000011011
+#                  130 dividend_tmp = 00000000000010101000000000, dividor = 0000000011011
+#                  170 dividend_tmp = 00000000000010101000000000, dividor = 0000000011011
+#                  190 dividend_tmp = 00000000000101010000000000, dividor = 0000000011011
+#                  230 dividend_tmp = 00000000000001111000000001, dividor = 0000000011011
+#                  250 dividend_tmp = 00000000000011110000000010, dividor = 0000000011011
+#                  290 dividend_tmp = 00000000000000011000000011, dividor = 0000000011011
+#                  310 dividend_tmp = 00000000000000110000000110, dividor = 0000000011011
+#                  350 dividend_tmp = 00000000000000110000000110, dividor = 0000000011011
+#                  370 dividend_tmp = 00000000000001100000001100, dividor = 0000000011011
+#                  410 dividend_tmp = 00000000000001100000001100, dividor = 0000000011011
+#                  430 dividend_tmp = 00000000000011000000011000, dividor = 0000000011011
+#                  470 dividend_tmp = 00000000000011000000011000, dividor = 0000000011011
+#                  490 dividend_tmp = 00000000000110000000110000, dividor = 0000000011011
+#                  530 dividend_tmp = 00000000000010101000110001, dividor = 0000000011011
+#                  550 dividend_tmp = 00000000000101010001100010, dividor = 0000000011011
+#                  590 dividend_tmp = 00000000000001111001100011, dividor = 0000000011011
+#                  610 dividend_tmp = 00000000000011110011000110, dividor = 0000000011011
+#                  650 dividend_tmp = 00000000000000011011000111, dividor = 0000000011011
+#                  680 result = 199	actual =        199
+#                  770 dividend = 0000010001110, dividor = 0000100001110
+#                  790 dividend_tmp = 00000000000100011100000000, dividor = 0000100001110
+#                  830 dividend_tmp = 00000000000100011100000000, dividor = 0000100001110
+#                  850 dividend_tmp = 00000000001000111000000000, dividor = 0000100001110
+#                  890 dividend_tmp = 00000000001000111000000000, dividor = 0000100001110
+#                  910 dividend_tmp = 00000000010001110000000000, dividor = 0000100001110
+#                  950 dividend_tmp = 00000000010001110000000000, dividor = 0000100001110
+#                  970 dividend_tmp = 00000000100011100000000000, dividor = 0000100001110
+#                 1010 dividend_tmp = 00000000000001110000000001, dividor = 0000100001110
+#                 1030 dividend_tmp = 00000000000011100000000010, dividor = 0000100001110
+#                 1070 dividend_tmp = 00000000000011100000000010, dividor = 0000100001110
+#                 1090 dividend_tmp = 00000000000111000000000100, dividor = 0000100001110
+#                 1130 dividend_tmp = 00000000000111000000000100, dividor = 0000100001110
+#                 1150 dividend_tmp = 00000000001110000000001000, dividor = 0000100001110
+#                 1190 dividend_tmp = 00000000001110000000001000, dividor = 0000100001110
+#                 1210 dividend_tmp = 00000000011100000000010000, dividor = 0000100001110
+#                 1250 dividend_tmp = 00000000011100000000010000, dividor = 0000100001110
+#                 1270 dividend_tmp = 00000000111000000000100000, dividor = 0000100001110
+#                 1310 dividend_tmp = 00000000010110010000100001, dividor = 0000100001110
+#                 1340 result =  33	actual =         33
+#                 1430 dividend = 0000000101010, dividor = 0000010101010
+#                 1450 dividend_tmp = 00000000000101010000000000, dividor = 0000010101010
+#                 1490 dividend_tmp = 00000000000101010000000000, dividor = 0000010101010
+#                 1510 dividend_tmp = 00000000001010100000000000, dividor = 0000010101010
+#                 1550 dividend_tmp = 00000000001010100000000000, dividor = 0000010101010
+#                 1570 dividend_tmp = 00000000010101000000000000, dividor = 0000010101010
+#                 1610 dividend_tmp = 00000000010101000000000000, dividor = 0000010101010
+#                 1630 dividend_tmp = 00000000101010000000000000, dividor = 0000010101010
+#                 1670 dividend_tmp = 00000000010100110000000001, dividor = 0000010101010
+#                 1690 dividend_tmp = 00000000101001100000000010, dividor = 0000010101010
+#                 1730 dividend_tmp = 00000000010100010000000011, dividor = 0000010101010
+#                 1750 dividend_tmp = 00000000101000100000000110, dividor = 0000010101010
+#                 1790 dividend_tmp = 00000000010011010000000111, dividor = 0000010101010
+#                 1810 dividend_tmp = 00000000100110100000001110, dividor = 0000010101010
+#                 1850 dividend_tmp = 00000000010001010000001111, dividor = 0000010101010
+#                 1870 dividend_tmp = 00000000100010100000011110, dividor = 0000010101010
+#                 1910 dividend_tmp = 00000000001101010000011111, dividor = 0000010101010
+#                 1930 dividend_tmp = 00000000011010100000111110, dividor = 0000010101010
+#                 1970 dividend_tmp = 00000000000101010000111111, dividor = 0000010101010
+#                 2000 result =  63	actual =         63
+#                 2090 dividend = 0000000101010, dividor = 0000000011110
+#                 2110 dividend_tmp = 00000000000101010000000000, dividor = 0000000011110
+#                 2150 dividend_tmp = 00000000000001100000000001, dividor = 0000000011110
+#                 2170 dividend_tmp = 00000000000011000000000010, dividor = 0000000011110
+#                 2210 dividend_tmp = 00000000000011000000000010, dividor = 0000000011110
+#                 2230 dividend_tmp = 00000000000110000000000100, dividor = 0000000011110
+#                 2270 dividend_tmp = 00000000000010010000000101, dividor = 0000000011110
+#                 2290 dividend_tmp = 00000000000100100000001010, dividor = 0000000011110
+#                 2330 dividend_tmp = 00000000000000110000001011, dividor = 0000000011110
+#                 2350 dividend_tmp = 00000000000001100000010110, dividor = 0000000011110
+#                 2390 dividend_tmp = 00000000000001100000010110, dividor = 0000000011110
+#                 2410 dividend_tmp = 00000000000011000000101100, dividor = 0000000011110
+#                 2450 dividend_tmp = 00000000000011000000101100, dividor = 0000000011110
+#                 2470 dividend_tmp = 00000000000110000001011000, dividor = 0000000011110
+#                 2510 dividend_tmp = 00000000000010010001011001, dividor = 0000000011110
+#                 2530 dividend_tmp = 00000000000100100010110010, dividor = 0000000011110
+#                 2570 dividend_tmp = 00000000000000110010110011, dividor = 0000000011110
+#                 2590 dividend_tmp = 00000000000001100101100110, dividor = 0000000011110
+#                 2630 dividend_tmp = 00000000000001100101100110, dividor = 0000000011110
+#                 2660 result = 358	actual =        358
+# Test Passed!
+# ** Note: $stop    : ./sim/SHARE_SUPERALU_DIV_TEST.v(211)
+#    Time: 2700 ns  Iteration: 0  Instance: /SHARE_SUPERALU_DIV_TEST
+# Break in Module SHARE_SUPERALU_DIV_TEST at ./sim/SHARE_SUPERALU_DIV_TEST.v line 211
+# END Test Case: SHARE_SUPERALU_DIV_TEST
+# 
+# BGN Test Case (2): SHARE_SUPERALU_CORDIC_TEST
+# vsim 
+# Start time: 01:09:05 on Jul 06,2016
+# Loading work.SHARE_SUPERALU_CORDIC_TEST
+# Loading work.SHARE_SUPERALU
+#                   20
+# //////// (3) Sqrt power sum test ////////
+#                   60 Test 1_1: |X|>|Y|, X>0 & Y>0
+#                 5240 sqrt(pow(  58,2)+pow(  50,2))=  88, phase= 369
+#                 5240 Test 1_2: |X|>|Y|, X<0 & Y>0
+#                10420 sqrt(pow(8134,2)+pow(  50,2))=  88, phase=1239
+#                10420 Test 1_3: |X|>|Y|, X>0 & Y<0
+#                15600 sqrt(pow(  58,2)+pow(8142,2))=  88, phase=2848
+#                15600 Test 1_4: |X|>|Y|, X<0 & Y<0
+#                20780 sqrt(pow(8134,2)+pow(8142,2))=  88, phase=1977
+#                20780 Test 2_1: |X|<|Y|, X>0 & Y>0
+#                25960 sqrt(pow(  50,2)+pow(  58,2))=  88, phase= 435
+#                25960 Test 2_2: |X|<|Y|, X<0 & Y>0
+#                31140 sqrt(pow(8142,2)+pow(  58,2))=  88, phase=1173
+#                31140 Test 2_3: |X|<|Y|, X>0 & Y<0
+#                36320 sqrt(pow(  50,2)+pow(8134,2))=  88, phase=2782
+#                36320 Test 2_4: |X|<|Y|, X<0 & Y<0
+#                41500 sqrt(pow(8142,2)+pow(8134,2))=  88, phase=2044
+# Test Passed!
+# ** Note: $stop    : ./sim/SHARE_SUPERALU_CORDIC_TEST.v(183)
+#    Time: 41540 ns  Iteration: 0  Instance: /SHARE_SUPERALU_CORDIC_TEST
+# Break in Module SHARE_SUPERALU_CORDIC_TEST at ./sim/SHARE_SUPERALU_CORDIC_TEST.v line 183
+# END Test Case: SHARE_SUPERALU_CORDIC_TEST
+# 
+# BGN Test Case (3): PSEUDO_SPI_INTF_RA1512_TEST
+# vsim 
+# Start time: 01:09:14 on Jul 06,2016
 # Loading work.PSEUDO_SPI_INTF_RA1512_TEST
 # Loading work.SRAM_IO_CTRL
 # Loading work.PSEUDO_SPT_INTF
@@ -881,10 +1062,9 @@
 # Break in Module PSEUDO_SPI_INTF_RA1512_TEST at ./sim/PSEUDO_SPI_INTF_RA1512_TEST.v line 341
 # END Test Case: PSEUDO_SPI_INTF_RA1512_TEST
 # 
-# 
-# BGN Test Case (2): PSEUDO_SPI_INTF_SCAN_TEST
+# BGN Test Case (4): PSEUDO_SPI_INTF_SCAN_TEST
 # vsim 
-# Start time: 17:07:12 on Jul 04,2016
+# Start time: 01:09:22 on Jul 06,2016
 # Loading work.PSEUDO_SPI_INTF_SCAN_TEST
 # Loading work.PSEUDO_SPT_INTF
 # Loading work.I_MEMORY_8BIT
@@ -913,10 +1093,9 @@
 # Break in Module PSEUDO_SPI_INTF_SCAN_TEST at ./sim/PSEUDO_SPI_INTF_SCAN_TEST.v line 280
 # END Test Case: PSEUDO_SPI_INTF_SCAN_TEST
 # 
-# 
-# BGN Test Case (3): PSEUDO_SPI_INTF_TEST
+# BGN Test Case (5): PSEUDO_SPI_INTF_TEST
 # vsim 
-# Start time: 17:07:15 on Jul 04,2016
+# Start time: 01:09:32 on Jul 06,2016
 # Loading work.PSEUDO_SPI_INTF_TEST
 # Loading work.PSEUDO_SPT_INTF
 # Loading work.I_MEMORY_8BIT
@@ -955,10 +1134,9 @@
 # Break in Module PSEUDO_SPI_INTF_TEST at ./sim/PSEUDO_SPI_INTF_TEST.v line 243
 # END Test Case: PSEUDO_SPI_INTF_TEST
 # 
-# 
-# BGN Test Case (4): SCPU_MEM_LOOP_8BIT_TEST
+# BGN Test Case (6): SCPU_MEM_LOOP_8BIT_TEST
 # vsim 
-# Start time: 17:07:19 on Jul 04,2016
+# Start time: 01:09:40 on Jul 06,2016
 # Loading work.SCPU_MEM_LOOP_8BIT_TEST
 # Loading work.SERIAL_CPU_8BIT
 # Loading work.I_MEMORY_8BIT
@@ -991,10 +1169,9 @@
 # Break in Module SCPU_MEM_LOOP_8BIT_TEST at ./sim/SCPU_MEM_LOOP_8BIT_TEST.v line 164
 # END Test Case: SCPU_MEM_LOOP_8BIT_TEST
 # 
-# 
-# BGN Test Case (5): SCPU_MEM_LOOP_TEST
+# BGN Test Case (7): SCPU_MEM_LOOP_TEST
 # vsim 
-# Start time: 17:07:22 on Jul 04,2016
+# Start time: 01:09:49 on Jul 06,2016
 # Loading work.SCPU_MEM_LOOP_TEST
 # Loading work.SERIAL_CPU
 # Loading work.I_MEMORY
@@ -1026,10 +1203,9 @@
 # Break in Module SCPU_MEM_LOOP_TEST at ./sim/SCPU_MEM_LOOP_TEST.v line 128
 # END Test Case: SCPU_MEM_LOOP_TEST
 # 
-# 
-# BGN Test Case (6): SRAM_IO_CTRL_RA1512_SCPU_8BIT_TEST
+# BGN Test Case (8): SRAM_IO_CTRL_RA1512_SCPU_8BIT_TEST
 # vsim 
-# Start time: 17:07:27 on Jul 04,2016
+# Start time: 01:09:58 on Jul 06,2016
 # Loading work.SRAM_IO_CTRL_RA1512_SCPU_8BIT_TEST
 # Loading work.SERIAL_CPU_8BIT
 # Loading work.SRAM_IO_CTRL
@@ -1084,10 +1260,9 @@
 # Break in Module SRAM_IO_CTRL_RA1512_SCPU_8BIT_TEST at ./sim/SRAM_IO_CTRL_RA1512_SCPU_8BIT_TEST.v line 509
 # END Test Case: SRAM_IO_CTRL_RA1512_SCPU_8BIT_TEST
 # 
-# 
-# BGN Test Case (7): SRAM_IO_CTRL_RA1512_TEST
+# BGN Test Case (9): SRAM_IO_CTRL_RA1512_TEST
 # vsim 
-# Start time: 17:07:31 on Jul 04,2016
+# Start time: 01:10:07 on Jul 06,2016
 # Loading work.SRAM_IO_CTRL_RA1512_TEST
 # Loading work.SRAM_IO_CTRL
 # Loading work.RA1SHD_IBM512X8
@@ -1120,10 +1295,43 @@
 # Break in Module SRAM_IO_CTRL_RA1512_TEST at ./sim/SRAM_IO_CTRL_RA1512_TEST.v line 345
 # END Test Case: SRAM_IO_CTRL_RA1512_TEST
 # 
-# 
-# BGN Test Case (8): SCPU_SRAM_8BIT_ALU_SPI_TOP_TEST
+# BGN Test Case (10): SRAM_IO_CTRL_TEST
 # vsim 
-# Start time: 17:07:36 on Jul 04,2016
+# Start time: 01:10:16 on Jul 06,2016
+# Loading work.SRAM_IO_CTRL_TEST
+# Loading work.SRAM_IO_CTRL
+# Loading work.I_MEMORY_8BIT
+# ** Warning: (vsim-3017) ./sim/SRAM_IO_CTRL_TEST.v(79): [TFMPC] - Too few port connections. Expected 6, found 0.
+# 
+#         Region: /SRAM_IO_CTRL_TEST/i_mem
+# ** Warning: (vsim-3722) ./sim/SRAM_IO_CTRL_TEST.v(79): [TFMPC] - Missing connection for port 'clk'.
+# 
+# ** Warning: (vsim-3722) ./sim/SRAM_IO_CTRL_TEST.v(79): [TFMPC] - Missing connection for port 'rst_n'.
+# 
+# ** Warning: (vsim-3722) ./sim/SRAM_IO_CTRL_TEST.v(79): [TFMPC] - Missing connection for port 'addr'.
+# 
+# ** Warning: (vsim-3722) ./sim/SRAM_IO_CTRL_TEST.v(79): [TFMPC] - Missing connection for port 'd_we'.
+# 
+# ** Warning: (vsim-3722) ./sim/SRAM_IO_CTRL_TEST.v(79): [TFMPC] - Missing connection for port 'datain'.
+# 
+# ** Warning: (vsim-3722) ./sim/SRAM_IO_CTRL_TEST.v(79): [TFMPC] - Missing connection for port 'dataout'.
+# 
+# 0020	10111011 00000100 
+# 0022	10111001 00000000 
+# 0024	01000001 00010011 
+# 0026	01011011 00000001 
+# 0028	11011000 00010010 
+# 002a	00011001 00000010 
+# 002c	00001000 00000000 
+# Test Passed!
+# ** Note: $stop    : ./sim/SRAM_IO_CTRL_TEST.v(272)
+#    Time: 21590 ns  Iteration: 0  Instance: /SRAM_IO_CTRL_TEST
+# Break in Module SRAM_IO_CTRL_TEST at ./sim/SRAM_IO_CTRL_TEST.v line 272
+# END Test Case: SRAM_IO_CTRL_TEST
+# 
+# BGN Test Case (11): SCPU_SRAM_8BIT_ALU_SPI_TOP_TEST
+# vsim 
+# Start time: 01:10:25 on Jul 06,2016
 # Loading work.SCPU_SRAM_8BIT_ALU_SPI_TOP_TEST
 # Loading work.SCPU_SRAM_8BIT_ALU_SPI_TOP
 # Loading work.SCPU_8BIT_ALU_CTRL_SPI
@@ -1165,3 +1373,7 @@
 # END Test Case: SCPU_SRAM_8BIT_ALU_SPI_TOP_TEST
 # 
 # 
+# All 12 Test Cases Finished
+# file159b6c48
+# 0
+# Success: 12, Errors: 0

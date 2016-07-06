@@ -14,7 +14,7 @@
 `include "../SRAM_IO_CTRL.v"
 `include "../I_MEMORY_8bit.v"
 
-module SRAM_IO_CTRL_TOP;
+module SRAM_IO_CTRL_TEST;
 
    parameter    MEMORY_DATA_WIDTH   = 8,
                 MEMORY_ADDR_WIDTH   = 9,
