@@ -155,7 +155,7 @@ module SERIAL_CPU_8BIT(
                 STATE_MEM:  next_state <= STATE_MEM2;
                 STATE_MEM2: next_state <= STATE_WB;//next_state <= STATE_MEM;
                 STATE_WB:
-                    if (id_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `HALT) begin
+                    if (code_type == `HALT) begin
                         nxt <= 2'b01;
                         next_state <= STATE_IDLE;
                     end
@@ -182,16 +182,10 @@ module SERIAL_CPU_8BIT(
             if (!rst_n)
                 begin
                     id_ir <= {`NOP, 11'b000_0000_0000};
-                    // pc <= 8'b0000_0000;
                 end
             else if (state == STATE_IF)
                 begin
                     id_ir[MEMORY_DATA_WIDTH-1:0] <= i_datain;
-                    
-                    // if(branch_flag)
-                        // pc <= reg_C[PC_MEM_ADDR_WIDTH-1:0];
-                    // else
-                        // pc <= pc + 1;
                 end
             else if (state == STATE_IF2)
                 begin
@@ -228,36 +222,33 @@ module SERIAL_CPU_8BIT(
         begin
             if (!rst_n)
                 begin
-                    //id_ir <= {`NOP, 11'b000_0000_0000};
                     reg_A <= 16'b0000_0000_0000_0000;
                     reg_B <= 16'b0000_0000_0000_0000;
-                    smdr <= 16'b0000_0000_0000_0000;
+                    smdr  <= 16'b0000_0000_0000_0000;
                 end
             else if (state == STATE_ID)
                 begin
-                    //id_ir <= id_ir;
-                    
-                    if (id_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `STORE)
-                        smdr <= gr[id_ir[MSB_OPER1_11B-1:MSB_OPER2_8B]];
+                    if (code_type == `STORE)
+                        smdr <= gr[oper1_r1];
                     else
                         smdr <= smdr;
                 
-                    if (id_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `JUMP)
+                    if (code_type == `JUMP)
                         reg_A <= 16'b0000_0000_0000_0000;
-                    else if (I_R1_TYPE(id_ir[MSB_OP_16B-1:MSB_OPER1_11B]))
-                        reg_A <= gr[id_ir[MSB_OPER1_11B-1:MSB_OPER2_8B]];
-                    else if (I_R2_TYPE(id_ir[MSB_OP_16B-1:MSB_OPER1_11B]))
+                    else if (I_R1_TYPE(code_type))
+                        reg_A <= gr[oper1_r1];
+                    else if (I_R2_TYPE(code_type))
                         reg_A <= gr[id_ir[MSB_VAL2_7B-1:MSB_OPER3_4B]];
                     else
                         reg_A <= reg_A;
                     
-                    if (I_V3_TYPE(id_ir[MSB_OP_16B-1:MSB_OPER1_11B]))
+                    if (I_V3_TYPE(code_type))
                         reg_B <= {12'b0000_0000_0000, id_ir[MSB_OPER3_4B-1:0]};
-                    else if (I_ZEROV2V3_TYPE(id_ir[MSB_OP_16B-1:MSB_OPER1_11B]))
+                    else if (I_ZEROV2V3_TYPE(code_type))
                         reg_B <= {8'b0000_0000, id_ir[MSB_OPER2_8B-1:0]};
-                    else if (I_V2V3ZERO_TYPE(id_ir[MSB_OP_16B-1:MSB_OPER1_11B]))
+                    else if (I_V2V3ZERO_TYPE(code_type))
                         reg_B <= {id_ir[MSB_OPER2_8B-1:0], 8'b0000_0000};
-                    else if (I_R3_TYPE(id_ir[MSB_OP_16B-1:MSB_OPER1_11B]))
+                    else if (I_R3_TYPE(code_type))
                         reg_B <= gr[id_ir[MSB_VAL3_3B-1:0]];
                     else
                         reg_B <= reg_B;
@@ -266,7 +257,7 @@ module SERIAL_CPU_8BIT(
     //************* Combinational ALU *************//
     always @(*)
         begin
-            case(id_ir[MSB_OP_16B-1:MSB_OPER1_11B])
+            case(code_type)
                 `AND:   {cf_buf, ALUo} <= {1'b0, reg_A & reg_B};
                 `OR:    {cf_buf, ALUo} <= {1'b0, reg_A | reg_B};
                 `XOR:   {cf_buf, ALUo} <= {1'b0, reg_A ^ reg_B};
@@ -313,18 +304,18 @@ module SERIAL_CPU_8BIT(
             
             else if (state == STATE_EX)
                 begin
-                    if (id_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `LIOA)
+                    if (code_type == `LIOA)
                         reg_C <= io_datainA;
-                    else if (id_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `LIOB)
+                    else if (code_type == `LIOB)
                         reg_C <= io_datainB;
-                    else if (id_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `LIOS)
+                    else if (code_type == `LIOS)
                         reg_C <= io_status;
-                    else if (id_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `LFSR)
+                    else if (code_type == `LFSR)
                         reg_C <= {ALUo[14:0], (ALUo[15] ^ ALUo[13] ^ ALUo[12] ^ ALUo[10])}; //16 bits
                     else
                         reg_C <= ALUo;
                     
-                    if (I_ZFNFCF_TYPE(id_ir[MSB_OP_16B-1:MSB_OPER1_11B]))
+                    if (I_ZFNFCF_TYPE(code_type))
                         begin
                             cf <= cf_buf;
                             if (ALUo == 16'b0000_0000_0000_0000)
@@ -342,17 +333,6 @@ module SERIAL_CPU_8BIT(
                             nf <= nf;
                             cf <= cf;
                         end
-                    
-                    // if (id_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `STORE)
-                        // begin
-                            // dw <= 1'b1;
-                            // smdr <= smdr;
-                        // end
-                    // else
-                        // begin
-                            // dw <= 1'b0;
-                            // smdr <= smdr;
-                        // end
                 end
         end
 
@@ -363,7 +343,7 @@ module SERIAL_CPU_8BIT(
                 dw <= 1'b0;
             else if (state == STATE_EX)
                 begin
-                    if (id_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `STORE)
+                    if (code_type == `STORE)
                         dw <= 1'b1;
                     else
                         dw <= 1'b0;
@@ -373,14 +353,14 @@ module SERIAL_CPU_8BIT(
         end
         
     //************* MEM *************//
-    assign branch_flag = ((id_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `JUMP)
-                        || (id_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `JMPR)
-                        || ((id_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `BZ) && (zf == 1'b1))
-                        || ((id_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `BNZ) && (zf == 1'b0))
-                        || ((id_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `BN) && (nf == 1'b1))
-                        || ((id_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `BNN) && (nf == 1'b0))
-                        || ((id_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `BC) && (cf == 1'b1))
-                        || ((id_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `BNC) && (cf == 1'b0)));
+    assign branch_flag = ((code_type == `JUMP)
+                        || (code_type == `JMPR)
+                        || ((code_type == `BZ) && (zf == 1'b1))
+                        || ((code_type == `BNZ) && (zf == 1'b0))
+                        || ((code_type == `BN) && (nf == 1'b1))
+                        || ((code_type == `BNN) && (nf == 1'b0))
+                        || ((code_type == `BC) && (cf == 1'b1))
+                        || ((code_type == `BNC) && (cf == 1'b0)));
 
     //************* WB *************//
     always @(negedge clk or negedge rst_n)
@@ -398,24 +378,30 @@ module SERIAL_CPU_8BIT(
                     
                     pc <= {PC_MEM_ADDR_WIDTH{1'b0}};//DEFAULT_PC_ADDR;
                 end
+            else if (state == STATE_IDLE)
+                begin
+                    if (start == 1'b1)
+                        //pc stays at all 1's when instructions exhaust
+                        pc <= {PC_MEM_ADDR_WIDTH{1'b0}};
+                end
             else if (state == STATE_MEM2)
                 begin
                     // save the d_datain to the low half
-                    if (id_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `LOAD)
-                        gr[id_ir[MSB_OPER1_11B-1:MSB_OPER2_8B]][MEMORY_DATA_WIDTH-1:0] <= d_datain;
+                    if (code_type == `LOAD)
+                        gr[oper1_r1][MEMORY_DATA_WIDTH-1:0] <= d_datain;
                 end
             else if (state == STATE_WB)
                 begin
-                    if (id_ir[MSB_OP_16B-1:MSB_OPER1_11B] == `LOAD)
-                        gr[id_ir[MSB_OPER1_11B-1:MSB_OPER2_8B]][(MEMORY_DATA_WIDTH<<1)-1:MEMORY_DATA_WIDTH] <= d_datain;
-                    else if (I_REG_TYPE(id_ir[MSB_OP_16B-1:MSB_OPER1_11B]))
-                        gr[id_ir[MSB_OPER1_11B-1:MSB_OPER2_8B]] <= reg_C;
+                    if (code_type == `LOAD)
+                        gr[oper1_r1][(MEMORY_DATA_WIDTH<<1)-1:MEMORY_DATA_WIDTH] <= d_datain;
+                    else if (I_REG_TYPE(code_type))
+                        gr[oper1_r1] <= reg_C;
                         
                     //the pc update could be move to MEM state to save time;
-                    if(branch_flag)
+                    if (branch_flag)
                         pc <= reg_C[PC_MEM_ADDR_WIDTH-1:0];
-                    else if(instr_over)
-                        pc <= {PC_MEM_ADDR_WIDTH{1'b0}};//DEFAULT_PC_ADDR
+                    else if (instr_over)
+                        pc <= pc;//{PC_MEM_ADDR_WIDTH{1'b0}};//DEFAULT_PC_ADDR
                     else
                         pc <= pc + 1;
                 end

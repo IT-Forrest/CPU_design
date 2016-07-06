@@ -40,3 +40,5 @@ foreach case $testcases {
     puts "END Test Case: $case\n\n"
     incr i
 }
+
+puts "\n\nAll $i Test Cases Finished"

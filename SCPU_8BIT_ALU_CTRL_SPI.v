@@ -110,7 +110,7 @@ module SCPU_8BIT_ALU_CTRL_SPI(
                 IO_ALU_STA          = 5,
                 IO_SPI_STA          = 6;
     parameter   IO_STAT_ALU_DONE    = 0,
-                IO_STAT_CTRL_DONE   = 1;
+                IO_STAT_SPI_DONE    = 1;
    
     wire    [GENERAL_REG_WIDTH-1:0] io_status;
     wire    [GENERAL_REG_WIDTH-1:0] io_control;
