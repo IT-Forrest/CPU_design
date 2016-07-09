@@ -7,13 +7,13 @@
 module D_MEMORY(
     input clk,
     input rst_n,
-    input [7:0] addr,
+    input [8:0] addr,
     input d_we,
     input [15:0] datain,
     output [15:0] dataout
     );
 
-    reg [15:0] D_RAM[255:0];
+    reg [15:0] D_RAM[511:0];
     
     assign dataout = D_RAM[addr];
     always @(posedge clk or negedge rst_n)

@@ -14,6 +14,8 @@
 
 # Compile the verilog files
 vlog -work work DEFINE_CPU.v
+vlog -work work D_MEMORY.v
+vlog -work work I_MEMORY.v
 vlog -work work I_MEMORY_8bit.v
 vlog -work work SERIAL_CPU_8bit.v
 vlog -work work SHARE_SUPERALU.v
