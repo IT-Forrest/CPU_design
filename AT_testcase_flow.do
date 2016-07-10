@@ -30,6 +30,7 @@ do AT_compile_all.do
 # (3) Load design & Run
 set i 0
 foreach case $testcases {
+    incr i
     puts "BGN Test Case ($i): $case"
     vsim -lib work $case
     onbreak {
@@ -39,7 +40,6 @@ foreach case $testcases {
     quit -sim
     
     puts "END Test Case: $case\n"
-    incr i
 }
 
 # (4) Read Log & Report Results
