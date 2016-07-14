@@ -1,17 +1,16 @@
-{F:/05. Code Battle/04. Verilog/CPU_design/D_MEMORY.v} {1 {vlog -work work -stats=none {F:/05. Code Battle/04. Verilog/CPU_design/D_MEMORY.v}
+{F:/05. Code Battle/04. Verilog/CPU_design/SRAM_IO_CTRL_LOGIC.v} {1 {vlog -work work -stats=none {F:/05. Code Battle/04. Verilog/CPU_design/SRAM_IO_CTRL_LOGIC.v}
+Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
+-- Compiling module SRAM_IO_CTRL_LOGIC
+
+Top level modules:
+	SRAM_IO_CTRL_LOGIC
+
+} {} {}} {F:/05. Code Battle/04. Verilog/CPU_design/D_MEMORY.v} {1 {vlog -work work -stats=none {F:/05. Code Battle/04. Verilog/CPU_design/D_MEMORY.v}
 Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
 -- Compiling module D_MEMORY
 
 Top level modules:
 	D_MEMORY
-
-} {} {}} {F:/05. Code Battle/04. Verilog/CPU_design/sim/SHARE_SUPERALU_CORDIC_TEST.v} {1 {vlog -work work -stats=none {F:/05. Code Battle/04. Verilog/CPU_design/sim/SHARE_SUPERALU_CORDIC_TEST.v}
-Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
--- Compiling module SHARE_SUPERALU
--- Compiling module SHARE_SUPERALU_CORDIC_TEST
-
-Top level modules:
-	SHARE_SUPERALU_CORDIC_TEST
 
 } {} {}} {F:/05. Code Battle/04. Verilog/CPU_design/sim/SRAM_IO_CTRL_TEST.v} {1 {vlog -work work -stats=none {F:/05. Code Battle/04. Verilog/CPU_design/sim/SRAM_IO_CTRL_TEST.v}
 Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
@@ -21,6 +20,14 @@ Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
 
 Top level modules:
 	SRAM_IO_CTRL_TEST
+
+} {} {}} {F:/05. Code Battle/04. Verilog/CPU_design/sim/SHARE_SUPERALU_CORDIC_TEST.v} {1 {vlog -work work -stats=none {F:/05. Code Battle/04. Verilog/CPU_design/sim/SHARE_SUPERALU_CORDIC_TEST.v}
+Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
+-- Compiling module SHARE_SUPERALU
+-- Compiling module SHARE_SUPERALU_CORDIC_TEST
+
+Top level modules:
+	SHARE_SUPERALU_CORDIC_TEST
 
 } {} {}} {F:/05. Code Battle/04. Verilog/CPU_design/SERIAL_CPU_8bit.v} {1 {vlog -work work -stats=none {F:/05. Code Battle/04. Verilog/CPU_design/SERIAL_CPU_8bit.v}
 Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
@@ -127,18 +134,16 @@ Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
 Top level modules:
 	PCPU_MEM_INIT_TOP
 
-} {} {}} {F:/05. Code Battle/04. Verilog/CPU_design/SCPU_SRAM_8BIT_ALU_SPI_TOP.v} {1 {vlog -work work -stats=none {F:/05. Code Battle/04. Verilog/CPU_design/SCPU_SRAM_8BIT_ALU_SPI_TOP.v}
+} {} {}} {F:/05. Code Battle/04. Verilog/CPU_design/SCPU_8BIT_ALU_CTRL_SPI.v} {1 {vlog -work work -stats=none {F:/05. Code Battle/04. Verilog/CPU_design/SCPU_8BIT_ALU_CTRL_SPI.v}
 Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
 -- Compiling module SERIAL_CPU_8BIT
 -- Compiling module SHARE_SUPERALU
 -- Compiling module SRAM_IO_CTRL
 -- Compiling module PSEUDO_SPT_INTF
 -- Compiling module SCPU_8BIT_ALU_CTRL_SPI
--- Compiling module RA1SHD_IBM512X8
--- Compiling module SCPU_SRAM_8BIT_ALU_SPI_TOP
 
 Top level modules:
-	SCPU_SRAM_8BIT_ALU_SPI_TOP
+	SCPU_8BIT_ALU_CTRL_SPI
 
 } {} {}} {F:/05. Code Battle/04. Verilog/CPU_design/sim/PCPU_MEM_CTRL_TEST.v} {1 {vlog -work work -stats=none {F:/05. Code Battle/04. Verilog/CPU_design/sim/PCPU_MEM_CTRL_TEST.v}
 Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
@@ -152,23 +157,25 @@ Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
 Top level modules:
 	PCPU_MEM_CTRL_TOP
 
-} {} {}} {F:/05. Code Battle/04. Verilog/CPU_design/SCPU_8BIT_ALU_CTRL_SPI.v} {1 {vlog -work work -stats=none {F:/05. Code Battle/04. Verilog/CPU_design/SCPU_8BIT_ALU_CTRL_SPI.v}
+} {} {}} {F:/05. Code Battle/04. Verilog/CPU_design/SCPU_SRAM_8BIT_ALU_SPI_TOP.v} {1 {vlog -work work -stats=none {F:/05. Code Battle/04. Verilog/CPU_design/SCPU_SRAM_8BIT_ALU_SPI_TOP.v}
 Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
 -- Compiling module SERIAL_CPU_8BIT
 -- Compiling module SHARE_SUPERALU
 -- Compiling module SRAM_IO_CTRL
 -- Compiling module PSEUDO_SPT_INTF
 -- Compiling module SCPU_8BIT_ALU_CTRL_SPI
+-- Compiling module RA1SHD_IBM512X8
+-- Compiling module SCPU_SRAM_8BIT_ALU_SPI_TOP
 
 Top level modules:
-	SCPU_8BIT_ALU_CTRL_SPI
+	SCPU_SRAM_8BIT_ALU_SPI_TOP
 
-} {} {}} {F:/05. Code Battle/04. Verilog/CPU_design/CTRL_LOGIC.v} {1 {vlog -work work -stats=none {F:/05. Code Battle/04. Verilog/CPU_design/CTRL_LOGIC.v}
+} {} {}} {F:/05. Code Battle/04. Verilog/CPU_design/RA1SHD_IBM512X8.v} {1 {vlog -work work -stats=none {F:/05. Code Battle/04. Verilog/CPU_design/RA1SHD_IBM512X8.v}
 Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
--- Compiling module CTRL_LOGIC
+-- Compiling module RA1SHD_IBM512X8
 
 Top level modules:
-	CTRL_LOGIC
+	RA1SHD_IBM512X8
 
 } {} {}} {F:/05. Code Battle/04. Verilog/CPU_design/sim/PSEUDO_SPI_INTF_TEST.v} {1 {vlog -work work -stats=none {F:/05. Code Battle/04. Verilog/CPU_design/sim/PSEUDO_SPI_INTF_TEST.v}
 Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
@@ -179,12 +186,26 @@ Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
 Top level modules:
 	PSEUDO_SPI_INTF_TEST
 
-} {} {}} {F:/05. Code Battle/04. Verilog/CPU_design/RA1SHD_IBM512X8.v} {1 {vlog -work work -stats=none {F:/05. Code Battle/04. Verilog/CPU_design/RA1SHD_IBM512X8.v}
+} {} {}} {F:/05. Code Battle/04. Verilog/CPU_design/CTRL_LOGIC.v} {1 {vlog -work work -stats=none {F:/05. Code Battle/04. Verilog/CPU_design/CTRL_LOGIC.v}
 Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
--- Compiling module RA1SHD_IBM512X8
+-- Compiling module CTRL_LOGIC
 
 Top level modules:
-	RA1SHD_IBM512X8
+	CTRL_LOGIC
+
+} {} {}} {F:/05. Code Battle/04. Verilog/CPU_design/PSEUDO_SPI_INTF.v} {1 {vlog -work work -stats=none {F:/05. Code Battle/04. Verilog/CPU_design/PSEUDO_SPI_INTF.v}
+Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
+-- Compiling module PSEUDO_SPT_INTF
+
+Top level modules:
+	PSEUDO_SPT_INTF
+
+} {} {}} {F:/05. Code Battle/04. Verilog/CPU_design/SHARE_SUPERALU.v} {1 {vlog -work work -stats=none {F:/05. Code Battle/04. Verilog/CPU_design/SHARE_SUPERALU.v}
+Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
+-- Compiling module SHARE_SUPERALU
+
+Top level modules:
+	SHARE_SUPERALU
 
 } {} {}} {F:/05. Code Battle/04. Verilog/CPU_design/sim/SHARE_SUPERALU_MULT_TEST.v} {1 {vlog -work work -stats=none {F:/05. Code Battle/04. Verilog/CPU_design/sim/SHARE_SUPERALU_MULT_TEST.v}
 Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
@@ -194,20 +215,6 @@ Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
 Top level modules:
 	SHARE_SUPERALU_MULT_TEST
 
-} {} {}} {F:/05. Code Battle/04. Verilog/CPU_design/SHARE_SUPERALU.v} {1 {vlog -work work -stats=none {F:/05. Code Battle/04. Verilog/CPU_design/SHARE_SUPERALU.v}
-Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
--- Compiling module SHARE_SUPERALU
-
-Top level modules:
-	SHARE_SUPERALU
-
-} {} {}} {F:/05. Code Battle/04. Verilog/CPU_design/PSEUDO_SPI_INTF.v} {1 {vlog -work work -stats=none {F:/05. Code Battle/04. Verilog/CPU_design/PSEUDO_SPI_INTF.v}
-Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
--- Compiling module PSEUDO_SPT_INTF
-
-Top level modules:
-	PSEUDO_SPT_INTF
-
 } {} {}} {F:/05. Code Battle/04. Verilog/CPU_design/sim/SHARE_SUPERALU_DIV_TEST.v} {1 {vlog -work work -stats=none {F:/05. Code Battle/04. Verilog/CPU_design/sim/SHARE_SUPERALU_DIV_TEST.v}
 Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
 -- Compiling module SHARE_SUPERALU
@@ -215,16 +222,6 @@ Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
 
 Top level modules:
 	SHARE_SUPERALU_DIV_TEST
-
-} {} {}} {F:/05. Code Battle/04. Verilog/CPU_design/sim/PSEUDO_SPI_INTF_RA1512_TEST.v} {1 {vlog -work work -stats=none {F:/05. Code Battle/04. Verilog/CPU_design/sim/PSEUDO_SPI_INTF_RA1512_TEST.v}
-Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
--- Compiling module PSEUDO_SPT_INTF
--- Compiling module RA1SHD_IBM512X8
--- Compiling module I_MEMORY_8BIT
--- Compiling module PSEUDO_SPI_INTF_RA1512_TEST
-
-Top level modules:
-	PSEUDO_SPI_INTF_RA1512_TEST
 
 } {} {}} {F:/05. Code Battle/04. Verilog/CPU_design/sim/SCPU_SRAM_8BIT_ALU_TOP_TEST.v} {2 {vlog -work work -stats=none {F:/05. Code Battle/04. Verilog/CPU_design/sim/SCPU_SRAM_8BIT_ALU_TOP_TEST.v}
 Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
@@ -242,6 +239,23 @@ Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
 Top level modules:
 	SCPU_SRAM_8BIT_ALU_TOP_TEST
 
+} {} {}} {F:/05. Code Battle/04. Verilog/CPU_design/sim/PSEUDO_SPI_INTF_RA1512_TEST.v} {1 {vlog -work work -stats=none {F:/05. Code Battle/04. Verilog/CPU_design/sim/PSEUDO_SPI_INTF_RA1512_TEST.v}
+Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
+-- Compiling module PSEUDO_SPT_INTF
+-- Compiling module RA1SHD_IBM512X8
+-- Compiling module I_MEMORY_8BIT
+-- Compiling module PSEUDO_SPI_INTF_RA1512_TEST
+
+Top level modules:
+	PSEUDO_SPI_INTF_RA1512_TEST
+
+} {} {}} {F:/05. Code Battle/04. Verilog/CPU_design/SRAM_IO_CTRL.v} {1 {vlog -work work -stats=none {F:/05. Code Battle/04. Verilog/CPU_design/SRAM_IO_CTRL.v}
+Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
+-- Compiling module SRAM_IO_CTRL
+
+Top level modules:
+	SRAM_IO_CTRL
+
 } {} {}} {F:/05. Code Battle/04. Verilog/CPU_design/sim/PSEUDO_SPI_INTF_SCAN_TEST.v} {1 {vlog -work work -stats=none {F:/05. Code Battle/04. Verilog/CPU_design/sim/PSEUDO_SPI_INTF_SCAN_TEST.v}
 Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
 -- Compiling module PSEUDO_SPT_INTF
@@ -252,19 +266,20 @@ Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
 Top level modules:
 	PSEUDO_SPI_INTF_SCAN_TEST
 
-} {} {}} {F:/05. Code Battle/04. Verilog/CPU_design/SRAM_IO_CTRL.v} {1 {vlog -work work -stats=none {F:/05. Code Battle/04. Verilog/CPU_design/SRAM_IO_CTRL.v}
-Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
--- Compiling module SRAM_IO_CTRL
-
-Top level modules:
-	SRAM_IO_CTRL
-
 } {} {}} {F:/05. Code Battle/04. Verilog/CPU_design/I_MEMORY_8bit.v} {1 {vlog -work work -stats=none {F:/05. Code Battle/04. Verilog/CPU_design/I_MEMORY_8bit.v}
 Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
 -- Compiling module I_MEMORY_8BIT
 
 Top level modules:
 	I_MEMORY_8BIT
+
+} {} {}} {F:/05. Code Battle/04. Verilog/CPU_design/sim/PCPU_SINGLE_TEST.v} {1 {vlog -work work -stats=none {F:/05. Code Battle/04. Verilog/CPU_design/sim/PCPU_SINGLE_TEST.v}
+Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
+-- Compiling module PIPE_CPU
+-- Compiling module PCPU_SINGLE_TOP
+
+Top level modules:
+	PCPU_SINGLE_TOP
 
 } {} {}} {F:/05. Code Battle/04. Verilog/CPU_design/sim/SRAM_IO_CTRL_RA1512_SCPU_8BIT_TEST.v} {1 {vlog -work work -stats=none {F:/05. Code Battle/04. Verilog/CPU_design/sim/SRAM_IO_CTRL_RA1512_SCPU_8BIT_TEST.v}
 Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
@@ -287,13 +302,20 @@ Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
 Top level modules:
 	SRAM_IO_CTRL_RA1512_TEST
 
-} {} {}} {F:/05. Code Battle/04. Verilog/CPU_design/sim/PCPU_SINGLE_TEST.v} {1 {vlog -work work -stats=none {F:/05. Code Battle/04. Verilog/CPU_design/sim/PCPU_SINGLE_TEST.v}
+} {} {}} {F:/05. Code Battle/04. Verilog/CPU_design/sim/SCPU_SINGLE_8bit_TEST.v} {1 {vlog -work work -stats=none {F:/05. Code Battle/04. Verilog/CPU_design/sim/SCPU_SINGLE_8bit_TEST.v}
 Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
--- Compiling module PIPE_CPU
--- Compiling module PCPU_SINGLE_TOP
+-- Compiling module SERIAL_CPU_8BIT
+-- Compiling module SCPU_SINGLE_8BIT_TOP
 
 Top level modules:
-	PCPU_SINGLE_TOP
+	SCPU_SINGLE_8BIT_TOP
+
+} {} {}} {F:/05. Code Battle/04. Verilog/CPU_design/I_MEMORY.v} {1 {vlog -work work -stats=none {F:/05. Code Battle/04. Verilog/CPU_design/I_MEMORY.v}
+Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
+-- Compiling module I_MEMORY
+
+Top level modules:
+	I_MEMORY
 
 } {} {}} {F:/05. Code Battle/04. Verilog/CPU_design/sim/SCPU_MEM_LOOP_TEST.v} {2 {vlog -work work -stats=none {F:/05. Code Battle/04. Verilog/CPU_design/sim/SCPU_MEM_LOOP_TEST.v}
 Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
@@ -307,22 +329,26 @@ Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
 Top level modules:
 	SCPU_MEM_LOOP_TEST
 
-} {} {}} {F:/05. Code Battle/04. Verilog/CPU_design/I_MEMORY.v} {1 {vlog -work work -stats=none {F:/05. Code Battle/04. Verilog/CPU_design/I_MEMORY.v}
-Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
--- Compiling module I_MEMORY
-
-Top level modules:
-	I_MEMORY
-
-} {} {}} {F:/05. Code Battle/04. Verilog/CPU_design/sim/SCPU_SINGLE_8bit_TEST.v} {1 {vlog -work work -stats=none {F:/05. Code Battle/04. Verilog/CPU_design/sim/SCPU_SINGLE_8bit_TEST.v}
+} {} {}} {F:/05. Code Battle/04. Verilog/CPU_design/sim/SCPU_MEM_INST_END_8BIT_TEST.v} {1 {vlog -work work -stats=none {F:/05. Code Battle/04. Verilog/CPU_design/sim/SCPU_MEM_INST_END_8BIT_TEST.v}
 Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
 -- Compiling module SERIAL_CPU_8BIT
--- Compiling module SCPU_SINGLE_8BIT_TOP
+-- Compiling module I_MEMORY_8BIT
+-- Compiling module SCPU_MEM_INST_END_8BIT_TEST
 
 Top level modules:
-	SCPU_SINGLE_8BIT_TOP
+	SCPU_MEM_INST_END_8BIT_TEST
 
 } {} {}} {F:/05. Code Battle/04. Verilog/CPU_design/DEFINE_CPU.v} {1 {vlog -work work -stats=none {F:/05. Code Battle/04. Verilog/CPU_design/DEFINE_CPU.v}
 Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
+
+} {} {}} {F:/05. Code Battle/04. Verilog/CPU_design/sim/SRAM_IO_CTRL_LOGIC_TEST.v} {1 {vlog -work work -stats=none {F:/05. Code Battle/04. Verilog/CPU_design/sim/SRAM_IO_CTRL_LOGIC_TEST.v}
+Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
+-- Compiling module SRAM_IO_CTRL
+-- Compiling module SRAM_IO_CTRL_LOGIC
+-- Compiling module I_MEMORY_8BIT
+-- Compiling module SRAM_IO_CTRL_LOGIC_TEST
+
+Top level modules:
+	SRAM_IO_CTRL_LOGIC_TEST
 
 } {} {}}

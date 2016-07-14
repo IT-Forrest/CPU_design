@@ -176,6 +176,7 @@ module PSEUDO_SPT_INTF(
                 SPI_SOUT:   cnt_state <= 0;
                 SPI_LOOP:   cnt_state <= (cnt_bit_sent)?4:0;
                 SPI_ADDR:   cnt_state <= 0;
+                default:    cnt_state <= 0;
             endcase
         end
         else
@@ -189,7 +190,7 @@ module PSEUDO_SPT_INTF(
             spi_state <= SPI_IDLE;
         else begin
             case (spi_state)
-                SPI_IDLE:   if (!cnt_state) spi_state <= SPI_READ;
+                SPI_IDLE:   if (!cnt_state) spi_state <= SPI_ADDR;
                 SPI_READ:   if (!cnt_state) spi_state <= SPI_SOUT;
                 SPI_SOUT:   if (!cnt_state) spi_state <= SPI_LOOP;
                 SPI_LOOP:

@@ -152,8 +152,8 @@ module PSEUDO_SPI_INTF_RA1512_TEST;
         rst_n = 0;
         SPI_BGN = 0;
         CTRL_BGN = 0;
-        addr_end = MEM_BGN_ADDR + TRANSFER_LEN - 1;
-        data_len = TRANSFER_LEN - 1;
+        addr_end = MEM_BGN_ADDR + TRANSFER_LEN;
+        data_len = TRANSFER_LEN;
         LOAD_N = 1;
         error_cnt = 0;
         CTRL_MODE = 2'b00;
@@ -233,71 +233,83 @@ module PSEUDO_SPI_INTF_RA1512_TEST;
 
         /* (1) Import address & Instruction to SRAM via CTRL_SRAM */
         for (i = DEFAULT_PC_ADDR; i<7+ DEFAULT_PC_ADDR; i=i+1) begin
-            #10 CTRL_MODE = 2'b00;
-            tmpi_adder = (i<<1);
-            tmpi_all = {tmpi_adder, i_mem.I_RAM[tmpi_adder]};
+            for (k=2; k>=1; k=k-1) begin
+                /** (a) load data to SRAM_IO_CTRL from PC **/
+                // C code modify control word
+                #10 CTRL_BGN = 1;
+                #10 CTRL_MODE = 2'b00;
+                tmpi_adder = (i<<1)+k-1;
+                tmpi_all = {tmpi_adder, i_mem.I_RAM[tmpi_adder]};
+                // C code triger FPGA gen Load signal
             
-            //Load data to CTRL
-            for (j = 0; j < REG_BITS_WIDTH; j=j+1) begin
-                SI = tmpi_all[j];
-                #10 LOAD_N = 0;
-                #30;
-                for (k = 0; k < 5; k=k+1) begin
-                    if (RDY) begin
-                        k = 5;
+                begin
+                    // FPGA send Load signal & data to CTRL
+                    #10 LOAD_N = 0;
+                    for (j = 0; j < REG_BITS_WIDTH; j=j+1) begin
+                        #10 SI = tmpi_all[j];
                     end
-                    #10;
                 end
-                #10 LOAD_N = 1;
-            end
-            //Send data to SRAM
-            #10 CTRL_MODE = 2'b11;
-            #10 LOAD_N = 0;
-            #30;
-            for (k = 0; k < 5; k=k+1) begin
-                if (RDY) begin
-                    k = 5;
-                end
-                #10;
-            end
-            #10 LOAD_N = 1;
-            //release m_addr;
             
-            #10 CTRL_MODE = 2'b00;
-            tmpi_adder = tmpi_adder + 1;
-            tmpi_all = {tmpi_adder, i_mem.I_RAM[tmpi_adder]};
-            for (j = 0; j < REG_BITS_WIDTH; j=j+1) begin
-                SI = tmpi_all[j];
-                #10 LOAD_N = 0;
-                #30;
-                for (k = 0; k < 5; k=k+1) begin
-                    if (RDY) begin
-                        k = 5;
-                    end
+                // C code polling to do next
+                begin: ctrl_module_load_ready
+                forever begin
                     #10;
+                    if (RDY) begin
+                        disable ctrl_module_load_ready;
+                    end
                 end
-                #10 LOAD_N = 1;
-            end
-            //Send data to SRAM;
-            #10 CTRL_MODE = 2'b11;
-            #10 LOAD_N = 0;
-            #30;
-            for (k = 0; k < 5; k=k+1) begin
-                if (RDY) begin
-                    k = 5;
                 end
-                #10;
+            
+                // C code modify control word
+                #10 CTRL_BGN = 0;
+                #10 LOAD_N = 1;//this FPGA signal is related to CTRL_BGN
+                begin: ctrl_module_load_finish
+                forever begin
+                    #10;
+                    if (!RDY) begin
+                        disable ctrl_module_load_finish;
+                    end
+                end
+                end
+            
+                /** (b) notify SRAM_IO_CTRL to send data to SRAM **/
+                // C code modify control word
+                #10 CTRL_BGN = 1;
+                #10 CTRL_MODE = 2'b11;
+                // C code triger FPGA gen Load signal
+                
+                begin
+                    // FPGA send Load signal & data to CTRL
+                    #10 LOAD_N = 0;
+                end
+            
+                // C code polling to do next
+                begin: ctrl_module_write_ready
+                forever begin
+                    #10;
+                    if (RDY) begin
+                        disable ctrl_module_write_ready;
+                    end
+                end
+                end
+            
+                // C code modify control word
+                #10 CTRL_BGN = 0;
+                #10 LOAD_N = 1;//this FPGA signal is related to CTRL_BGN
+                begin: ctrl_module_write_finish
+                forever begin
+                    #10;
+                    if (!RDY) begin
+                        disable ctrl_module_write_finish;
+                    end
+                end
+                end
             end
-            #10 LOAD_N = 1;
-            //release m_addr;
         end
-        // #10 start =1;
-        // #10 start = 0;
-        // for (j=1; j<40; j=j+1)
-            // #100;
         #800;
         
         /* (3) fetch info from Real SRAM & compare with Baseline */ 
+        // C code modify control word
         error_cnt = 0;
         is_intf_flag = 1;
         CTRL_BGN = 0;
@@ -315,7 +327,7 @@ module PSEUDO_SPI_INTF_RA1512_TEST;
                     end
                     #10;
                 end
-                #10 LOAD_N = 1;
+                //#10 LOAD_N = 1;
             end
             // Write data to tmp SRAM for later comparison
             c_mem.I_RAM[ i-2] = tmpi_datain[MEMORY_DATA_WIDTH-1:0];

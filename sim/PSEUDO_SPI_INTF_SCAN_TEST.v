@@ -153,8 +153,8 @@ module PSEUDO_SPI_INTF_SCAN_TEST;
         rst_n = 0;
         BGN = 0;
         ADC = 10'b0000000000;
-        addr_end = MEM_BGN_ADDR + TRANSFER_LEN - 1;
-        data_len = TRANSFER_LEN - 1;
+        addr_end = MEM_BGN_ADDR + TRANSFER_LEN;
+        data_len = TRANSFER_LEN;
         
         LOAD_N = 1;
         error_cnt = 0;

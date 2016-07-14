@@ -20,6 +20,7 @@ vlog -work work I_MEMORY_8bit.v
 vlog -work work SERIAL_CPU_8bit.v
 vlog -work work SHARE_SUPERALU.v
 vlog -work work SRAM_IO_CTRL.v
+vlog -work work SRAM_IO_CTRL_LOGIC.v
 vlog -work work PSEUDO_SPI_INTF.v
 vlog -work work SCPU_8BIT_ALU_CTRL_SPI.v
 vlog -work work iogpil_cmrf8sf_rvt.v
@@ -38,6 +39,7 @@ SCPU_MEM_LOOP_8BIT_TEST\
 SCPU_MEM_LOOP_TEST\
 SRAM_IO_CTRL_RA1512_SCPU_8BIT_TEST\
 SRAM_IO_CTRL_RA1512_TEST\
+SRAM_IO_CTRL_LOGIC_TEST\
 SRAM_IO_CTRL_TEST\
 SCPU_SRAM_8BIT_ALU_SPI_TOP_TEST\
 ]

@@ -126,8 +126,8 @@ module PSEUDO_SPI_INTF_TEST;
         CLK = 0;
         rst_n = 0;
         BGN = 0;
-        addr_end = MEM_BGN_ADDR + TRANSFER_LEN - 1;
-        data_len = TRANSFER_LEN - 1;
+        addr_end = MEM_BGN_ADDR + TRANSFER_LEN;
+        data_len = TRANSFER_LEN;
         
         LOAD_N = 1;
         error_cnt = 0;

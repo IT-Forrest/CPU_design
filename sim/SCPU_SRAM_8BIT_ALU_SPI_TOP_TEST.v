@@ -164,179 +164,195 @@ module SCPU_SRAM_8BIT_ALU_SPI_TOP_TEST;
 
         /* (1) Serially Input the address & Instruction to CTRL and then to SRAM */
         for (i = 0; i<7+ DEFAULT_PC_ADDR; ) begin
-            #10 CTRL_MODE = 2'b00;
-            tmpi_adder = (i<<1);
-            tmpi_all = {tmpi_adder, i_mem.I_RAM[tmpi_adder]};
-            
-            //Load data to CTRL
-            for (j = 0; j < REG_BITS_WIDTH; j=j+1) begin
-                CTRL_SI = tmpi_all[j];
-                #10 LOAD_N = 0;
-                #30;
-                for (k = 0; k < 5; k=k+1) begin
-                    if (CTRL_RDY) begin
-                        k = 5;
+            for (k=2; k>=1; k=k-1) begin
+                /** (a) load data to SRAM_IO_CTRL from PC **/
+                // C code modify control word
+                #10 CTRL_BGN = 1;
+                #10 CTRL_MODE = 2'b00;
+                tmpi_adder = (i<<1)+k-1;
+                tmpi_all = {tmpi_adder, i_mem.I_RAM[tmpi_adder]};
+                // C code triger FPGA gen Load signal
+                
+                begin
+                    // FPGA send Load signal & data to CTRL
+                    #10 LOAD_N = 0;
+                    for (j = 0; j < REG_BITS_WIDTH; j=j+1) begin
+                        #10 CTRL_SI = tmpi_all[j];
                     end
+                end
+                
+                // C code polling to do next
+                //polling_wait(CTRL_RDY);
+                begin: ctrl_module_load_ready
+                forever begin
                     #10;
-                end
-                #10 LOAD_N = 1;
-            end
-            //Send data to SRAM
-            #10 CTRL_MODE = 2'b11;
-            #10 LOAD_N = 0;
-            #30;
-            for (k = 0; k < 5; k=k+1) begin
-                if (CTRL_RDY) begin
-                    k = 5;
-                end
-                #10;
-            end
-            #10 LOAD_N = 1;
-            //release m_addr;
-            
-            #10 CTRL_MODE = 2'b00;
-            tmpi_adder = tmpi_adder + 1;
-            tmpi_all = {tmpi_adder, i_mem.I_RAM[tmpi_adder]};
-            for (j = 0; j < REG_BITS_WIDTH; j=j+1) begin
-                CTRL_SI = tmpi_all[j];
-                #10 LOAD_N = 0;
-                #30;
-                for (k = 0; k < 5; k=k+1) begin
                     if (CTRL_RDY) begin
-                        k = 5;
+                        disable ctrl_module_load_ready;
                     end
+                end
+                end
+                
+                // C code modify control word
+                #10 CTRL_BGN = 0;
+                #10 LOAD_N = 1;//this FPGA signal is related to CTRL_BGN
+                //polling_wait(!CTRL_RDY);
+                begin: ctrl_module_load_finish
+                forever begin
                     #10;
+                    if (!CTRL_RDY) begin
+                        disable ctrl_module_load_finish;
+                    end
                 end
-                #10 LOAD_N = 1;
-            end
-            //Send data to SRAM;
-            #10 CTRL_MODE = 2'b11;
-            #10 LOAD_N = 0;
-            #30;
-            for (k = 0; k < 5; k=k+1) begin
-                if (CTRL_RDY) begin
-                    k = 5;
                 end
-                #10;
+                
+                /** (b) notify SRAM_IO_CTRL to send data to SRAM **/
+                // C code modify control word
+                #10 CTRL_BGN = 1;
+                #10 CTRL_MODE = 2'b11;
+                // C code triger FPGA gen Load signal
+                
+                begin
+                    // FPGA send Load signal & data to CTRL
+                    #10 LOAD_N = 0;
+                end
+
+                // C code polling to do next
+                //polling_wait(CTRL_RDY);
+                begin: ctrl_module_write_ready
+                forever begin
+                    #10;
+                    if (CTRL_RDY) begin
+                        disable ctrl_module_write_ready;
+                    end
+                end
+                end
+                
+                // C code modify control word
+                #10 CTRL_BGN = 0;
+                #10 LOAD_N = 1;//this FPGA signal is related to CTRL_BGN
+                //polling_wait(!CTRL_RDY);
+                begin: ctrl_module_write_finish
+                forever begin
+                    #10;
+                    if (!CTRL_RDY) begin
+                        disable ctrl_module_write_finish;
+                    end
+                end
+                end
             end
-            #10 LOAD_N = 1;
-            //release m_addr;
+            
             if (i == 0)
                 i = DEFAULT_PC_ADDR;
             else
                 i = i + 1;
         end
-        // #10 CPU_BGN =1;
-        // #10 CPU_BGN = 0;
-        // for (j=1; j<40; j=j+1)
-            // #100;
         #1500;
         
         /* (2) Activate CPU to load from SRAM and then run */
         #10     CTRL_BGN = 0;
         #10     CPU_BGN = 1;
         #10     CPU_BGN = 0;
-        for (i = 0; i< 180; i=i+1) begin
-            if (NXT[0]) begin
-                i = 1000;
+        
+        // C code polling to do next
+        //polling_wait(NXT[0]);
+        begin : cpu_process_loop
+            forever begin
+                #10;
+                if (NXT[0]) begin
+                    disable cpu_process_loop;
+                end
             end
-            #10;
         end
-
+        
         /* (3) fetch the inner instructions */ 
         // force   CEN_after_mux = 0;//enable RA1SHD_ibm512x8
         // force   WEN_after_mux = 1;//read module
         #10     CTRL_BGN = 1;
         for (i = DEFAULT_PC_ADDR; i<7+ DEFAULT_PC_ADDR; i=i+1) begin
             $write("%4x\t", (i<<1));
-            #10 CTRL_MODE = 2'b00;
-            tmpi_adder = (i<<1) + 0;
-            for (j = 0; j < MEMORY_ADDR_WIDTH; j=j+1) begin
-                CTRL_SI = tmpi_adder[j];
-                #10 LOAD_N = 0;
-                #30;
-                for (k = 0; k < 5; k=k+1) begin
-                    if (CTRL_RDY) begin
-                        k = 5;
-                    end
-                    #10;
-                end
-                #10 LOAD_N = 1;
-            end
-            //Read data from SRAM;
-            #10 CTRL_MODE = 2'b01;
-            #10 LOAD_N = 0;
-            #30;
-            for (k = 0; k < 5; k=k+1) begin
-                if (CTRL_RDY) begin
-                    k = 5;
-                end
-                #10;
-            end
-            #10 LOAD_N = 1;
-            //Serial Output of SRAM content;
-            #10 CTRL_MODE = 2'b00;
-            for (j = 0; j < MEMORY_DATA_WIDTH; j=j+1) begin
-                tmpi_datain = {CTRL_SO,tmpi_datain[(MEMORY_DATA_WIDTH<<1)-1:1]};
-                #10 LOAD_N = 0;
-                #30;
-                for (k = 0; k < 5; k=k+1) begin
-                    if (CTRL_RDY) begin
-                        k = 5;
-                    end
-                    #10;
-                end
-                #10 LOAD_N = 1;
-            end
-            // #10 force   m_addr = tmpi_adder;
-            // #10;// a rising edge for SRAM
-            // $write("%8b ", m_dataout); i_mem.I_RAM[tmpi_adder+(DEFAULT_PC_ADDR<<1)] = m_dataout;
-            // #10 release m_addr;
+            for (k=2; k>=1; k=k-1) begin
+                /** (a) load data to SRAM_IO_CTRL from PC **/
+                // C code modify control word
+                #10 CTRL_BGN = 1;
+                #10 CTRL_MODE = 2'b00;
+                tmpi_adder = (i<<1)+k-1;
+                tmpi_all = {tmpi_adder, {MEMORY_DATA_WIDTH{1'b0}}};//i_mem.I_RAM[tmpi_adder]
+                // C code triger FPGA gen Load signal
 
-            #10 CTRL_MODE = 2'b00;
-            tmpi_adder = (i<<1) + 1;
-            for (j = 0; j < MEMORY_ADDR_WIDTH; j=j+1) begin
-                CTRL_SI = tmpi_adder[j];
-                #10 LOAD_N = 0;
-                #30;
-                for (k = 0; k < 5; k=k+1) begin
-                    if (CTRL_RDY) begin
-                        k = 5;
+                begin
+                    // FPGA send Load signal & data to CTRL
+                    #10 LOAD_N = 0;
+                    for (j = 0; j < REG_BITS_WIDTH; j=j+1) begin
+                        #10 CTRL_SI = tmpi_all[j];
                     end
+                end
+
+                // C code polling to do next
+                //polling_wait(CTRL_RDY);
+                begin: ctrl_module_load_ready_2nd
+                forever begin
                     #10;
-                end
-                #10 LOAD_N = 1;
-            end
-            //Read data from SRAM;
-            #10 CTRL_MODE = 2'b01;
-            #10 LOAD_N = 0;
-            #30;
-            for (k = 0; k < 5; k=k+1) begin
-                if (CTRL_RDY) begin
-                    k = 5;
-                end
-                #10;
-            end
-            #10 LOAD_N = 1;
-            //Serial Output of SRAM content;
-            #10 CTRL_MODE = 2'b00;
-            for (j = 0; j < MEMORY_DATA_WIDTH; j=j+1) begin
-                tmpi_datain = {CTRL_SO,tmpi_datain[(MEMORY_DATA_WIDTH<<1)-1:1]};
-                #10 LOAD_N = 0;
-                #30;
-                for (k = 0; k < 5; k=k+1) begin
                     if (CTRL_RDY) begin
-                        k = 5;
+                        disable ctrl_module_load_ready_2nd;
                     end
-                    #10;
                 end
-                #10 LOAD_N = 1;
+                end
+                
+                // C code modify control word
+                #10 CTRL_BGN = 0;
+                #10 LOAD_N = 1;//this FPGA signal is related to CTRL_BGN
+                //polling_wait(!CTRL_RDY);
+                begin: ctrl_module_load_finish_2nd
+                forever begin
+                    #10;
+                    if (!CTRL_RDY) begin
+                        disable ctrl_module_load_finish_2nd;
+                    end
+                end
+                end
+                
+                /** (b) notify SRAM_IO_CTRL to send data to SRAM **/
+                // C code modify control word
+                #10 CTRL_BGN = 1;
+                #10 CTRL_MODE = 2'b01;
+                // C code triger FPGA gen Load signal
+                
+                begin
+                    // FPGA send Load signal & data to CTRL
+                    #10 LOAD_N = 0;
+                end
+
+                // C code polling to do next
+                //polling_wait(CTRL_RDY);
+                begin: ctrl_module_read_ready
+                forever begin
+                    #10;
+                    if (CTRL_RDY) begin
+                        disable ctrl_module_read_ready;
+                    end
+                end
+                end
+                
+                // C code modify control word
+                #10 CTRL_BGN = 0;
+                #10 LOAD_N = 1;//this FPGA signal is related to CTRL_BGN
+                //polling_wait(!CTRL_RDY);
+                begin: ctrl_module_read_finish
+                forever begin
+                    #10;
+                    if (!CTRL_RDY) begin
+                        disable ctrl_module_read_finish;
+                    end
+                end
+                end
+                
+                /** (c) Export SRAM data from SRAM_IO_CTRL **/
+                $write("%8b ", scpu_sram_alu.scpu_ctrl_spi.cct.reg_bits[MEMORY_DATA_WIDTH-1:0]);
+                if (k == 1)
+                    tmpi_datain[MEMORY_DATA_WIDTH-1:0] = scpu_sram_alu.scpu_ctrl_spi.cct.reg_bits[MEMORY_DATA_WIDTH-1:0];
+                else if (k == 2)
+                    tmpi_datain[2*MEMORY_DATA_WIDTH-1:MEMORY_DATA_WIDTH] = scpu_sram_alu.scpu_ctrl_spi.cct.reg_bits[MEMORY_DATA_WIDTH-1:0];
             end
-            // #10 force   m_addr = tmpi_adder;
-            // #10;// a rising edge for SRAM
-            // $write("%8b ", m_dataout); i_mem.I_RAM[tmpi_adder+(DEFAULT_PC_ADDR<<1)] = m_dataout;
-            // #10 release m_addr;
-            $write("%b ", tmpi_datain);
             
             if ({i_mem.I_RAM[(i<<1)+1],i_mem.I_RAM[(i<<1)]} == tmpi_datain)
                 $write("\t<--- Inst Correct!");
@@ -347,100 +363,97 @@ module SCPU_SRAM_8BIT_ALU_SPI_TOP_TEST;
             $display("");
         end
         
-        // Judge Final Test Result
+        // (4) Judge Final Test Result
         if (error_cnt)
             $display("Test Failed!");
         else begin
             i = 2;
             $write("%4x\t", (i<<1));
-            #10 CTRL_MODE = 2'b00;
-            tmpi_adder = (i<<1)+0;
-            for (j = 0; j < MEMORY_ADDR_WIDTH; j=j+1) begin
-                CTRL_SI = tmpi_adder[j];
-                #10 LOAD_N = 0;
-                #30;
-                for (k = 0; k < 5; k=k+1) begin
-                    if (CTRL_RDY) begin
-                        k = 5;
-                    end
-                    #10;
-                end
-                #10 LOAD_N = 1;
-            end
-            //Read data from SRAM;
-            #10 CTRL_MODE = 2'b01;
-            #10 LOAD_N = 0;
-            #30;
-            for (k = 0; k < 5; k=k+1) begin
-                if (CTRL_RDY) begin
-                    k = 5;
-                end
-                #10;
-            end
-            #10 LOAD_N = 1;
-            //Serial Output of SRAM content;
-            #10 CTRL_MODE = 2'b00;
-            for (j = 0; j < MEMORY_DATA_WIDTH; j=j+1) begin
-                tmpi_datain = {CTRL_SO,tmpi_datain[(MEMORY_DATA_WIDTH<<1)-1:1]};
-                #10 LOAD_N = 0;
-                #30;
-                for (k = 0; k < 5; k=k+1) begin
-                    if (CTRL_RDY) begin
-                        k = 5;
-                    end
-                    #10;
-                end
-                #10 LOAD_N = 1;
-            end
-            // #10 force   m_addr = tmpi_adder;
-            // #10;// a rising edge for SRAM
-            // $write("%8b ", m_dataout); i_mem.I_RAM[tmpi_adder+(DEFAULT_PC_ADDR<<1)] = m_dataout;
-            // #10 release m_addr;
+            for (k=2; k>=1; k=k-1) begin
+                /** (a) load data to SRAM_IO_CTRL from PC **/
+                // C code modify control word
+                #10 CTRL_BGN = 1;
+                #10 CTRL_MODE = 2'b00;
+                tmpi_adder = (i<<1)+k-1;
+                tmpi_all = {tmpi_adder, {MEMORY_DATA_WIDTH{1'b0}}};//i_mem.I_RAM[tmpi_adder]
+                // C code triger FPGA gen Load signal
             
-            #10 CTRL_MODE = 2'b00;
-            tmpi_adder = (i<<1) + 1;
-            for (j = 0; j < MEMORY_ADDR_WIDTH; j=j+1) begin
-                CTRL_SI = tmpi_adder[j];
-                #10 LOAD_N = 0;
-                #30;
-                for (k = 0; k < 5; k=k+1) begin
-                    if (CTRL_RDY) begin
-                        k = 5;
+                begin
+                    // FPGA send Load signal & data to CTRL
+                    #10 LOAD_N = 0;
+                    for (j = 0; j < REG_BITS_WIDTH; j=j+1) begin
+                        #10 CTRL_SI = tmpi_all[j];
                     end
+                end
+            
+                // C code polling to do next
+                //polling_wait(CTRL_RDY);
+                begin: ctrl_module_load_ready_4th
+                forever begin
                     #10;
-                end
-                #10 LOAD_N = 1;
-            end
-            //Read data from SRAM;
-            #10 CTRL_MODE = 2'b01;
-            #10 LOAD_N = 0;
-            #30;
-            for (k = 0; k < 5; k=k+1) begin
-                if (CTRL_RDY) begin
-                    k = 5;
-                end
-                #10;
-            end
-            #10 LOAD_N = 1;
-            //Serial Output of SRAM content;
-            #10 CTRL_MODE = 2'b00;
-            for (j = 0; j < MEMORY_DATA_WIDTH; j=j+1) begin
-                tmpi_datain = {CTRL_SO,tmpi_datain[(MEMORY_DATA_WIDTH<<1)-1:1]};
-                #10 LOAD_N = 0;
-                #30;
-                for (k = 0; k < 5; k=k+1) begin
                     if (CTRL_RDY) begin
-                        k = 5;
+                        disable ctrl_module_load_ready_4th;
                     end
-                    #10;
                 end
-                #10 LOAD_N = 1;
+                end
+                
+                // C code modify control word
+                #10 CTRL_BGN = 0;
+                #10 LOAD_N = 1;//this FPGA signal is related to CTRL_BGN
+                //polling_wait(!CTRL_RDY);
+                begin: ctrl_module_load_finish_4th
+                forever begin
+                    #10;
+                    if (!CTRL_RDY) begin
+                        disable ctrl_module_load_finish_4th;
+                    end
+                end
+                end
+                
+                /** (b) notify SRAM_IO_CTRL to send data to SRAM **/
+                // C code modify control word
+                #10 CTRL_BGN = 1;
+                #10 CTRL_MODE = 2'b01;
+                // C code triger FPGA gen Load signal
+                
+                begin
+                    // FPGA send Load signal & data to CTRL
+                    #10 LOAD_N = 0;
+                end
+                
+                // C code polling to do next
+                //polling_wait(CTRL_RDY);
+                begin: ctrl_module_read_ready_2nd
+                forever begin
+                    #10;
+                    if (CTRL_RDY) begin
+                        disable ctrl_module_read_ready_2nd;
+                    end
+                end
+                end
+                
+                // C code modify control word
+                #10 CTRL_BGN = 0;
+                #10 LOAD_N = 1;//this FPGA signal is related to CTRL_BGN
+
+                //polling_wait(!CTRL_RDY);
+                begin: ctrl_module_read_finish_2nd
+                forever begin
+                    #10;
+                    if (!CTRL_RDY) begin
+                        disable ctrl_module_read_finish_2nd;
+                    end
+                end
+                end
+                
+                /** (c) Export SRAM data from SRAM_IO_CTRL**/
+                $write("%8b ", scpu_sram_alu.scpu_ctrl_spi.cct.reg_bits[MEMORY_DATA_WIDTH-1:0]);
+                if (k == 1)
+                    tmpi_datain[MEMORY_DATA_WIDTH-1:0] = scpu_sram_alu.scpu_ctrl_spi.cct.reg_bits[MEMORY_DATA_WIDTH-1:0];
+                else if (k == 2)
+                    tmpi_datain[2*MEMORY_DATA_WIDTH-1:MEMORY_DATA_WIDTH] = scpu_sram_alu.scpu_ctrl_spi.cct.reg_bits[MEMORY_DATA_WIDTH-1:0];
             end
-            // #10 force   m_addr = tmpi_adder;
-            // #10;// a rising edge for SRAM
-            // $write("%8b ", m_dataout); i_mem.I_RAM[tmpi_adder] = m_dataout;
-            // #10 release m_addr;
-            $display("%b ", tmpi_datain);
+            $display("");
             
             if (10 == tmpi_datain)
                 $display("Test Passed!");
@@ -448,7 +461,7 @@ module SCPU_SRAM_8BIT_ALU_SPI_TOP_TEST;
                 $display("Test Failed!");
         end
         //#10 release CEN_after_mux; release WEN_after_mux;
-        $stop();//
+        #20 $stop();//
     end
     
     always #5
