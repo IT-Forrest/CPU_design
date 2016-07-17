@@ -133,7 +133,7 @@ module SRAM_IO_CTRL_LOGIC(
         if ((~rsi_reset_n) | (~avs_cpuctrl_write))
         begin
             reg_LOAD <= 2'b00;
-        end else if (//avs_cpuctrl_write &
+        end else if (avs_cpuctrl_write &
                     avs_cpuctrl_writedata[IDX_SCPU_CTRL_LOAD] &
                     (reg_LOAD == 2'b00))
         begin

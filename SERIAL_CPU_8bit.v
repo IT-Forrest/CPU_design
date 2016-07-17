@@ -66,7 +66,8 @@ module SERIAL_CPU_8BIT(
                 STATE_EX2           = 4'b0100,
                 STATE_MEM           = 4'b0101,
                 STATE_MEM2          = 4'b0111,
-                STATE_WB            = 4'b1111;
+                STATE_WB            = 4'b1111,
+                STATE_LP            = 4'b1110;
     
     input   clk;
     input   enable;
@@ -101,11 +102,15 @@ module SERIAL_CPU_8BIT(
     reg     [GENERAL_REG_WIDTH-1:0] reg_A, reg_B, reg_C, smdr;// reg_C1, smdr1;
     reg     [GENERAL_REG_WIDTH-1:0] gr[4:0];
     wire    branch_flag;
+    wire    cpu_suspend;
+    wire    cpu_restore;
 
     assign  io_control  = gr[1];
     assign  io_dataoutA = gr[2];
     assign  io_dataoutB = gr[3];
     assign  io_offset   = gr[4];
+    assign  cpu_suspend = (io_control[7:4]!= 4'b0000);
+    assign  cpu_restore = (io_status[3:0] != 4'b0000);
     
     //*********** Facilitate code learning ***********//
     wire    instr_over; // instructions in SRAM are over
@@ -147,7 +152,13 @@ module SERIAL_CPU_8BIT(
                         //nxt <= 2'b00;
                         next_state <= STATE_IDLE;
                     end
-                STATE_IF:   next_state <= STATE_IF2;
+                STATE_IF:
+                    if (cpu_suspend && !cpu_restore) begin
+                        next_state <= STATE_LP;
+                    end
+                    else begin
+                        next_state <= STATE_IF2;
+                    end
                 STATE_IF2:  next_state <= STATE_ID;
                 STATE_ID:   next_state <= STATE_EX;
                 STATE_EX:   next_state <= STATE_EX2;
@@ -166,6 +177,13 @@ module SERIAL_CPU_8BIT(
                     else begin
                         nxt <= 2'b00;
                         next_state <= STATE_IF;
+                    end
+                STATE_LP:
+                    if (cpu_restore) begin
+                        next_state <= STATE_IF2;
+                    end
+                    else begin
+                        next_state <= STATE_LP;
                     end
                 default:
                     begin
@@ -381,7 +399,6 @@ module SERIAL_CPU_8BIT(
             else if (state == STATE_IDLE)
                 begin
                     if (start == 1'b1)
-                        //pc stays at all 1's when instructions exhaust
                         pc <= {PC_MEM_ADDR_WIDTH{1'b0}};
                 end
             else if (state == STATE_MEM2)
