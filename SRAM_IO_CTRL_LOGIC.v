@@ -103,7 +103,7 @@ module SRAM_IO_CTRL_LOGIC(
     input                       coe_ctrl_rdy_export;
     
     // Registers and wires
-    reg         reg_ctrl_bgn;
+    reg         reg_ctrl_bgn, reg_ctrl_bgn_n;
     reg         [1:0]   reg_LOAD;
     reg         [1:0]   reg_ctrl_mode;
     reg         [CT_WIDTH-1:0]  reg_sram_addr;
@@ -117,15 +117,44 @@ module SRAM_IO_CTRL_LOGIC(
     wire    is_LOAD;
     assign  is_LOAD = reg_LOAD[0];
 
+    wire    is_load2_ctrl = (reg_ctrl_mode == 2'b00);
+    wire    is_rfrom_ctrl = (reg_ctrl_mode == 2'b10);
+    
     assign  avs_cpustat_readdata[IDX_SCPU_CTRL_RDY] = coe_ctrl_rdy_export;
     assign  avs_sram_addr_readdata = reg_sram_all[REG_BITS_WIDTH-1:MEMORY_DATA_WIDTH];
     assign  avs_sram_data_readdata = reg_sram_all[MEMORY_DATA_WIDTH-1:0];
     
-    assign  coe_ctrl_bgn_export = reg_ctrl_bgn;
-    assign  coe_ctrl_mod0_export = reg_ctrl_mode[0];
-    assign  coe_ctrl_mod1_export = reg_ctrl_mode[1];
+    assign  coe_ctrl_bgn_export  = reg_ctrl_bgn_n;//reg_ctrl_bgn
     assign  coe_ctrl_load_export = is_LOAD;
-    assign  coe_ctrl_si_export = reg_sram_all[0];
+    assign  coe_ctrl_si_export   = reg_sram_all[0];
+    assign  coe_ctrl_mod1_export = (reg_ctrl_mode[0])?reg_ctrl_mode[1]:1'b0;
+    assign  coe_ctrl_mod0_export = reg_ctrl_mode[0];
+    
+    //************* Combinational Mapping For CTRL MODE *************//
+    /* always @(*) begin
+        case(reg_ctrl_mode)
+        /// Due to clock delay, serial data between CHIP and FPGA have different processes
+        2'b00://serial input data to CHIP from FPGA 
+            {coe_ctrl_mod1_export,coe_ctrl_mod0_export} = 2'b00;
+        2'b10://serial input data to FPGA from CHIP
+            {coe_ctrl_mod1_export,coe_ctrl_mod0_export} = 2'b00;
+
+        /// Due to SRAM delay, PI data between SRAM and CTRL have different processes
+        2'b01://read PI data from SRAM to CTRL (all on CHIP)
+            {coe_ctrl_mod1_export,coe_ctrl_mod0_export} = reg_ctrl_mode;
+        2'b11://send PI data from CTRL to SRAM (all on CHIP)
+            {coe_ctrl_mod1_export,coe_ctrl_mod0_export} = reg_ctrl_mode;
+        endcase
+    end */
+    
+    //************* CEN should not active at posedge *************//
+    always @(negedge csi_clk)
+    begin
+        if (~rsi_reset_n)
+            reg_ctrl_bgn_n <= 1'b0;
+        else
+            reg_ctrl_bgn_n <= reg_ctrl_bgn;
+    end
     
     //************* make IDX_SCPU_CTRL_LOAD only works for one cycle *************//
     always @(posedge csi_clk)
@@ -150,7 +179,13 @@ module SRAM_IO_CTRL_LOGIC(
         if (~rsi_reset_n)
             reg_sram_all <= {REG_BITS_WIDTH{1'b0}};
         else if (is_LOAD)
-            reg_sram_all <= {reg_sram_addr[MEMORY_ADDR_WIDTH-1:0], reg_sram_data[MEMORY_DATA_WIDTH-1:0]};
+            if (is_load2_ctrl)
+                reg_sram_all <= {reg_sram_addr[MEMORY_ADDR_WIDTH-1:0], reg_sram_data[MEMORY_DATA_WIDTH-1:0]};
+            else if (is_rfrom_ctrl)
+                // Due to clock delay, FPGA starts to read when is_LOAD
+                reg_sram_all <= {CTRL_SO, reg_sram_all[REG_BITS_WIDTH-1:1]};
+            else
+                reg_sram_all <= reg_sram_all;
         else if (cnt_bit_load)
             reg_sram_all <= {CTRL_SO, reg_sram_all[REG_BITS_WIDTH-1:1]};
     end
@@ -160,7 +195,13 @@ module SRAM_IO_CTRL_LOGIC(
         if (~rsi_reset_n)
             cnt_bit_load <= 0;
         else if (is_LOAD)
-            cnt_bit_load <= REG_BITS_WIDTH;
+            if (is_load2_ctrl)
+                cnt_bit_load <= REG_BITS_WIDTH;
+            else if (is_rfrom_ctrl)
+                // Due to clock delay, FPGA starts to read when is_LOAD
+                cnt_bit_load <= REG_BITS_WIDTH-1;
+            else
+                cnt_bit_load <= 0;
         else if (cnt_bit_load)
             cnt_bit_load <= cnt_bit_load - 1;
     end
@@ -170,7 +211,11 @@ module SRAM_IO_CTRL_LOGIC(
     begin
         if (~rsi_reset_n)
         begin
+            reg_ctrl_bgn  <= 1'b0;
             reg_ctrl_mode <= 2'b00;
+            
+            reg_sram_addr <= {CT_WIDTH{1'b0}};
+            reg_sram_data <= {CT_WIDTH{1'b0}};
         end else
         begin
             if (avs_cpuctrl_write)// Set registers if any value changes

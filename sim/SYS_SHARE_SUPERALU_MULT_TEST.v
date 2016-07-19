@@ -1,74 +1,91 @@
 //+FHDR****************************************************************
 // ECE department, TAMU
 // --------------------------------------------------------------------
-// FILE NAME    : SCPU_IO_CTRL_LOGIC_TEST.v
+// FILE NAME    : SYS_SHARE_SUPERALU_MULT_TEST.v
 // AUTHER       : Jiafan Wang
-// DATE         : 07/10/2016
+// DATE         : 07/16/2016
 // VERSION      : 1.0
-// PURPOSE      : works as PC manager in C Language
+// PURPOSE      : sytem level testbench of the super ALU including *, / and sqrt
 // --------------------------------------------------------------------
-// ABSTRACT: ModelSim simulation time 6us given each time period 10ns
+// ABSTRACT: loop-test simulation time 100ms given each time period 20ns
 // --------------------------------------------------------------------
-`timescale 1ns / 1ps
-`include "../DEFINE_CPU.v"
-`include "../SRAM_IO_CTRL.v"
-`include "../SRAM_IO_CTRL_LOGIC.v"
-`include "../I_MEMORY_8bit.v"
+`timescale  1 ns / 100 ps
+`include    "../DEFINE_CPU.v"
+`include    "../SCPU_SRAM_8BIT_ALU_SPI_TOP.v"
+`include    "../SRAM_IO_CTRL_LOGIC.v"
+`include    "../I_MEMORY_8bit.v"
 
-module SRAM_IO_CTRL_LOGIC_TEST;
+module  SYS_SHARE_SUPERALU_MULT_TEST();
 
-   parameter    MEMORY_DATA_WIDTH   = 8,
+    parameter   MULTIPLICAND_WIDTH  = 9,// the division of CF
+                MULTIPLIER_WIDTH    = 8;// for the random value used by SA, it's the width of LFSR 
+
+    parameter   MEMORY_DATA_WIDTH   = 8,
                 MEMORY_ADDR_WIDTH   = 9,
                 REG_BITS_WIDTH = MEMORY_ADDR_WIDTH + MEMORY_DATA_WIDTH;
 
-    // Inputs
-    reg clk;
-    reg rsi_reset_n;
-    reg CTRL_BGN;// enable signal for CTRL_SRAM
-    reg start;// enable signal for SERIAL_CPU_8bit
-    reg [1:0]   CTRL_MODE;
-    wire [1:0]  ctrl_mods_dly;
-    
-    // Wires
-    // wire is_i_addr;
-    // wire [7:0]  i_datain;
-    // wire [7:0]  d_datain;
-    // wire [7:0]  d_dataout;
-    wire [7:0]  m_datain;
+    parameter   GENERAL_REG_WIDTH   = 16;
+    parameter   DEFAULT_PC_ADDR     = 16;
+    reg     [MULTIPLICAND_WIDTH-1:0]    multiplicand;
+    reg     [MULTIPLIER_WIDTH-1:0]      multiplier;
 
-    wire [7:0]  m_dataout;
-    wire [8:0]  m_addr;
-    // wire [8:0]  i_addr;
-    // wire [8:0]  d_addr;
-    wire d_we;
-    wire CEN;
-    wire SO;
-    wire RDY;
-    
     integer i,j,k;
     integer error_cnt;
-    reg  [15:0] tmpi_datain;
-    reg  [REG_BITS_WIDTH-1:0]  tmpi_all;//addr+instruction
-    reg  [8:0]  tmpi_adder;
-    reg  SI;
-    reg  LOAD_N;
-   
-    // Instantiate the Unit Under Test (UUT)
-    SRAM_IO_CTRL cct (
-        .CLK    (clk_dly),
-        .BGN    (ctrl_bgn_dly),
-        .SI     (ctrl_si_dly),
-        .LOAD_N (ctrl_load_dly),
-        .CTRL   (ctrl_mods_dly),
-        .PI     (m_dataout),
-        .RDY    (ctrl_rdy_dly),
-        .D_WE   (d_we),
-        .CEN    (CEN),
-        .SO     (ctrl_so_dly),
-        .A      (m_addr),
-        .PO     (m_datain)
-    );
+    reg     [15:0] tmpi_datain; //MEMORY_DATA_WIDTH*2 -1
+    reg     [REG_BITS_WIDTH-1:0]  tmpi_all;//addr+instruction
+    reg     [8:0]  tmpi_adder;  //MEMORY_ADDR_WIDTH -1
     
+    reg     CLK;
+    reg     RST_N;
+    reg     rsi_reset_n;
+    reg     [1:0]  CTRL_MODE;
+    reg     CTRL_BGN;
+    reg     CPU_BGN;// enable signal for SERIAL_CPU_8bit
+    reg     LOAD_N;
+    reg     CTRL_SI;
+    //reg     ANA_SI;
+    reg     [GENERAL_REG_WIDTH-1:0] ADC_PI;
+    
+    // Wires
+    wire    CTRL_RDY;
+    wire    ANA_RDY;
+    wire    CTRL_SO;
+    wire    ANA_SO;
+    wire    [1:0]  NXT;
+    wire    SEL;
+    wire    SCLK1;
+    wire    SCLK2;
+    wire    LAT;
+    wire    CLRN;
+    wire    CLK_ADC;
+    wire    RSTN_ADC;
+    
+    SCPU_SRAM_8BIT_ALU_SPI_TOP  scpu_sram_alu(
+        .CLK            (CLK        ),
+        .RST_N          (RST_N      ),
+        .CTRL_MODE      ({coe_ctrl_mod1_export,coe_ctrl_mod0_export}),
+        .CTRL_BGN       (coe_ctrl_bgn_export),
+        .CPU_BGN        (CPU_BGN    ),
+        .LOAD_N         (!coe_ctrl_load_export),
+        .CTRL_SI        (coe_ctrl_si_export),
+        //.ANA_SI         (ANA_SI     ),
+        .ADC_PI         (ADC_PI     ),
+        // output
+        .CTRL_RDY       (coe_ctrl_rdy_export),
+        //.ANA_RDY        (ANA_RDY    ),
+        .CTRL_SO        (coe_ctrl_so_export ),
+        //.ANA_SO         (ANA_SO     ),
+        .NXT            (NXT        ),
+        //.SEL            (SEL        ),
+        .SCLK1          (SCLK1      ),
+        .SCLK2          (SCLK2      ),
+        .LAT            (LAT        ),
+        .SPI_SO         (SPI_SO     )
+        //.CLRN           (CLRN       ),
+        //.CLK_ADC        (CLK_ADC    ),
+        //.RSTN_ADC       (RSTN_ADC   )
+    );
+   
     parameter   IDX_SCPU_CTRL_BGN  = 0;     // SCPU CTRL Module's start bit
     parameter   IDX_SCPU_CTRL_LOAD = 1;     // SCPU CTRL Module's load bit
     parameter   IDX_SCPU_CTRL_MOD0 = 2;     // SCPU CTRL Module's mode bit
@@ -87,12 +104,12 @@ module SRAM_IO_CTRL_LOGIC_TEST;
     
     wire    [31:0]  avs_sram_addr_readdata;
     wire    [31:0]  avs_sram_data_readdata;
-
-    assign  RDY = avs_cpustat_readdata[IDX_SCPU_CTRL_RDY];
-    
+   
+    assign  CTRL_RDY = avs_cpustat_readdata[IDX_SCPU_CTRL_RDY];
+   
     SRAM_IO_CTRL_LOGIC fpga(
         //input
-        .csi_clk                (clk                    ),                // Clock
+        .csi_clk                (CLK                    ),                // Clock
         .rsi_reset_n            (rsi_reset_n            ),            // Reset (Active Low)
 
         //// Control Word ////  
@@ -125,25 +142,7 @@ module SRAM_IO_CTRL_LOGIC_TEST;
         .coe_ctrl_so_export     (coe_ctrl_so_export     ),
         .coe_ctrl_rdy_export    (coe_ctrl_rdy_export    )
     );
-    
-    /********* Add delay to mimic communicate between FPGA & CHIP **********/
-    assign  #2 clk_dly = clk;
-    assign  #2 ctrl_bgn_dly  = coe_ctrl_bgn_export;
-    assign  #2 ctrl_mods_dly = {coe_ctrl_mod1_export,coe_ctrl_mod0_export};
-    assign  #2 ctrl_load_dly = (!coe_ctrl_load_export);// might invert later
-    assign  #2 ctrl_si_dly   = coe_ctrl_si_export;
-    assign  #2 coe_ctrl_so_export  = ctrl_so_dly;
-    assign  #2 coe_ctrl_rdy_export = ctrl_rdy_dly;
-    
-    I_MEMORY_8BIT   sram (
-        .clk(clk),
-        .rst_n(!CEN), 
-        .addr(m_addr),
-        .d_we(!d_we),// need a seperate control signal; or instruction set will be overwritten when d_we=1
-        .datain(m_datain),//i_instruct
-        .dataout(m_dataout)
-    );
-
+   
     I_MEMORY_8BIT   i_mem(
         // .clk(clk),
         // .rst_n(CEN), 
@@ -153,16 +152,13 @@ module SRAM_IO_CTRL_LOGIC_TEST;
         // .dataout(m_dataout)
     );
     
-    parameter   DEFAULT_PC_ADDR = 16;
-    //defparam    uut.DEFAULT_PC_ADDR = DEFAULT_PC_ADDR;
-
-    
     initial begin
-        // Initialize Inputs
-        clk = 0;
+        // Initialize Inputs Signals
+        CLK = 0;
+        RST_N = 0;
         rsi_reset_n = 0;
         CTRL_BGN = 0;
-        start = 0;
+        CPU_BGN = 0;
         LOAD_N = 1;
         error_cnt = 0;
         CTRL_MODE = 2'b00;
@@ -174,61 +170,54 @@ module SRAM_IO_CTRL_LOGIC_TEST;
         avs_cpuctrl_write   = 1;
         avs_sram_addr_write = 1;
         avs_sram_data_write = 1;
-        // Wait 100 ns for global rst_n to finish
+        // Wait 100 ns for global RST_N to finish
         #100;
         
-        // Add stimulus here
-        // $display("pc  :               id_ir                :reg_A :reg_B :reg_C\
-            // : da  :  dd  : w :  gr1  :  gr2  :  gr3   :zf :nf:cf");
-        // $monitor("%3d : %b : %h : %h : %h : %h : %h : %b : %h : %h : %h : %b : %b : %b", 
-            // uut.pc, uut.id_ir, uut.reg_A, uut.reg_B, uut.reg_C,
-            // d_addr, d_dataout, d_we, uut.gr[1], uut.gr[2], uut.gr[3],
-            // uut.zf, uut.nf, uut.cf);
-
-        /* (1) Initilization  */
+        /* (0) Add stimulus here: Using a pseudo memory to load instruction*/ 
         i= DEFAULT_PC_ADDR*2;
-        tmpi_datain = {`SET, `gr3, 4'b0000, 4'b0100};//reset the loop controller `gr7
+        //Load I/O data_A to `gr2 as XIN
+        tmpi_datain = {`LIOA, `gr2, 4'b0000, 4'b0000};
         i_mem.I_RAM[ i] = tmpi_datain[7:0];  i = 1 + DEFAULT_PC_ADDR*2;
         i_mem.I_RAM[ i] = tmpi_datain[15:8]; i = 2 + DEFAULT_PC_ADDR*2;
-        tmpi_datain = {`SET, `gr1, 4'b0000, 4'b0000};//reset the sum value
+        //Load I/O data_A to `gr3 as YIN
+        tmpi_datain = {`LIOA, `gr3, 4'b0000, 4'b0000};
         i_mem.I_RAM[ i] = tmpi_datain[7:0];  i = 3 + DEFAULT_PC_ADDR*2;
         i_mem.I_RAM[ i] = tmpi_datain[15:8]; i = 4 + DEFAULT_PC_ADDR*2;
-        // i_mem.I_RAM[ 2] = {`NOP, 11'b000_0000_0000};
-        // i_mem.I_RAM[ 3] = {`NOP, 11'b000_0000_0000};
-        // i_mem.I_RAM[ 4] = {`NOP, 11'b000_0000_0000};
-        tmpi_datain = {`ADD, `gr1, 1'b0, `gr1, 1'b0, `gr3};//set the loop controller `gr7 = 25
+        //set OFFSET as 0
+        tmpi_datain = {`SUB, `gr4, 1'b0, `gr4, 1'b0, `gr4};
         i_mem.I_RAM[ i] = tmpi_datain[7:0];  i = 5 + DEFAULT_PC_ADDR*2;
         i_mem.I_RAM[ i] = tmpi_datain[15:8]; i = 6 + DEFAULT_PC_ADDR*2;
-        // i_mem.I_RAM[ 7] = {`NOP, 11'b000_0000_0000};
-        // i_mem.I_RAM[ 8] = {`NOP, 11'b000_0000_0000};
-        tmpi_datain = {`SUBI, `gr3, 4'b0000, 4'b0001};//sum += `gr7
+        //set the control reg for ALU
+        tmpi_datain = {`SET, `gr1, 3'b001, 3'b100, 2'b01};
         i_mem.I_RAM[ i] = tmpi_datain[7:0];  i = 7 + DEFAULT_PC_ADDR*2;
         i_mem.I_RAM[ i] = tmpi_datain[15:8]; i = 8 + DEFAULT_PC_ADDR*2;
         
         //if (`gr3 != 0) go to I_RAM[ 9];
-        //make sure to include the offset for DATA SRAM
-        tmpi_datain = {`BNZ, `gr0, 4'b0001, 4'b0010};
+        // CPU is supposed to finish the loop automatically
         
+        //Load I/O data_A to `gr2 as FOUT
+        tmpi_datain = {`LIOA, `gr2, 4'b0000, 4'b0000};
         i_mem.I_RAM[ i] = tmpi_datain[7:0];  i = 9 + DEFAULT_PC_ADDR*2;
         i_mem.I_RAM[ i] = tmpi_datain[15:8]; i = 10+ DEFAULT_PC_ADDR*2;
-        // i_mem.I_RAM[11] = {`NOP, 11'b000_0000_0000};
-        // i_mem.I_RAM[12] = {`NOP, 11'b000_0000_0000};
-        // i_mem.I_RAM[13] = {`NOP, 11'b000_0000_0000};
-        tmpi_datain = {`STORE, `gr1, 1'b0, `gr0, 4'b0010};//if (`gr7 != 0) go to I_RAM[ 9];
+        //Load I/O data_B to `gr3 as POUT
+        tmpi_datain = {`LIOB, `gr3, 4'b0000, 4'b0000};
         i_mem.I_RAM[ i] = tmpi_datain[7:0];  i = 11+ DEFAULT_PC_ADDR*2;
         i_mem.I_RAM[ i] = tmpi_datain[15:8]; i = 12+ DEFAULT_PC_ADDR*2;
-        // i_mem.I_RAM[15] = {`NOP, 11'b000_0000_0000};
-        // i_mem.I_RAM[16] = {`NOP, 11'b000_0000_0000};
-        // i_mem.I_RAM[17] = {`NOP, 11'b000_0000_0000};
-        tmpi_datain = {`HALT, 11'b000_0000_0000};//due to the pipeline, we need to add many `NOP to the instruction set
+        //reset the control reg for ALU
+        tmpi_datain = {`SET, `gr1, 3'b000, 3'b000, 2'b00};
         i_mem.I_RAM[ i] = tmpi_datain[7:0];  i = 13+ DEFAULT_PC_ADDR*2;
         i_mem.I_RAM[ i] = tmpi_datain[15:8]; i = 14+ DEFAULT_PC_ADDR*2;
-        // i_mem.I_RAM[19] = {`NOP, 11'b000_0000_0000};
-        // i_mem.I_RAM[20] = {`NOP, 11'b000_0000_0000};
-        // i_mem.I_RAM[21] = {`NOP, 11'b000_0000_0000};
+        //Save Multiplication to SRAM at 0x2;
+        tmpi_datain = {`STORE, `gr2, 1'b0, `gr0, 4'b0010};
+        i_mem.I_RAM[ i] = tmpi_datain[7:0];  i = 15+ DEFAULT_PC_ADDR*2;
+        i_mem.I_RAM[ i] = tmpi_datain[15:8]; i = 16+ DEFAULT_PC_ADDR*2;
+        //System finish
+        tmpi_datain = {`HALT, 11'b000_0000_0000};
+        i_mem.I_RAM[ i] = tmpi_datain[7:0];  i = 17+ DEFAULT_PC_ADDR*2;
+        i_mem.I_RAM[ i] = tmpi_datain[15:8]; i = 18+ DEFAULT_PC_ADDR*2;
         
         i = 0;
-        tmpi_datain = 16'h00AB;
+        tmpi_datain = {`JUMP, 3'b000, 4'b0001, 4'b0000};// Jump to certain address
         i_mem.I_RAM[ i] = tmpi_datain[7:0];  i = 1;
         i_mem.I_RAM[ i] = tmpi_datain[15:8]; i = 2;
         tmpi_datain = 16'h3C00;
@@ -240,22 +229,21 @@ module SRAM_IO_CTRL_LOGIC_TEST;
         // i_mem.D_RAM[0] = 16'h00AB;
         // i_mem.D_RAM[1] = 16'h3C00;
         // i_mem.D_RAM[2] = 16'h0000;
-
-        #10 rsi_reset_n = 0; 
-        #10 rsi_reset_n = 1;
-
-        /* (2) Serially Input the address & Instruction to CTRL and then to SRAM */
-        for (i = DEFAULT_PC_ADDR; i<7+ DEFAULT_PC_ADDR; i=i+1) begin
-            for (k = 2; k>=1; k=k-1) begin
+        
+        #10 RST_N = 0; rsi_reset_n = 0; CTRL_BGN = 1;
+        #10 RST_N = 1; rsi_reset_n = 1;
+        
+        /* (1) Serially Input the address & Instruction to CTRL and then to SRAM */
+        for (i = 0; i<9+ DEFAULT_PC_ADDR; ) begin
+            for (k=2; k>=1; k=k-1) begin
                 /** (a) load data to SRAM_IO_CTRL from PC **/
                 // C code modify control word
-
                 #10 CTRL_BGN = 1;
                 avs_cpuctrl_writedata[IDX_SCPU_CTRL_BGN] = 1'b1;
                 #10 CTRL_MODE = 2'b00;
                 avs_cpuctrl_writedata[IDX_SCPU_CTRL_MOD1] = 1'b0;
                 avs_cpuctrl_writedata[IDX_SCPU_CTRL_MOD0] = 1'b0;
-                
+
                 tmpi_adder = (i<<1)+k-1;
                 tmpi_all = {tmpi_adder, i_mem.I_RAM[tmpi_adder]};
                 avs_sram_addr_writedata = tmpi_adder;
@@ -264,20 +252,21 @@ module SRAM_IO_CTRL_LOGIC_TEST;
                 avs_cpuctrl_write = 0;
                 #10 avs_cpuctrl_write = 1;
                 avs_cpuctrl_writedata[IDX_SCPU_CTRL_LOAD] = 1'b1;
-
+                
                 // begin
                     // FPGA send Load signal & data to CTRL
                     // #10 LOAD_N = 0;
                     // for (j = 0; j < REG_BITS_WIDTH; j=j+1) begin
-                        // #10 SI = tmpi_all[j];
+                        // #10 CTRL_SI = tmpi_all[j];
                     // end
                 // end
-
+                
                 // C code polling to do next
+                //polling_wait(CTRL_RDY);
                 begin: ctrl_module_load_ready
                 forever begin
                     #10;
-                    if (RDY) begin
+                    if (CTRL_RDY) begin
                         disable ctrl_module_load_ready;
                     end
                 end
@@ -293,12 +282,12 @@ module SRAM_IO_CTRL_LOGIC_TEST;
                 begin: ctrl_module_load_finish
                 forever begin
                     #10;
-                    if (!RDY) begin
+                    if (!CTRL_RDY) begin
                         disable ctrl_module_load_finish;
                     end
                 end
                 end
-
+                
                 /** (b) notify SRAM_IO_CTRL to send data to SRAM **/
                 // C code modify control word
                 #10 CTRL_BGN = 1;
@@ -310,17 +299,18 @@ module SRAM_IO_CTRL_LOGIC_TEST;
                 avs_cpuctrl_write = 0;
                 #10 avs_cpuctrl_write = 1;
                 avs_cpuctrl_writedata[IDX_SCPU_CTRL_LOAD] = 1;
-                
+
                 // begin
                     // FPGA send Load signal & data to CTRL
                     // #10 LOAD_N = 0;
                 // end
-                
+
                 // C code polling to do next
+                //polling_wait(CTRL_RDY);
                 begin: ctrl_module_write_ready
                 forever begin
                     #10;
-                    if (RDY) begin
+                    if (CTRL_RDY) begin
                         disable ctrl_module_write_ready;
                     end
                 end
@@ -336,21 +326,48 @@ module SRAM_IO_CTRL_LOGIC_TEST;
                 begin: ctrl_module_write_finish
                 forever begin
                     #10;
-                    if (!RDY) begin
+                    if (!CTRL_RDY) begin
                         disable ctrl_module_write_finish;
                     end
                 end
                 end
             end
+            
+            if (i == 0)
+                i = DEFAULT_PC_ADDR;
+            else
+                i = i + 1;
         end
-        #3130;
+        #1500;
         
-        // (3) Read the inner instructions
-        //force   CEN = 0;//enable RA1SHD_ibm512x8
-        //force   d_we = 0;//read module
-        for (i = DEFAULT_PC_ADDR; i<7+ DEFAULT_PC_ADDR; i=i+1) begin
+        /* (2) Activate CPU to load from LIOA */
+        #10     CTRL_BGN = 0;
+        #10     CPU_BGN = 1;
+        #10     CPU_BGN = 0;
+        
+        #110;
+        multiplicand = 240;//7
+        multiplier = 8'b01101011;//0.4140625 or 106 out of 256
+        ADC_PI = multiplicand;
+        #50;
+        ADC_PI = multiplier;
+        #50;
+        
+        // C code polling to do next
+        //polling_wait(NXT[0]);
+        begin : cpu_process_loop
+            forever begin
+                #10;
+                if (NXT[0]) begin
+                    disable cpu_process_loop;
+                end
+            end
+        end
+        
+        /* (3) fetch the inner instructions */ 
+        for (i = 2; i<3; i=i+1) begin
             $write("%4x\t", (i<<1));
-            for (k = 2; k >= 1; k=k-1) begin
+            for (k=2; k>=1; k=k-1) begin
                 /** (a) load data to SRAM_IO_CTRL from PC **/
                 // C code modify control word
                 #10 CTRL_BGN = 1;
@@ -358,34 +375,35 @@ module SRAM_IO_CTRL_LOGIC_TEST;
                 #10 CTRL_MODE = 2'b00;
                 avs_cpuctrl_writedata[IDX_SCPU_CTRL_MOD1] = 0;
                 avs_cpuctrl_writedata[IDX_SCPU_CTRL_MOD0] = 0;
-                
+
                 tmpi_adder = (i<<1)+k-1;
                 tmpi_all = {tmpi_adder, {MEMORY_DATA_WIDTH{1'b0}}};//i_mem.I_RAM[tmpi_adder]
                 avs_sram_addr_writedata = tmpi_adder;
-                avs_sram_data_writedata = {MEMORY_DATA_WIDTH{1'b0}};
+                avs_sram_data_writedata = {MEMORY_DATA_WIDTH{1'b1}};
                 // C code triger FPGA gen Load signal
                 avs_cpuctrl_write = 0;
                 #10 avs_cpuctrl_write = 1;
                 avs_cpuctrl_writedata[IDX_SCPU_CTRL_LOAD] = 1;
-                
+
                 // begin
                     // FPGA send Load signal & data to CTRL
                     // #10 LOAD_N = 0;
                     // for (j = 0; j < REG_BITS_WIDTH; j=j+1) begin
-                        // #10 SI = tmpi_all[j];
+                        // #10 CTRL_SI = tmpi_all[j];
                     // end
                 // end
-
+        
                 // C code polling to do next
+                //polling_wait(CTRL_RDY);
                 begin: ctrl_module_load_ready_2nd
                 forever begin
                     #10;
-                    if (RDY) begin
+                    if (CTRL_RDY) begin
                         disable ctrl_module_load_ready_2nd;
                     end
                 end
                 end
-                
+        
                 // C code modify control word
                 #10 CTRL_BGN = 0;
                 avs_cpuctrl_writedata[IDX_SCPU_CTRL_BGN] = 0;
@@ -396,12 +414,12 @@ module SRAM_IO_CTRL_LOGIC_TEST;
                 begin: ctrl_module_load_finish_2nd
                 forever begin
                     #10;
-                    if (!RDY) begin
+                    if (!CTRL_RDY) begin
                         disable ctrl_module_load_finish_2nd;
                     end
                 end
                 end
-               
+        
                 /** (b) notify SRAM_IO_CTRL to send data to SRAM **/
                 // C code modify control word
                 #10 CTRL_BGN = 1;
@@ -413,22 +431,23 @@ module SRAM_IO_CTRL_LOGIC_TEST;
                 avs_cpuctrl_write = 0;
                 #10 avs_cpuctrl_write = 1;
                 avs_cpuctrl_writedata[IDX_SCPU_CTRL_LOAD] = 1;
-                
+
                 // begin
                     // FPGA send Load signal & data to CTRL
                     // #10 LOAD_N = 0;
                 // end
-                
+
                 // C code polling to do next
+                //polling_wait(CTRL_RDY);
                 begin: ctrl_module_read_ready
                 forever begin
                     #10;
-                    if (RDY) begin
+                    if (CTRL_RDY) begin
                         disable ctrl_module_read_ready;
                     end
                 end
                 end
-                
+
                 // C code modify control word
                 #10 CTRL_BGN = 0;
                 avs_cpuctrl_writedata[IDX_SCPU_CTRL_BGN] = 0;
@@ -439,13 +458,13 @@ module SRAM_IO_CTRL_LOGIC_TEST;
                 begin: ctrl_module_read_finish
                 forever begin
                     #10;
-                    if (!RDY) begin
+                    if (!CTRL_RDY) begin
                         disable ctrl_module_read_finish;
                     end
                 end
                 end
                 
-                /** (c) Export SRAM data from SRAM_IO_CTRL**/
+                /** (c) Export SRAM data from SRAM_IO_CTRL **/
                 // C code modify control word
                 #10 CTRL_BGN = 1;
                 avs_cpuctrl_writedata[IDX_SCPU_CTRL_BGN] = 1;
@@ -474,7 +493,7 @@ module SRAM_IO_CTRL_LOGIC_TEST;
                 begin: ctrl_module_load_ready_3nd
                 forever begin
                     #10;
-                    if (RDY) begin
+                    if (CTRL_RDY) begin
                         disable ctrl_module_load_ready_3nd;
                     end
                 end
@@ -490,7 +509,7 @@ module SRAM_IO_CTRL_LOGIC_TEST;
                 begin: ctrl_module_load_finish_3nd
                 forever begin
                     #10;
-                    if (!RDY) begin
+                    if (!CTRL_RDY) begin
                         disable ctrl_module_load_finish_3nd;
                     end
                 end
@@ -502,25 +521,28 @@ module SRAM_IO_CTRL_LOGIC_TEST;
                 else if (k == 2)
                     tmpi_datain[2*MEMORY_DATA_WIDTH-1:MEMORY_DATA_WIDTH] = avs_sram_data_readdata[MEMORY_DATA_WIDTH-1:0];
             end
-        
-            if (tmpi_datain != {i_mem.I_RAM[(i<<1)+1],i_mem.I_RAM[i<<1]}) begin
-                $write("<-- Data Wrong!");
-                error_cnt = error_cnt + 1;
+
+            if (i == 2) begin
+                if (tmpi_datain == (multiplicand*{1'b1,multiplier}/256))
+                    $write("\t<--- Multiplication Correct!");
+                else begin
+                    $write("\t<--- Multiplication Wrong!");
+                    error_cnt = error_cnt + 1;
+                end
             end
             $display("");
         end
-        
-        // Judge Final Test Result
+
+        // (4) Judge Final Test Result
         if (error_cnt)
             $display("Test Failed!");
         else
             $display("Test Passed!");
-        //#10 release CEN; release d_we;
-        $stop();//
+        #20 $stop();
     end
-    
+
     always #5
-        clk = ~clk;
-      
+        CLK = ~CLK;
+   
 endmodule
 

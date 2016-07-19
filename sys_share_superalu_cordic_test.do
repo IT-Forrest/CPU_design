@@ -19,7 +19,14 @@ add wave -noupdate /SYS_SHARE_SUPERALU_CORDIC_TEST/scpu_sram_alu/scpu_ctrl_spi/u
 add wave -noupdate /SYS_SHARE_SUPERALU_CORDIC_TEST/scpu_sram_alu/scpu_ctrl_spi/uut/clk
 add wave -noupdate /SYS_SHARE_SUPERALU_CORDIC_TEST/scpu_sram_alu/scpu_ctrl_spi/uut/reg_C
 add wave -noupdate -divider sram
+add wave -noupdate /SYS_SHARE_SUPERALU_CORDIC_TEST/scpu_sram_alu/scpu_ctrl_spi/CTRL_BGN
 add wave -noupdate /SYS_SHARE_SUPERALU_CORDIC_TEST/scpu_sram_alu/sram/CEN
+add wave -noupdate /SYS_SHARE_SUPERALU_CORDIC_TEST/scpu_sram_alu/scpu_ctrl_spi/CEN_after_mux
+add wave -noupdate /SYS_SHARE_SUPERALU_CORDIC_TEST/scpu_sram_alu/scpu_ctrl_spi/LOAD_MUX
+add wave -noupdate /SYS_SHARE_SUPERALU_CORDIC_TEST/scpu_sram_alu/scpu_ctrl_spi/CEN
+add wave -noupdate /SYS_SHARE_SUPERALU_CORDIC_TEST/scpu_sram_alu/scpu_ctrl_spi/CEN_from_SPI
+add wave -noupdate /SYS_SHARE_SUPERALU_CORDIC_TEST/scpu_sram_alu/scpu_ctrl_spi/spi_start
+add wave -noupdate /SYS_SHARE_SUPERALU_CORDIC_TEST/scpu_sram_alu/scpu_ctrl_spi/CEN_spi
 add wave -noupdate /SYS_SHARE_SUPERALU_CORDIC_TEST/scpu_sram_alu/sram/Q
 add wave -noupdate /SYS_SHARE_SUPERALU_CORDIC_TEST/scpu_sram_alu/sram/A
 add wave -noupdate /SYS_SHARE_SUPERALU_CORDIC_TEST/scpu_sram_alu/sram/D
@@ -32,7 +39,7 @@ add wave -noupdate /SYS_SHARE_SUPERALU_CORDIC_TEST/scpu_sram_alu/scpu_ctrl_spi/A
 add wave -noupdate /SYS_SHARE_SUPERALU_CORDIC_TEST/scpu_sram_alu/scpu_ctrl_spi/ALU_01/FOUT
 add wave -noupdate /SYS_SHARE_SUPERALU_CORDIC_TEST/scpu_sram_alu/scpu_ctrl_spi/ALU_01/POUT
 TreeUpdate [SetDefaultTree]
-WaveRestoreCursors {{Cursor 1} {11106667 ps} 0}
+WaveRestoreCursors {{Cursor 1} {111000 ps} 0}
 quietly wave cursor active 1
 configure wave -namecolwidth 276
 configure wave -valuecolwidth 100
@@ -48,4 +55,4 @@ configure wave -griddelta 40
 configure wave -timeline 0
 configure wave -timelineunits ps
 update
-WaveRestoreZoom {10463200 ps} {12864200 ps}
+WaveRestoreZoom {0 ps} {837376 ps}

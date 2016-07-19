@@ -17,6 +17,7 @@ vlog -work work DEFINE_CPU.v
 vlog -work work D_MEMORY.v
 vlog -work work I_MEMORY.v
 vlog -work work I_MEMORY_8bit.v
+vlog -work work RA1SHD_IBM512X8.v
 vlog -work work SERIAL_CPU_8bit.v
 vlog -work work SHARE_SUPERALU.v
 vlog -work work SRAM_IO_CTRL.v
@@ -43,6 +44,7 @@ SRAM_IO_CTRL_LOGIC_TEST\
 SRAM_IO_CTRL_TEST\
 SCPU_SRAM_8BIT_ALU_SPI_TOP_TEST\
 SYS_SHARE_SUPERALU_CORDIC_TEST\
+SYS_SHARE_SUPERALU_MULT_TEST\
 ]
 
 foreach case $testcases {
