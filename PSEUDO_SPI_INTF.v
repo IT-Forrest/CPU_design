@@ -37,6 +37,7 @@ module PSEUDO_SPT_INTF(
     A,
     CEN,
     D_WE,//memory read or write signal, 1: write
+    spi_MUX,
     spi_is_done
 );
 
@@ -58,6 +59,7 @@ module PSEUDO_SPT_INTF(
     output  [MEMORY_ADDR_WIDTH-1:0] A;
     output  CEN;
     output  D_WE;//memory read or write signal, 1: write
+    output  spi_MUX;
     output  spi_is_done;
 
     // State Machine Parameters
@@ -72,19 +74,20 @@ module PSEUDO_SPT_INTF(
     reg     [MEMORY_ADDR_WIDTH-1:0] sram_addr;
     reg     [MEMORY_DATA_WIDTH-1:0] sram_regs;
     
+    reg             spi_MUX;
     reg     [3:0]   spi_state;
     reg     [2:0]   cnt_state;
     reg     [4:0]   cnt_bit_sent;
     reg     [4:0]   cnt_addr_len;
     reg     [4:0]   cnt_freq_div;
     //reg     [2:0]  sclk_state;
-    reg     CEN;
     
     assign  SPI_SO  = sram_regs[0];
-    assign  A       = (!CEN)?(sram_addr):0;
+    assign  A       = sram_addr;//(!CEN)?(sram_addr):0;
+    assign  CEN     = 1'b0;/* low enable */
     assign  D_WE    = 1'b1;/* low write */
-    assign  SCLK1   = (cnt_state[0] & cnt_state[1]);
-    assign  SCLK2   = (cnt_state[0] & ~cnt_state[1]);
+    assign  SCLK1   = (spi_MUX & cnt_state[0] & cnt_state[1]);
+    assign  SCLK2   = (spi_MUX & cnt_state[0] & ~cnt_state[1]);
     assign  LAT     = (spi_state == SPI_RDY);
     assign  spi_is_done = (spi_state == SPI_DONE);
     
@@ -96,12 +99,23 @@ module PSEUDO_SPT_INTF(
         // else
             // D_WE <= 1;
     // end
+    // always @(negedge CLK)
+    // begin
+        // if ((spi_state == SPI_ADDR) || (spi_state == SPI_READ))
+            // CEN <= 0;/* low enable */
+        // else
+            // CEN <= 1;
+    // end
+    
+    //************* delay SPI_MUX signal for one cycle *************//
     always @(negedge CLK)
     begin
-        if ((spi_state == SPI_ADDR) || (spi_state == SPI_READ))
-            CEN <= 0;/* low enable */
-        else
-            CEN <= 1;
+        if (!BGN)
+            spi_MUX <= 1'b0;
+        else if (SPI_ADDR == spi_state)//((SPI_IDLE == spi_state) && !cnt_state)
+            spi_MUX <= 1'b1;
+        else if (SPI_DONE == spi_state)
+            spi_MUX <= 1'b0;
     end
     
     //******** Frequency Divisior ********//
@@ -122,9 +136,8 @@ module PSEUDO_SPT_INTF(
     begin
         if (!BGN)
             sram_addr <= ADDR_BGN;
-            // sclk_state <= 0;
-        else if ((SPI_ADDR == spi_state) && cnt_addr_len)//sram_addr
-            sram_addr <= sram_addr - 1;
+        else if ((SPI_ADDR == spi_state) && cnt_addr_len)
+            sram_addr <= sram_addr + 1;
         else
             sram_addr <= sram_addr;
     end
@@ -168,7 +181,7 @@ module PSEUDO_SPT_INTF(
     always @(posedge CLK or negedge BGN)
     begin
         if (!BGN)
-            cnt_state <= 0;
+            cnt_state <= 1;
         else if (!cnt_state) begin
             case (spi_state)
                 SPI_IDLE:   cnt_state <= 0;

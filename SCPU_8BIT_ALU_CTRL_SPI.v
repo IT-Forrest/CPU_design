@@ -216,6 +216,7 @@ module SCPU_8BIT_ALU_CTRL_SPI(
         .CEN        (CEN_spi    ),
         .A          (A_spi ),
         .D_WE       (d_we_spi   ),//memory read or write signal, 1: write
+        .spi_MUX    (spi_MUX    ),
         .spi_is_done(spi_is_done)
     );
     
@@ -236,9 +237,9 @@ module SCPU_8BIT_ALU_CTRL_SPI(
     assign  addr_end   = io_dataoutA[MEMORY_ADDR_WIDTH-1:0];
     assign  data_len   = io_dataoutB[RESERVED_DATA_LEN-1:0];
     assign  spi_start       = io_control[IO_SPI_STA];
-    assign  CEN_from_SPI    = (spi_start)?CEN_spi:1'b0;//enable
-    assign  A_from_SPI      = (spi_start)?A_spi:m_addr;
-    assign  WEN_from_SPI    = (spi_start)?1'b1:(!D_WE);
+    assign  CEN_from_SPI    = (spi_MUX)?CEN_spi:1'b0;//enable
+    assign  A_from_SPI      = (spi_MUX)?A_spi:m_addr;
+    assign  WEN_from_SPI    = (spi_MUX)?1'b1:(!D_WE);
     
     /* Mux & Demux from CTRL and CPU to SRAM */
     assign  LOAD_MUX = CTRL_BGN;
