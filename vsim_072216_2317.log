@@ -1,0 +1,1694 @@
+# No design specified
+# ** Warning: (vlib-34) Library already exists at "work".
+# 
+# Model Technology ModelSim PE vmap 10.3c Lib Mapping Utility 2014.09 Sep 20 2014
+# vmap -modelsim_quiet work work 
+# Modifying F:/05. Code Battle/04. Verilog/CPU_design/CPU_wjf.mpf
+# Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
+# Start time: 23:17:12 on Jul 22,2016
+# vlog -reportprogress 300 -work work DEFINE_CPU.v 
+# End time: 23:17:12 on Jul 22,2016, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
+# Start time: 23:17:12 on Jul 22,2016
+# vlog -reportprogress 300 -work work D_MEMORY.v 
+# -- Compiling module D_MEMORY
+# 
+# Top level modules:
+# 	D_MEMORY
+# End time: 23:17:12 on Jul 22,2016, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
+# Start time: 23:17:12 on Jul 22,2016
+# vlog -reportprogress 300 -work work I_MEMORY.v 
+# -- Compiling module I_MEMORY
+# 
+# Top level modules:
+# 	I_MEMORY
+# End time: 23:17:12 on Jul 22,2016, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
+# Start time: 23:17:12 on Jul 22,2016
+# vlog -reportprogress 300 -work work I_MEMORY_8bit.v 
+# -- Compiling module I_MEMORY_8BIT
+# 
+# Top level modules:
+# 	I_MEMORY_8BIT
+# End time: 23:17:12 on Jul 22,2016, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
+# Start time: 23:17:13 on Jul 22,2016
+# vlog -reportprogress 300 -work work RA1SHD_IBM512X8.v 
+# -- Compiling module RA1SHD_IBM512X8
+# 
+# Top level modules:
+# 	RA1SHD_IBM512X8
+# End time: 23:17:13 on Jul 22,2016, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
+# Start time: 23:17:13 on Jul 22,2016
+# vlog -reportprogress 300 -work work SERIAL_CPU_8bit.v 
+# -- Compiling module SERIAL_CPU_8BIT
+# 
+# Top level modules:
+# 	SERIAL_CPU_8BIT
+# End time: 23:17:13 on Jul 22,2016, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
+# Start time: 23:17:13 on Jul 22,2016
+# vlog -reportprogress 300 -work work SHARE_SUPERALU.v 
+# -- Compiling module SHARE_SUPERALU
+# 
+# Top level modules:
+# 	SHARE_SUPERALU
+# End time: 23:17:13 on Jul 22,2016, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
+# Start time: 23:17:13 on Jul 22,2016
+# vlog -reportprogress 300 -work work SRAM_IO_CTRL.v 
+# -- Compiling module SRAM_IO_CTRL
+# 
+# Top level modules:
+# 	SRAM_IO_CTRL
+# End time: 23:17:13 on Jul 22,2016, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
+# Start time: 23:17:13 on Jul 22,2016
+# vlog -reportprogress 300 -work work SRAM_IO_CTRL_LOGIC.v 
+# -- Compiling module SRAM_IO_CTRL_LOGIC
+# 
+# Top level modules:
+# 	SRAM_IO_CTRL_LOGIC
+# End time: 23:17:13 on Jul 22,2016, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
+# Start time: 23:17:13 on Jul 22,2016
+# vlog -reportprogress 300 -work work PSEUDO_SPI_INTF.v 
+# -- Compiling module PSEUDO_SPT_INTF
+# 
+# Top level modules:
+# 	PSEUDO_SPT_INTF
+# End time: 23:17:13 on Jul 22,2016, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
+# Start time: 23:17:13 on Jul 22,2016
+# vlog -reportprogress 300 -work work SCPU_8BIT_ALU_CTRL_SPI.v 
+# -- Compiling module SERIAL_CPU_8BIT
+# -- Compiling module SHARE_SUPERALU
+# -- Compiling module SRAM_IO_CTRL
+# -- Compiling module PSEUDO_SPT_INTF
+# -- Compiling module SCPU_8BIT_ALU_CTRL_SPI
+# 
+# Top level modules:
+# 	SCPU_8BIT_ALU_CTRL_SPI
+# End time: 23:17:13 on Jul 22,2016, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
+# Start time: 23:17:13 on Jul 22,2016
+# vlog -reportprogress 300 -work work iogpil_cmrf8sf_rvt.v 
+# -- Compiling module PBCOC12A
+# -- Compiling module PBCOC12B
+# -- Compiling module PBCOC12C
+# -- Compiling module PBCOC16A
+# -- Compiling module PBCOC16B
+# -- Compiling module PBCOC16C
+# -- Compiling module PBCOC24A
+# -- Compiling module PBCOC24B
+# -- Compiling module PBCOC24C
+# -- Compiling module PBCOC2A
+# -- Compiling module PBCOC2C
+# -- Compiling module PBCOC4A
+# -- Compiling module PBCOC4C
+# -- Compiling module PBCOC8A
+# -- Compiling module PBCOC8B
+# -- Compiling module PBCOC8C
+# -- Compiling module PBCSOC12A
+# -- Compiling module PBCSOC12B
+# -- Compiling module PBCSOC12C
+# -- Compiling module PBCSOC16A
+# -- Compiling module PBCSOC16B
+# -- Compiling module PBCSOC16C
+# -- Compiling module PBCSOC24A
+# -- Compiling module PBCSOC24B
+# -- Compiling module PBCSOC24C
+# -- Compiling module PBCSOC2A
+# -- Compiling module PBCSOC2C
+# -- Compiling module PBCSOC4A
+# -- Compiling module PBCSOC4C
+# -- Compiling module PBCSOC8A
+# -- Compiling module PBCSOC8B
+# -- Compiling module PBCSOC8C
+# -- Compiling module PBCOD12A
+# -- Compiling module PBCOD12B
+# -- Compiling module PBCOD12C
+# -- Compiling module PBCOD16A
+# -- Compiling module PBCOD16B
+# -- Compiling module PBCOD16C
+# -- Compiling module PBCOD24A
+# -- Compiling module PBCOD24B
+# -- Compiling module PBCOD24C
+# -- Compiling module PBCOD2A
+# -- Compiling module PBCOD2C
+# -- Compiling module PBCOD4A
+# -- Compiling module PBCOD4C
+# -- Compiling module PBCOD8A
+# -- Compiling module PBCOD8B
+# -- Compiling module PBCOD8C
+# -- Compiling module PBCSOD12A
+# -- Compiling module PBCSOD12B
+# -- Compiling module PBCSOD12C
+# -- Compiling module PBCSOD16A
+# -- Compiling module PBCSOD16B
+# -- Compiling module PBCSOD16C
+# -- Compiling module PBCSOD24A
+# -- Compiling module PBCSOD24B
+# -- Compiling module PBCSOD24C
+# -- Compiling module PBCSOD2A
+# -- Compiling module PBCSOD2C
+# -- Compiling module PBCSOD4A
+# -- Compiling module PBCSOD4C
+# -- Compiling module PBCSOD8A
+# -- Compiling module PBCSOD8B
+# -- Compiling module PBCSOD8C
+# -- Compiling module PBCCT12A
+# -- Compiling module PBCCT12B
+# -- Compiling module PBCCT12C
+# -- Compiling module PBCCT16A
+# -- Compiling module PBCCT16B
+# -- Compiling module PBCCT16C
+# -- Compiling module PBCCT24A
+# -- Compiling module PBCCT24B
+# -- Compiling module PBCCT24C
+# -- Compiling module PBCCT2A
+# -- Compiling module PBCCT2C
+# -- Compiling module PBCCT4A
+# -- Compiling module PBCCT4C
+# -- Compiling module PBCCT8A
+# -- Compiling module PBCCT8B
+# -- Compiling module PBCCT8C
+# -- Compiling module PBCSCT12A
+# -- Compiling module PBCSCT12B
+# -- Compiling module PBCSCT12C
+# -- Compiling module PBCSCT16A
+# -- Compiling module PBCSCT16B
+# -- Compiling module PBCSCT16C
+# -- Compiling module PBCSCT24A
+# -- Compiling module PBCSCT24B
+# -- Compiling module PBCSCT24C
+# -- Compiling module PBCSCT2A
+# -- Compiling module PBCSCT2C
+# -- Compiling module PBCSCT4A
+# -- Compiling module PBCSCT4C
+# -- Compiling module PBCSCT8A
+# -- Compiling module PBCSCT8B
+# -- Compiling module PBCSCT8C
+# -- Compiling module PBCODD12A
+# -- Compiling module PBCODD12B
+# -- Compiling module PBCODD12C
+# -- Compiling module PBCODD16A
+# -- Compiling module PBCODD16B
+# -- Compiling module PBCODD16C
+# -- Compiling module PBCODD24A
+# -- Compiling module PBCODD24B
+# -- Compiling module PBCODD24C
+# -- Compiling module PBCODD2A
+# -- Compiling module PBCODD2C
+# -- Compiling module PBCODD4A
+# -- Compiling module PBCODD4C
+# -- Compiling module PBCODD8A
+# -- Compiling module PBCODD8B
+# -- Compiling module PBCODD8C
+# -- Compiling module PBCSODD12A
+# -- Compiling module PBCSODD12B
+# -- Compiling module PBCSODD12C
+# -- Compiling module PBCSODD16A
+# -- Compiling module PBCSODD16B
+# -- Compiling module PBCSODD16C
+# -- Compiling module PBCSODD24A
+# -- Compiling module PBCSODD24B
+# -- Compiling module PBCSODD24C
+# -- Compiling module PBCSODD2A
+# -- Compiling module PBCSODD2C
+# -- Compiling module PBCSODD4A
+# -- Compiling module PBCSODD4C
+# -- Compiling module PBCSODD8A
+# -- Compiling module PBCSODD8B
+# -- Compiling module PBCSODD8C
+# -- Compiling module PBCCTD12A
+# -- Compiling module PBCCTD12B
+# -- Compiling module PBCCTD12C
+# -- Compiling module PBCCTD16A
+# -- Compiling module PBCCTD16B
+# -- Compiling module PBCCTD16C
+# -- Compiling module PBCCTD24A
+# -- Compiling module PBCCTD24B
+# -- Compiling module PBCCTD24C
+# -- Compiling module PBCCTD2A
+# -- Compiling module PBCCTD2C
+# -- Compiling module PBCCTD4A
+# -- Compiling module PBCCTD4C
+# -- Compiling module PBCCTD8A
+# -- Compiling module PBCCTD8B
+# -- Compiling module PBCCTD8C
+# -- Compiling module PBCSCTD12A
+# -- Compiling module PBCSCTD12B
+# -- Compiling module PBCSCTD12C
+# -- Compiling module PBCSCTD16A
+# -- Compiling module PBCSCTD16B
+# -- Compiling module PBCSCTD16C
+# -- Compiling module PBCSCTD24A
+# -- Compiling module PBCSCTD24B
+# -- Compiling module PBCSCTD24C
+# -- Compiling module PBCSCTD2A
+# -- Compiling module PBCSCTD2C
+# -- Compiling module PBCSCTD4A
+# -- Compiling module PBCSCTD4C
+# -- Compiling module PBCSCTD8A
+# -- Compiling module PBCSCTD8B
+# -- Compiling module PBCSCTD8C
+# -- Compiling module PBCOCU12A
+# -- Compiling module PBCOCU12B
+# -- Compiling module PBCOCU12C
+# -- Compiling module PBCOCU16A
+# -- Compiling module PBCOCU16B
+# -- Compiling module PBCOCU16C
+# -- Compiling module PBCOCU24A
+# -- Compiling module PBCOCU24B
+# -- Compiling module PBCOCU24C
+# -- Compiling module PBCOCU2A
+# -- Compiling module PBCOCU2C
+# -- Compiling module PBCOCU4A
+# -- Compiling module PBCOCU4C
+# -- Compiling module PBCOCU8A
+# -- Compiling module PBCOCU8B
+# -- Compiling module PBCOCU8C
+# -- Compiling module PBCSOCU12A
+# -- Compiling module PBCSOCU12B
+# -- Compiling module PBCSOCU12C
+# -- Compiling module PBCSOCU16A
+# -- Compiling module PBCSOCU16B
+# -- Compiling module PBCSOCU16C
+# -- Compiling module PBCSOCU24A
+# -- Compiling module PBCSOCU24B
+# -- Compiling module PBCSOCU24C
+# -- Compiling module PBCSOCU2A
+# -- Compiling module PBCSOCU2C
+# -- Compiling module PBCSOCU4A
+# -- Compiling module PBCSOCU4C
+# -- Compiling module PBCSOCU8A
+# -- Compiling module PBCSOCU8B
+# -- Compiling module PBCSOCU8C
+# -- Compiling module PBCCTU12A
+# -- Compiling module PBCCTU12B
+# -- Compiling module PBCCTU12C
+# -- Compiling module PBCCTU16A
+# -- Compiling module PBCCTU16B
+# -- Compiling module PBCCTU16C
+# -- Compiling module PBCCTU24A
+# -- Compiling module PBCCTU24B
+# -- Compiling module PBCCTU24C
+# -- Compiling module PBCCTU2A
+# -- Compiling module PBCCTU2C
+# -- Compiling module PBCCTU4A
+# -- Compiling module PBCCTU4C
+# -- Compiling module PBCCTU8A
+# -- Compiling module PBCCTU8B
+# -- Compiling module PBCCTU8C
+# -- Compiling module PBCSCTU12A
+# -- Compiling module PBCSCTU12B
+# -- Compiling module PBCSCTU12C
+# -- Compiling module PBCSCTU16A
+# -- Compiling module PBCSCTU16B
+# -- Compiling module PBCSCTU16C
+# -- Compiling module PBCSCTU24A
+# -- Compiling module PBCSCTU24B
+# -- Compiling module PBCSCTU24C
+# -- Compiling module PBCSCTU2A
+# -- Compiling module PBCSCTU2C
+# -- Compiling module PBCSCTU4A
+# -- Compiling module PBCSCTU4C
+# -- Compiling module PBCSCTU8A
+# -- Compiling module PBCSCTU8B
+# -- Compiling module PBCSCTU8C
+# -- Compiling module PIC
+# -- Compiling module PICS
+# -- Compiling module PICD
+# -- Compiling module PICSD
+# -- Compiling module PICSU
+# -- Compiling module PICU
+# -- Compiling module POC12A
+# -- Compiling module POC12B
+# -- Compiling module POC12C
+# -- Compiling module POC16A
+# -- Compiling module POC16B
+# -- Compiling module POC16C
+# -- Compiling module POC24A
+# -- Compiling module POC24B
+# -- Compiling module POC24C
+# -- Compiling module POC2A
+# -- Compiling module POC2C
+# -- Compiling module POC4A
+# -- Compiling module POC4C
+# -- Compiling module POC8A
+# -- Compiling module POC8B
+# -- Compiling module POC8C
+# -- Compiling module POOC12A
+# -- Compiling module POOC12B
+# -- Compiling module POOC12C
+# -- Compiling module POOC16A
+# -- Compiling module POOC16B
+# -- Compiling module POOC16C
+# -- Compiling module POOC24A
+# -- Compiling module POOC24B
+# -- Compiling module POOC24C
+# -- Compiling module POOC2A
+# -- Compiling module POOC2C
+# -- Compiling module POOC4A
+# -- Compiling module POOC4C
+# -- Compiling module POOC8A
+# -- Compiling module POOC8B
+# -- Compiling module POOC8C
+# -- Compiling module POOD12A
+# -- Compiling module POOD12B
+# -- Compiling module POOD12C
+# -- Compiling module POOD16A
+# -- Compiling module POOD16B
+# -- Compiling module POOD16C
+# -- Compiling module POOD24A
+# -- Compiling module POOD24B
+# -- Compiling module POOD24C
+# -- Compiling module POOD2A
+# -- Compiling module POOD2C
+# -- Compiling module POOD4A
+# -- Compiling module POOD4C
+# -- Compiling module POOD8A
+# -- Compiling module POOD8B
+# -- Compiling module POOD8C
+# -- Compiling module POCT12A
+# -- Compiling module POCT12B
+# -- Compiling module POCT12C
+# -- Compiling module POCT16A
+# -- Compiling module POCT16B
+# -- Compiling module POCT16C
+# -- Compiling module POCT24A
+# -- Compiling module POCT24B
+# -- Compiling module POCT24C
+# -- Compiling module POCT2A
+# -- Compiling module POCT2C
+# -- Compiling module POCT4A
+# -- Compiling module POCT4C
+# -- Compiling module POCT8A
+# -- Compiling module POCT8B
+# -- Compiling module POCT8C
+# -- Compiling module PBREAK
+# -- Compiling module PBREAKBF
+# -- Compiling module PBREAKDVDDR
+# -- Compiling module PBREAKBFDVDDR
+# -- Compiling module PCORNER
+# -- Compiling module PFILL1
+# -- Compiling module PFILLH
+# -- Compiling module PFILLQ
+# -- Compiling module PDVSS
+# -- Compiling module PDVDD
+# -- Compiling module PVSS
+# -- Compiling module PVDD
+# -- Compiling module PAVDD
+# -- Compiling module PAVSS
+# -- Compiling module PANALOG
+# -- Compiling module PBAREWIRE
+# -- Compiling module POSC1
+# -- Compiling module POSC2
+# -- Compiling module POSC3
+# -- Compiling module POSC4
+# 
+# Top level modules:
+# 	PBCOC12A
+# 	PBCOC12B
+# 	PBCOC12C
+# 	PBCOC16A
+# 	PBCOC16B
+# 	PBCOC16C
+# 	PBCOC24A
+# 	PBCOC24B
+# 	PBCOC24C
+# 	PBCOC2A
+# 	PBCOC2C
+# 	PBCOC4A
+# 	PBCOC4C
+# 	PBCOC8A
+# 	PBCOC8B
+# 	PBCOC8C
+# 	PBCSOC12A
+# 	PBCSOC12B
+# 	PBCSOC12C
+# 	PBCSOC16A
+# 	PBCSOC16B
+# 	PBCSOC16C
+# 	PBCSOC24A
+# 	PBCSOC24B
+# 	PBCSOC24C
+# 	PBCSOC2A
+# 	PBCSOC2C
+# 	PBCSOC4A
+# 	PBCSOC4C
+# 	PBCSOC8A
+# 	PBCSOC8B
+# 	PBCSOC8C
+# 	PBCOD12A
+# 	PBCOD12B
+# 	PBCOD12C
+# 	PBCOD16A
+# 	PBCOD16B
+# 	PBCOD16C
+# 	PBCOD24A
+# 	PBCOD24B
+# 	PBCOD24C
+# 	PBCOD2A
+# 	PBCOD2C
+# 	PBCOD4A
+# 	PBCOD4C
+# 	PBCOD8A
+# 	PBCOD8B
+# 	PBCOD8C
+# 	PBCSOD12A
+# 	PBCSOD12B
+# 	PBCSOD12C
+# 	PBCSOD16A
+# 	PBCSOD16B
+# 	PBCSOD16C
+# 	PBCSOD24A
+# 	PBCSOD24B
+# 	PBCSOD24C
+# 	PBCSOD2A
+# 	PBCSOD2C
+# 	PBCSOD4A
+# 	PBCSOD4C
+# 	PBCSOD8A
+# 	PBCSOD8B
+# 	PBCSOD8C
+# 	PBCCT12A
+# 	PBCCT12B
+# 	PBCCT12C
+# 	PBCCT16A
+# 	PBCCT16B
+# 	PBCCT16C
+# 	PBCCT24A
+# 	PBCCT24B
+# 	PBCCT24C
+# 	PBCCT2A
+# 	PBCCT2C
+# 	PBCCT4A
+# 	PBCCT4C
+# 	PBCCT8A
+# 	PBCCT8B
+# 	PBCCT8C
+# 	PBCSCT12A
+# 	PBCSCT12B
+# 	PBCSCT12C
+# 	PBCSCT16A
+# 	PBCSCT16B
+# 	PBCSCT16C
+# 	PBCSCT24A
+# 	PBCSCT24B
+# 	PBCSCT24C
+# 	PBCSCT2A
+# 	PBCSCT2C
+# 	PBCSCT4A
+# 	PBCSCT4C
+# 	PBCSCT8A
+# 	PBCSCT8B
+# 	PBCSCT8C
+# 	PBCODD12A
+# 	PBCODD12B
+# 	PBCODD12C
+# 	PBCODD16A
+# 	PBCODD16B
+# 	PBCODD16C
+# 	PBCODD24A
+# 	PBCODD24B
+# 	PBCODD24C
+# 	PBCODD2A
+# 	PBCODD2C
+# 	PBCODD4A
+# 	PBCODD4C
+# 	PBCODD8A
+# 	PBCODD8B
+# 	PBCODD8C
+# 	PBCSODD12A
+# 	PBCSODD12B
+# 	PBCSODD12C
+# 	PBCSODD16A
+# 	PBCSODD16B
+# 	PBCSODD16C
+# 	PBCSODD24A
+# 	PBCSODD24B
+# 	PBCSODD24C
+# 	PBCSODD2A
+# 	PBCSODD2C
+# 	PBCSODD4A
+# 	PBCSODD4C
+# 	PBCSODD8A
+# 	PBCSODD8B
+# 	PBCSODD8C
+# 	PBCCTD12A
+# 	PBCCTD12B
+# 	PBCCTD12C
+# 	PBCCTD16A
+# 	PBCCTD16B
+# 	PBCCTD16C
+# 	PBCCTD24A
+# 	PBCCTD24B
+# 	PBCCTD24C
+# 	PBCCTD2A
+# 	PBCCTD2C
+# 	PBCCTD4A
+# 	PBCCTD4C
+# 	PBCCTD8A
+# 	PBCCTD8B
+# 	PBCCTD8C
+# 	PBCSCTD12A
+# 	PBCSCTD12B
+# 	PBCSCTD12C
+# 	PBCSCTD16A
+# 	PBCSCTD16B
+# 	PBCSCTD16C
+# 	PBCSCTD24A
+# 	PBCSCTD24B
+# 	PBCSCTD24C
+# 	PBCSCTD2A
+# 	PBCSCTD2C
+# 	PBCSCTD4A
+# 	PBCSCTD4C
+# 	PBCSCTD8A
+# 	PBCSCTD8B
+# 	PBCSCTD8C
+# 	PBCOCU12A
+# 	PBCOCU12B
+# 	PBCOCU12C
+# 	PBCOCU16A
+# 	PBCOCU16B
+# 	PBCOCU16C
+# 	PBCOCU24A
+# 	PBCOCU24B
+# 	PBCOCU24C
+# 	PBCOCU2A
+# 	PBCOCU2C
+# 	PBCOCU4A
+# 	PBCOCU4C
+# 	PBCOCU8A
+# 	PBCOCU8B
+# 	PBCOCU8C
+# 	PBCSOCU12A
+# 	PBCSOCU12B
+# 	PBCSOCU12C
+# 	PBCSOCU16A
+# 	PBCSOCU16B
+# 	PBCSOCU16C
+# 	PBCSOCU24A
+# 	PBCSOCU24B
+# 	PBCSOCU24C
+# 	PBCSOCU2A
+# 	PBCSOCU2C
+# 	PBCSOCU4A
+# 	PBCSOCU4C
+# 	PBCSOCU8A
+# 	PBCSOCU8B
+# 	PBCSOCU8C
+# 	PBCCTU12A
+# 	PBCCTU12B
+# 	PBCCTU12C
+# 	PBCCTU16A
+# 	PBCCTU16B
+# 	PBCCTU16C
+# 	PBCCTU24A
+# 	PBCCTU24B
+# 	PBCCTU24C
+# 	PBCCTU2A
+# 	PBCCTU2C
+# 	PBCCTU4A
+# 	PBCCTU4C
+# 	PBCCTU8A
+# 	PBCCTU8B
+# 	PBCCTU8C
+# 	PBCSCTU12A
+# 	PBCSCTU12B
+# 	PBCSCTU12C
+# 	PBCSCTU16A
+# 	PBCSCTU16B
+# 	PBCSCTU16C
+# 	PBCSCTU24A
+# 	PBCSCTU24B
+# 	PBCSCTU24C
+# 	PBCSCTU2A
+# 	PBCSCTU2C
+# 	PBCSCTU4A
+# 	PBCSCTU4C
+# 	PBCSCTU8A
+# 	PBCSCTU8B
+# 	PBCSCTU8C
+# 	PIC
+# 	PICS
+# 	PICD
+# 	PICSD
+# 	PICSU
+# 	PICU
+# 	POC12A
+# 	POC12B
+# 	POC12C
+# 	POC16A
+# 	POC16B
+# 	POC16C
+# 	POC24A
+# 	POC24B
+# 	POC24C
+# 	POC2A
+# 	POC2C
+# 	POC4A
+# 	POC4C
+# 	POC8A
+# 	POC8B
+# 	POC8C
+# 	POOC12A
+# 	POOC12B
+# 	POOC12C
+# 	POOC16A
+# 	POOC16B
+# 	POOC16C
+# 	POOC24A
+# 	POOC24B
+# 	POOC24C
+# 	POOC2A
+# 	POOC2C
+# 	POOC4A
+# 	POOC4C
+# 	POOC8A
+# 	POOC8B
+# 	POOC8C
+# 	POOD12A
+# 	POOD12B
+# 	POOD12C
+# 	POOD16A
+# 	POOD16B
+# 	POOD16C
+# 	POOD24A
+# 	POOD24B
+# 	POOD24C
+# 	POOD2A
+# 	POOD2C
+# 	POOD4A
+# 	POOD4C
+# 	POOD8A
+# 	POOD8B
+# 	POOD8C
+# 	POCT12A
+# 	POCT12B
+# 	POCT12C
+# 	POCT16A
+# 	POCT16B
+# 	POCT16C
+# 	POCT24A
+# 	POCT24B
+# 	POCT24C
+# 	POCT2A
+# 	POCT2C
+# 	POCT4A
+# 	POCT4C
+# 	POCT8A
+# 	POCT8B
+# 	POCT8C
+# 	PBREAK
+# 	PBREAKBF
+# 	PBREAKDVDDR
+# 	PBREAKBFDVDDR
+# 	PCORNER
+# 	PFILL1
+# 	PFILLH
+# 	PFILLQ
+# 	PDVSS
+# 	PDVDD
+# 	PVSS
+# 	PVDD
+# 	PAVDD
+# 	PAVSS
+# 	PANALOG
+# 	PBAREWIRE
+# 	POSC1
+# 	POSC2
+# 	POSC3
+# 	POSC4
+# End time: 23:17:14 on Jul 22,2016, Elapsed time: 0:00:01
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
+# Start time: 23:17:16 on Jul 22,2016
+# vlog -reportprogress 300 -work work SCPU_SRAM_8BIT_ALU_SPI_TOP.v 
+# -- Compiling module SERIAL_CPU_8BIT
+# -- Compiling module SHARE_SUPERALU
+# -- Compiling module SRAM_IO_CTRL
+# -- Compiling module PSEUDO_SPT_INTF
+# -- Compiling module SCPU_8BIT_ALU_CTRL_SPI
+# -- Compiling module RA1SHD_IBM512X8
+# -- Compiling module SCPU_SRAM_8BIT_ALU_SPI_TOP
+# 
+# Top level modules:
+# 	SCPU_SRAM_8BIT_ALU_SPI_TOP
+# End time: 23:17:16 on Jul 22,2016, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# SHARE_SUPERALU_MULT_TEST SHARE_SUPERALU_DIV_TEST SHARE_SUPERALU_CORDIC_TEST PSEUDO_SPI_INTF_RA1512_TEST PSEUDO_SPI_INTF_SCAN_TEST PSEUDO_SPI_INTF_TEST SCPU_MEM_INST_END_8BIT_TEST SCPU_MEM_LOOP_8BIT_TEST SCPU_MEM_LOOP_TEST SRAM_IO_CTRL_RA1512_SCPU_8BIT_TEST SRAM_IO_CTRL_RA1512_TEST SRAM_IO_CTRL_LOGIC_TEST SRAM_IO_CTRL_TEST SCPU_SRAM_8BIT_ALU_SPI_TOP_TEST SYS_SHARE_SUPERALU_CORDIC_TEST SYS_SHARE_SUPERALU_MULT_TEST SYS_PSEUDO_SPI_INTF_SCAN_TEST
+# Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
+# Start time: 23:17:16 on Jul 22,2016
+# vlog -reportprogress 300 -work work ./sim/SHARE_SUPERALU_MULT_TEST.v 
+# -- Compiling module SHARE_SUPERALU
+# -- Compiling module SHARE_SUPERALU_MULT_TEST
+# 
+# Top level modules:
+# 	SHARE_SUPERALU_MULT_TEST
+# End time: 23:17:16 on Jul 22,2016, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
+# Start time: 23:17:16 on Jul 22,2016
+# vlog -reportprogress 300 -work work ./sim/SHARE_SUPERALU_DIV_TEST.v 
+# -- Compiling module SHARE_SUPERALU
+# -- Compiling module SHARE_SUPERALU_DIV_TEST
+# 
+# Top level modules:
+# 	SHARE_SUPERALU_DIV_TEST
+# End time: 23:17:17 on Jul 22,2016, Elapsed time: 0:00:01
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
+# Start time: 23:17:17 on Jul 22,2016
+# vlog -reportprogress 300 -work work ./sim/SHARE_SUPERALU_CORDIC_TEST.v 
+# -- Compiling module SHARE_SUPERALU
+# -- Compiling module SHARE_SUPERALU_CORDIC_TEST
+# 
+# Top level modules:
+# 	SHARE_SUPERALU_CORDIC_TEST
+# End time: 23:17:17 on Jul 22,2016, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
+# Start time: 23:17:17 on Jul 22,2016
+# vlog -reportprogress 300 -work work ./sim/PSEUDO_SPI_INTF_RA1512_TEST.v 
+# -- Compiling module PSEUDO_SPT_INTF
+# -- Compiling module RA1SHD_IBM512X8
+# -- Compiling module I_MEMORY_8BIT
+# -- Compiling module PSEUDO_SPI_INTF_RA1512_TEST
+# 
+# Top level modules:
+# 	PSEUDO_SPI_INTF_RA1512_TEST
+# End time: 23:17:17 on Jul 22,2016, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
+# Start time: 23:17:17 on Jul 22,2016
+# vlog -reportprogress 300 -work work ./sim/PSEUDO_SPI_INTF_SCAN_TEST.v 
+# -- Compiling module PSEUDO_SPT_INTF
+# -- Compiling module I_MEMORY_8BIT
+# -- Compiling module SC_CELL_V3
+# -- Compiling module PSEUDO_SPI_INTF_SCAN_TEST
+# 
+# Top level modules:
+# 	PSEUDO_SPI_INTF_SCAN_TEST
+# End time: 23:17:17 on Jul 22,2016, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
+# Start time: 23:17:17 on Jul 22,2016
+# vlog -reportprogress 300 -work work ./sim/PSEUDO_SPI_INTF_TEST.v 
+# -- Compiling module PSEUDO_SPT_INTF
+# -- Compiling module I_MEMORY_8BIT
+# -- Compiling module PSEUDO_SPI_INTF_TEST
+# 
+# Top level modules:
+# 	PSEUDO_SPI_INTF_TEST
+# End time: 23:17:17 on Jul 22,2016, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
+# Start time: 23:17:17 on Jul 22,2016
+# vlog -reportprogress 300 -work work ./sim/SCPU_MEM_INST_END_8BIT_TEST.v 
+# -- Compiling module SERIAL_CPU_8BIT
+# -- Compiling module I_MEMORY_8BIT
+# -- Compiling module SCPU_MEM_INST_END_8BIT_TEST
+# 
+# Top level modules:
+# 	SCPU_MEM_INST_END_8BIT_TEST
+# End time: 23:17:17 on Jul 22,2016, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
+# Start time: 23:17:17 on Jul 22,2016
+# vlog -reportprogress 300 -work work ./sim/SCPU_MEM_LOOP_8BIT_TEST.v 
+# -- Compiling module SERIAL_CPU_8BIT
+# -- Compiling module I_MEMORY_8BIT
+# -- Compiling module SCPU_MEM_LOOP_8BIT_TEST
+# ** Warning: ./sim/SCPU_MEM_LOOP_8BIT_TEST.v(86): (vlog-2643) Unterminated string literal continues onto next line.
+# 
+# 
+# Top level modules:
+# 	SCPU_MEM_LOOP_8BIT_TEST
+# End time: 23:17:17 on Jul 22,2016, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 1
+# Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
+# Start time: 23:17:17 on Jul 22,2016
+# vlog -reportprogress 300 -work work ./sim/SCPU_MEM_LOOP_TEST.v 
+# -- Compiling module SERIAL_CPU
+# -- Compiling module I_MEMORY
+# -- Compiling module D_MEMORY
+# -- Compiling module SCPU_MEM_LOOP_TEST
+# ** Warning: ./sim/SCPU_MEM_LOOP_TEST.v(79): (vlog-2643) Unterminated string literal continues onto next line.
+# 
+# 
+# Top level modules:
+# 	SCPU_MEM_LOOP_TEST
+# End time: 23:17:17 on Jul 22,2016, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 1
+# Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
+# Start time: 23:17:17 on Jul 22,2016
+# vlog -reportprogress 300 -work work ./sim/SRAM_IO_CTRL_RA1512_SCPU_8BIT_TEST.v 
+# -- Compiling module SERIAL_CPU_8BIT
+# -- Compiling module SRAM_IO_CTRL
+# -- Compiling module RA1SHD_IBM512X8
+# -- Compiling module I_MEMORY_8BIT
+# -- Compiling module SRAM_IO_CTRL_RA1512_SCPU_8BIT_TEST
+# 
+# Top level modules:
+# 	SRAM_IO_CTRL_RA1512_SCPU_8BIT_TEST
+# End time: 23:17:17 on Jul 22,2016, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
+# Start time: 23:17:17 on Jul 22,2016
+# vlog -reportprogress 300 -work work ./sim/SRAM_IO_CTRL_RA1512_TEST.v 
+# -- Compiling module SRAM_IO_CTRL
+# -- Compiling module RA1SHD_IBM512X8
+# -- Compiling module I_MEMORY_8BIT
+# -- Compiling module SRAM_IO_CTRL_RA1512_TEST
+# 
+# Top level modules:
+# 	SRAM_IO_CTRL_RA1512_TEST
+# End time: 23:17:18 on Jul 22,2016, Elapsed time: 0:00:01
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
+# Start time: 23:17:18 on Jul 22,2016
+# vlog -reportprogress 300 -work work ./sim/SRAM_IO_CTRL_LOGIC_TEST.v 
+# -- Compiling module SRAM_IO_CTRL
+# -- Compiling module SRAM_IO_CTRL_LOGIC
+# -- Compiling module I_MEMORY_8BIT
+# -- Compiling module SRAM_IO_CTRL_LOGIC_TEST
+# 
+# Top level modules:
+# 	SRAM_IO_CTRL_LOGIC_TEST
+# End time: 23:17:18 on Jul 22,2016, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
+# Start time: 23:17:18 on Jul 22,2016
+# vlog -reportprogress 300 -work work ./sim/SRAM_IO_CTRL_TEST.v 
+# -- Compiling module SRAM_IO_CTRL
+# -- Compiling module I_MEMORY_8BIT
+# -- Compiling module SRAM_IO_CTRL_TEST
+# 
+# Top level modules:
+# 	SRAM_IO_CTRL_TEST
+# End time: 23:17:18 on Jul 22,2016, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
+# Start time: 23:17:18 on Jul 22,2016
+# vlog -reportprogress 300 -work work ./sim/SCPU_SRAM_8BIT_ALU_SPI_TOP_TEST.v 
+# -- Compiling module SERIAL_CPU_8BIT
+# -- Compiling module SHARE_SUPERALU
+# -- Compiling module SRAM_IO_CTRL
+# -- Compiling module PSEUDO_SPT_INTF
+# -- Compiling module SCPU_8BIT_ALU_CTRL_SPI
+# -- Compiling module RA1SHD_IBM512X8
+# -- Compiling module SCPU_SRAM_8BIT_ALU_SPI_TOP
+# -- Compiling module I_MEMORY_8BIT
+# -- Compiling module SCPU_SRAM_8BIT_ALU_SPI_TOP_TEST
+# ** Warning: ./sim/SCPU_SRAM_8BIT_ALU_SPI_TOP_TEST.v(166): (vlog-2252) Missing incrementer in "FOR" statement.
+# 
+# 
+# Top level modules:
+# 	SCPU_SRAM_8BIT_ALU_SPI_TOP_TEST
+# End time: 23:17:18 on Jul 22,2016, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 1
+# Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
+# Start time: 23:17:18 on Jul 22,2016
+# vlog -reportprogress 300 -work work ./sim/SYS_SHARE_SUPERALU_CORDIC_TEST.v 
+# -- Compiling module SERIAL_CPU_8BIT
+# -- Compiling module SHARE_SUPERALU
+# -- Compiling module SRAM_IO_CTRL
+# -- Compiling module PSEUDO_SPT_INTF
+# -- Compiling module SCPU_8BIT_ALU_CTRL_SPI
+# -- Compiling module RA1SHD_IBM512X8
+# -- Compiling module SCPU_SRAM_8BIT_ALU_SPI_TOP
+# -- Compiling module I_MEMORY_8BIT
+# -- Compiling module SYS_SHARE_SUPERALU_CORDIC_TEST
+# ** Warning: ./sim/SYS_SHARE_SUPERALU_CORDIC_TEST.v(176): (vlog-2252) Missing incrementer in "FOR" statement.
+# 
+# 
+# Top level modules:
+# 	SYS_SHARE_SUPERALU_CORDIC_TEST
+# End time: 23:17:18 on Jul 22,2016, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 1
+# Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
+# Start time: 23:17:18 on Jul 22,2016
+# vlog -reportprogress 300 -work work ./sim/SYS_SHARE_SUPERALU_MULT_TEST.v 
+# -- Compiling module SERIAL_CPU_8BIT
+# -- Compiling module SHARE_SUPERALU
+# -- Compiling module SRAM_IO_CTRL
+# -- Compiling module PSEUDO_SPT_INTF
+# -- Compiling module SCPU_8BIT_ALU_CTRL_SPI
+# -- Compiling module RA1SHD_IBM512X8
+# -- Compiling module SCPU_SRAM_8BIT_ALU_SPI_TOP
+# -- Compiling module SRAM_IO_CTRL_LOGIC
+# -- Compiling module I_MEMORY_8BIT
+# -- Compiling module SYS_SHARE_SUPERALU_MULT_TEST
+# ** Warning: ./sim/SYS_SHARE_SUPERALU_MULT_TEST.v(237): (vlog-2252) Missing incrementer in "FOR" statement.
+# 
+# 
+# Top level modules:
+# 	SYS_SHARE_SUPERALU_MULT_TEST
+# End time: 23:17:18 on Jul 22,2016, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 1
+# Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
+# Start time: 23:17:18 on Jul 22,2016
+# vlog -reportprogress 300 -work work ./sim/SYS_PSEUDO_SPI_INTF_SCAN_TEST.v 
+# -- Compiling module SERIAL_CPU_8BIT
+# -- Compiling module SHARE_SUPERALU
+# -- Compiling module SRAM_IO_CTRL
+# -- Compiling module PSEUDO_SPT_INTF
+# -- Compiling module SCPU_8BIT_ALU_CTRL_SPI
+# -- Compiling module RA1SHD_IBM512X8
+# -- Compiling module SCPU_SRAM_8BIT_ALU_SPI_TOP
+# -- Compiling module SRAM_IO_CTRL_LOGIC
+# -- Compiling module I_MEMORY_8BIT
+# -- Compiling module SC_CELL_V3
+# -- Compiling module SYS_PSEUDO_SPI_INTF_SCAN_TEST
+# ** Warning: ./sim/SYS_PSEUDO_SPI_INTF_SCAN_TEST.v(294): (vlog-2252) Missing incrementer in "FOR" statement.
+# 
+# 
+# Top level modules:
+# 	SYS_PSEUDO_SPI_INTF_SCAN_TEST
+# End time: 23:17:18 on Jul 22,2016, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 1
+# 0
+# BGN Test Case (1): SHARE_SUPERALU_MULT_TEST
+# vsim 
+# Start time: 23:17:21 on Jul 22,2016
+# Loading work.SHARE_SUPERALU_MULT_TEST
+# Loading work.SHARE_SUPERALU
+#                   20
+# //////// (1) Multiplication test /////////
+#                  740 result =  100	actual =        100
+#                 1480 result =  340	actual =        340
+#                 1580 result =   14	actual =   14
+# Test Passed!
+# ** Note: $stop    : ./sim/SHARE_SUPERALU_MULT_TEST.v(215)
+#    Time: 1620 ns  Iteration: 0  Instance: /SHARE_SUPERALU_MULT_TEST
+# Break in Module SHARE_SUPERALU_MULT_TEST at ./sim/SHARE_SUPERALU_MULT_TEST.v line 215
+# END Test Case: SHARE_SUPERALU_MULT_TEST
+# 
+# BGN Test Case (2): SHARE_SUPERALU_DIV_TEST
+# vsim 
+# Start time: 23:17:26 on Jul 22,2016
+# Loading work.SHARE_SUPERALU_DIV_TEST
+# Loading work.SHARE_SUPERALU
+#                   20
+# //////// (2) Division test ////////
+#                  110 dividend = 0000000101010, dividor = 0000000011011
+#                  130 dividend_tmp = 00000000000010101000000000, dividor = 0000000011011
+#                  170 dividend_tmp = 00000000000010101000000000, dividor = 0000000011011
+#                  190 dividend_tmp = 00000000000101010000000000, dividor = 0000000011011
+#                  230 dividend_tmp = 00000000000001111000000001, dividor = 0000000011011
+#                  250 dividend_tmp = 00000000000011110000000010, dividor = 0000000011011
+#                  290 dividend_tmp = 00000000000000011000000011, dividor = 0000000011011
+#                  310 dividend_tmp = 00000000000000110000000110, dividor = 0000000011011
+#                  350 dividend_tmp = 00000000000000110000000110, dividor = 0000000011011
+#                  370 dividend_tmp = 00000000000001100000001100, dividor = 0000000011011
+#                  410 dividend_tmp = 00000000000001100000001100, dividor = 0000000011011
+#                  430 dividend_tmp = 00000000000011000000011000, dividor = 0000000011011
+#                  470 dividend_tmp = 00000000000011000000011000, dividor = 0000000011011
+#                  490 dividend_tmp = 00000000000110000000110000, dividor = 0000000011011
+#                  530 dividend_tmp = 00000000000010101000110001, dividor = 0000000011011
+#                  550 dividend_tmp = 00000000000101010001100010, dividor = 0000000011011
+#                  590 dividend_tmp = 00000000000001111001100011, dividor = 0000000011011
+#                  610 dividend_tmp = 00000000000011110011000110, dividor = 0000000011011
+#                  650 dividend_tmp = 00000000000000011011000111, dividor = 0000000011011
+#                  680 result = 199	actual =        199
+#                  770 dividend = 0000010001110, dividor = 0000100001110
+#                  790 dividend_tmp = 00000000000100011100000000, dividor = 0000100001110
+#                  830 dividend_tmp = 00000000000100011100000000, dividor = 0000100001110
+#                  850 dividend_tmp = 00000000001000111000000000, dividor = 0000100001110
+#                  890 dividend_tmp = 00000000001000111000000000, dividor = 0000100001110
+#                  910 dividend_tmp = 00000000010001110000000000, dividor = 0000100001110
+#                  950 dividend_tmp = 00000000010001110000000000, dividor = 0000100001110
+#                  970 dividend_tmp = 00000000100011100000000000, dividor = 0000100001110
+#                 1010 dividend_tmp = 00000000000001110000000001, dividor = 0000100001110
+#                 1030 dividend_tmp = 00000000000011100000000010, dividor = 0000100001110
+#                 1070 dividend_tmp = 00000000000011100000000010, dividor = 0000100001110
+#                 1090 dividend_tmp = 00000000000111000000000100, dividor = 0000100001110
+#                 1130 dividend_tmp = 00000000000111000000000100, dividor = 0000100001110
+#                 1150 dividend_tmp = 00000000001110000000001000, dividor = 0000100001110
+#                 1190 dividend_tmp = 00000000001110000000001000, dividor = 0000100001110
+#                 1210 dividend_tmp = 00000000011100000000010000, dividor = 0000100001110
+#                 1250 dividend_tmp = 00000000011100000000010000, dividor = 0000100001110
+#                 1270 dividend_tmp = 00000000111000000000100000, dividor = 0000100001110
+#                 1310 dividend_tmp = 00000000010110010000100001, dividor = 0000100001110
+#                 1340 result =  33	actual =         33
+#                 1430 dividend = 0000000101010, dividor = 0000010101010
+#                 1450 dividend_tmp = 00000000000101010000000000, dividor = 0000010101010
+#                 1490 dividend_tmp = 00000000000101010000000000, dividor = 0000010101010
+#                 1510 dividend_tmp = 00000000001010100000000000, dividor = 0000010101010
+#                 1550 dividend_tmp = 00000000001010100000000000, dividor = 0000010101010
+#                 1570 dividend_tmp = 00000000010101000000000000, dividor = 0000010101010
+#                 1610 dividend_tmp = 00000000010101000000000000, dividor = 0000010101010
+#                 1630 dividend_tmp = 00000000101010000000000000, dividor = 0000010101010
+#                 1670 dividend_tmp = 00000000010100110000000001, dividor = 0000010101010
+#                 1690 dividend_tmp = 00000000101001100000000010, dividor = 0000010101010
+#                 1730 dividend_tmp = 00000000010100010000000011, dividor = 0000010101010
+#                 1750 dividend_tmp = 00000000101000100000000110, dividor = 0000010101010
+#                 1790 dividend_tmp = 00000000010011010000000111, dividor = 0000010101010
+#                 1810 dividend_tmp = 00000000100110100000001110, dividor = 0000010101010
+#                 1850 dividend_tmp = 00000000010001010000001111, dividor = 0000010101010
+#                 1870 dividend_tmp = 00000000100010100000011110, dividor = 0000010101010
+#                 1910 dividend_tmp = 00000000001101010000011111, dividor = 0000010101010
+#                 1930 dividend_tmp = 00000000011010100000111110, dividor = 0000010101010
+#                 1970 dividend_tmp = 00000000000101010000111111, dividor = 0000010101010
+#                 2000 result =  63	actual =         63
+#                 2090 dividend = 0000000101010, dividor = 0000000011110
+#                 2110 dividend_tmp = 00000000000101010000000000, dividor = 0000000011110
+#                 2150 dividend_tmp = 00000000000001100000000001, dividor = 0000000011110
+#                 2170 dividend_tmp = 00000000000011000000000010, dividor = 0000000011110
+#                 2210 dividend_tmp = 00000000000011000000000010, dividor = 0000000011110
+#                 2230 dividend_tmp = 00000000000110000000000100, dividor = 0000000011110
+#                 2270 dividend_tmp = 00000000000010010000000101, dividor = 0000000011110
+#                 2290 dividend_tmp = 00000000000100100000001010, dividor = 0000000011110
+#                 2330 dividend_tmp = 00000000000000110000001011, dividor = 0000000011110
+#                 2350 dividend_tmp = 00000000000001100000010110, dividor = 0000000011110
+#                 2390 dividend_tmp = 00000000000001100000010110, dividor = 0000000011110
+#                 2410 dividend_tmp = 00000000000011000000101100, dividor = 0000000011110
+#                 2450 dividend_tmp = 00000000000011000000101100, dividor = 0000000011110
+#                 2470 dividend_tmp = 00000000000110000001011000, dividor = 0000000011110
+#                 2510 dividend_tmp = 00000000000010010001011001, dividor = 0000000011110
+#                 2530 dividend_tmp = 00000000000100100010110010, dividor = 0000000011110
+#                 2570 dividend_tmp = 00000000000000110010110011, dividor = 0000000011110
+#                 2590 dividend_tmp = 00000000000001100101100110, dividor = 0000000011110
+#                 2630 dividend_tmp = 00000000000001100101100110, dividor = 0000000011110
+#                 2660 result = 358	actual =        358
+# Test Passed!
+# ** Note: $stop    : ./sim/SHARE_SUPERALU_DIV_TEST.v(211)
+#    Time: 2700 ns  Iteration: 0  Instance: /SHARE_SUPERALU_DIV_TEST
+# Break in Module SHARE_SUPERALU_DIV_TEST at ./sim/SHARE_SUPERALU_DIV_TEST.v line 211
+# END Test Case: SHARE_SUPERALU_DIV_TEST
+# 
+# BGN Test Case (3): SHARE_SUPERALU_CORDIC_TEST
+# vsim 
+# Start time: 23:17:33 on Jul 22,2016
+# Loading work.SHARE_SUPERALU_CORDIC_TEST
+# Loading work.SHARE_SUPERALU
+#                   20
+# //////// (3) Sqrt power sum test ////////
+#                   60 Test 1_1: |X|>|Y|, X>0 & Y>0
+#                 5240 sqrt(pow(  58,2)+pow(  50,2))=  88, phase= 369
+#                 5240 Test 1_2: |X|>|Y|, X<0 & Y>0
+#                10420 sqrt(pow(8134,2)+pow(  50,2))=  88, phase=1239
+#                10420 Test 1_3: |X|>|Y|, X>0 & Y<0
+#                15600 sqrt(pow(  58,2)+pow(8142,2))=  88, phase=2848
+#                15600 Test 1_4: |X|>|Y|, X<0 & Y<0
+#                20780 sqrt(pow(8134,2)+pow(8142,2))=  88, phase=1977
+#                20780 Test 2_1: |X|<|Y|, X>0 & Y>0
+#                25960 sqrt(pow(  50,2)+pow(  58,2))=  88, phase= 435
+#                25960 Test 2_2: |X|<|Y|, X<0 & Y>0
+#                31140 sqrt(pow(8142,2)+pow(  58,2))=  88, phase=1173
+#                31140 Test 2_3: |X|<|Y|, X>0 & Y<0
+#                36320 sqrt(pow(  50,2)+pow(8134,2))=  88, phase=2782
+#                36320 Test 2_4: |X|<|Y|, X<0 & Y<0
+#                41500 sqrt(pow(8142,2)+pow(8134,2))=  88, phase=2044
+# Test Passed!
+# ** Note: $stop    : ./sim/SHARE_SUPERALU_CORDIC_TEST.v(183)
+#    Time: 41540 ns  Iteration: 0  Instance: /SHARE_SUPERALU_CORDIC_TEST
+# Break in Module SHARE_SUPERALU_CORDIC_TEST at ./sim/SHARE_SUPERALU_CORDIC_TEST.v line 183
+# END Test Case: SHARE_SUPERALU_CORDIC_TEST
+# 
+# BGN Test Case (4): PSEUDO_SPI_INTF_RA1512_TEST
+# vsim 
+# Start time: 23:17:40 on Jul 22,2016
+# Loading work.PSEUDO_SPI_INTF_RA1512_TEST
+# Loading work.SRAM_IO_CTRL
+# Loading work.PSEUDO_SPT_INTF
+# Loading work.RA1SHD_IBM512X8
+# Loading work.I_MEMORY_8BIT
+# ** Warning: (vsim-3017) ./sim/PSEUDO_SPI_INTF_RA1512_TEST.v(89): [TFMPC] - Too few port connections. Expected 14, found 13.
+# 
+#         Region: /PSEUDO_SPI_INTF_RA1512_TEST/put
+# ** Warning: (vsim-3722) ./sim/PSEUDO_SPI_INTF_RA1512_TEST.v(89): [TFMPC] - Missing connection for port 'spi_MUX'.
+# 
+# ** Warning: (vsim-3017) ./sim/PSEUDO_SPI_INTF_RA1512_TEST.v(118): [TFMPC] - Too few port connections. Expected 6, found 0.
+# 
+#         Region: /PSEUDO_SPI_INTF_RA1512_TEST/i_mem
+# ** Warning: (vsim-3722) ./sim/PSEUDO_SPI_INTF_RA1512_TEST.v(118): [TFMPC] - Missing connection for port 'clk'.
+# 
+# ** Warning: (vsim-3722) ./sim/PSEUDO_SPI_INTF_RA1512_TEST.v(118): [TFMPC] - Missing connection for port 'rst_n'.
+# 
+# ** Warning: (vsim-3722) ./sim/PSEUDO_SPI_INTF_RA1512_TEST.v(118): [TFMPC] - Missing connection for port 'addr'.
+# 
+# ** Warning: (vsim-3722) ./sim/PSEUDO_SPI_INTF_RA1512_TEST.v(118): [TFMPC] - Missing connection for port 'd_we'.
+# 
+# ** Warning: (vsim-3722) ./sim/PSEUDO_SPI_INTF_RA1512_TEST.v(118): [TFMPC] - Missing connection for port 'datain'.
+# 
+# ** Warning: (vsim-3722) ./sim/PSEUDO_SPI_INTF_RA1512_TEST.v(118): [TFMPC] - Missing connection for port 'dataout'.
+# 
+# ** Warning: (vsim-3017) ./sim/PSEUDO_SPI_INTF_RA1512_TEST.v(127): [TFMPC] - Too few port connections. Expected 6, found 0.
+# 
+#         Region: /PSEUDO_SPI_INTF_RA1512_TEST/c_mem
+# ** Warning: (vsim-3722) ./sim/PSEUDO_SPI_INTF_RA1512_TEST.v(127): [TFMPC] - Missing connection for port 'clk'.
+# 
+# ** Warning: (vsim-3722) ./sim/PSEUDO_SPI_INTF_RA1512_TEST.v(127): [TFMPC] - Missing connection for port 'rst_n'.
+# 
+# ** Warning: (vsim-3722) ./sim/PSEUDO_SPI_INTF_RA1512_TEST.v(127): [TFMPC] - Missing connection for port 'addr'.
+# 
+# ** Warning: (vsim-3722) ./sim/PSEUDO_SPI_INTF_RA1512_TEST.v(127): [TFMPC] - Missing connection for port 'd_we'.
+# 
+# ** Warning: (vsim-3722) ./sim/PSEUDO_SPI_INTF_RA1512_TEST.v(127): [TFMPC] - Missing connection for port 'datain'.
+# 
+# ** Warning: (vsim-3722) ./sim/PSEUDO_SPI_INTF_RA1512_TEST.v(127): [TFMPC] - Missing connection for port 'dataout'.
+# 
+# 0020	00000100 	<--- Data Correct!
+# 0021	10111011 	<--- Data Correct!
+# 0022	00000000 	<--- Data Correct!
+# 0023	10111001 	<--- Data Correct!
+# 0024	00010011 	<--- Data Correct!
+# 0025	01000001 	<--- Data Correct!
+# 0026	00000001 	<--- Data Correct!
+# 0027	01011011 	<--- Data Correct!
+# 0028	00010010 	<--- Data Correct!
+# 0029	11011000 	<--- Data Correct!
+# 002a	00000010 	<--- Data Correct!
+# 002b	00011001 	<--- Data Correct!
+# 002c	00000000 	<--- Data Correct!
+# 002d	00001000 	<--- Data Correct!
+# Test Passed!
+# ** Note: $stop    : ./sim/PSEUDO_SPI_INTF_RA1512_TEST.v(354)
+#    Time: 12570 ns  Iteration: 0  Instance: /PSEUDO_SPI_INTF_RA1512_TEST
+# Break in Module PSEUDO_SPI_INTF_RA1512_TEST at ./sim/PSEUDO_SPI_INTF_RA1512_TEST.v line 354
+# END Test Case: PSEUDO_SPI_INTF_RA1512_TEST
+# 
+# BGN Test Case (5): PSEUDO_SPI_INTF_SCAN_TEST
+# vsim 
+# Start time: 23:17:48 on Jul 22,2016
+# Loading work.PSEUDO_SPI_INTF_SCAN_TEST
+# Loading work.PSEUDO_SPT_INTF
+# Loading work.I_MEMORY_8BIT
+# Loading work.SC_CELL_V3
+# ** Warning: (vsim-3017) ./sim/PSEUDO_SPI_INTF_SCAN_TEST.v(69): [TFMPC] - Too few port connections. Expected 14, found 13.
+# 
+#         Region: /PSEUDO_SPI_INTF_SCAN_TEST/put
+# ** Warning: (vsim-3722) ./sim/PSEUDO_SPI_INTF_SCAN_TEST.v(69): [TFMPC] - Missing connection for port 'spi_MUX'.
+# 
+# ** Warning: (vsim-3017) ./sim/PSEUDO_SPI_INTF_SCAN_TEST.v(108): [TFMPC] - Too few port connections. Expected 6, found 0.
+# 
+#         Region: /PSEUDO_SPI_INTF_SCAN_TEST/c_mem
+# ** Warning: (vsim-3722) ./sim/PSEUDO_SPI_INTF_SCAN_TEST.v(108): [TFMPC] - Missing connection for port 'clk'.
+# 
+# ** Warning: (vsim-3722) ./sim/PSEUDO_SPI_INTF_SCAN_TEST.v(108): [TFMPC] - Missing connection for port 'rst_n'.
+# 
+# ** Warning: (vsim-3722) ./sim/PSEUDO_SPI_INTF_SCAN_TEST.v(108): [TFMPC] - Missing connection for port 'addr'.
+# 
+# ** Warning: (vsim-3722) ./sim/PSEUDO_SPI_INTF_SCAN_TEST.v(108): [TFMPC] - Missing connection for port 'd_we'.
+# 
+# ** Warning: (vsim-3722) ./sim/PSEUDO_SPI_INTF_SCAN_TEST.v(108): [TFMPC] - Missing connection for port 'datain'.
+# 
+# ** Warning: (vsim-3722) ./sim/PSEUDO_SPI_INTF_SCAN_TEST.v(108): [TFMPC] - Missing connection for port 'dataout'.
+# 
+# 0000	11111000 	<--- Data Correct!
+# 0001	10100111 	<--- Data Correct!
+# 	Scan Chain Correct!
+# Test Passed!
+# ** Note: $stop    : ./sim/PSEUDO_SPI_INTF_SCAN_TEST.v(280)
+#    Time: 1150 ns  Iteration: 0  Instance: /PSEUDO_SPI_INTF_SCAN_TEST
+# Break in Module PSEUDO_SPI_INTF_SCAN_TEST at ./sim/PSEUDO_SPI_INTF_SCAN_TEST.v line 280
+# END Test Case: PSEUDO_SPI_INTF_SCAN_TEST
+# 
+# BGN Test Case (6): PSEUDO_SPI_INTF_TEST
+# vsim 
+# Start time: 23:17:55 on Jul 22,2016
+# Loading work.PSEUDO_SPI_INTF_TEST
+# Loading work.PSEUDO_SPT_INTF
+# Loading work.I_MEMORY_8BIT
+# ** Warning: (vsim-3017) ./sim/PSEUDO_SPI_INTF_TEST.v(64): [TFMPC] - Too few port connections. Expected 14, found 13.
+# 
+#         Region: /PSEUDO_SPI_INTF_TEST/put
+# ** Warning: (vsim-3722) ./sim/PSEUDO_SPI_INTF_TEST.v(64): [TFMPC] - Missing connection for port 'spi_MUX'.
+# 
+# ** Warning: (vsim-3017) ./sim/PSEUDO_SPI_INTF_TEST.v(103): [TFMPC] - Too few port connections. Expected 6, found 0.
+# 
+#         Region: /PSEUDO_SPI_INTF_TEST/c_mem
+# ** Warning: (vsim-3722) ./sim/PSEUDO_SPI_INTF_TEST.v(103): [TFMPC] - Missing connection for port 'clk'.
+# 
+# ** Warning: (vsim-3722) ./sim/PSEUDO_SPI_INTF_TEST.v(103): [TFMPC] - Missing connection for port 'rst_n'.
+# 
+# ** Warning: (vsim-3722) ./sim/PSEUDO_SPI_INTF_TEST.v(103): [TFMPC] - Missing connection for port 'addr'.
+# 
+# ** Warning: (vsim-3722) ./sim/PSEUDO_SPI_INTF_TEST.v(103): [TFMPC] - Missing connection for port 'd_we'.
+# 
+# ** Warning: (vsim-3722) ./sim/PSEUDO_SPI_INTF_TEST.v(103): [TFMPC] - Missing connection for port 'datain'.
+# 
+# ** Warning: (vsim-3722) ./sim/PSEUDO_SPI_INTF_TEST.v(103): [TFMPC] - Missing connection for port 'dataout'.
+# 
+# 0000	10101011 	<--- Data Correct!
+# 0001	00000000 	<--- Data Correct!
+# 0002	00000000 	<--- Data Correct!
+# 0003	00111100 	<--- Data Correct!
+# 0004	00000000 	<--- Data Correct!
+# 0005	00000101 	<--- Data Correct!
+# 0006	00111101 	<--- Data Correct!
+# 0007	10011110 	<--- Data Correct!
+# 0008	11000011 	<--- Data Correct!
+# 0009	11010111 	<--- Data Correct!
+# 000a	01011000 	<--- Data Correct!
+# 000b	01111010 	<--- Data Correct!
+# 000c	00000001 	<--- Data Correct!
+# 000d	11000010 	<--- Data Correct!
+# Test Passed!
+# ** Note: $stop    : ./sim/PSEUDO_SPI_INTF_TEST.v(244)
+#    Time: 7150 ns  Iteration: 0  Instance: /PSEUDO_SPI_INTF_TEST
+# Break in Module PSEUDO_SPI_INTF_TEST at ./sim/PSEUDO_SPI_INTF_TEST.v line 244
+# END Test Case: PSEUDO_SPI_INTF_TEST
+# 
+# BGN Test Case (7): SCPU_MEM_INST_END_8BIT_TEST
+# vsim 
+# Start time: 23:18:03 on Jul 22,2016
+# Loading work.SCPU_MEM_INST_END_8BIT_TEST
+# Loading work.SERIAL_CPU_8BIT
+# Loading work.I_MEMORY_8BIT
+# ** Warning: (vsim-3017) ./sim/SCPU_MEM_INST_END_8BIT_TEST.v(44): [TFMPC] - Too few port connections. Expected 19, found 12.
+# 
+#         Region: /SCPU_MEM_INST_END_8BIT_TEST/uut
+# ** Warning: (vsim-3722) ./sim/SCPU_MEM_INST_END_8BIT_TEST.v(44): [TFMPC] - Missing connection for port 'io_status'.
+# 
+# ** Warning: (vsim-3722) ./sim/SCPU_MEM_INST_END_8BIT_TEST.v(44): [TFMPC] - Missing connection for port 'io_control'.
+# 
+# ** Warning: (vsim-3722) ./sim/SCPU_MEM_INST_END_8BIT_TEST.v(44): [TFMPC] - Missing connection for port 'io_datainA'.
+# 
+# ** Warning: (vsim-3722) ./sim/SCPU_MEM_INST_END_8BIT_TEST.v(44): [TFMPC] - Missing connection for port 'io_datainB'.
+# 
+# ** Warning: (vsim-3722) ./sim/SCPU_MEM_INST_END_8BIT_TEST.v(44): [TFMPC] - Missing connection for port 'io_dataoutA'.
+# 
+# ** Warning: (vsim-3722) ./sim/SCPU_MEM_INST_END_8BIT_TEST.v(44): [TFMPC] - Missing connection for port 'io_dataoutB'.
+# 
+# ** Warning: (vsim-3722) ./sim/SCPU_MEM_INST_END_8BIT_TEST.v(44): [TFMPC] - Missing connection for port 'io_offset'.
+# 
+# 	Sum = 0x3c0a
+# Test Passed!
+# ** Note: $stop    : ./sim/SCPU_MEM_INST_END_8BIT_TEST.v(203)
+#    Time: 1890 ns  Iteration: 0  Instance: /SCPU_MEM_INST_END_8BIT_TEST
+# Break in Module SCPU_MEM_INST_END_8BIT_TEST at ./sim/SCPU_MEM_INST_END_8BIT_TEST.v line 203
+# END Test Case: SCPU_MEM_INST_END_8BIT_TEST
+# 
+# BGN Test Case (8): SCPU_MEM_LOOP_8BIT_TEST
+# vsim 
+# Start time: 23:18:11 on Jul 22,2016
+# Loading work.SCPU_MEM_LOOP_8BIT_TEST
+# Loading work.SERIAL_CPU_8BIT
+# Loading work.I_MEMORY_8BIT
+# ** Warning: (vsim-3017) ./sim/SCPU_MEM_LOOP_8BIT_TEST.v(43): [TFMPC] - Too few port connections. Expected 19, found 11.
+# 
+#         Region: /SCPU_MEM_LOOP_8BIT_TEST/uut
+# ** Warning: (vsim-3722) ./sim/SCPU_MEM_LOOP_8BIT_TEST.v(43): [TFMPC] - Missing connection for port 'nxt'.
+# 
+# ** Warning: (vsim-3722) ./sim/SCPU_MEM_LOOP_8BIT_TEST.v(43): [TFMPC] - Missing connection for port 'io_status'.
+# 
+# ** Warning: (vsim-3722) ./sim/SCPU_MEM_LOOP_8BIT_TEST.v(43): [TFMPC] - Missing connection for port 'io_control'.
+# 
+# ** Warning: (vsim-3722) ./sim/SCPU_MEM_LOOP_8BIT_TEST.v(43): [TFMPC] - Missing connection for port 'io_datainA'.
+# 
+# ** Warning: (vsim-3722) ./sim/SCPU_MEM_LOOP_8BIT_TEST.v(43): [TFMPC] - Missing connection for port 'io_datainB'.
+# 
+# ** Warning: (vsim-3722) ./sim/SCPU_MEM_LOOP_8BIT_TEST.v(43): [TFMPC] - Missing connection for port 'io_dataoutA'.
+# 
+# ** Warning: (vsim-3722) ./sim/SCPU_MEM_LOOP_8BIT_TEST.v(43): [TFMPC] - Missing connection for port 'io_dataoutB'.
+# 
+# ** Warning: (vsim-3722) ./sim/SCPU_MEM_LOOP_8BIT_TEST.v(43): [TFMPC] - Missing connection for port 'io_offset'.
+# 
+# pc  :               id_ir                :reg_A :reg_B :reg_C
+# 
+#             : da  :  dd  : w :  gr1  :  gr2  :  gr3   :zf :nf:cf
+# 	Sum =    10
+# Test Passed!
+# ** Note: $stop    : ./sim/SCPU_MEM_LOOP_8BIT_TEST.v(164)
+#    Time: 3280 ns  Iteration: 0  Instance: /SCPU_MEM_LOOP_8BIT_TEST
+# Break in Module SCPU_MEM_LOOP_8BIT_TEST at ./sim/SCPU_MEM_LOOP_8BIT_TEST.v line 164
+# END Test Case: SCPU_MEM_LOOP_8BIT_TEST
+# 
+# BGN Test Case (9): SCPU_MEM_LOOP_TEST
+# vsim 
+# Start time: 23:18:19 on Jul 22,2016
+# Loading work.SCPU_MEM_LOOP_TEST
+# Loading work.SERIAL_CPU
+# Loading work.I_MEMORY
+# Loading work.D_MEMORY
+# ** Warning: (vsim-3017) ./sim/SCPU_MEM_LOOP_TEST.v(38): [TFMPC] - Too few port connections. Expected 19, found 10.
+# 
+#         Region: /SCPU_MEM_LOOP_TEST/uut
+# ** Warning: (vsim-3722) ./sim/SCPU_MEM_LOOP_TEST.v(38): [TFMPC] - Missing connection for port 'is_i_addr'.
+# 
+# ** Warning: (vsim-3722) ./sim/SCPU_MEM_LOOP_TEST.v(38): [TFMPC] - Missing connection for port 'nxt'.
+# 
+# ** Warning: (vsim-3722) ./sim/SCPU_MEM_LOOP_TEST.v(38): [TFMPC] - Missing connection for port 'io_status'.
+# 
+# ** Warning: (vsim-3722) ./sim/SCPU_MEM_LOOP_TEST.v(38): [TFMPC] - Missing connection for port 'io_control'.
+# 
+# ** Warning: (vsim-3722) ./sim/SCPU_MEM_LOOP_TEST.v(38): [TFMPC] - Missing connection for port 'io_datainA'.
+# 
+# ** Warning: (vsim-3722) ./sim/SCPU_MEM_LOOP_TEST.v(38): [TFMPC] - Missing connection for port 'io_datainB'.
+# 
+# ** Warning: (vsim-3722) ./sim/SCPU_MEM_LOOP_TEST.v(38): [TFMPC] - Missing connection for port 'io_dataoutA'.
+# 
+# ** Warning: (vsim-3722) ./sim/SCPU_MEM_LOOP_TEST.v(38): [TFMPC] - Missing connection for port 'io_dataoutB'.
+# 
+# ** Warning: (vsim-3722) ./sim/SCPU_MEM_LOOP_TEST.v(38): [TFMPC] - Missing connection for port 'io_offset'.
+# 
+# pc  :               id_ir                :reg_A :reg_B :reg_C
+# 
+#             : da  :  dd  : w :  gr1  :  gr2  :  gr3   :zf :nf:cf
+# 	Sum =    10
+# Test Passed!
+# ** Note: $stop    : ./sim/SCPU_MEM_LOOP_TEST.v(128)
+#    Time: 3280 ns  Iteration: 0  Instance: /SCPU_MEM_LOOP_TEST
+# Break in Module SCPU_MEM_LOOP_TEST at ./sim/SCPU_MEM_LOOP_TEST.v line 128
+# END Test Case: SCPU_MEM_LOOP_TEST
+# 
+# BGN Test Case (10): SRAM_IO_CTRL_RA1512_SCPU_8BIT_TEST
+# vsim 
+# Start time: 23:18:29 on Jul 22,2016
+# Loading work.SRAM_IO_CTRL_RA1512_SCPU_8BIT_TEST
+# Loading work.SERIAL_CPU_8BIT
+# Loading work.SRAM_IO_CTRL
+# Loading work.RA1SHD_IBM512X8
+# Loading work.I_MEMORY_8BIT
+# ** Warning: (vsim-3017) ./sim/SRAM_IO_CTRL_RA1512_SCPU_8BIT_TEST.v(65): [TFMPC] - Too few port connections. Expected 19, found 12.
+# 
+#         Region: /SRAM_IO_CTRL_RA1512_SCPU_8BIT_TEST/uut
+# ** Warning: (vsim-3722) ./sim/SRAM_IO_CTRL_RA1512_SCPU_8BIT_TEST.v(65): [TFMPC] - Missing connection for port 'io_status'.
+# 
+# ** Warning: (vsim-3722) ./sim/SRAM_IO_CTRL_RA1512_SCPU_8BIT_TEST.v(65): [TFMPC] - Missing connection for port 'io_control'.
+# 
+# ** Warning: (vsim-3722) ./sim/SRAM_IO_CTRL_RA1512_SCPU_8BIT_TEST.v(65): [TFMPC] - Missing connection for port 'io_datainA'.
+# 
+# ** Warning: (vsim-3722) ./sim/SRAM_IO_CTRL_RA1512_SCPU_8BIT_TEST.v(65): [TFMPC] - Missing connection for port 'io_datainB'.
+# 
+# ** Warning: (vsim-3722) ./sim/SRAM_IO_CTRL_RA1512_SCPU_8BIT_TEST.v(65): [TFMPC] - Missing connection for port 'io_dataoutA'.
+# 
+# ** Warning: (vsim-3722) ./sim/SRAM_IO_CTRL_RA1512_SCPU_8BIT_TEST.v(65): [TFMPC] - Missing connection for port 'io_dataoutB'.
+# 
+# ** Warning: (vsim-3722) ./sim/SRAM_IO_CTRL_RA1512_SCPU_8BIT_TEST.v(65): [TFMPC] - Missing connection for port 'io_offset'.
+# 
+# ** Warning: (vsim-3017) ./sim/SRAM_IO_CTRL_RA1512_SCPU_8BIT_TEST.v(108): [TFMPC] - Too few port connections. Expected 6, found 0.
+# 
+#         Region: /SRAM_IO_CTRL_RA1512_SCPU_8BIT_TEST/i_mem
+# ** Warning: (vsim-3722) ./sim/SRAM_IO_CTRL_RA1512_SCPU_8BIT_TEST.v(108): [TFMPC] - Missing connection for port 'clk'.
+# 
+# ** Warning: (vsim-3722) ./sim/SRAM_IO_CTRL_RA1512_SCPU_8BIT_TEST.v(108): [TFMPC] - Missing connection for port 'rst_n'.
+# 
+# ** Warning: (vsim-3722) ./sim/SRAM_IO_CTRL_RA1512_SCPU_8BIT_TEST.v(108): [TFMPC] - Missing connection for port 'addr'.
+# 
+# ** Warning: (vsim-3722) ./sim/SRAM_IO_CTRL_RA1512_SCPU_8BIT_TEST.v(108): [TFMPC] - Missing connection for port 'd_we'.
+# 
+# ** Warning: (vsim-3722) ./sim/SRAM_IO_CTRL_RA1512_SCPU_8BIT_TEST.v(108): [TFMPC] - Missing connection for port 'datain'.
+# 
+# ** Warning: (vsim-3722) ./sim/SRAM_IO_CTRL_RA1512_SCPU_8BIT_TEST.v(108): [TFMPC] - Missing connection for port 'dataout'.
+# 
+# 0020	10111011 00000100 	<--- Inst Correct!
+# 0022	10111001 00000000 	<--- Inst Correct!
+# 0024	01000001 00010011 	<--- Inst Correct!
+# 0026	01011011 00000001 	<--- Inst Correct!
+# 0028	11011000 00010010 	<--- Inst Correct!
+# 002a	00011001 00000011 	<--- Inst Correct!
+# 002c	10000001 11110000 	<--- Inst Correct!
+# 002e	00101100 00000001 	<--- Inst Correct!
+# 0030	00101100 00000100 	<--- Inst Correct!
+# 0032	00001000 00000000 	<--- Inst Correct!
+# 0006	00000000 00001010 
+# Test Passed!
+# ** Note: $stop    : ./sim/SRAM_IO_CTRL_RA1512_SCPU_8BIT_TEST.v(508)
+#    Time: 18030 ns  Iteration: 0  Instance: /SRAM_IO_CTRL_RA1512_SCPU_8BIT_TEST
+# Break in Module SRAM_IO_CTRL_RA1512_SCPU_8BIT_TEST at ./sim/SRAM_IO_CTRL_RA1512_SCPU_8BIT_TEST.v line 508
+# END Test Case: SRAM_IO_CTRL_RA1512_SCPU_8BIT_TEST
+# 
+# BGN Test Case (11): SRAM_IO_CTRL_RA1512_TEST
+# vsim 
+# Start time: 23:18:39 on Jul 22,2016
+# Loading work.SRAM_IO_CTRL_RA1512_TEST
+# Loading work.SRAM_IO_CTRL
+# Loading work.RA1SHD_IBM512X8
+# Loading work.I_MEMORY_8BIT
+# ** Warning: (vsim-3017) ./sim/SRAM_IO_CTRL_RA1512_TEST.v(81): [TFMPC] - Too few port connections. Expected 6, found 0.
+# 
+#         Region: /SRAM_IO_CTRL_RA1512_TEST/i_mem
+# ** Warning: (vsim-3722) ./sim/SRAM_IO_CTRL_RA1512_TEST.v(81): [TFMPC] - Missing connection for port 'clk'.
+# 
+# ** Warning: (vsim-3722) ./sim/SRAM_IO_CTRL_RA1512_TEST.v(81): [TFMPC] - Missing connection for port 'rst_n'.
+# 
+# ** Warning: (vsim-3722) ./sim/SRAM_IO_CTRL_RA1512_TEST.v(81): [TFMPC] - Missing connection for port 'addr'.
+# 
+# ** Warning: (vsim-3722) ./sim/SRAM_IO_CTRL_RA1512_TEST.v(81): [TFMPC] - Missing connection for port 'd_we'.
+# 
+# ** Warning: (vsim-3722) ./sim/SRAM_IO_CTRL_RA1512_TEST.v(81): [TFMPC] - Missing connection for port 'datain'.
+# 
+# ** Warning: (vsim-3722) ./sim/SRAM_IO_CTRL_RA1512_TEST.v(81): [TFMPC] - Missing connection for port 'dataout'.
+# 
+# 0020	10111011 00000100 
+# 0022	10111001 00000000 
+# 0024	01000001 00010011 
+# 0026	01011011 00000001 
+# 0028	11011000 00010010 
+# 002a	00011001 00000010 
+# 002c	00001000 00000000 
+# Test Passed!
+# ** Note: $stop    : ./sim/SRAM_IO_CTRL_RA1512_TEST.v(344)
+#    Time: 12580 ns  Iteration: 0  Instance: /SRAM_IO_CTRL_RA1512_TEST
+# Break in Module SRAM_IO_CTRL_RA1512_TEST at ./sim/SRAM_IO_CTRL_RA1512_TEST.v line 344
+# END Test Case: SRAM_IO_CTRL_RA1512_TEST
+# 
+# BGN Test Case (12): SRAM_IO_CTRL_LOGIC_TEST
+# vsim 
+# Start time: 23:18:50 on Jul 22,2016
+# Loading work.SRAM_IO_CTRL_LOGIC_TEST
+# Loading work.SRAM_IO_CTRL
+# Loading work.SRAM_IO_CTRL_LOGIC
+# Loading work.I_MEMORY_8BIT
+# ** Warning: (vsim-3017) ./sim/SRAM_IO_CTRL_LOGIC_TEST.v(147): [TFMPC] - Too few port connections. Expected 6, found 0.
+# 
+#         Region: /SRAM_IO_CTRL_LOGIC_TEST/i_mem
+# ** Warning: (vsim-3722) ./sim/SRAM_IO_CTRL_LOGIC_TEST.v(147): [TFMPC] - Missing connection for port 'clk'.
+# 
+# ** Warning: (vsim-3722) ./sim/SRAM_IO_CTRL_LOGIC_TEST.v(147): [TFMPC] - Missing connection for port 'rst_n'.
+# 
+# ** Warning: (vsim-3722) ./sim/SRAM_IO_CTRL_LOGIC_TEST.v(147): [TFMPC] - Missing connection for port 'addr'.
+# 
+# ** Warning: (vsim-3722) ./sim/SRAM_IO_CTRL_LOGIC_TEST.v(147): [TFMPC] - Missing connection for port 'd_we'.
+# 
+# ** Warning: (vsim-3722) ./sim/SRAM_IO_CTRL_LOGIC_TEST.v(147): [TFMPC] - Missing connection for port 'datain'.
+# 
+# ** Warning: (vsim-3722) ./sim/SRAM_IO_CTRL_LOGIC_TEST.v(147): [TFMPC] - Missing connection for port 'dataout'.
+# 
+# 0020	10111011 00000100 
+# 0022	10111001 00000000 
+# 0024	01000001 00010011 
+# 0026	01011011 00000001 
+# 0028	11011000 00010010 
+# 002a	00011001 00000010 
+# 002c	00001000 00000000 
+# Test Passed!
+# ** Note: $stop    : ./sim/SRAM_IO_CTRL_LOGIC_TEST.v(519)
+#    Time: 16830 ns  Iteration: 0  Instance: /SRAM_IO_CTRL_LOGIC_TEST
+# Break in Module SRAM_IO_CTRL_LOGIC_TEST at ./sim/SRAM_IO_CTRL_LOGIC_TEST.v line 519
+# END Test Case: SRAM_IO_CTRL_LOGIC_TEST
+# 
+# BGN Test Case (13): SRAM_IO_CTRL_TEST
+# vsim 
+# Start time: 23:19:01 on Jul 22,2016
+# Loading work.SRAM_IO_CTRL_TEST
+# Loading work.SRAM_IO_CTRL
+# Loading work.I_MEMORY_8BIT
+# ** Warning: (vsim-3017) ./sim/SRAM_IO_CTRL_TEST.v(79): [TFMPC] - Too few port connections. Expected 6, found 0.
+# 
+#         Region: /SRAM_IO_CTRL_TEST/i_mem
+# ** Warning: (vsim-3722) ./sim/SRAM_IO_CTRL_TEST.v(79): [TFMPC] - Missing connection for port 'clk'.
+# 
+# ** Warning: (vsim-3722) ./sim/SRAM_IO_CTRL_TEST.v(79): [TFMPC] - Missing connection for port 'rst_n'.
+# 
+# ** Warning: (vsim-3722) ./sim/SRAM_IO_CTRL_TEST.v(79): [TFMPC] - Missing connection for port 'addr'.
+# 
+# ** Warning: (vsim-3722) ./sim/SRAM_IO_CTRL_TEST.v(79): [TFMPC] - Missing connection for port 'd_we'.
+# 
+# ** Warning: (vsim-3722) ./sim/SRAM_IO_CTRL_TEST.v(79): [TFMPC] - Missing connection for port 'datain'.
+# 
+# ** Warning: (vsim-3722) ./sim/SRAM_IO_CTRL_TEST.v(79): [TFMPC] - Missing connection for port 'dataout'.
+# 
+# 0020	10111011 00000100 
+# 0022	10111001 00000000 
+# 0024	01000001 00010011 
+# 0026	01011011 00000001 
+# 0028	11011000 00010010 
+# 002a	00011001 00000010 
+# 002c	00001000 00000000 
+# Test Passed!
+# ** Note: $stop    : ./sim/SRAM_IO_CTRL_TEST.v(350)
+#    Time: 12630 ns  Iteration: 0  Instance: /SRAM_IO_CTRL_TEST
+# Break in Module SRAM_IO_CTRL_TEST at ./sim/SRAM_IO_CTRL_TEST.v line 350
+# END Test Case: SRAM_IO_CTRL_TEST
+# 
+# BGN Test Case (14): SCPU_SRAM_8BIT_ALU_SPI_TOP_TEST
+# vsim 
+# Start time: 23:19:14 on Jul 22,2016
+# Loading work.SCPU_SRAM_8BIT_ALU_SPI_TOP_TEST
+# Loading work.SCPU_SRAM_8BIT_ALU_SPI_TOP
+# Loading work.SCPU_8BIT_ALU_CTRL_SPI
+# Loading work.SERIAL_CPU_8BIT
+# Loading work.SRAM_IO_CTRL
+# Loading work.SHARE_SUPERALU
+# Loading work.PSEUDO_SPT_INTF
+# Loading work.RA1SHD_IBM512X8
+# Loading work.PIC
+# Loading work.POC8B
+# Loading work.I_MEMORY_8BIT
+# ** Warning: (vsim-3017) ./sim/SCPU_SRAM_8BIT_ALU_SPI_TOP_TEST.v(85): [TFMPC] - Too few port connections. Expected 6, found 0.
+# 
+#         Region: /SCPU_SRAM_8BIT_ALU_SPI_TOP_TEST/i_mem
+# ** Warning: (vsim-3722) ./sim/SCPU_SRAM_8BIT_ALU_SPI_TOP_TEST.v(85): [TFMPC] - Missing connection for port 'clk'.
+# 
+# ** Warning: (vsim-3722) ./sim/SCPU_SRAM_8BIT_ALU_SPI_TOP_TEST.v(85): [TFMPC] - Missing connection for port 'rst_n'.
+# 
+# ** Warning: (vsim-3722) ./sim/SCPU_SRAM_8BIT_ALU_SPI_TOP_TEST.v(85): [TFMPC] - Missing connection for port 'addr'.
+# 
+# ** Warning: (vsim-3722) ./sim/SCPU_SRAM_8BIT_ALU_SPI_TOP_TEST.v(85): [TFMPC] - Missing connection for port 'd_we'.
+# 
+# ** Warning: (vsim-3722) ./sim/SCPU_SRAM_8BIT_ALU_SPI_TOP_TEST.v(85): [TFMPC] - Missing connection for port 'datain'.
+# 
+# ** Warning: (vsim-3722) ./sim/SCPU_SRAM_8BIT_ALU_SPI_TOP_TEST.v(85): [TFMPC] - Missing connection for port 'dataout'.
+# 
+# 0020	10111011 00000100 	<--- Inst Correct!
+# 0022	10111001 00000000 	<--- Inst Correct!
+# 0024	01000001 00010011 	<--- Inst Correct!
+# 0026	01011011 00000001 	<--- Inst Correct!
+# 0028	11011000 00010010 	<--- Inst Correct!
+# 002a	00011001 00000010 	<--- Inst Correct!
+# 002c	00001000 00000000 	<--- Inst Correct!
+# 0004	00000000 00001010 
+# Test Passed!
+# ** Note: $stop    : ./sim/SCPU_SRAM_8BIT_ALU_SPI_TOP_TEST.v(464)
+#    Time: 13760 ns  Iteration: 0  Instance: /SCPU_SRAM_8BIT_ALU_SPI_TOP_TEST
+# Break in Module SCPU_SRAM_8BIT_ALU_SPI_TOP_TEST at ./sim/SCPU_SRAM_8BIT_ALU_SPI_TOP_TEST.v line 464
+# END Test Case: SCPU_SRAM_8BIT_ALU_SPI_TOP_TEST
+# 
+# BGN Test Case (15): SYS_SHARE_SUPERALU_CORDIC_TEST
+# vsim 
+# Start time: 23:19:27 on Jul 22,2016
+# Loading work.SYS_SHARE_SUPERALU_CORDIC_TEST
+# Loading work.SCPU_SRAM_8BIT_ALU_SPI_TOP
+# Loading work.SCPU_8BIT_ALU_CTRL_SPI
+# Loading work.SERIAL_CPU_8BIT
+# Loading work.SRAM_IO_CTRL
+# Loading work.SHARE_SUPERALU
+# Loading work.PSEUDO_SPT_INTF
+# Loading work.RA1SHD_IBM512X8
+# Loading work.PIC
+# Loading work.POC8B
+# Loading work.I_MEMORY_8BIT
+# ** Warning: (vsim-3017) ./sim/SYS_SHARE_SUPERALU_CORDIC_TEST.v(85): [TFMPC] - Too few port connections. Expected 6, found 0.
+# 
+#         Region: /SYS_SHARE_SUPERALU_CORDIC_TEST/i_mem
+# ** Warning: (vsim-3722) ./sim/SYS_SHARE_SUPERALU_CORDIC_TEST.v(85): [TFMPC] - Missing connection for port 'clk'.
+# 
+# ** Warning: (vsim-3722) ./sim/SYS_SHARE_SUPERALU_CORDIC_TEST.v(85): [TFMPC] - Missing connection for port 'rst_n'.
+# 
+# ** Warning: (vsim-3722) ./sim/SYS_SHARE_SUPERALU_CORDIC_TEST.v(85): [TFMPC] - Missing connection for port 'addr'.
+# 
+# ** Warning: (vsim-3722) ./sim/SYS_SHARE_SUPERALU_CORDIC_TEST.v(85): [TFMPC] - Missing connection for port 'd_we'.
+# 
+# ** Warning: (vsim-3722) ./sim/SYS_SHARE_SUPERALU_CORDIC_TEST.v(85): [TFMPC] - Missing connection for port 'datain'.
+# 
+# ** Warning: (vsim-3722) ./sim/SYS_SHARE_SUPERALU_CORDIC_TEST.v(85): [TFMPC] - Missing connection for port 'dataout'.
+# 
+# 0004	00000000 01011000 	<--- Fout Correct!
+# 0006	00000001 01110001 	<--- Pout Correct!
+# Test Passed!
+# ** Note: $stop    : ./sim/SYS_SHARE_SUPERALU_CORDIC_TEST.v(394)
+#    Time: 12760 ns  Iteration: 0  Instance: /SYS_SHARE_SUPERALU_CORDIC_TEST
+# Break in Module SYS_SHARE_SUPERALU_CORDIC_TEST at ./sim/SYS_SHARE_SUPERALU_CORDIC_TEST.v line 394
+# END Test Case: SYS_SHARE_SUPERALU_CORDIC_TEST
+# 
+# BGN Test Case (16): SYS_SHARE_SUPERALU_MULT_TEST
+# vsim 
+# Start time: 23:19:41 on Jul 22,2016
+# Loading work.SYS_SHARE_SUPERALU_MULT_TEST
+# Loading work.SCPU_SRAM_8BIT_ALU_SPI_TOP
+# Loading work.SCPU_8BIT_ALU_CTRL_SPI
+# Loading work.SERIAL_CPU_8BIT
+# Loading work.SRAM_IO_CTRL
+# Loading work.SHARE_SUPERALU
+# Loading work.PSEUDO_SPT_INTF
+# Loading work.RA1SHD_IBM512X8
+# Loading work.PIC
+# Loading work.POC8B
+# Loading work.SRAM_IO_CTRL_LOGIC
+# Loading work.I_MEMORY_8BIT
+# ** Warning: (vsim-3017) ./sim/SYS_SHARE_SUPERALU_MULT_TEST.v(146): [TFMPC] - Too few port connections. Expected 6, found 0.
+# 
+#         Region: /SYS_SHARE_SUPERALU_MULT_TEST/i_mem
+# ** Warning: (vsim-3722) ./sim/SYS_SHARE_SUPERALU_MULT_TEST.v(146): [TFMPC] - Missing connection for port 'clk'.
+# 
+# ** Warning: (vsim-3722) ./sim/SYS_SHARE_SUPERALU_MULT_TEST.v(146): [TFMPC] - Missing connection for port 'rst_n'.
+# 
+# ** Warning: (vsim-3722) ./sim/SYS_SHARE_SUPERALU_MULT_TEST.v(146): [TFMPC] - Missing connection for port 'addr'.
+# 
+# ** Warning: (vsim-3722) ./sim/SYS_SHARE_SUPERALU_MULT_TEST.v(146): [TFMPC] - Missing connection for port 'd_we'.
+# 
+# ** Warning: (vsim-3722) ./sim/SYS_SHARE_SUPERALU_MULT_TEST.v(146): [TFMPC] - Missing connection for port 'datain'.
+# 
+# ** Warning: (vsim-3722) ./sim/SYS_SHARE_SUPERALU_MULT_TEST.v(146): [TFMPC] - Missing connection for port 'dataout'.
+# 
+# 0004	00000001 01010100 	<--- Multiplication Correct!
+# Test Passed!
+# ** Note: $stop    : ./sim/SYS_SHARE_SUPERALU_MULT_TEST.v(541)
+#    Time: 11030 ns  Iteration: 0  Instance: /SYS_SHARE_SUPERALU_MULT_TEST
+# Break in Module SYS_SHARE_SUPERALU_MULT_TEST at ./sim/SYS_SHARE_SUPERALU_MULT_TEST.v line 541
+# END Test Case: SYS_SHARE_SUPERALU_MULT_TEST
+# 
+# BGN Test Case (17): SYS_PSEUDO_SPI_INTF_SCAN_TEST
+# vsim 
+# Start time: 23:19:56 on Jul 22,2016
+# Loading work.SYS_PSEUDO_SPI_INTF_SCAN_TEST
+# Loading work.SCPU_SRAM_8BIT_ALU_SPI_TOP
+# Loading work.SCPU_8BIT_ALU_CTRL_SPI
+# Loading work.SERIAL_CPU_8BIT
+# Loading work.SRAM_IO_CTRL
+# Loading work.SHARE_SUPERALU
+# Loading work.PSEUDO_SPT_INTF
+# Loading work.RA1SHD_IBM512X8
+# Loading work.PIC
+# Loading work.POC8B
+# Loading work.SRAM_IO_CTRL_LOGIC
+# Loading work.I_MEMORY_8BIT
+# Loading work.SC_CELL_V3
+# ** Warning: (vsim-3017) ./sim/SYS_PSEUDO_SPI_INTF_SCAN_TEST.v(148): [TFMPC] - Too few port connections. Expected 6, found 0.
+# 
+#         Region: /SYS_PSEUDO_SPI_INTF_SCAN_TEST/i_mem
+# ** Warning: (vsim-3722) ./sim/SYS_PSEUDO_SPI_INTF_SCAN_TEST.v(148): [TFMPC] - Missing connection for port 'clk'.
+# 
+# ** Warning: (vsim-3722) ./sim/SYS_PSEUDO_SPI_INTF_SCAN_TEST.v(148): [TFMPC] - Missing connection for port 'rst_n'.
+# 
+# ** Warning: (vsim-3722) ./sim/SYS_PSEUDO_SPI_INTF_SCAN_TEST.v(148): [TFMPC] - Missing connection for port 'addr'.
+# 
+# ** Warning: (vsim-3722) ./sim/SYS_PSEUDO_SPI_INTF_SCAN_TEST.v(148): [TFMPC] - Missing connection for port 'd_we'.
+# 
+# ** Warning: (vsim-3722) ./sim/SYS_PSEUDO_SPI_INTF_SCAN_TEST.v(148): [TFMPC] - Missing connection for port 'datain'.
+# 
+# ** Warning: (vsim-3722) ./sim/SYS_PSEUDO_SPI_INTF_SCAN_TEST.v(148): [TFMPC] - Missing connection for port 'dataout'.
+# 
+# 0004	00001010 10100000 	<--- (Multiplication << 3) Correct!
+# Test Passed!
+# ** Note: $stop    : ./sim/SYS_PSEUDO_SPI_INTF_SCAN_TEST.v(600)
+#    Time: 16740 ns  Iteration: 0  Instance: /SYS_PSEUDO_SPI_INTF_SCAN_TEST
+# Break in Module SYS_PSEUDO_SPI_INTF_SCAN_TEST at ./sim/SYS_PSEUDO_SPI_INTF_SCAN_TEST.v line 600
+# END Test Case: SYS_PSEUDO_SPI_INTF_SCAN_TEST
+# 
+# 
+# All 17 Test Cases Finished
+# file130cffc0
+# 0
+# Success: 17, Errors: 0

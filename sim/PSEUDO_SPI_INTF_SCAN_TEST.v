@@ -50,7 +50,7 @@ module PSEUDO_SPI_INTF_SCAN_TEST;
    
     parameter   RESERVED_DATA_LEN   = 8;
                 
-    reg   [MEMORY_ADDR_WIDTH-1:0] addr_end;
+    reg   [MEMORY_ADDR_WIDTH-1:0] addr_bgn;
     reg   [RESERVED_DATA_LEN-1:0] data_len;    //each data width = MEMORY_DATA_WIDTH
     reg   [7:0]   freq_div;
     reg   [MEMORY_DATA_WIDTH-1:0] PI;         // read from SRAM
@@ -70,7 +70,7 @@ module PSEUDO_SPI_INTF_SCAN_TEST;
         // input
         .CLK        (CLK        ),
         .BGN        (BGN        ),
-        .ADDR_BGN   (addr_end   ),
+        .ADDR_BGN   (addr_bgn   ),
         .DATA_LEN   (data_len   ),
         //.FREQ_DIV   (freq_div   ),
         .PI         (m_dataout  ),
@@ -122,16 +122,16 @@ module PSEUDO_SPI_INTF_SCAN_TEST;
     SC_CELL_V3	CS209( .SIN(M0 ), .SO(M1  ), .PO(SC_CLK_ADC ), .PIN(CLK_ADC  ), .SEL(SEL_B), .LAT(LAT_B), .SCK1(SCK1_B), .SCK2(SCK2), .BYP_N(1'b0) );
     SC_CELL_V3	CS210( .SIN(M1 ), .SO(M2  ), .PO(SC_RSTN_ADC), .PIN(RSTN_ADC ), .SEL(SEL_B), .LAT(LAT_B), .SCK1(SCK1_B), .SCK2(SCK2), .BYP_N(1'b0) );
     SC_CELL_V3	CS211( .SIN(M2 ), .SO(M3  ), .PO(SC_PO_IDLE ), .PIN(PO_IDLE  ), .SEL(SEL_B), .LAT(LAT_B), .SCK1(SCK1_B), .SCK2(SCK2), .BYP_N(1'b0) );
-    SC_CELL_V3	CS212( .SIN(M3 ), .SO(M4  ), .PO(CFSA_ADC[0]), .PIN(ADC[0]   ), .SEL(SEL_B), .LAT(LAT_B), .SCK1(SCK1_B), .SCK2(SCK2), .BYP_N(1'b0) );
-    SC_CELL_V3	CS213( .SIN(M4 ), .SO(M5  ), .PO(CFSA_ADC[1]), .PIN(ADC[1]   ), .SEL(SEL_B), .LAT(LAT_B), .SCK1(SCK1_B), .SCK2(SCK2), .BYP_N(1'b0) );
-    SC_CELL_V3	CS214( .SIN(M5 ), .SO(M6  ), .PO(CFSA_ADC[2]), .PIN(ADC[2]   ), .SEL(SEL_B), .LAT(LAT_B), .SCK1(SCK1_B), .SCK2(SCK2), .BYP_N(1'b0) );
-    SC_CELL_V3	CS215( .SIN(M6 ), .SO(M7  ), .PO(CFSA_ADC[3]), .PIN(ADC[3]   ), .SEL(SEL_B), .LAT(LAT_B), .SCK1(SCK1_B), .SCK2(SCK2), .BYP_N(1'b0) );
-    SC_CELL_V3	CS216( .SIN(M7 ), .SO(M8  ), .PO(CFSA_ADC[4]), .PIN(ADC[4]   ), .SEL(SEL_B), .LAT(LAT_B), .SCK1(SCK1_B), .SCK2(SCK2), .BYP_N(1'b0) );
-    SC_CELL_V3	CS217( .SIN(M8 ), .SO(M9  ), .PO(CFSA_ADC[5]), .PIN(ADC[5]   ), .SEL(SEL_B), .LAT(LAT_B), .SCK1(SCK1_B), .SCK2(SCK2), .BYP_N(1'b0) );
-    SC_CELL_V3	CS218( .SIN(M9 ), .SO(M10 ), .PO(CFSA_ADC[6]), .PIN(ADC[6]   ), .SEL(SEL_B), .LAT(LAT_B), .SCK1(SCK1_B), .SCK2(SCK2), .BYP_N(1'b0) );
-    SC_CELL_V3	CS219( .SIN(M10), .SO(M11 ), .PO(CFSA_ADC[7]), .PIN(ADC[7]   ), .SEL(SEL_B), .LAT(LAT_B), .SCK1(SCK1_B), .SCK2(SCK2), .BYP_N(1'b0) );
-    SC_CELL_V3	CS220( .SIN(M11), .SO(M12 ), .PO(CFSA_ADC[8]), .PIN(ADC[8]   ), .SEL(SEL_B), .LAT(LAT_B), .SCK1(SCK1_B), .SCK2(SCK2), .BYP_N(1'b0) );
-    SC_CELL_V3	CS221( .SIN(M12), .SO(SO_B), .PO(CFSA_ADC[9]), .PIN(ADC[9]   ), .SEL(SEL_B), .LAT(LAT_B), .SCK1(SCK1_B), .SCK2(SCK2), .BYP_N(1'b0) );
+    SC_CELL_V3	CS212( .SIN(M3 ), .SO(M4  ), .PO(CFSA_ADC[9]), .PIN(ADC[9]   ), .SEL(SEL_B), .LAT(LAT_B), .SCK1(SCK1_B), .SCK2(SCK2), .BYP_N(1'b0) );
+    SC_CELL_V3	CS213( .SIN(M4 ), .SO(M5  ), .PO(CFSA_ADC[8]), .PIN(ADC[8]   ), .SEL(SEL_B), .LAT(LAT_B), .SCK1(SCK1_B), .SCK2(SCK2), .BYP_N(1'b0) );
+    SC_CELL_V3	CS214( .SIN(M5 ), .SO(M6  ), .PO(CFSA_ADC[7]), .PIN(ADC[7]   ), .SEL(SEL_B), .LAT(LAT_B), .SCK1(SCK1_B), .SCK2(SCK2), .BYP_N(1'b0) );
+    SC_CELL_V3	CS215( .SIN(M6 ), .SO(M7  ), .PO(CFSA_ADC[6]), .PIN(ADC[6]   ), .SEL(SEL_B), .LAT(LAT_B), .SCK1(SCK1_B), .SCK2(SCK2), .BYP_N(1'b0) );
+    SC_CELL_V3	CS216( .SIN(M7 ), .SO(M8  ), .PO(CFSA_ADC[5]), .PIN(ADC[5]   ), .SEL(SEL_B), .LAT(LAT_B), .SCK1(SCK1_B), .SCK2(SCK2), .BYP_N(1'b0) );
+    SC_CELL_V3	CS217( .SIN(M8 ), .SO(M9  ), .PO(CFSA_ADC[4]), .PIN(ADC[4]   ), .SEL(SEL_B), .LAT(LAT_B), .SCK1(SCK1_B), .SCK2(SCK2), .BYP_N(1'b0) );
+    SC_CELL_V3	CS218( .SIN(M9 ), .SO(M10 ), .PO(CFSA_ADC[3]), .PIN(ADC[3]   ), .SEL(SEL_B), .LAT(LAT_B), .SCK1(SCK1_B), .SCK2(SCK2), .BYP_N(1'b0) );
+    SC_CELL_V3	CS219( .SIN(M10), .SO(M11 ), .PO(CFSA_ADC[2]), .PIN(ADC[2]   ), .SEL(SEL_B), .LAT(LAT_B), .SCK1(SCK1_B), .SCK2(SCK2), .BYP_N(1'b0) );
+    SC_CELL_V3	CS220( .SIN(M11), .SO(M12 ), .PO(CFSA_ADC[1]), .PIN(ADC[1]   ), .SEL(SEL_B), .LAT(LAT_B), .SCK1(SCK1_B), .SCK2(SCK2), .BYP_N(1'b0) );
+    SC_CELL_V3	CS221( .SIN(M12), .SO(SO_B), .PO(CFSA_ADC[0]), .PIN(ADC[0]   ), .SEL(SEL_B), .LAT(LAT_B), .SCK1(SCK1_B), .SCK2(SCK2), .BYP_N(1'b0) );
 
     assign  SIN     = SPI_SO;
     assign  SCK1_B  = SCLK1;
@@ -153,7 +153,8 @@ module PSEUDO_SPI_INTF_SCAN_TEST;
         rst_n = 0;
         BGN = 0;
         ADC = 10'b0000000000;
-        addr_end = MEM_BGN_ADDR + TRANSFER_LEN;
+        //addr starts at {MEMORY_ADDR_WIDTH{1'b1}} + 1
+        addr_bgn = {MEMORY_ADDR_WIDTH{1'b1}};
         data_len = TRANSFER_LEN;
         
         LOAD_N = 1;
@@ -203,7 +204,7 @@ module PSEUDO_SPI_INTF_SCAN_TEST;
         // i_mem.I_RAM[21] = {`NOP, 11'b000_0000_0000};
         
         i = 0; j = 0; k = 0;
-        tmpi_datain = 16'b111110_00_1010_0111;//510
+        tmpi_datain = 16'b1010_0111111110_00;//510
         i_mem.I_RAM[ i] = tmpi_datain[7:0];  i = 1;
         i_mem.I_RAM[ i] = tmpi_datain[15:8]; i = 2;
         tmpi_datain = 16'h3C00;
@@ -231,8 +232,8 @@ module PSEUDO_SPI_INTF_SCAN_TEST;
         #10 BGN = 1; rst_n = 1; 
 
         /* Fetch SRAM info & print inner instructions */
-        for (i = MEM_BGN_ADDR + TRANSFER_LEN + 1; i > (MEM_BGN_ADDR + 1); i=i-1) begin
-            $write("%4x\t", i-2); tmpi_datain = 0;
+        for (i = MEM_BGN_ADDR; i < (MEM_BGN_ADDR + TRANSFER_LEN); i=i+1) begin
+            $write("%4x\t", i); tmpi_datain = 0;
             // Wait for data read from real SRAM;
             #10;
             for (j = 0; j < MEMORY_DATA_WIDTH; j=j+1) begin
@@ -247,12 +248,12 @@ module PSEUDO_SPI_INTF_SCAN_TEST;
                 #10 LOAD_N = 1;
             end
             // Write data to tmp SRAM for later comparison
-            c_mem.I_RAM[ i-2] = tmpi_datain[MEMORY_DATA_WIDTH-1:0];
+            c_mem.I_RAM[ i] = tmpi_datain[MEMORY_DATA_WIDTH-1:0];
             #10;
             
-            $write("%b ", c_mem.I_RAM[ i-2]);
+            $write("%b ", c_mem.I_RAM[ i]);
             
-            if (i_mem.I_RAM[ i-2] == c_mem.I_RAM[ i-2])
+            if (i_mem.I_RAM[ i] == c_mem.I_RAM[ i])
                 $write("\t<--- Data Correct!");
             else begin
                 $write("\t<--- Data Wrong!");
@@ -263,8 +264,7 @@ module PSEUDO_SPI_INTF_SCAN_TEST;
         
         // Judge Bits Correct Result
         tmpi_datain = {c_mem.I_RAM[1], c_mem.I_RAM[0]};
-        if ((10'd510 == {CFSA_ADC[9],CFSA_ADC[8],CFSA_ADC[7],CFSA_ADC[6],CFSA_ADC[5],CFSA_ADC[4],CFSA_ADC[3],CFSA_ADC[2],CFSA_ADC[1],CFSA_ADC[0]})
-            && ({tmpi_datain[3:0],tmpi_datain[15:10]} == {CFSA_ADC[9],CFSA_ADC[8],CFSA_ADC[7],CFSA_ADC[6],CFSA_ADC[5],CFSA_ADC[4],CFSA_ADC[3],CFSA_ADC[2],CFSA_ADC[1],CFSA_ADC[0]}))
+        if ((10'd510 == CFSA_ADC) && (tmpi_datain[11:2] == CFSA_ADC))
             $write("\tScan Chain Correct!\n");
         else begin
             $write("\tScan Chain Wrong!\n");

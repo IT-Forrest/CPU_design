@@ -49,7 +49,7 @@ module PSEUDO_SPI_INTF_TEST;
    
     parameter   RESERVED_DATA_LEN   = 8;
                 
-    reg   [MEMORY_ADDR_WIDTH-1:0] addr_end;
+    reg   [MEMORY_ADDR_WIDTH-1:0] addr_bgn;
     reg   [RESERVED_DATA_LEN-1:0] data_len;    //each data width = MEMORY_DATA_WIDTH
     reg   [7:0]   freq_div;
     reg   [MEMORY_DATA_WIDTH-1:0] PI;         // read from SRAM
@@ -65,7 +65,7 @@ module PSEUDO_SPI_INTF_TEST;
         // input
         .CLK        (CLK     ),
         .BGN        (BGN     ),
-        .ADDR_BGN   (addr_end),
+        .ADDR_BGN   (addr_bgn),
         .DATA_LEN   (data_len),
         //.FREQ_DIV   (freq_div),
         .PI         (m_dataout  ),
@@ -126,7 +126,8 @@ module PSEUDO_SPI_INTF_TEST;
         CLK = 0;
         rst_n = 0;
         BGN = 0;
-        addr_end = MEM_BGN_ADDR + TRANSFER_LEN;
+        //addr starts at {MEMORY_ADDR_WIDTH{1'b1}} + 1
+        addr_bgn = {MEMORY_ADDR_WIDTH{1'b1}};
         data_len = TRANSFER_LEN;
         
         LOAD_N = 1;
@@ -204,8 +205,8 @@ module PSEUDO_SPI_INTF_TEST;
         #10 BGN = 1; rst_n = 1; 
 
         /* Fetch SRAM info & print inner instructions */
-        for (i = MEM_BGN_ADDR + TRANSFER_LEN + 1; i > (MEM_BGN_ADDR + 1); i=i-1) begin
-            $write("%4x\t", i-2); tmpi_datain = 0;
+        for (i = MEM_BGN_ADDR; i < (MEM_BGN_ADDR + TRANSFER_LEN); i=i+1) begin
+            $write("%4x\t", i); tmpi_datain = 0;
             // Wait for data read from real SRAM;
             #10;
             for (j = 0; j < MEMORY_DATA_WIDTH; j=j+1) begin
@@ -220,12 +221,12 @@ module PSEUDO_SPI_INTF_TEST;
                 #10 LOAD_N = 1;
             end
             // Write data to tmp SRAM for later comparison
-            c_mem.I_RAM[ i-2] = tmpi_datain[MEMORY_DATA_WIDTH-1:0];
+            c_mem.I_RAM[ i] = tmpi_datain[MEMORY_DATA_WIDTH-1:0];
             #10;
             
-            $write("%b ", c_mem.I_RAM[ i-2]);
+            $write("%b ", c_mem.I_RAM[ i]);
             
-            if (i_mem.I_RAM[ i-2] == c_mem.I_RAM[ i-2])
+            if (i_mem.I_RAM[ i] == c_mem.I_RAM[ i])
                 $write("\t<--- Data Correct!");
             else begin
                 $write("\t<--- Data Wrong!");
