@@ -81,6 +81,7 @@ add wave -noupdate /SYS_PSEUDO_SPI_INTF_SCAN_VG_TEST/scpu_sram_alu/I_CTRL_MODE
 add wave -noupdate /SYS_PSEUDO_SPI_INTF_SCAN_VG_TEST/scpu_sram_alu/Q_FROM_SRAM
 add wave -noupdate /SYS_PSEUDO_SPI_INTF_SCAN_VG_TEST/scpu_sram_alu/N191
 TreeUpdate [SetDefaultTree]
+WaveRestoreCursors {{Cursor 2} {1238064722 ps} 0} {{Cursor 2} {346000 ps} 0}
 quietly wave cursor active 2
 configure wave -namecolwidth 318
 configure wave -valuecolwidth 185
@@ -96,3 +97,4 @@ configure wave -griddelta 40
 configure wave -timeline 0
 configure wave -timelineunits ps
 update
+WaveRestoreZoom {96565 ps} {410365 ps}

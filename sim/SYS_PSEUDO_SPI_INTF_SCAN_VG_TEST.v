@@ -293,6 +293,7 @@ module  SYS_PSEUDO_SPI_INTF_SCAN_VG_TEST();
         // i_mem.D_RAM[2] = 16'h0000;
         
         #10 RST_N = 0; rsi_reset_n = 0; CTRL_BGN = 1;
+        #10 RST_N = 1; rsi_reset_n = 1;
         
         /* (1) Serially Input the address & Instruction to CTRL and then to SRAM */
         for (i = 0; i<15+ DEFAULT_PC_ADDR; i=i) begin
