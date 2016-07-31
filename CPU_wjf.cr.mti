@@ -29,6 +29,13 @@ Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
 Top level modules:
 	D_MEMORY
 
+} {} {}} {F:/05. Code Battle/04. Verilog/CPU_design/SERIAL_CPU_8bit.v} {1 {vlog -work work -stats=none {F:/05. Code Battle/04. Verilog/CPU_design/SERIAL_CPU_8bit.v}
+Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
+-- Compiling module SERIAL_CPU_8BIT
+
+Top level modules:
+	SERIAL_CPU_8BIT
+
 } {} {}} {F:/05. Code Battle/04. Verilog/CPU_design/SCPU_SRAM_8BIT_ALU_SPI_TOP_VG.v} {1 {vlog -work work -stats=none {F:/05. Code Battle/04. Verilog/CPU_design/SCPU_SRAM_8BIT_ALU_SPI_TOP_VG.v}
 Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
 -- Compiling module SHARE_SUPERALU_VG
@@ -37,13 +44,6 @@ Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
 
 Top level modules:
 	SCPU_SRAM_8BIT_ALU_SPI_TOP_VG
-
-} {} {}} {F:/05. Code Battle/04. Verilog/CPU_design/SERIAL_CPU_8bit.v} {1 {vlog -work work -stats=none {F:/05. Code Battle/04. Verilog/CPU_design/SERIAL_CPU_8bit.v}
-Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
--- Compiling module SERIAL_CPU_8BIT
-
-Top level modules:
-	SERIAL_CPU_8BIT
 
 } {} {}} {F:/05. Code Battle/04. Verilog/CPU_design/sim/SHARE_SUPERALU_CORDIC_TEST.v} {1 {vlog -work work -stats=none {F:/05. Code Battle/04. Verilog/CPU_design/sim/SHARE_SUPERALU_CORDIC_TEST.v}
 Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
@@ -3516,6 +3516,14 @@ Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
 Top level modules:
 	SHARE_SUPERALU_MULT_TEST
 
+} {} {}} {F:/05. Code Battle/04. Verilog/CPU_design/sim/SHARE_SUPERALU_DIV_TEST.v} {1 {vlog -work work -stats=none {F:/05. Code Battle/04. Verilog/CPU_design/sim/SHARE_SUPERALU_DIV_TEST.v}
+Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
+-- Compiling module SHARE_SUPERALU
+-- Compiling module SHARE_SUPERALU_DIV_TEST
+
+Top level modules:
+	SHARE_SUPERALU_DIV_TEST
+
 } {} {}} {F:/05. Code Battle/04. Verilog/CPU_design/sim/SYS_PSEUDO_SPI_INTF_SCAN_TEST.v} {2 {vlog -work work -stats=none {F:/05. Code Battle/04. Verilog/CPU_design/sim/SYS_PSEUDO_SPI_INTF_SCAN_TEST.v}
 Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
 -- Compiling module SERIAL_CPU_8BIT
@@ -3529,19 +3537,11 @@ Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
 -- Compiling module I_MEMORY_8BIT
 -- Compiling module SC_CELL_V3
 -- Compiling module SYS_PSEUDO_SPI_INTF_SCAN_TEST
-** Warning: F:/05. Code Battle/04. Verilog/CPU_design/sim/SYS_PSEUDO_SPI_INTF_SCAN_TEST.v(302): (vlog-2252) Missing incrementer in "FOR" statement.
+** Warning: F:/05. Code Battle/04. Verilog/CPU_design/sim/SYS_PSEUDO_SPI_INTF_SCAN_TEST.v(307): (vlog-2252) Missing incrementer in "FOR" statement.
 
 
 Top level modules:
 	SYS_PSEUDO_SPI_INTF_SCAN_TEST
-
-} {} {}} {F:/05. Code Battle/04. Verilog/CPU_design/sim/SHARE_SUPERALU_DIV_TEST.v} {1 {vlog -work work -stats=none {F:/05. Code Battle/04. Verilog/CPU_design/sim/SHARE_SUPERALU_DIV_TEST.v}
-Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
--- Compiling module SHARE_SUPERALU
--- Compiling module SHARE_SUPERALU_DIV_TEST
-
-Top level modules:
-	SHARE_SUPERALU_DIV_TEST
 
 } {} {}} {F:/05. Code Battle/04. Verilog/CPU_design/sim/SCPU_SRAM_8BIT_ALU_TOP_TEST.v} {2 {vlog -work work -stats=none {F:/05. Code Battle/04. Verilog/CPU_design/sim/SCPU_SRAM_8BIT_ALU_TOP_TEST.v}
 Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014

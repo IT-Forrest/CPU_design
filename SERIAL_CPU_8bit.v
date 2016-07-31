@@ -90,7 +90,7 @@ module SERIAL_CPU_8BIT(
     output  [GENERAL_REG_WIDTH-1:0]  io_dataoutB;
     output  [GENERAL_REG_WIDTH-1:0]  io_offset;
     
-    //reg     is_i_addr;
+    reg     is_i_addr;
     reg     lowest_bit;
     reg     cf_buf;
     reg     [GENERAL_REG_WIDTH-1:0] ALUo;
@@ -121,7 +121,7 @@ module SERIAL_CPU_8BIT(
     wire    [3:0]   oper3_r3;
     wire    oper3_is_val;
     
-    assign  is_i_addr = ((state == STATE_IF)||(state == STATE_IF2));
+    //assign  is_i_addr = ((state == STATE_IF)||(state == STATE_IF2));
     assign  instr_over = (pc == {PC_MEM_ADDR_WIDTH{1'b1}});
     assign  code_type = id_ir[MSB_OP_16B-1:MSB_OPER1_11B];
     assign  oper1_r1 = id_ir[MSB_OPER1_11B-1:MSB_OPER2_8B];
@@ -130,8 +130,17 @@ module SERIAL_CPU_8BIT(
     assign  oper2_is_val = id_ir[MSB_OPER2_8B-1];
     assign  oper3_is_val = id_ir[MSB_OPER3_4B-1];
     
+    //************* delay is_i_addr signal *************//
+    always @(negedge clk)
+        begin
+            if ((state == STATE_IF)||(state == STATE_IF2)||(state == STATE_ID)||(state == STATE_LP))
+                is_i_addr <= 1'b1;
+            else
+                is_i_addr <= 1'b0;
+        end
+    
     //************* CPU Control *************//
-    always @(negedge clk or negedge rst_n)
+    always @(posedge clk or negedge rst_n)
         begin
             if (!rst_n)
                 state <= STATE_IDLE;
@@ -195,13 +204,13 @@ module SERIAL_CPU_8BIT(
         
         
     //************* IF (&IF2) *************//
-    always @(negedge clk or negedge rst_n)
+    always @(posedge clk or negedge rst_n)
         begin
             if (!rst_n)
                 begin
                     id_ir <= {`NOP, 11'b000_0000_0000};
                 end
-            else if (state == STATE_IF)
+            else if (state == STATE_ID)
                 begin
                     id_ir[MEMORY_DATA_WIDTH-1:0] <= i_datain;
                 end
@@ -213,11 +222,9 @@ module SERIAL_CPU_8BIT(
 
     //************* lowest_bit ***************
     assign i_addr = {pc, lowest_bit};
-    always @(negedge clk or negedge rst_n)
+    always @(negedge clk)
         begin
-            if (!rst_n)
-                lowest_bit <= 0;
-            else if (state == STATE_IDLE)
+            if (state == STATE_IDLE)
                 lowest_bit <= 0;
             else if (state == STATE_IF)
                 lowest_bit <= 1;
@@ -244,7 +251,7 @@ module SERIAL_CPU_8BIT(
                     reg_B <= 16'b0000_0000_0000_0000;
                     smdr  <= 16'b0000_0000_0000_0000;
                 end
-            else if (state == STATE_ID)
+            else if (state == STATE_EX)
                 begin
                     if (code_type == `STORE)
                         smdr <= gr[oper1_r1];
@@ -308,11 +315,29 @@ module SERIAL_CPU_8BIT(
     assign d_dataout = (!lowest_bit)?
                     smdr[MEMORY_DATA_WIDTH-1:0]:
                     smdr[(MEMORY_DATA_WIDTH<<1)-1:MEMORY_DATA_WIDTH];
-    always @(negedge clk or negedge rst_n)
+    //negedge reg_C since it's used as SRAM addr which should avoid posedge clk
+    always @(negedge clk)
+    begin
+        if (state == STATE_EX2)
+            begin
+                if (code_type == `LIOA)
+                    reg_C <= io_datainA;
+                else if (code_type == `LIOB)
+                    reg_C <= io_datainB;
+                else if (code_type == `LIOS)
+                    reg_C <= io_status;
+                else if (code_type == `LFSR)
+                    reg_C <= {ALUo[14:0], (ALUo[15] ^ ALUo[13] ^ ALUo[12] ^ ALUo[10])}; //16 bits
+                else
+                    reg_C <= ALUo;
+            end
+    end
+                    
+    always @(posedge clk or negedge rst_n)
         begin
             if (!rst_n)
                 begin
-                    reg_C <= 16'b0000_0000_0000_0000;
+                    //reg_C <= 16'b0000_0000_0000_0000;
                     //smdr <= 16'b0000_0000_0000_0000;
                     //dw <= 1'b0;
                     zf <= 1'b0;
@@ -320,18 +345,18 @@ module SERIAL_CPU_8BIT(
                     cf <= 1'b0;
                 end
             
-            else if (state == STATE_EX)
+            else if (state == STATE_EX2)
                 begin
-                    if (code_type == `LIOA)
-                        reg_C <= io_datainA;
-                    else if (code_type == `LIOB)
-                        reg_C <= io_datainB;
-                    else if (code_type == `LIOS)
-                        reg_C <= io_status;
-                    else if (code_type == `LFSR)
-                        reg_C <= {ALUo[14:0], (ALUo[15] ^ ALUo[13] ^ ALUo[12] ^ ALUo[10])}; //16 bits
-                    else
-                        reg_C <= ALUo;
+                    // if (code_type == `LIOA)
+                        // reg_C <= io_datainA;
+                    // else if (code_type == `LIOB)
+                        // reg_C <= io_datainB;
+                    // else if (code_type == `LIOS)
+                        // reg_C <= io_status;
+                    // else if (code_type == `LFSR)
+                        // reg_C <= {ALUo[14:0], (ALUo[15] ^ ALUo[13] ^ ALUo[12] ^ ALUo[10])}; //16 bits
+                    // else
+                        // reg_C <= ALUo;
                     
                     if (I_ZFNFCF_TYPE(code_type))
                         begin
@@ -355,18 +380,16 @@ module SERIAL_CPU_8BIT(
         end
 
     //************* dw SRAM write signal ***************
-    always @(negedge clk or negedge rst_n)
+    always @(negedge clk)
         begin
-            if (!rst_n)
-                dw <= 1'b0;
-            else if (state == STATE_EX)
+            if ((state == STATE_EX2)||(state == STATE_MEM))
                 begin
                     if (code_type == `STORE)
                         dw <= 1'b1;
                     else
                         dw <= 1'b0;
                 end
-            else if (state == STATE_MEM)
+            else// if (state == STATE_MEM)
                 dw <= 1'b0;
         end
         
@@ -381,7 +404,7 @@ module SERIAL_CPU_8BIT(
                         || ((code_type == `BNC) && (cf == 1'b0)));
 
     //************* WB *************//
-    always @(negedge clk or negedge rst_n)
+    always @(posedge clk or negedge rst_n)
         begin
             if (!rst_n)
                 begin
