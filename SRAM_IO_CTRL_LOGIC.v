@@ -11,7 +11,7 @@
 // --------------------------------------------------------------------
 
 `timescale 1ns / 1ps
-`include "DEFINE_CPU.v"
+//`include "DEFINE_CPU.v"
 
 `ifndef SRAM_IO_CTRL_LOGIC_V
 `define SRAM_IO_CTRL_LOGIC_V
@@ -103,7 +103,7 @@ module SRAM_IO_CTRL_LOGIC(
     input                       coe_ctrl_rdy_export;
     
     // Registers and wires
-    reg         reg_ctrl_bgn, reg_ctrl_bgn_n;
+    reg         reg_ctrl_bgn, reg_ctrl_bgn_dly, reg_load_dly;
     reg         [1:0]   reg_LOAD;
     reg         [1:0]   reg_ctrl_mode;
     reg         [CT_WIDTH-1:0]  reg_sram_addr;
@@ -115,7 +115,7 @@ module SRAM_IO_CTRL_LOGIC(
     wire    CTRL_SO;
     assign  CTRL_SO = coe_ctrl_so_export;
     wire    is_LOAD;
-    assign  is_LOAD = reg_LOAD[0];
+    assign  is_LOAD = reg_load_dly;//reg_LOAD[0];
 
     wire    is_load2_ctrl = (reg_ctrl_mode == 2'b00);
     wire    is_rfrom_ctrl = (reg_ctrl_mode == 2'b10);
@@ -124,7 +124,7 @@ module SRAM_IO_CTRL_LOGIC(
     assign  avs_sram_addr_readdata = reg_sram_all[REG_BITS_WIDTH-1:MEMORY_DATA_WIDTH];
     assign  avs_sram_data_readdata = reg_sram_all[MEMORY_DATA_WIDTH-1:0];
     
-    assign  coe_ctrl_bgn_export  = reg_ctrl_bgn_n;//reg_ctrl_bgn
+    assign  coe_ctrl_bgn_export  = reg_ctrl_bgn_dly;//reg_ctrl_bgn
     assign  coe_ctrl_load_export = is_LOAD;
     assign  coe_ctrl_si_export   = reg_sram_all[0];
     assign  coe_ctrl_mod1_export = (reg_ctrl_mode[0])?reg_ctrl_mode[1]:1'b0;
@@ -151,9 +151,17 @@ module SRAM_IO_CTRL_LOGIC(
     always @(negedge csi_clk)
     begin
         if (~rsi_reset_n)
-            reg_ctrl_bgn_n <= 1'b0;
+            reg_ctrl_bgn_dly <= 1'b0;
         else
-            reg_ctrl_bgn_n <= reg_ctrl_bgn;
+            reg_ctrl_bgn_dly <= reg_ctrl_bgn;
+    end
+    
+    always @(negedge csi_clk)
+    begin
+        if (~rsi_reset_n)
+            reg_load_dly <= 1'b0;
+        else
+            reg_load_dly <= reg_LOAD[0];
     end
     
     //************* make IDX_SCPU_CTRL_LOAD only works for one cycle *************//
@@ -174,7 +182,7 @@ module SRAM_IO_CTRL_LOGIC(
     end
     
     /************** Send Serial data to SRAM_IO_CTRL  ***********/
-    always @(posedge csi_clk)
+    always @(negedge csi_clk)
     begin
         if (~rsi_reset_n)
             reg_sram_all <= {REG_BITS_WIDTH{1'b0}};
@@ -190,13 +198,13 @@ module SRAM_IO_CTRL_LOGIC(
             reg_sram_all <= {CTRL_SO, reg_sram_all[REG_BITS_WIDTH-1:1]};
     end
     
-    always @(posedge csi_clk)
+    always @(negedge csi_clk)
     begin
         if (~rsi_reset_n)
             cnt_bit_load <= 0;
         else if (is_LOAD)
             if (is_load2_ctrl)
-                cnt_bit_load <= REG_BITS_WIDTH;
+                cnt_bit_load <= REG_BITS_WIDTH-1;
             else if (is_rfrom_ctrl)
                 // Due to clock delay, FPGA starts to read when is_LOAD
                 cnt_bit_load <= REG_BITS_WIDTH-1;

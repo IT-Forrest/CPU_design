@@ -1,7 +1,7 @@
 //+FHDR****************************************************************
 // ECE department, TAMU
 // --------------------------------------------------------------------
-// FILE NAME    : SYS_PSEUDO_SPI_INTF_SCAN_TEST.v
+// FILE NAME    : SYS_PSEUDO_SPI_INTF_SCAN_VG_TEST.v
 // AUTHER       : Jiafan Wang
 // DATE         : 07/19/2016
 // VERSION      : 1.0
@@ -10,13 +10,16 @@
 // ABSTRACT: loop-test simulation time 100ms given each time period 20ns
 // --------------------------------------------------------------------
 `timescale  1 ns / 100 ps
+`include    "../ibm13rfrvt_neg.v"       //IBM130 standard cells
+`include    "../iogpil_cmrf8sf_rvt.v"   //Pad cells
 `include    "../DEFINE_CPU.v"
-`include    "../SCPU_SRAM_8BIT_ALU_SPI_TOP.v"
+`include    "../RA1SHD_IBM512X8.v"
+`include    "../SCPU_SRAM_8BIT_ALU_SPI_TOP_VG.v"
 `include    "../SRAM_IO_CTRL_LOGIC.v"
 `include    "../I_MEMORY_8bit.v"
 `include    "../SC_CELL_V3.v"
 
-module  SYS_PSEUDO_SPI_INTF_SCAN_TEST();
+module  SYS_PSEUDO_SPI_INTF_SCAN_VG_TEST();
 
     parameter   MULTIPLICAND_WIDTH  = 9,// the division of CF
                 MULTIPLIER_WIDTH    = 8,// for the random value used by SA, it's the width of LFSR 
@@ -61,16 +64,15 @@ module  SYS_PSEUDO_SPI_INTF_SCAN_TEST();
     wire    CLRN;
     wire    CLK_ADC;
     wire    RSTN_ADC;
-    wire    [1:0]   CTRL_MODE_dly;
     
-    SCPU_SRAM_8BIT_ALU_SPI_TOP  scpu_sram_alu(
+    SCPU_SRAM_8BIT_ALU_SPI_TOP_VG  scpu_sram_alu(
         .CLK            (CLK        ),
         .RST_N          (RST_N      ),
-        .CTRL_MODE      (CTRL_MODE_dly),
-        .CTRL_BGN       (CTRL_BGN_dly),
+        .CTRL_MODE      ({coe_ctrl_mod1_export,coe_ctrl_mod0_export}),
+        .CTRL_BGN       (coe_ctrl_bgn_export),
         .CPU_BGN        (CPU_BGN    ),
-        .LOAD_N         (LOAD_N_dly),
-        .CTRL_SI        (CTRL_SI_dly),
+        .LOAD_N         (!coe_ctrl_load_export),
+        .CTRL_SI        (coe_ctrl_si_export),
         //.ANA_SI         (ANA_SI     ),
         .ADC_PI         (ADC_PI     ),
         // output
@@ -176,18 +178,13 @@ module  SYS_PSEUDO_SPI_INTF_SCAN_TEST();
     SC_CELL_V3	CS219( .SIN(M10       ), .SO(M11 ), .PO(CFSA_FOUT[1 ]), .PIN(FOUT[1 ]), .SEL(SEL_B), .LAT(LAT_dly), .SCK1(SCLK1_dly), .SCK2(SCLK2_dly), .BYP_N(1'b0) );
     SC_CELL_V3	CS220( .SIN(M11       ), .SO(SO_B), .PO(CFSA_FOUT[0 ]), .PIN(FOUT[0 ]), .SEL(SEL_B), .LAT(LAT_dly), .SCK1(SCLK1_dly), .SCK2(SCLK2_dly), .BYP_N(1'b0) );
 
-    parameter   VIRTUAL_DLY = 2;
+    parameter   VIRTUAL_DLY = 0;//2
     
     assign  #VIRTUAL_DLY  SCLK1_dly   = SCLK1;
     assign  #VIRTUAL_DLY  SCLK2_dly   = SCLK2;
     assign  #VIRTUAL_DLY  LAT_dly     = LAT;
     assign  #VIRTUAL_DLY  SPI_SO_dly  = SPI_SO;
 
-    assign  #VIRTUAL_DLY    CTRL_MODE_dly = {coe_ctrl_mod1_export,coe_ctrl_mod0_export};
-    assign  #VIRTUAL_DLY    CTRL_BGN_dly = coe_ctrl_bgn_export;
-    assign  #VIRTUAL_DLY    LOAD_N_dly = !coe_ctrl_load_export;
-    assign  #VIRTUAL_DLY    CTRL_SI_dly = coe_ctrl_si_export;
-    
     initial begin
         // Initialize Inputs Signals
         CLK = 0;
@@ -296,10 +293,9 @@ module  SYS_PSEUDO_SPI_INTF_SCAN_TEST();
         // i_mem.D_RAM[2] = 16'h0000;
         
         #10 RST_N = 0; rsi_reset_n = 0; CTRL_BGN = 1;
-        #10 RST_N = 1; rsi_reset_n = 1;
         
         /* (1) Serially Input the address & Instruction to CTRL and then to SRAM */
-        for (i = 0; i<15+ DEFAULT_PC_ADDR; ) begin
+        for (i = 0; i<15+ DEFAULT_PC_ADDR; i=i) begin
             for (k=2; k>=1; k=k-1) begin
                 /** (a) load data to SRAM_IO_CTRL from PC **/
                 // C code modify control word
@@ -610,6 +606,13 @@ module  SYS_PSEUDO_SPI_INTF_SCAN_TEST();
 
     always #5
         CLK = ~CLK;
+
+    // Dump signals to view waveform
+    // initial
+    // begin
+        // $dumpfile ("wave_scan_vg.dump");
+        // $dumpvars (0, SYS_PSEUDO_SPI_INTF_SCAN_VG_TEST);
+    // end
    
 endmodule
 
