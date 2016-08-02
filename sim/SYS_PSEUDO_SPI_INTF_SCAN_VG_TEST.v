@@ -56,7 +56,7 @@ module  SYS_PSEUDO_SPI_INTF_SCAN_VG_TEST();
     wire    ANA_RDY;
     wire    CTRL_SO;
     wire    ANA_SO;
-    wire    [1:0]  NXT;
+    wire    [1:0]  CPU_NXT;
     wire    SEL;
     wire    SCLK1;
     wire    SCLK2;
@@ -64,23 +64,25 @@ module  SYS_PSEUDO_SPI_INTF_SCAN_VG_TEST();
     wire    CLRN;
     wire    CLK_ADC;
     wire    RSTN_ADC;
+    wire    [1:0]   CTRL_MODE_dly;
+    wire    [1:0]   CPU_NXT_dly;
     
     SCPU_SRAM_8BIT_ALU_SPI_TOP_VG  scpu_sram_alu(
         .CLK            (CLK        ),
         .RST_N          (RST_N      ),
-        .CTRL_MODE      ({coe_ctrl_mod1_export,coe_ctrl_mod0_export}),
-        .CTRL_BGN       (coe_ctrl_bgn_export),
+        .CTRL_MODE      (CTRL_MODE_dly),
+        .CTRL_BGN       (CTRL_BGN_dly),
         .CPU_BGN        (CPU_BGN    ),
-        .LOAD_N         (!coe_ctrl_load_export),
-        .CTRL_SI        (coe_ctrl_si_export),
+        .LOAD_N         (LOAD_N_dly),
+        .CTRL_SI        (CTRL_SI_dly),
         //.ANA_SI         (ANA_SI     ),
         .ADC_PI         (ADC_PI     ),
         // output
-        .CTRL_RDY       (coe_ctrl_rdy_export),
+        .CTRL_RDY       (CTRL_RDY),
         //.ANA_RDY        (ANA_RDY    ),
-        .CTRL_SO        (coe_ctrl_so_export ),
+        .CTRL_SO        (CTRL_SO    ),
         //.ANA_SO         (ANA_SO     ),
-        .NXT            (NXT        ),
+        .NXT            (CPU_NXT    ),
         //.SEL            (SEL        ),
         .SCLK1          (SCLK1      ),
         .SCLK2          (SCLK2      ),
@@ -110,7 +112,7 @@ module  SYS_PSEUDO_SPI_INTF_SCAN_VG_TEST();
     wire    [31:0]  avs_sram_addr_readdata;
     wire    [31:0]  avs_sram_data_readdata;
    
-    assign  CTRL_RDY = avs_cpustat_readdata[IDX_SCPU_CTRL_RDY];
+    assign  avs_cpustat_ctrl_rdy = avs_cpustat_readdata[IDX_SCPU_CTRL_RDY];
    
     SRAM_IO_CTRL_LOGIC fpga(
         //input
@@ -185,6 +187,15 @@ module  SYS_PSEUDO_SPI_INTF_SCAN_VG_TEST();
     assign  #VIRTUAL_DLY  LAT_dly     = LAT;
     assign  #VIRTUAL_DLY  SPI_SO_dly  = SPI_SO;
 
+    assign  #VIRTUAL_DLY    CTRL_MODE_dly = {coe_ctrl_mod1_export,coe_ctrl_mod0_export};
+    assign  #VIRTUAL_DLY    CTRL_BGN_dly = coe_ctrl_bgn_export;
+    assign  #VIRTUAL_DLY    LOAD_N_dly = !coe_ctrl_load_export;
+    assign  #VIRTUAL_DLY    CTRL_SI_dly = coe_ctrl_si_export;
+    
+    assign  #VIRTUAL_DLY    coe_ctrl_rdy_export = CTRL_RDY;
+    assign  #VIRTUAL_DLY    coe_ctrl_so_export = CTRL_SO;
+    assign  #VIRTUAL_DLY    CPU_NXT_dly = CPU_NXT;
+    
     initial begin
         // Initialize Inputs Signals
         CLK = 0;
@@ -328,7 +339,7 @@ module  SYS_PSEUDO_SPI_INTF_SCAN_VG_TEST();
                 begin: ctrl_module_load_ready
                 forever begin
                     #10;
-                    if (CTRL_RDY) begin
+                    if (avs_cpustat_ctrl_rdy) begin
                         disable ctrl_module_load_ready;
                     end
                 end
@@ -344,7 +355,7 @@ module  SYS_PSEUDO_SPI_INTF_SCAN_VG_TEST();
                 begin: ctrl_module_load_finish
                 forever begin
                     #10;
-                    if (!CTRL_RDY) begin
+                    if (!avs_cpustat_ctrl_rdy) begin
                         disable ctrl_module_load_finish;
                     end
                 end
@@ -372,7 +383,7 @@ module  SYS_PSEUDO_SPI_INTF_SCAN_VG_TEST();
                 begin: ctrl_module_write_ready
                 forever begin
                     #10;
-                    if (CTRL_RDY) begin
+                    if (avs_cpustat_ctrl_rdy) begin
                         disable ctrl_module_write_ready;
                     end
                 end
@@ -388,7 +399,7 @@ module  SYS_PSEUDO_SPI_INTF_SCAN_VG_TEST();
                 begin: ctrl_module_write_finish
                 forever begin
                     #10;
-                    if (!CTRL_RDY) begin
+                    if (!avs_cpustat_ctrl_rdy) begin
                         disable ctrl_module_write_finish;
                     end
                 end
@@ -420,7 +431,7 @@ module  SYS_PSEUDO_SPI_INTF_SCAN_VG_TEST();
         begin : cpu_process_loop
             forever begin
                 #10;
-                if (NXT[0]) begin
+                if (CPU_NXT_dly[0]) begin
                     disable cpu_process_loop;
                 end
             end
@@ -460,7 +471,7 @@ module  SYS_PSEUDO_SPI_INTF_SCAN_VG_TEST();
                 begin: ctrl_module_load_ready_2nd
                 forever begin
                     #10;
-                    if (CTRL_RDY) begin
+                    if (avs_cpustat_ctrl_rdy) begin
                         disable ctrl_module_load_ready_2nd;
                     end
                 end
@@ -476,7 +487,7 @@ module  SYS_PSEUDO_SPI_INTF_SCAN_VG_TEST();
                 begin: ctrl_module_load_finish_2nd
                 forever begin
                     #10;
-                    if (!CTRL_RDY) begin
+                    if (!avs_cpustat_ctrl_rdy) begin
                         disable ctrl_module_load_finish_2nd;
                     end
                 end
@@ -504,7 +515,7 @@ module  SYS_PSEUDO_SPI_INTF_SCAN_VG_TEST();
                 begin: ctrl_module_read_ready
                 forever begin
                     #10;
-                    if (CTRL_RDY) begin
+                    if (avs_cpustat_ctrl_rdy) begin
                         disable ctrl_module_read_ready;
                     end
                 end
@@ -520,7 +531,7 @@ module  SYS_PSEUDO_SPI_INTF_SCAN_VG_TEST();
                 begin: ctrl_module_read_finish
                 forever begin
                     #10;
-                    if (!CTRL_RDY) begin
+                    if (!avs_cpustat_ctrl_rdy) begin
                         disable ctrl_module_read_finish;
                     end
                 end
@@ -555,7 +566,7 @@ module  SYS_PSEUDO_SPI_INTF_SCAN_VG_TEST();
                 begin: ctrl_module_load_ready_3nd
                 forever begin
                     #10;
-                    if (CTRL_RDY) begin
+                    if (avs_cpustat_ctrl_rdy) begin
                         disable ctrl_module_load_ready_3nd;
                     end
                 end
@@ -571,7 +582,7 @@ module  SYS_PSEUDO_SPI_INTF_SCAN_VG_TEST();
                 begin: ctrl_module_load_finish_3nd
                 forever begin
                     #10;
-                    if (!CTRL_RDY) begin
+                    if (!avs_cpustat_ctrl_rdy) begin
                         disable ctrl_module_load_finish_3nd;
                     end
                 end
