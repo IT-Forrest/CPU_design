@@ -20,6 +20,7 @@
 `include    "../SC_CELL_V3.v"
 
 module  SYS_PSEUDO_SPI_INTF_SCAN_VG_TEST();
+    parameter   CLKPERIOD   10;
 
     parameter   MULTIPLICAND_WIDTH  = 9,// the division of CF
                 MULTIPLIER_WIDTH    = 8,// for the random value used by SA, it's the width of LFSR 
@@ -616,7 +617,7 @@ module  SYS_PSEUDO_SPI_INTF_SCAN_VG_TEST();
         #20 $stop();
     end
 
-    always #5
+    always #(CLKPERIOD/2)
         CLK = ~CLK;
 
     // Dump signals to view waveform

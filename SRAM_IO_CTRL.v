@@ -47,6 +47,7 @@ module SRAM_IO_CTRL(CLK, BGN, SI, LOAD_N, CTRL, PI, RDY, D_WE, CEN, SO, A, PO);
     reg [REG_BITS_WIDTH-1:0] reg_bits;
     //reg [1:0]   reg_LOAD;
     
+    reg     is_shift;
     wire    is_write;
     wire    is_LOAD;
     // notify the outside process
@@ -78,16 +79,27 @@ module SRAM_IO_CTRL(CLK, BGN, SI, LOAD_N, CTRL, PI, RDY, D_WE, CEN, SO, A, PO);
             CEN <= 1;
     end
     
+    //*********** Flag for data shifting ***********//
+    always @(posedge CLK)
+    begin
+        if (cnt_bit_load)
+            is_shift <= 1'b1;
+        else
+            is_shift <= 1'b0;
+    end
+    
     //************* IO shift process *************//
     always @(posedge CLK)
     begin
         //if (!BGN)
         //    reg_bits <= {REG_BITS_WIDTH{1'b0}};
         //else
-        if ((ctrl_state == IO_LOAD) && (cnt_bit_load))
+        if ((ctrl_state == IO_LOAD) && is_shift)
             reg_bits <= {SI, reg_bits[REG_BITS_WIDTH-1:1]};
-        else if ((ctrl_state == IO_SEND) && (!cnt_bit_load) && !is_write)
+        else if ((ctrl_state == IO_SEND) && (!is_shift) && !is_write)
             reg_bits[MEMORY_DATA_WIDTH-1:0] <= PI;
+        else
+            reg_bits <= reg_bits;
     end
     
     //************* make LOAD_N only works for one cycle *************//

@@ -16,6 +16,7 @@ add wave -noupdate /SYS_PSEUDO_SPI_INTF_SCAN_VG_TEST/scpu_sram_alu/I_CTRL_BGN
 add wave -noupdate /SYS_PSEUDO_SPI_INTF_SCAN_VG_TEST/scpu_sram_alu/N93
 add wave -noupdate /SYS_PSEUDO_SPI_INTF_SCAN_VG_TEST/scpu_sram_alu/N324
 add wave -noupdate {/SYS_PSEUDO_SPI_INTF_SCAN_VG_TEST/scpu_sram_alu/\scpu_ctrl_spi/ALU_01 /RST_N}
+add wave -noupdate /SYS_PSEUDO_SPI_INTF_SCAN_VG_TEST/scpu_sram_alu/N191
 add wave -noupdate -divider spi_module
 add wave -noupdate /SYS_PSEUDO_SPI_INTF_SCAN_VG_TEST/coe_ctrl_bgn_export
 add wave -noupdate /SYS_PSEUDO_SPI_INTF_SCAN_VG_TEST/coe_ctrl_load_export
@@ -28,7 +29,6 @@ add wave -noupdate /SYS_PSEUDO_SPI_INTF_SCAN_VG_TEST/SCLK1_dly
 add wave -noupdate /SYS_PSEUDO_SPI_INTF_SCAN_VG_TEST/SCLK2_dly
 add wave -noupdate /SYS_PSEUDO_SPI_INTF_SCAN_VG_TEST/SPI_SO_dly
 add wave -noupdate -divider ctrl_logic
-add wave -noupdate /SYS_PSEUDO_SPI_INTF_SCAN_VG_TEST/fpga/csi_clk
 add wave -noupdate -radix unsigned /SYS_PSEUDO_SPI_INTF_SCAN_VG_TEST/fpga/cnt_bit_load
 add wave -noupdate /SYS_PSEUDO_SPI_INTF_SCAN_VG_TEST/fpga/reg_sram_all
 add wave -noupdate /SYS_PSEUDO_SPI_INTF_SCAN_VG_TEST/fpga/CTRL_SO
@@ -41,6 +41,9 @@ add wave -noupdate /SYS_PSEUDO_SPI_INTF_SCAN_VG_TEST/fpga/reg_sram_data
 add wave -noupdate /SYS_PSEUDO_SPI_INTF_SCAN_VG_TEST/fpga/is_LOAD
 add wave -noupdate /SYS_PSEUDO_SPI_INTF_SCAN_VG_TEST/fpga/is_load2_ctrl
 add wave -noupdate /SYS_PSEUDO_SPI_INTF_SCAN_VG_TEST/fpga/is_rfrom_ctrl
+add wave -noupdate /SYS_PSEUDO_SPI_INTF_SCAN_VG_TEST/fpga/csi_clk
+add wave -noupdate {/SYS_PSEUDO_SPI_INTF_SCAN_VG_TEST/scpu_sram_alu/\scpu_ctrl_spi/cct/ctrl_state_reg[1] /CK}
+add wave -noupdate {/SYS_PSEUDO_SPI_INTF_SCAN_VG_TEST/scpu_sram_alu/\scpu_ctrl_spi/cct/reg_bits_reg[0] /Q}
 add wave -noupdate -expand -group SCPU_CTRL_SPI_CCT_REG_BITS {/SYS_PSEUDO_SPI_INTF_SCAN_VG_TEST/scpu_sram_alu/\SCPU_CTRL_SPI_CCT_REG_BITS[1] }
 add wave -noupdate -expand -group SCPU_CTRL_SPI_CCT_REG_BITS {/SYS_PSEUDO_SPI_INTF_SCAN_VG_TEST/scpu_sram_alu/\SCPU_CTRL_SPI_CCT_REG_BITS[2] }
 add wave -noupdate -expand -group SCPU_CTRL_SPI_CCT_REG_BITS {/SYS_PSEUDO_SPI_INTF_SCAN_VG_TEST/scpu_sram_alu/\SCPU_CTRL_SPI_CCT_REG_BITS[3] }
@@ -60,14 +63,8 @@ add wave -noupdate -expand -group SCPU_CTRL_SPI_CCT_REG_BITS {/SYS_PSEUDO_SPI_IN
 add wave -noupdate /SYS_PSEUDO_SPI_INTF_SCAN_VG_TEST/scpu_sram_alu/I_CTRL_SI
 add wave -noupdate /SYS_PSEUDO_SPI_INTF_SCAN_VG_TEST/scpu_sram_alu/I_CLK
 add wave -noupdate {/SYS_PSEUDO_SPI_INTF_SCAN_VG_TEST/scpu_sram_alu/\scpu_ctrl_spi/cct/CEN_reg /Q}
-add wave -noupdate {/SYS_PSEUDO_SPI_INTF_SCAN_VG_TEST/scpu_sram_alu/\SCPU_CTRL_SPI_CCT_CTRL_STATE[0] }
 add wave -noupdate {/SYS_PSEUDO_SPI_INTF_SCAN_VG_TEST/scpu_sram_alu/\scpu_ctrl_spi/cct/ctrl_state_reg[1] /Q}
-add wave -noupdate {/SYS_PSEUDO_SPI_INTF_SCAN_VG_TEST/scpu_sram_alu/\scpu_ctrl_spi/cct/ctrl_state_reg[1] /CK}
-add wave -noupdate {/SYS_PSEUDO_SPI_INTF_SCAN_VG_TEST/scpu_sram_alu/\scpu_ctrl_spi/cct/ctrl_state_reg[1] /D}
-add wave -noupdate {/SYS_PSEUDO_SPI_INTF_SCAN_VG_TEST/scpu_sram_alu/\scpu_ctrl_spi/cct/ctrl_state_reg[1] /E}
 add wave -noupdate {/SYS_PSEUDO_SPI_INTF_SCAN_VG_TEST/scpu_sram_alu/\scpu_ctrl_spi/cct/ctrl_state_reg[0] /Q}
-add wave -noupdate {/SYS_PSEUDO_SPI_INTF_SCAN_VG_TEST/scpu_sram_alu/\scpu_ctrl_spi/cct/ctrl_state_reg[0] /QN}
-add wave -noupdate {/SYS_PSEUDO_SPI_INTF_SCAN_VG_TEST/scpu_sram_alu/\scpu_ctrl_spi/cct/ctrl_state_reg[0] /D}
 add wave -noupdate /SYS_PSEUDO_SPI_INTF_SCAN_VG_TEST/scpu_sram_alu/I_CTRL_BGN
 add wave -noupdate /SYS_PSEUDO_SPI_INTF_SCAN_VG_TEST/scpu_sram_alu/I_LOAD_N
 add wave -noupdate {/SYS_PSEUDO_SPI_INTF_SCAN_VG_TEST/scpu_sram_alu/\scpu_ctrl_spi/cct/cnt_bit_load_reg[0] /Q}
@@ -79,10 +76,9 @@ add wave -noupdate {/SYS_PSEUDO_SPI_INTF_SCAN_VG_TEST/scpu_sram_alu/\scpu_ctrl_s
 add wave -noupdate {/SYS_PSEUDO_SPI_INTF_SCAN_VG_TEST/scpu_sram_alu/\scpu_ctrl_spi/cct/cnt_bit_load_reg[6] /Q}
 add wave -noupdate /SYS_PSEUDO_SPI_INTF_SCAN_VG_TEST/scpu_sram_alu/I_CTRL_MODE
 add wave -noupdate /SYS_PSEUDO_SPI_INTF_SCAN_VG_TEST/scpu_sram_alu/Q_FROM_SRAM
-add wave -noupdate /SYS_PSEUDO_SPI_INTF_SCAN_VG_TEST/scpu_sram_alu/N191
 TreeUpdate [SetDefaultTree]
-WaveRestoreCursors {{Cursor 2} {1238064722 ps} 0} {{Cursor 2} {346000 ps} 0}
-quietly wave cursor active 2
+WaveRestoreCursors {{Cursor 2} {338212 ps} 0} {{Cursor 2} {325703 ps} 0}
+quietly wave cursor active 1
 configure wave -namecolwidth 318
 configure wave -valuecolwidth 185
 configure wave -justifyvalue left
@@ -97,4 +93,4 @@ configure wave -griddelta 40
 configure wave -timeline 0
 configure wave -timelineunits ps
 update
-WaveRestoreZoom {96565 ps} {410365 ps}
+WaveRestoreZoom {265717 ps} {423217 ps}

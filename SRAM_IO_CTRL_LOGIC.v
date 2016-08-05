@@ -111,6 +111,7 @@ module SRAM_IO_CTRL_LOGIC(
             
     reg         [REG_BITS_WIDTH-1:0]  reg_sram_all;//addr+instruction
     reg         [7:0]   cnt_bit_load;
+    reg         is_shift;
     
     wire    CTRL_SO;
     assign  CTRL_SO = coe_ctrl_so_export;
@@ -184,6 +185,14 @@ module SRAM_IO_CTRL_LOGIC(
     /************** Send Serial data to SRAM_IO_CTRL  ***********/
     always @(negedge csi_clk)
     begin
+        if (cnt_bit_load)
+            is_shift <= 1'b1;
+        else
+            is_shift <= 1'b0;
+    end
+    
+    always @(negedge csi_clk)
+    begin
         if (~rsi_reset_n)
             reg_sram_all <= {REG_BITS_WIDTH{1'b0}};
         else if (is_LOAD)
@@ -194,7 +203,7 @@ module SRAM_IO_CTRL_LOGIC(
                 reg_sram_all <= {CTRL_SO, reg_sram_all[REG_BITS_WIDTH-1:1]};
             else
                 reg_sram_all <= reg_sram_all;
-        else if (cnt_bit_load)
+        else if (is_shift)
             reg_sram_all <= {CTRL_SO, reg_sram_all[REG_BITS_WIDTH-1:1]};
     end
     
