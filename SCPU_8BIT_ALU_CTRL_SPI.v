@@ -64,7 +64,7 @@ module SCPU_8BIT_ALU_CTRL_SPI(
     input   LOAD_N;
     input   CTRL_SI;
     //input   ANA_SI;
-    input   [GENERAL_REG_WIDTH-1:0] ADC_PI;
+    input   [9:0]   ADC_PI;
     
     // Output
     output  CTRL_RDY;
@@ -230,7 +230,8 @@ module SCPU_8BIT_ALU_CTRL_SPI(
     
     // wire connections GPIO and CPU
     assign  io_status  = {{(GENERAL_REG_WIDTH-2){1'b0}}, spi_is_done, alu_is_done};
-    assign  io_datainA = (alu_start)?{{(GENERAL_REG_WIDTH-MAX_SQRT_WIDTH){1'b0}},FOUT}:ADC_PI;
+    assign  io_datainA = (alu_start)?{{(GENERAL_REG_WIDTH-MAX_SQRT_WIDTH){1'b0}},FOUT}:
+                                {{(GENERAL_REG_WIDTH-10){1'b0}},ADC_PI};
     assign  io_datainB = {{(GENERAL_REG_WIDTH-MAX_SQRT_WIDTH){1'b0}},POUT};
 
     // wire connections between SPI module and CPU

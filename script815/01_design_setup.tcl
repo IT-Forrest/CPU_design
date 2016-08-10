@@ -19,9 +19,10 @@ exec Milkyway -f ${macro_db_path}/lef2cel_new.tcl  &
 # manually close Milkyway # menuQuit
 }
 
+set CHIP_lib    CHIP2
  ## Create the CHIP Libaray if Not Exist
-if {![file exist CHIP]} {create_mw_lib  -technology ${icc_tech_file} -mw_reference_library [list ${icc_ref_lib} ${icc_pad_lib} ${macro_db_path}/${sram_db_name}] -bus_naming_style {[%d]} -open CHIP}
-open_mw_lib CHIP
+if {![file exist ${CHIP_lib}]} {create_mw_lib  -technology ${icc_tech_file} -mw_reference_library [list ${icc_ref_lib} ${icc_pad_lib} ${macro_db_path}/${sram_db_name}] -bus_naming_style {[%d]} -open ${CHIP_lib}}
+open_mw_lib ${CHIP_lib}
 
  ## Load the design 
 import_designs -format verilog -top ${my_design} -cel ${my_design} "${syn_nlst_dir}/${my_design}.vg"

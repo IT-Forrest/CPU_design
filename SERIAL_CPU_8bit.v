@@ -59,15 +59,16 @@ module SERIAL_CPU_8BIT(
                 MSB_VAL3_3B         = 3;//  index of the MSB bit of value3
     
     parameter   STATE_IDLE          = 4'b0000,
-                STATE_IF            = 4'b0001,
-                STATE_IF2           = 4'b0011,
-                STATE_ID            = 4'b0010,
-                STATE_EX            = 4'b0110,
-                STATE_EX2           = 4'b0100,
-                STATE_MEM           = 4'b0101,
-                STATE_MEM2          = 4'b0111,
-                STATE_WB            = 4'b1111,
-                STATE_LP            = 4'b1110;
+                STATE_IF            = 4'b0010,
+                STATE_IF2           = 4'b0100,
+                STATE_ID            = 4'b0101,
+                STATE_EX            = 4'b1101,
+                STATE_WAIT          = 4'b1001,
+                STATE_EX2           = 4'b0001,
+                STATE_MEM           = 4'b0011,
+                STATE_MEM2          = 4'b1011,
+                STATE_WB            = 4'b1010,
+                STATE_LP            = 4'b0110;
     
     input   clk;
     input   enable;
@@ -170,7 +171,8 @@ module SERIAL_CPU_8BIT(
                     end
                 STATE_IF2:  next_state <= STATE_ID;
                 STATE_ID:   next_state <= STATE_EX;
-                STATE_EX:   next_state <= STATE_EX2;
+                STATE_EX:   next_state <= STATE_WAIT;
+                STATE_WAIT: next_state <= STATE_EX2;
                 STATE_EX2:  next_state <= STATE_MEM;
                 STATE_MEM:  next_state <= STATE_MEM2;
                 STATE_MEM2: next_state <= STATE_WB;//next_state <= STATE_MEM;

@@ -14,7 +14,8 @@ verify_lvs
  ## Insert Standard Cell Fillers
 insert_stdcell_filler  -cell_without_metal "FILL64TF FILL32TF FILL16TF FILL8TF FILL4TF FILL2TF FILL1TF"
  ## Make Sure No Fillers Exists Around Macros
-remove_stdcell_filler  -stdcell -bounding_box {{552.990 587.720} {786.640 771.530}}
+remove_stdcell_filler  -stdcell -bounding_box {{571.000 578.000} {762.000 737.000}}
+#remove_stdcell_filler  -stdcell -bounding_box {{552.990 587.720} {786.640 771.530}}
 #source ../scripts/addCoreFiller.cmd
 #insert_metal_filler  -out self
 

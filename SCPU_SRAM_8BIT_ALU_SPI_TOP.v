@@ -57,7 +57,7 @@ module SCPU_SRAM_8BIT_ALU_SPI_TOP(
     input   LOAD_N;
     input   CTRL_SI;
     //input   ANA_SI;
-    input   [GENERAL_REG_WIDTH-1:0] ADC_PI;
+    input   [9:0] ADC_PI;
     
     // Output
     output  CTRL_RDY;
@@ -74,7 +74,7 @@ module SCPU_SRAM_8BIT_ALU_SPI_TOP(
     // Wires
     wire    [1:0]   i_CTRL_MODE;
     wire    [1:0]   i_NXT;
-    wire    [GENERAL_REG_WIDTH-1:0] i_ADC_PI;
+    wire    [9:0]   i_ADC_PI;
     wire    WEN_after_mux;
     wire    CEN_after_mux;
     wire [8:0]  A_after_mux;
@@ -141,12 +141,6 @@ module SCPU_SRAM_8BIT_ALU_SPI_TOP(
     PIC     ipad_adc_pi7	(.Y(i_ADC_PI[7]), .P(ADC_PI[7]), .IE(1'b1));
     PIC     ipad_adc_pi8	(.Y(i_ADC_PI[8]), .P(ADC_PI[8]), .IE(1'b1));
     PIC     ipad_adc_pi9	(.Y(i_ADC_PI[9]), .P(ADC_PI[9]), .IE(1'b1));
-    PIC     ipad_adc_pi10	(.Y(i_ADC_PI[10]), .P(ADC_PI[10]), .IE(1'b1));
-    PIC     ipad_adc_pi11	(.Y(i_ADC_PI[11]), .P(ADC_PI[11]), .IE(1'b1));
-    PIC     ipad_adc_pi12	(.Y(i_ADC_PI[12]), .P(ADC_PI[12]), .IE(1'b1));
-    PIC     ipad_adc_pi13	(.Y(i_ADC_PI[13]), .P(ADC_PI[13]), .IE(1'b1));
-    PIC     ipad_adc_pi14	(.Y(i_ADC_PI[14]), .P(ADC_PI[14]), .IE(1'b1));
-    PIC     ipad_adc_pi15	(.Y(i_ADC_PI[15]), .P(ADC_PI[15]), .IE(1'b1));
     
     // output Pad information
     POC8B   opad_ctrl_rdy   (.P(CTRL_RDY), .A(i_CTRL_RDY));
