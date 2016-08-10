@@ -96,7 +96,8 @@ module SRAM_IO_CTRL(CLK, BGN, SI, LOAD_N, CTRL, PI, RDY, D_WE, CEN, SO, A, PO);
         //else
         if ((ctrl_state == IO_LOAD) && is_shift)
             reg_bits <= {SI, reg_bits[REG_BITS_WIDTH-1:1]};
-        else if ((ctrl_state == IO_SEND) && (!is_shift) && !is_write)
+        else if ((ctrl_state == IO_SEND) && is_shift && !is_write)
+            // due to the delay of is_shift, use (is_shift==1)
             reg_bits[MEMORY_DATA_WIDTH-1:0] <= PI;
         else
             reg_bits <= reg_bits;
