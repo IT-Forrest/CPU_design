@@ -20,7 +20,7 @@
 `include    "../SC_CELL_V3.v"
 
 module  SYS_PSEUDO_SPI_INTF_SCAN_VG_TEST();
-    parameter   CLKPERIOD = 40;
+    parameter   CLKPERIOD = 20;
 
     parameter   MULTIPLICAND_WIDTH  = 9,// the division of CF
                 MULTIPLIER_WIDTH    = 8,// for the random value used by SA, it's the width of LFSR 

@@ -80,7 +80,7 @@ module PSEUDO_SPT_INTF(
     reg     [4:0]   cnt_bit_sent;
     reg     [4:0]   cnt_addr_len;
     reg     [4:0]   cnt_freq_div;
-    //reg     [2:0]  sclk_state;
+    reg             is_addr_len_nz;
     
     assign  SPI_SO  = sram_regs[0];
     assign  A       = sram_addr;//(!CEN)?(sram_addr):0;
@@ -131,12 +131,22 @@ module PSEUDO_SPT_INTF(
             // cnt_freq_div <= cnt_freq_div;
     // end
     
+    always @(negedge CLK)
+    begin
+        if (!BGN)
+            is_addr_len_nz <= 1'b0;
+        else if (cnt_addr_len)
+            is_addr_len_nz <= 1'b1;
+        else
+            is_addr_len_nz <= 1'b0;
+    end
+    
     //************* Addr & Buffer Update *************//
     always @(negedge CLK)
     begin
         if (!BGN)
             sram_addr <= ADDR_BGN;
-        else if ((SPI_ADDR == spi_state) && cnt_addr_len)
+        else if ((SPI_ADDR == spi_state) && is_addr_len_nz)
             sram_addr <= sram_addr + 1;
         else
             sram_addr <= sram_addr;
@@ -215,7 +225,7 @@ module PSEUDO_SPT_INTF(
                     end
                 SPI_ADDR:
                     if (!cnt_state) begin
-                        if (cnt_addr_len)
+                        if (is_addr_len_nz)
                             spi_state <= SPI_READ;
                         else
                             spi_state <= SPI_RDY;
