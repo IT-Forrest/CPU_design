@@ -50,7 +50,7 @@ module  SYS_PSEUDO_SPI_INTF_SCAN_VG_TEST();
     reg     LOAD_N;
     reg     CTRL_SI;
     //reg     ANA_SI;
-    reg     [GENERAL_REG_WIDTH-1:0] ADC_PI;
+    reg     [9:0] ADC_PI;
     
     // Wires
     wire    CTRL_RDY;

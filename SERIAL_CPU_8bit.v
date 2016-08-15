@@ -134,10 +134,17 @@ module SERIAL_CPU_8BIT(
     //************* delay is_i_addr signal *************//
     always @(negedge clk)
         begin
-            if ((state == STATE_IF)||(state == STATE_IF2)||(state == STATE_ID)||(state == STATE_LP))
-                is_i_addr <= 1'b1;
-            else
+            if (!rst_n)
                 is_i_addr <= 1'b0;
+            else if (state == STATE_IF)
+            // else if (state == STATE_IF2)
+            // else if (state == STATE_ID)
+            // else if (state == STATE_LP)
+                is_i_addr <= 1'b1;
+            else if (state == STATE_EX)
+                is_i_addr <= 1'b0;
+            else
+                is_i_addr <= is_i_addr;
         end
     
     //************* CPU Control *************//
