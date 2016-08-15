@@ -22,12 +22,11 @@ module I_MEMORY_8BIT(
     input [8:0] addr,
     input d_we,
     input [7:0] datain,
-    output [7:0] dataout
+    output reg [7:0] dataout
     );
 
     reg [7:0] I_RAM[511:0];
-    
-    assign dataout = I_RAM[addr];
+    //assign dataout = I_RAM[addr];
     always @(posedge clk or negedge rst_n)
         begin
             if (!rst_n)
@@ -52,6 +51,8 @@ module I_MEMORY_8BIT(
                 end
             else if (d_we)
                 I_RAM[addr] <= datain;
+            else
+                dataout <= I_RAM[addr];
         end
 
 endmodule

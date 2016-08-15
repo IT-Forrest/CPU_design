@@ -17,10 +17,12 @@
 
 module PSEUDO_SPI_INTF_RA1512_TEST;
 
-   parameter    MEMORY_DATA_WIDTH   = 8,
+    parameter   MEMORY_DATA_WIDTH   = 8,
                 MEMORY_ADDR_WIDTH   = 9,
                 REG_BITS_WIDTH = MEMORY_ADDR_WIDTH + MEMORY_DATA_WIDTH;
 
+    parameter   VIRTUAL_DLY = 2;
+                
     // Inputs
     reg CLK;
     reg SPI_BGN;// enable signal for PSEUDO_SPI
@@ -70,15 +72,21 @@ module PSEUDO_SPI_INTF_RA1512_TEST;
     wire  is_i_addr;
     wire  spi_is_done;
 
+    wire  CLK_dly;
+    wire  CTRL_BGN_dly;
+    wire  SI_dly;
+    wire  RDY_dly;
+    wire  LOAD_N_dly;
+    
     // Instantiate the Unit Under Test (UUT)
     SRAM_IO_CTRL cct (
-        .CLK(CLK),
-        .BGN(CTRL_BGN),
-        .SI(SI),
-        .LOAD_N(LOAD_N),
+        .CLK(CLK_dly),
+        .BGN(CTRL_BGN_dly),
+        .SI(SI_dly),
+        .LOAD_N(LOAD_N_dly),
         .CTRL(CTRL_MODE),//2'b00
         .PI(m_dataout),
-        .RDY(RDY),
+        .RDY(RDY_dly),
         .D_WE(d_we_cct),
         .CEN(CEN_cct),
         .SO(CTRL_SO),
@@ -88,7 +96,7 @@ module PSEUDO_SPI_INTF_RA1512_TEST;
     
     PSEUDO_SPT_INTF     put(
         //input
-        .CLK        (CLK     ),
+        .CLK        (CLK_dly),
         .BGN        (SPI_BGN ),
         .ADDR_BGN   (addr_bgn),
         .DATA_LEN   (data_len),
@@ -106,7 +114,7 @@ module PSEUDO_SPI_INTF_RA1512_TEST;
     );
   
     RA1SHD_IBM512X8   sram (
-        .CLK(CLK),
+        .CLK(CLK_dly),
         .CEN(CEN), 
         .A(m_addr),
         .WEN(d_we),// need a seperate control signal; or instruction set will be overwritten when d_we=1
@@ -141,6 +149,12 @@ module PSEUDO_SPI_INTF_RA1512_TEST;
     assign  d_we    = (is_intf_flag)? d_we_put: d_we_cct;
     //assign  i_datain = (is_i_addr)?m_dataout:0;
     //assign  d_datain = (is_i_addr)?0:m_dataout;
+    
+    assign  #VIRTUAL_DLY    CTRL_BGN_dly = CTRL_BGN;
+    assign  #VIRTUAL_DLY    CLK_dly = CLK;
+    assign  #VIRTUAL_DLY    SI_dly  = SI;
+    assign  #VIRTUAL_DLY    LOAD_N_dly = LOAD_N;
+    assign  #VIRTUAL_DLY    RDY_dly = RDY;
     
     parameter   DEFAULT_PC_ADDR = 16,
                 MEM_BGN_ADDR    = DEFAULT_PC_ADDR*2,
@@ -246,6 +260,7 @@ module PSEUDO_SPI_INTF_RA1512_TEST;
                 begin
                     // FPGA send Load signal & data to CTRL
                     #10 LOAD_N = 0;
+                    #10;//need to wait one more cycle for the delay
                     for (j = 0; j < REG_BITS_WIDTH; j=j+1) begin
                         #10 SI = tmpi_all[j];
                     end
@@ -255,7 +270,7 @@ module PSEUDO_SPI_INTF_RA1512_TEST;
                 begin: ctrl_module_load_ready
                 forever begin
                     #10;
-                    if (RDY) begin
+                    if (RDY_dly) begin
                         disable ctrl_module_load_ready;
                     end
                 end
@@ -267,7 +282,7 @@ module PSEUDO_SPI_INTF_RA1512_TEST;
                 begin: ctrl_module_load_finish
                 forever begin
                     #10;
-                    if (!RDY) begin
+                    if (!RDY_dly) begin
                         disable ctrl_module_load_finish;
                     end
                 end
@@ -288,7 +303,7 @@ module PSEUDO_SPI_INTF_RA1512_TEST;
                 begin: ctrl_module_write_ready
                 forever begin
                     #10;
-                    if (RDY) begin
+                    if (RDY_dly) begin
                         disable ctrl_module_write_ready;
                     end
                 end
@@ -300,7 +315,7 @@ module PSEUDO_SPI_INTF_RA1512_TEST;
                 begin: ctrl_module_write_finish
                 forever begin
                     #10;
-                    if (!RDY) begin
+                    if (!RDY_dly) begin
                         disable ctrl_module_write_finish;
                     end
                 end

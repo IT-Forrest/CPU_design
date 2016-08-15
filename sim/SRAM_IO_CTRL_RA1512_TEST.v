@@ -180,6 +180,7 @@ module SRAM_IO_CTRL_RA1512_TEST;
                 begin
                     // FPGA send Load signal & data to CTRL
                     #10 LOAD_N = 0;
+                    #10;//need to wait one more cycle for the delay
                     for (j = 0; j < REG_BITS_WIDTH; j=j+1) begin
                         #10 SI = tmpi_all[j];
                     end
@@ -260,6 +261,7 @@ module SRAM_IO_CTRL_RA1512_TEST;
                 begin
                     // FPGA send Load signal & data to CTRL
                     #10 LOAD_N = 0;
+                    #10;//need to wait one more cycle for the delay
                     for (j = 0; j < REG_BITS_WIDTH; j=j+1) begin
                         #10 SI = tmpi_all[j];
                     end

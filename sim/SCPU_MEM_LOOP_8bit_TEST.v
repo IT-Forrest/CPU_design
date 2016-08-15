@@ -41,10 +41,10 @@ module SCPU_MEM_LOOP_8BIT_TEST;
     
     // Instantiate the Unit Under Test (UUT)
     SERIAL_CPU_8BIT uut (
-        .clk(clk), 
+        .clk(clk_dly), 
         .enable(enable), 
         .rst_n(rst_n), 
-        .start(start), 
+        .start(CPU_BGN_dly), 
         .i_datain(i_datain), 
         .d_datain(d_datain), 
         // output
@@ -55,7 +55,7 @@ module SCPU_MEM_LOOP_8BIT_TEST;
         .d_dataout(d_dataout)
     );
     I_MEMORY_8BIT i_mem (
-        .clk(clk),
+        .clk(clk_dly),
         .rst_n(rst_n), 
         .addr(m_addr),
         .d_we(d_we),// need a seperate control signal; or instruction set will be overwritten when d_we=1
@@ -63,6 +63,7 @@ module SCPU_MEM_LOOP_8BIT_TEST;
         .dataout(m_dataout)
     );
 
+    parameter   VIRTUAL_DLY = 2;
     parameter   DEFAULT_PC_ADDR = 16;
     defparam    uut.DEFAULT_PC_ADDR = DEFAULT_PC_ADDR;
     
@@ -70,6 +71,9 @@ module SCPU_MEM_LOOP_8BIT_TEST;
     assign  m_datain = d_dataout;
     assign  i_datain = (is_i_addr)?m_dataout:0;
     assign  d_datain = (is_i_addr)?0:m_dataout;
+    
+    assign  #VIRTUAL_DLY    CPU_BGN_dly = start;
+    assign  #VIRTUAL_DLY    clk_dly = clk;
     
     initial begin
         // Initialize Inputs
@@ -132,13 +136,13 @@ module SCPU_MEM_LOOP_8BIT_TEST;
         // i_mem.I_RAM[21] = {`NOP, 11'b000_0000_0000};
         
         i = 0;
-        tmpi_datain = 16'h00AB;
+        tmpi_datain = {`JUMP, 3'b000, 4'b0001, 4'b0000};// Jump to certain address
         i_mem.I_RAM[ i] = tmpi_datain[7:0];  i = 1;
         i_mem.I_RAM[ i] = tmpi_datain[15:8]; i = 2;
-        tmpi_datain = 16'h3C00;
+        tmpi_datain = 16'h00AB;
         i_mem.I_RAM[ i] = tmpi_datain[7:0];  i = 3;
         i_mem.I_RAM[ i] = tmpi_datain[15:8]; i = 4;
-        tmpi_datain = 16'h0000;
+        tmpi_datain = 16'h3C00;
         i_mem.I_RAM[ i] = tmpi_datain[7:0];  i = 5;
         i_mem.I_RAM[ i] = tmpi_datain[15:8]; i = 6;
         // i_mem.D_RAM[0] = 16'h00AB;

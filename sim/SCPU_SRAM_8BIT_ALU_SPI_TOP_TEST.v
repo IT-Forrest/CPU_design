@@ -39,7 +39,7 @@ module SCPU_SRAM_8BIT_ALU_SPI_TOP_TEST;
     reg     LOAD_N;
     reg     CTRL_SI;
     //reg     ANA_SI;
-    reg     [GENERAL_REG_WIDTH-1:0] ADC_PI;
+    reg     [9:0] ADC_PI;
     
     // Wires
     wire    CTRL_RDY;
@@ -176,6 +176,7 @@ module SCPU_SRAM_8BIT_ALU_SPI_TOP_TEST;
                 begin
                     // FPGA send Load signal & data to CTRL
                     #10 LOAD_N = 0;
+                    #10;//need to wait one more cycle for the delay
                     for (j = 0; j < REG_BITS_WIDTH; j=j+1) begin
                         #10 CTRL_SI = tmpi_all[j];
                     end
@@ -282,6 +283,7 @@ module SCPU_SRAM_8BIT_ALU_SPI_TOP_TEST;
                 begin
                     // FPGA send Load signal & data to CTRL
                     #10 LOAD_N = 0;
+                    #10;//need to wait one more cycle for the delay
                     for (j = 0; j < REG_BITS_WIDTH; j=j+1) begin
                         #10 CTRL_SI = tmpi_all[j];
                     end
@@ -381,6 +383,7 @@ module SCPU_SRAM_8BIT_ALU_SPI_TOP_TEST;
                 begin
                     // FPGA send Load signal & data to CTRL
                     #10 LOAD_N = 0;
+                    #10;//need to wait one more cycle for the delay
                     for (j = 0; j < REG_BITS_WIDTH; j=j+1) begin
                         #10 CTRL_SI = tmpi_all[j];
                     end

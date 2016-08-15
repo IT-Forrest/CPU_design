@@ -63,10 +63,10 @@ module SRAM_IO_CTRL_RA1512_SCPU_8BIT_TEST;
    
     // Instantiate the Unit Under Test (UUT)
     SERIAL_CPU_8BIT uut (
-        .clk(clk), 
+        .clk(clk_dly), 
         .enable(enable), 
         .rst_n(rst_n), 
-        .start(start), 
+        .start(CPU_BGN_dly), 
         .i_datain(i_datain), 
         .d_datain(d_datain), 
         // output
@@ -80,8 +80,8 @@ module SRAM_IO_CTRL_RA1512_SCPU_8BIT_TEST;
    
     // Instantiate the Control Unit Test (CUT)
     SRAM_IO_CTRL cct (
-        .CLK(clk),
-        .BGN(CTRL_BGN),
+        .CLK(clk_dly),
+        .BGN(CTRL_BGN_dly),
         .SI(SI),
         .LOAD_N(LOAD_N),
         .CTRL(CTRL_MODE),//2'b00
@@ -95,7 +95,7 @@ module SRAM_IO_CTRL_RA1512_SCPU_8BIT_TEST;
     );
     
     RA1SHD_IBM512X8   sram (
-        .CLK(clk),
+        .CLK(clk_dly),
         .CEN(CEN_after_mux), 
         .A(A_after_mux),
         // need a seperate control signal; or instruction set will be overwritten when d_we=1
@@ -114,11 +114,16 @@ module SRAM_IO_CTRL_RA1512_SCPU_8BIT_TEST;
         // .dataout(m_dataout)
     );
     
+    parameter   VIRTUAL_DLY = 2;
     parameter   DEFAULT_PC_ADDR = 16;
     defparam    uut.DEFAULT_PC_ADDR = DEFAULT_PC_ADDR;
 
+    assign  #VIRTUAL_DLY    CTRL_BGN_dly = CTRL_BGN;
+    assign  #VIRTUAL_DLY    CPU_BGN_dly = start;
+    assign  #VIRTUAL_DLY    clk_dly = clk;
+    
     /* Mux & Demux from CTRL and CPU to SRAM */
-    assign  LOAD_MUX = CTRL_BGN;
+    assign  LOAD_MUX = CTRL_BGN_dly;
     assign  CEN_after_mux = (LOAD_MUX)?CEN:1'b0;//enable
     assign  WEN_after_mux = (LOAD_MUX)?WEN:(!D_WE); //low active
     assign  D_after_mux = (LOAD_MUX)?PO_from_CTRL:m_datain;
@@ -233,6 +238,7 @@ module SRAM_IO_CTRL_RA1512_SCPU_8BIT_TEST;
                 begin
                     // FPGA send Load signal & data to CTRL
                     #10 LOAD_N = 0;
+                    #10;//need to wait one more cycle for the delay
                     for (j = 0; j < REG_BITS_WIDTH; j=j+1) begin
                         #10 SI = tmpi_all[j];
                     end
@@ -335,6 +341,7 @@ module SRAM_IO_CTRL_RA1512_SCPU_8BIT_TEST;
                 begin
                     // FPGA send Load signal & data to CTRL
                     #10 LOAD_N = 0;
+                    #10;//need to wait one more cycle for the delay
                     for (j = 0; j < REG_BITS_WIDTH; j=j+1) begin
                         #10 SI = tmpi_all[j];
                     end
@@ -430,6 +437,7 @@ module SRAM_IO_CTRL_RA1512_SCPU_8BIT_TEST;
                 begin
                     // FPGA send Load signal & data to CTRL
                     #10 LOAD_N = 0;
+                    #10;//need to wait one more cycle for the delay
                     for (j = 0; j < REG_BITS_WIDTH; j=j+1) begin
                         #10 SI = tmpi_all[j];
                     end

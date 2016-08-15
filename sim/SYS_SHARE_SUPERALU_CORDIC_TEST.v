@@ -39,7 +39,7 @@ module  SYS_SHARE_SUPERALU_CORDIC_TEST();
     reg     LOAD_N;
     reg     CTRL_SI;
     //reg     ANA_SI;
-    reg     [GENERAL_REG_WIDTH-1:0] ADC_PI;
+    reg     [9:0] ADC_PI;
     
     // Wires
     wire    CTRL_RDY;
@@ -90,8 +90,7 @@ module  SYS_SHARE_SUPERALU_CORDIC_TEST();
         // .datain(m_datain),//i_instruct
         // .dataout(m_dataout)
     );
-    
-    parameter   CLK_PERIOD  = 20;
+   
     initial begin
         // Initialize Inputs Signals
         CLK = 0;
@@ -186,6 +185,7 @@ module  SYS_SHARE_SUPERALU_CORDIC_TEST();
                 begin
                     // FPGA send Load signal & data to CTRL
                     #10 LOAD_N = 0;
+                    #10;//need to wait one more cycle for the delay
                     for (j = 0; j < REG_BITS_WIDTH; j=j+1) begin
                         #10 CTRL_SI = tmpi_all[j];
                     end
@@ -295,6 +295,7 @@ module  SYS_SHARE_SUPERALU_CORDIC_TEST();
                 begin
                     // FPGA send Load signal & data to CTRL
                     #10 LOAD_N = 0;
+                    #10;//need to wait one more cycle for the delay
                     for (j = 0; j < REG_BITS_WIDTH; j=j+1) begin
                         #10 CTRL_SI = tmpi_all[j];
                     end

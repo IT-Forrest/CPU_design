@@ -156,7 +156,7 @@ module SRAM_IO_CTRL_TEST;
         // i_mem.I_RAM[21] = {`NOP, 11'b000_0000_0000};
         
         i = 0;
-        tmpi_datain = 16'h00AB;
+        tmpi_datain = {`JUMP, 3'b000, 4'b0001, 4'b0000};// Jump to certain address
         i_mem.I_RAM[ i] = tmpi_datain[7:0];  i = 1;
         i_mem.I_RAM[ i] = tmpi_datain[15:8]; i = 2;
         tmpi_datain = 16'h3C00;
@@ -173,7 +173,7 @@ module SRAM_IO_CTRL_TEST;
         #10 rst_n = 1;
 
         /* (2) Serially Input the address & Instruction to CTRL and then to SRAM */
-        for (i = DEFAULT_PC_ADDR; i<7+ DEFAULT_PC_ADDR; i=i+1) begin
+        for (i = 0; i<7+ DEFAULT_PC_ADDR; i=i) begin
             for (k = 2; k >= 1; k=k-1) begin
                 /** (a) load data to SRAM_IO_CTRL from PC **/
                 // C code modify control word
@@ -186,6 +186,7 @@ module SRAM_IO_CTRL_TEST;
                 begin
                     // FPGA send Load signal & data to CTRL
                     #10 LOAD_N = 0;
+                    #10;//need to wait one more cycle for the delay
                     for (j = 0; j < REG_BITS_WIDTH; j=j+1) begin
                         #10 SI = tmpi_all[j];
                     end
@@ -246,6 +247,11 @@ module SRAM_IO_CTRL_TEST;
                 end
                 end
             end
+            
+            if (i == 0)
+                i = DEFAULT_PC_ADDR;
+            else
+                i = i + 1;
         end
         #3130;
         
@@ -266,6 +272,7 @@ module SRAM_IO_CTRL_TEST;
                 begin
                     // FPGA send Load signal & data to CTRL
                     #10 LOAD_N = 0;
+                    #10;//need to wait one more cycle for the delay
                     for (j = 0; j < REG_BITS_WIDTH; j=j+1) begin
                         #10 SI = tmpi_all[j];
                     end

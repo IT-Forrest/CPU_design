@@ -1,36 +1,44 @@
 onerror {resume}
 quietly WaveActivateNextPane {} 0
-add wave -noupdate /PSEUDO_SPI_INTF_RA1512_TEST/CLK
-add wave -noupdate /PSEUDO_SPI_INTF_RA1512_TEST/is_intf_flag
-add wave -noupdate -radix unsigned /PSEUDO_SPI_INTF_RA1512_TEST/m_addr
-add wave -noupdate /PSEUDO_SPI_INTF_RA1512_TEST/d_we
-add wave -noupdate /PSEUDO_SPI_INTF_RA1512_TEST/CEN
-add wave -noupdate /PSEUDO_SPI_INTF_RA1512_TEST/SPI_SO
-add wave -noupdate -radix unsigned /PSEUDO_SPI_INTF_RA1512_TEST/error_cnt
-add wave -noupdate -divider PSEUDO_INTF
-add wave -noupdate /PSEUDO_SPI_INTF_RA1512_TEST/SPI_BGN
-add wave -noupdate -radix unsigned /PSEUDO_SPI_INTF_RA1512_TEST/put/A
-add wave -noupdate /PSEUDO_SPI_INTF_RA1512_TEST/SCLK1
-add wave -noupdate /PSEUDO_SPI_INTF_RA1512_TEST/SCLK2
-add wave -noupdate /PSEUDO_SPI_INTF_RA1512_TEST/LAT
-add wave -noupdate /PSEUDO_SPI_INTF_RA1512_TEST/spi_is_done
-add wave -noupdate -radix unsigned /PSEUDO_SPI_INTF_RA1512_TEST/put/sram_addr
-add wave -noupdate /PSEUDO_SPI_INTF_RA1512_TEST/put/sram_regs
-add wave -noupdate /PSEUDO_SPI_INTF_RA1512_TEST/put/spi_state
-add wave -noupdate /PSEUDO_SPI_INTF_RA1512_TEST/put/cnt_state
-add wave -noupdate -radix unsigned /PSEUDO_SPI_INTF_RA1512_TEST/put/cnt_bit_sent
-add wave -noupdate -radix unsigned /PSEUDO_SPI_INTF_RA1512_TEST/put/cnt_addr_len
-add wave -noupdate -divider SRAM
-add wave -noupdate /PSEUDO_SPI_INTF_RA1512_TEST/sram/Q
-add wave -noupdate /PSEUDO_SPI_INTF_RA1512_TEST/sram/CEN
-add wave -noupdate /PSEUDO_SPI_INTF_RA1512_TEST/sram/WEN
-add wave -noupdate -radix unsigned /PSEUDO_SPI_INTF_RA1512_TEST/sram/A
-add wave -noupdate /PSEUDO_SPI_INTF_RA1512_TEST/sram/D
+add wave -noupdate /SCPU_MEM_LOOP_8BIT_TEST/uut/rst_n
+add wave -noupdate /SCPU_MEM_LOOP_8BIT_TEST/uut/start
+add wave -noupdate /SCPU_MEM_LOOP_8BIT_TEST/uut/enable
+add wave -noupdate /SCPU_MEM_LOOP_8BIT_TEST/uut/clk
+add wave -noupdate -radix hexadecimal /SCPU_MEM_LOOP_8BIT_TEST/uut/i_datain
+add wave -noupdate -radix hexadecimal /SCPU_MEM_LOOP_8BIT_TEST/uut/d_datain
+add wave -noupdate -radix unsigned /SCPU_MEM_LOOP_8BIT_TEST/uut/i_addr
+add wave -noupdate /SCPU_MEM_LOOP_8BIT_TEST/uut/d_addr
+add wave -noupdate /SCPU_MEM_LOOP_8BIT_TEST/uut/d_we
+add wave -noupdate -radix binary /SCPU_MEM_LOOP_8BIT_TEST/uut/state
+add wave -noupdate /SCPU_MEM_LOOP_8BIT_TEST/uut/next_state
+add wave -noupdate -radix hexadecimal /SCPU_MEM_LOOP_8BIT_TEST/uut/d_dataout
+add wave -noupdate /SCPU_MEM_LOOP_8BIT_TEST/uut/reg_C
+add wave -noupdate -radix unsigned /SCPU_MEM_LOOP_8BIT_TEST/uut/code_type
+add wave -noupdate /SCPU_MEM_LOOP_8BIT_TEST/uut/oper1_r1
+add wave -noupdate /SCPU_MEM_LOOP_8BIT_TEST/uut/oper2_is_val
+add wave -noupdate /SCPU_MEM_LOOP_8BIT_TEST/uut/oper2_r2
+add wave -noupdate /SCPU_MEM_LOOP_8BIT_TEST/uut/oper3_is_val
+add wave -noupdate /SCPU_MEM_LOOP_8BIT_TEST/uut/oper3_r3
+add wave -noupdate -divider {SCPU internal}
+add wave -noupdate /SCPU_MEM_LOOP_8BIT_TEST/uut/cf_buf
+add wave -noupdate -radix hexadecimal -childformat {{{/SCPU_MEM_LOOP_8BIT_TEST/uut/ALUo[15]} -radix hexadecimal} {{/SCPU_MEM_LOOP_8BIT_TEST/uut/ALUo[14]} -radix hexadecimal} {{/SCPU_MEM_LOOP_8BIT_TEST/uut/ALUo[13]} -radix hexadecimal} {{/SCPU_MEM_LOOP_8BIT_TEST/uut/ALUo[12]} -radix hexadecimal} {{/SCPU_MEM_LOOP_8BIT_TEST/uut/ALUo[11]} -radix hexadecimal} {{/SCPU_MEM_LOOP_8BIT_TEST/uut/ALUo[10]} -radix hexadecimal} {{/SCPU_MEM_LOOP_8BIT_TEST/uut/ALUo[9]} -radix hexadecimal} {{/SCPU_MEM_LOOP_8BIT_TEST/uut/ALUo[8]} -radix hexadecimal} {{/SCPU_MEM_LOOP_8BIT_TEST/uut/ALUo[7]} -radix hexadecimal} {{/SCPU_MEM_LOOP_8BIT_TEST/uut/ALUo[6]} -radix hexadecimal} {{/SCPU_MEM_LOOP_8BIT_TEST/uut/ALUo[5]} -radix hexadecimal} {{/SCPU_MEM_LOOP_8BIT_TEST/uut/ALUo[4]} -radix hexadecimal} {{/SCPU_MEM_LOOP_8BIT_TEST/uut/ALUo[3]} -radix hexadecimal} {{/SCPU_MEM_LOOP_8BIT_TEST/uut/ALUo[2]} -radix hexadecimal} {{/SCPU_MEM_LOOP_8BIT_TEST/uut/ALUo[1]} -radix hexadecimal} {{/SCPU_MEM_LOOP_8BIT_TEST/uut/ALUo[0]} -radix hexadecimal}} -subitemconfig {{/SCPU_MEM_LOOP_8BIT_TEST/uut/ALUo[15]} {-height 15 -radix hexadecimal} {/SCPU_MEM_LOOP_8BIT_TEST/uut/ALUo[14]} {-height 15 -radix hexadecimal} {/SCPU_MEM_LOOP_8BIT_TEST/uut/ALUo[13]} {-height 15 -radix hexadecimal} {/SCPU_MEM_LOOP_8BIT_TEST/uut/ALUo[12]} {-height 15 -radix hexadecimal} {/SCPU_MEM_LOOP_8BIT_TEST/uut/ALUo[11]} {-height 15 -radix hexadecimal} {/SCPU_MEM_LOOP_8BIT_TEST/uut/ALUo[10]} {-height 15 -radix hexadecimal} {/SCPU_MEM_LOOP_8BIT_TEST/uut/ALUo[9]} {-height 15 -radix hexadecimal} {/SCPU_MEM_LOOP_8BIT_TEST/uut/ALUo[8]} {-height 15 -radix hexadecimal} {/SCPU_MEM_LOOP_8BIT_TEST/uut/ALUo[7]} {-height 15 -radix hexadecimal} {/SCPU_MEM_LOOP_8BIT_TEST/uut/ALUo[6]} {-height 15 -radix hexadecimal} {/SCPU_MEM_LOOP_8BIT_TEST/uut/ALUo[5]} {-height 15 -radix hexadecimal} {/SCPU_MEM_LOOP_8BIT_TEST/uut/ALUo[4]} {-height 15 -radix hexadecimal} {/SCPU_MEM_LOOP_8BIT_TEST/uut/ALUo[3]} {-height 15 -radix hexadecimal} {/SCPU_MEM_LOOP_8BIT_TEST/uut/ALUo[2]} {-height 15 -radix hexadecimal} {/SCPU_MEM_LOOP_8BIT_TEST/uut/ALUo[1]} {-height 15 -radix hexadecimal} {/SCPU_MEM_LOOP_8BIT_TEST/uut/ALUo[0]} {-height 15 -radix hexadecimal}} /SCPU_MEM_LOOP_8BIT_TEST/uut/ALUo
+add wave -noupdate /SCPU_MEM_LOOP_8BIT_TEST/uut/zf
+add wave -noupdate /SCPU_MEM_LOOP_8BIT_TEST/uut/nf
+add wave -noupdate /SCPU_MEM_LOOP_8BIT_TEST/uut/cf
+add wave -noupdate /SCPU_MEM_LOOP_8BIT_TEST/uut/dw
+add wave -noupdate -radix unsigned /SCPU_MEM_LOOP_8BIT_TEST/uut/pc
+add wave -noupdate -radix binary /SCPU_MEM_LOOP_8BIT_TEST/uut/id_ir
+add wave -noupdate -radix hexadecimal /SCPU_MEM_LOOP_8BIT_TEST/uut/reg_A
+add wave -noupdate -radix hexadecimal /SCPU_MEM_LOOP_8BIT_TEST/uut/reg_B
+add wave -noupdate -radix hexadecimal /SCPU_MEM_LOOP_8BIT_TEST/uut/reg_C
+add wave -noupdate /SCPU_MEM_LOOP_8BIT_TEST/uut/branch_flag
+add wave -noupdate /SCPU_MEM_LOOP_8BIT_TEST/uut/lowest_bit
+add wave -noupdate /SCPU_MEM_LOOP_8BIT_TEST/uut/is_i_addr
 TreeUpdate [SetDefaultTree]
-WaveRestoreCursors {{Cursor 1} {25805709 ps} 0}
+WaveRestoreCursors {{Cursor 1} {165902 ps} 0}
 quietly wave cursor active 1
-configure wave -namecolwidth 150
-configure wave -valuecolwidth 100
+configure wave -namecolwidth 227
+configure wave -valuecolwidth 200
 configure wave -justifyvalue left
 configure wave -signalnamewidth 0
 configure wave -snapdistance 10
@@ -43,4 +51,4 @@ configure wave -griddelta 40
 configure wave -timeline 0
 configure wave -timelineunits ps
 update
-WaveRestoreZoom {25753856 ps} {25859718 ps}
+WaveRestoreZoom {0 ps} {430500 ps}

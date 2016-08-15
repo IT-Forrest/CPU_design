@@ -26,6 +26,7 @@ vlog -work work PSEUDO_SPI_INTF.v
 vlog -work work SCPU_8BIT_ALU_CTRL_SPI.v
 vlog -work work iogpil_cmrf8sf_rvt.v
 vlog -work work SCPU_SRAM_8BIT_ALU_SPI_TOP.v
+vlog -work work SCPU_SRAM_8BIT_ALU_SPI_TOP_VG.v
 
 # Set & Compile testbench files
 set testcases   [list\
@@ -46,6 +47,7 @@ SCPU_SRAM_8BIT_ALU_SPI_TOP_TEST\
 SYS_SHARE_SUPERALU_CORDIC_TEST\
 SYS_SHARE_SUPERALU_MULT_TEST\
 SYS_PSEUDO_SPI_INTF_SCAN_TEST\
+SYS_PSEUDO_SPI_INTF_SCAN_VG_TEST\
 ]
 
 foreach case $testcases {
