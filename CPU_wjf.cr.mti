@@ -5208,13 +5208,6 @@ Model Technology ModelSim ALTERA vlog 10.4d Compiler 2015.12 Dec 30 2015
 Top level modules:
 	SCPU_SRAM_8BIT_ALU_SPI_TOP
 
-} {} {}} {F:/05. Code Battle/04. Verilog/CPU_design/RA1SHD_IBM512X8.v} {1 {vlog -work work -stats=none {F:/05. Code Battle/04. Verilog/CPU_design/RA1SHD_IBM512X8.v}
-Model Technology ModelSim ALTERA vlog 10.4d Compiler 2015.12 Dec 30 2015
--- Compiling module RA1SHD_IBM512X8
-
-Top level modules:
-	RA1SHD_IBM512X8
-
 } {} {}} {F:/05. Code Battle/04. Verilog/CPU_design/CTRL_LOGIC.v} {1 {vlog -work work -stats=none {F:/05. Code Battle/04. Verilog/CPU_design/CTRL_LOGIC.v}
 Model Technology ModelSim ALTERA vlog 10.4d Compiler 2015.12 Dec 30 2015
 -- Compiling module CTRL_LOGIC
