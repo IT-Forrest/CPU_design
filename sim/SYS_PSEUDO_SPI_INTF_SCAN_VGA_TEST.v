@@ -620,6 +620,8 @@ module  SYS_PSEUDO_SPI_INTF_SCAN_VGA_TEST();
     always #(CLKPERIOD/2)
         CLK = ~CLK;
 
+    initial
+        $sdf_annotate("./SCPU_SRAM_8BIT_ALU_SPI_TOP.sdf");
     // Dump signals to view waveform
     // initial
     // begin

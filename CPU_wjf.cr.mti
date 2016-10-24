@@ -38,17 +38,6 @@ Model Technology ModelSim ALTERA vlog 10.4d Compiler 2015.12 Dec 30 2015
 Top level modules:
 	SCPU_SRAM_8BIT_ALU_SPI_TOP
 
-} {} {}} {F:/05. Code Battle/04. Verilog/CPU_design/SCPU_8BIT_ALU_CTRL_SPI.v} {1 {vlog -work work -stats=none {F:/05. Code Battle/04. Verilog/CPU_design/SCPU_8BIT_ALU_CTRL_SPI.v}
-Model Technology ModelSim ALTERA vlog 10.4d Compiler 2015.12 Dec 30 2015
--- Compiling module SERIAL_CPU_8BIT
--- Compiling module SHARE_SUPERALU
--- Compiling module SRAM_IO_CTRL
--- Compiling module PSEUDO_SPT_INTF
--- Compiling module SCPU_8BIT_ALU_CTRL_SPI
-
-Top level modules:
-	SCPU_8BIT_ALU_CTRL_SPI
-
 } {} {}} {F:/05. Code Battle/04. Verilog/CPU_design/sim/SYS_PSEUDO_SPI_INTF_SCAN_FPGA_TEST.v} {1 {vlog -work work -stats=none {F:/05. Code Battle/04. Verilog/CPU_design/sim/SYS_PSEUDO_SPI_INTF_SCAN_FPGA_TEST.v}
 Model Technology ModelSim ALTERA vlog 10.4d Compiler 2015.12 Dec 30 2015
 -- Compiling module BUFX2TF
@@ -1758,6 +1747,17 @@ Top level modules:
 	POSC4
 	SYS_PSEUDO_SPI_INTF_SCAN_FPGA_TEST
 
+} {} {}} {F:/05. Code Battle/04. Verilog/CPU_design/SCPU_8BIT_ALU_CTRL_SPI.v} {1 {vlog -work work -stats=none {F:/05. Code Battle/04. Verilog/CPU_design/SCPU_8BIT_ALU_CTRL_SPI.v}
+Model Technology ModelSim ALTERA vlog 10.4d Compiler 2015.12 Dec 30 2015
+-- Compiling module SERIAL_CPU_8BIT
+-- Compiling module SHARE_SUPERALU
+-- Compiling module SRAM_IO_CTRL
+-- Compiling module PSEUDO_SPT_INTF
+-- Compiling module SCPU_8BIT_ALU_CTRL_SPI
+
+Top level modules:
+	SCPU_8BIT_ALU_CTRL_SPI
+
 } {} {}} {F:/05. Code Battle/04. Verilog/CPU_design/RA1SHD_IBM512X8.v} {1 {vlog -work work -stats=none {F:/05. Code Battle/04. Verilog/CPU_design/RA1SHD_IBM512X8.v}
 Model Technology ModelSim ALTERA vlog 10.4d Compiler 2015.12 Dec 30 2015
 -- Compiling module RA1SHD_IBM512X8
@@ -1780,14 +1780,6 @@ Model Technology ModelSim ALTERA vlog 10.4d Compiler 2015.12 Dec 30 2015
 Top level modules:
 	SHARE_SUPERALU_DIV_TEST
 
-} {} {}} {F:/05. Code Battle/04. Verilog/CPU_design/sim/SCPU_SINGLE_8bit_TEST.v} {1 {vlog -work work -stats=none {F:/05. Code Battle/04. Verilog/CPU_design/sim/SCPU_SINGLE_8bit_TEST.v}
-Model Technology ModelSim ALTERA vlog 10.4d Compiler 2015.12 Dec 30 2015
--- Compiling module SERIAL_CPU_8BIT
--- Compiling module SCPU_SINGLE_8BIT_TOP
-
-Top level modules:
-	SCPU_SINGLE_8BIT_TOP
-
 } {} {}} {F:/05. Code Battle/04. Verilog/CPU_design/sim/SCPU_MEM_LOOP_TEST.v} {2 {vlog -work work -stats=none {F:/05. Code Battle/04. Verilog/CPU_design/sim/SCPU_MEM_LOOP_TEST.v}
 Model Technology ModelSim ALTERA vlog 10.4d Compiler 2015.12 Dec 30 2015
 -- Compiling module SERIAL_CPU
@@ -1799,6 +1791,14 @@ Model Technology ModelSim ALTERA vlog 10.4d Compiler 2015.12 Dec 30 2015
 
 Top level modules:
 	SCPU_MEM_LOOP_TEST
+
+} {} {}} {F:/05. Code Battle/04. Verilog/CPU_design/sim/SCPU_SINGLE_8bit_TEST.v} {1 {vlog -work work -stats=none {F:/05. Code Battle/04. Verilog/CPU_design/sim/SCPU_SINGLE_8bit_TEST.v}
+Model Technology ModelSim ALTERA vlog 10.4d Compiler 2015.12 Dec 30 2015
+-- Compiling module SERIAL_CPU_8BIT
+-- Compiling module SCPU_SINGLE_8BIT_TOP
+
+Top level modules:
+	SCPU_SINGLE_8BIT_TOP
 
 } {} {}} {F:/05. Code Battle/04. Verilog/CPU_design/DEFINE_CPU.v} {1 {vlog -work work -stats=none {F:/05. Code Battle/04. Verilog/CPU_design/DEFINE_CPU.v}
 Model Technology ModelSim ALTERA vlog 10.4d Compiler 2015.12 Dec 30 2015
@@ -1955,6 +1955,13 @@ Model Technology ModelSim ALTERA vlog 10.4d Compiler 2015.12 Dec 30 2015
 Top level modules:
 	I_MEMORY
 
+} {} {}} {F:/05. Code Battle/04. Verilog/CPU_design/SERIAL_CPU_8bit.v} {1 {vlog -work work -stats=none {F:/05. Code Battle/04. Verilog/CPU_design/SERIAL_CPU_8bit.v}
+Model Technology ModelSim ALTERA vlog 10.4d Compiler 2015.12 Dec 30 2015
+-- Compiling module SERIAL_CPU_8BIT
+
+Top level modules:
+	SERIAL_CPU_8BIT
+
 } {} {}} {F:/05. Code Battle/04. Verilog/CPU_design/sim/SHARE_SUPERALU_CORDIC_TEST.v} {1 {vlog -work work -stats=none {F:/05. Code Battle/04. Verilog/CPU_design/sim/SHARE_SUPERALU_CORDIC_TEST.v}
 Model Technology ModelSim ALTERA vlog 10.4d Compiler 2015.12 Dec 30 2015
 -- Compiling module SHARE_SUPERALU
@@ -1962,13 +1969,6 @@ Model Technology ModelSim ALTERA vlog 10.4d Compiler 2015.12 Dec 30 2015
 
 Top level modules:
 	SHARE_SUPERALU_CORDIC_TEST
-
-} {} {}} {F:/05. Code Battle/04. Verilog/CPU_design/SERIAL_CPU_8bit.v} {1 {vlog -work work -stats=none {F:/05. Code Battle/04. Verilog/CPU_design/SERIAL_CPU_8bit.v}
-Model Technology ModelSim ALTERA vlog 10.4d Compiler 2015.12 Dec 30 2015
--- Compiling module SERIAL_CPU_8BIT
-
-Top level modules:
-	SERIAL_CPU_8BIT
 
 } {} {}} {F:/05. Code Battle/04. Verilog/CPU_design/sim/PCPU_MEM_ALU_TEST.v} {1 {vlog -work work -stats=none {F:/05. Code Battle/04. Verilog/CPU_design/sim/PCPU_MEM_ALU_TEST.v}
 Model Technology ModelSim ALTERA vlog 10.4d Compiler 2015.12 Dec 30 2015
@@ -5564,9 +5564,9 @@ Top level modules:
 	BUFX3TF
 	BUFX6TF
 	BUFX8TF
-	BUFX12TF
 	BUFX16TF
 	INVX3TF
+	INVX4TF
 	INVX6TF
 	INVX8TF
 	INVX12TF
@@ -5598,10 +5598,10 @@ Top level modules:
 	AND4X8TF
 	AOI21X4TF
 	AOI211X4TF
+	AOI22X4TF
 	AOI221XLTF
 	AOI221X2TF
 	AOI221X4TF
-	AOI222X1TF
 	AOI222X2TF
 	AOI31XLTF
 	AOI31X2TF
@@ -5662,6 +5662,7 @@ Top level modules:
 	NAND3BX2TF
 	NAND3BX4TF
 	NAND4BXLTF
+	NAND4BX2TF
 	NAND4BX4TF
 	NAND4BBXLTF
 	NAND4BBX2TF
@@ -5669,16 +5670,15 @@ Top level modules:
 	NOR2XLTF
 	NOR2X6TF
 	NOR2X8TF
+	NOR3X4TF
 	NOR3X6TF
 	NOR3X8TF
 	NOR4X4TF
 	NOR4X6TF
 	NOR4X8TF
 	NOR2BXLTF
-	NOR2BX2TF
 	NOR2BX4TF
 	NOR3BXLTF
-	NOR3BX2TF
 	NOR3BX4TF
 	NOR4BXLTF
 	NOR4BX2TF
@@ -5691,6 +5691,7 @@ Top level modules:
 	OR2X6TF
 	OR2X8TF
 	OR3XLTF
+	OR3X2TF
 	OR3X4TF
 	OR3X6TF
 	OR3X8TF
@@ -5700,8 +5701,10 @@ Top level modules:
 	OR4X4TF
 	OR4X6TF
 	OR4X8TF
+	OAI21X2TF
 	OAI21X4TF
 	OAI211X2TF
+	OAI211X4TF
 	OAI22X2TF
 	OAI22X4TF
 	OAI221X1TF
@@ -5719,7 +5722,7 @@ Top level modules:
 	OAI2BB1XLTF
 	OAI2BB1X2TF
 	OAI2BB1X4TF
-	OAI2BB2X1TF
+	OAI2BB2X2TF
 	OAI2BB2X4TF
 	OA21X1TF
 	OA21X2TF
@@ -5746,15 +5749,15 @@ Top level modules:
 	XNOR3X2TF
 	XNOR3X4TF
 	CLKBUFX3TF
+	CLKBUFX4TF
 	CLKBUFX6TF
 	CLKBUFX8TF
 	CLKBUFX12TF
 	CLKBUFX16TF
-	CLKBUFX20TF
 	CLKINVX3TF
 	CLKINVX4TF
 	CLKINVX8TF
-	CLKINVX12TF
+	CLKINVX16TF
 	CLKINVX20TF
 	CLKAND2X3TF
 	CLKAND2X4TF
@@ -5837,7 +5840,6 @@ Top level modules:
 	DFFX1TF
 	DFFX2TF
 	DFFX4TF
-	DFFQX4TF
 	DFFQXLTF
 	DFFRXLTF
 	DFFRX4TF
@@ -5854,7 +5856,7 @@ Top level modules:
 	EDFFXLTF
 	EDFFX2TF
 	EDFFX4TF
-	EDFFTRXLTF
+	EDFFTRX1TF
 	EDFFTRX2TF
 	EDFFTRX4TF
 	SDFFXLTF
@@ -5942,7 +5944,7 @@ Top level modules:
 	SMDFFHQX4TF
 	SMDFFHQX8TF
 	TLATX1TF
-	TLATX2TF
+	TLATX4TF
 	TLATSRXLTF
 	TLATSRX1TF
 	TLATSRX2TF
@@ -5964,6 +5966,7 @@ Top level modules:
 	DLY2X1TF
 	DLY3X1TF
 	DLY4X1TF
+	DLY1X4TF
 	DLY2X4TF
 	DLY3X4TF
 	DLY4X4TF
@@ -6265,9 +6268,14 @@ Top level modules:
 	PBREAKBF
 	PBREAKDVDDR
 	PBREAKBFDVDDR
+	PCORNER
 	PFILL1
 	PFILLH
 	PFILLQ
+	PDVSS
+	PDVDD
+	PVSS
+	PVDD
 	PAVDD
 	PAVSS
 	PANALOG
@@ -6985,6 +6993,14 @@ Model Technology ModelSim ALTERA vlog 10.4d Compiler 2015.12 Dec 30 2015
 Top level modules:
 	SHARE_SUPERALU
 
+} {} {}} {F:/05. Code Battle/04. Verilog/CPU_design/sim/PCPU_SINGLE_TEST.v} {1 {vlog -work work -stats=none {F:/05. Code Battle/04. Verilog/CPU_design/sim/PCPU_SINGLE_TEST.v}
+Model Technology ModelSim ALTERA vlog 10.4d Compiler 2015.12 Dec 30 2015
+-- Compiling module PIPE_CPU
+-- Compiling module PCPU_SINGLE_TOP
+
+Top level modules:
+	PCPU_SINGLE_TOP
+
 } {} {}} {F:/05. Code Battle/04. Verilog/CPU_design/sim/SRAM_IO_CTRL_RA1512_SCPU_8BIT_TEST.v} {1 {vlog -work work -stats=none {F:/05. Code Battle/04. Verilog/CPU_design/sim/SRAM_IO_CTRL_RA1512_SCPU_8BIT_TEST.v}
 Model Technology ModelSim ALTERA vlog 10.4d Compiler 2015.12 Dec 30 2015
 -- Compiling module SERIAL_CPU_8BIT
@@ -6995,13 +7011,5 @@ Model Technology ModelSim ALTERA vlog 10.4d Compiler 2015.12 Dec 30 2015
 
 Top level modules:
 	SRAM_IO_CTRL_RA1512_SCPU_8BIT_TEST
-
-} {} {}} {F:/05. Code Battle/04. Verilog/CPU_design/sim/PCPU_SINGLE_TEST.v} {1 {vlog -work work -stats=none {F:/05. Code Battle/04. Verilog/CPU_design/sim/PCPU_SINGLE_TEST.v}
-Model Technology ModelSim ALTERA vlog 10.4d Compiler 2015.12 Dec 30 2015
--- Compiling module PIPE_CPU
--- Compiling module PCPU_SINGLE_TOP
-
-Top level modules:
-	PCPU_SINGLE_TOP
 
 } {} {}}
