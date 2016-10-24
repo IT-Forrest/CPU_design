@@ -5,3 +5,8 @@ work
 *.dump
 *.vstf
 wlft*
+*.zip
+*.ddc
+*.def
+*.gds
+*.vga

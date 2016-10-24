@@ -163,7 +163,8 @@ module SRAM_IO_CTRL_SHELL(
     wire        LAT   ;
     wire        SPI_SO;
     
-    wire    [1:0]  CPU_NXT_dly;
+    wire    [1:0]   CTRL_MODE_dly;
+    wire    [1:0]   CPU_NXT_dly;
     wire    CTRL_SO;
     assign  CTRL_SO = (reg_TEST_MUX)? CTRL_SO_dly : coe_ctrl_so_export;
     wire    is_LOAD;
