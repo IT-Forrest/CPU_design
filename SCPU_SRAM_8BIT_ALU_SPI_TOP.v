@@ -26,7 +26,7 @@ module SCPU_SRAM_8BIT_ALU_SPI_TOP(
     CPU_BGN,
     LOAD_N,
     CTRL_SI,
-    //ANA_SI,
+    APP_DONE,
     ADC_PI,
     // output
     CTRL_RDY,
@@ -39,13 +39,10 @@ module SCPU_SRAM_8BIT_ALU_SPI_TOP(
     SCLK2,
     LAT,
     SPI_SO
-    // CLRN,
-    // CLK_ADC,
-    // RSTN_ADC
     );
 
     parameter   MEMORY_DATA_WIDTH   = 8,
-                MEMORY_ADDR_WIDTH   = 9;
+                MEMORY_ADDR_WIDTH   = 10;
     parameter   GENERAL_REG_WIDTH   = 16;
     
     // Inputs
@@ -77,9 +74,9 @@ module SCPU_SRAM_8BIT_ALU_SPI_TOP(
     wire    [9:0]   i_ADC_PI;
     wire    WEN_after_mux;
     wire    CEN_after_mux;
-    wire [8:0]  A_after_mux;
-    wire [7:0]  D_after_mux;
-    wire [7:0]  Q_from_SRAM;
+    wire [MEMORY_ADDR_WIDTH-1:0]  A_after_mux;
+    wire [MEMORY_DATA_WIDTH-1:0]  D_after_mux;
+    wire [MEMORY_DATA_WIDTH-1:0]  Q_from_SRAM;
    
     SCPU_8BIT_ALU_CTRL_SPI  scpu_ctrl_spi(
         // I/O with SRAM
@@ -96,7 +93,7 @@ module SCPU_SRAM_8BIT_ALU_SPI_TOP(
         .CPU_BGN        (i_CPU_BGN      ),
         .LOAD_N         (i_LOAD_N       ),
         .CTRL_SI        (i_CTRL_SI      ),
-        //.ANA_SI         (i_ANA_SI       ),
+        .APP_DONE       (i_APP_DONE     ),
         .ADC_PI         (i_ADC_PI       ),
         // output
         .CTRL_RDY       (i_CTRL_RDY     ),
@@ -112,7 +109,7 @@ module SCPU_SRAM_8BIT_ALU_SPI_TOP(
     );
 
     // SRAM module
-    RA1SHD_IBM512X8   sram (
+    RA1SHD_IBM1024X8   sram (
         .CLK(i_CLK),
         .CEN(CEN_after_mux), 
         .A(A_after_mux),
@@ -128,9 +125,10 @@ module SCPU_SRAM_8BIT_ALU_SPI_TOP(
     PIC     ipad_ctrl_mode0 (.Y(i_CTRL_MODE[0]), .P(CTRL_MODE[0]), .IE(1'b1));
     PIC     ipad_ctrl_mode1 (.Y(i_CTRL_MODE[1]), .P(CTRL_MODE[1]), .IE(1'b1));
     PIC     ipad_ctrl_bgn   (.Y(i_CTRL_BGN), .P(CTRL_BGN), .IE(1'b1));
-    PIC     ipad_cpu_str    (.Y(i_CPU_BGN), .P(CPU_BGN), .IE(1'b1));
+    PIC     ipad_cpu_bgn    (.Y(i_CPU_BGN), .P(CPU_BGN), .IE(1'b1));
     PIC     ipad_load_n     (.Y(i_LOAD_N), .P(LOAD_N), .IE(1'b1));
     PIC     ipad_ctrl_si    (.Y(i_CTRL_SI), .P(CTRL_SI), .IE(1'b1));
+    PIC     ipad_app_done   (.Y(i_APP_DONE), .P(APP_DONE), .IE(1'b1));
     PIC     ipad_adc_pi0	(.Y(i_ADC_PI[0]), .P(ADC_PI[0]), .IE(1'b1));
     PIC     ipad_adc_pi1	(.Y(i_ADC_PI[1]), .P(ADC_PI[1]), .IE(1'b1));
     PIC     ipad_adc_pi2	(.Y(i_ADC_PI[2]), .P(ADC_PI[2]), .IE(1'b1));

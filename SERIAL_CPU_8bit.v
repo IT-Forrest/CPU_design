@@ -45,9 +45,9 @@ module SERIAL_CPU_8BIT(
                 D_MEM_ADDR_WIDTH    = 8,
                 D_MEM_DATA_WIDTH    = 16,
                 GENERAL_REG_WIDTH   = 16,// width of the internal general registers
-                PC_MEM_ADDR_WIDTH   = 8,
+                PC_MEM_ADDR_WIDTH   = 9,
                 MEMORY_DATA_WIDTH   = 8,
-                MEMORY_ADDR_WIDTH   = 9;
+                MEMORY_ADDR_WIDTH   = 10;
     parameter   DEFAULT_PC_ADDR     = 16;// default pc starting address (16*2 BYTE)
                 
     parameter   MSB_OP_16B          = 16,// index of the MSB bit of instruction ID
@@ -101,7 +101,7 @@ module SERIAL_CPU_8BIT(
     reg     [PC_MEM_ADDR_WIDTH-1:0] pc;
     reg     [GENERAL_REG_WIDTH-1:0] id_ir;// instruction registers, ex_ir, mem_ir, wb_ir
     reg     [GENERAL_REG_WIDTH-1:0] reg_A, reg_B, reg_C, smdr;// reg_C1, smdr1;
-    reg     [GENERAL_REG_WIDTH-1:0] gr[4:0];
+    reg     [GENERAL_REG_WIDTH-1:0] gr[7:0];
     wire    branch_flag;
     wire    cpu_suspend;
     wire    cpu_restore;
@@ -422,9 +422,9 @@ module SERIAL_CPU_8BIT(
                     gr[2] <= 16'b0000_0000_0000_0000;
                     gr[3] <= 16'b0000_0000_0000_0000;
                     gr[4] <= 16'b0000_0000_0000_0000;
-                    // gr[5] <= 16'b0000_0000_0000_0000;
-                    // gr[6] <= 16'b0000_0000_0000_0000;
-                    // gr[7] <= 16'b0000_0000_0000_0000;
+                    gr[5] <= 16'b0000_0000_0000_0000;
+                    gr[6] <= 16'b0000_0000_0000_0000;
+                    gr[7] <= 16'b0000_0000_0000_0000;
                     
                     pc <= {PC_MEM_ADDR_WIDTH{1'b0}};//DEFAULT_PC_ADDR;
                 end

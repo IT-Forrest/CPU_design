@@ -35,7 +35,7 @@ module SCPU_8BIT_ALU_CTRL_SPI(
     CPU_BGN,
     LOAD_N,
     CTRL_SI,
-    //ANA_SI,
+    APP_DONE,
     ADC_PI,
     // output
     CTRL_RDY,
@@ -51,7 +51,7 @@ module SCPU_8BIT_ALU_CTRL_SPI(
     );
 
     parameter   MEMORY_DATA_WIDTH   = 8,
-                MEMORY_ADDR_WIDTH   = 9,
+                MEMORY_ADDR_WIDTH   = 10,
                 RESERVED_DATA_LEN   = 8;
     parameter   GENERAL_REG_WIDTH   = 16;
 
@@ -63,7 +63,7 @@ module SCPU_8BIT_ALU_CTRL_SPI(
     input   CPU_BGN;
     input   LOAD_N;
     input   CTRL_SI;
-    //input   ANA_SI;
+    input   APP_DONE;
     input   [9:0]   ADC_PI;
     
     // Output
@@ -88,19 +88,19 @@ module SCPU_8BIT_ALU_CTRL_SPI(
     // Wires
     // wire is_i_addr;
     wire enable;// enable signal for CTRL_SRAM
-    wire [7:0]  i_datain;
-    wire [7:0]  d_datain;
-    wire [7:0]  d_dataout;
-    wire [7:0]  m_datain;
+    wire [MEMORY_DATA_WIDTH-1:0]  i_datain;
+    wire [MEMORY_DATA_WIDTH-1:0]  d_datain;
+    wire [MEMORY_DATA_WIDTH-1:0]  d_dataout;
+    wire [MEMORY_DATA_WIDTH-1:0]  m_datain;
 
-    wire [7:0]  m_dataout;
-    wire [8:0]  m_addr;
-    wire [8:0]  i_addr;
-    wire [8:0]  d_addr;
+    wire [MEMORY_DATA_WIDTH-1:0]  m_dataout;
+    wire [MEMORY_ADDR_WIDTH-1:0]  m_addr;
+    wire [MEMORY_ADDR_WIDTH-1:0]  i_addr;
+    wire [MEMORY_ADDR_WIDTH-1:0]  d_addr;
     
-    wire [7:0]  PI_from_SRAM;
-    wire [8:0]  A_from_CTRL;
-    wire [7:0]  PO_from_CTRL;
+    wire [MEMORY_DATA_WIDTH-1:0]  PI_from_SRAM;
+    wire [MEMORY_ADDR_WIDTH-1:0]  A_from_CTRL;
+    wire [MEMORY_DATA_WIDTH-1:0]  PO_from_CTRL;
    
     // Super ALU's connection
     parameter   IO_CTRL_MODEL_END   = 0,
@@ -108,9 +108,11 @@ module SCPU_8BIT_ALU_CTRL_SPI(
                 IO_CTRL_ALU_END     = 2,
                 IO_CTRL_ALU_BGN     = 4,
                 IO_ALU_STA          = 5,
-                IO_SPI_STA          = 6;
+                IO_SPI_STA          = 6,
+                IO_APP_STA          = 7;
     parameter   IO_STAT_ALU_DONE    = 0,
-                IO_STAT_SPI_DONE    = 1;
+                IO_STAT_SPI_DONE    = 1,
+                IO_STAT_APP_DONE    = 2;// exterior app is done
    
     wire    [GENERAL_REG_WIDTH-1:0] io_status;
     wire    [GENERAL_REG_WIDTH-1:0] io_control;
@@ -192,7 +194,10 @@ module SCPU_8BIT_ALU_CTRL_SPI(
                         .POUT(POUT),
                         .alu_is_done(alu_is_done));
 
-    //// Analog Control Module
+    //// Exterior Analog Control Signal
+    // wire    io_control[IO_APP_STA]; // Actually, this is done by Scan Chain
+    
+    //// Output Scan Chain Control Module
     wire    spi_start;
     wire    spi_is_done;
     wire    [MEMORY_ADDR_WIDTH-1:0] addr_end;
@@ -229,7 +234,7 @@ module SCPU_8BIT_ALU_CTRL_SPI(
     assign  mode_type = io_control[IO_CTRL_MODEL_BGN:IO_CTRL_MODEL_END];
     
     // wire connections GPIO and CPU
-    assign  io_status  = {{(GENERAL_REG_WIDTH-2){1'b0}}, spi_is_done, alu_is_done};
+    assign  io_status  = {{(GENERAL_REG_WIDTH-3){1'b0}}, APP_DONE, spi_is_done, alu_is_done};
     assign  io_datainA = (alu_start)?{{(GENERAL_REG_WIDTH-MAX_SQRT_WIDTH){1'b0}},FOUT}:
                                 {{(GENERAL_REG_WIDTH-10){1'b0}},ADC_PI};
     assign  io_datainB = {{(GENERAL_REG_WIDTH-MAX_SQRT_WIDTH){1'b0}},POUT};

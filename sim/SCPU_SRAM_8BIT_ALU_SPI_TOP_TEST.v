@@ -17,7 +17,7 @@
 module SCPU_SRAM_8BIT_ALU_SPI_TOP_TEST;
 
     parameter   MEMORY_DATA_WIDTH   = 8,
-                MEMORY_ADDR_WIDTH   = 9,
+                MEMORY_ADDR_WIDTH   = 10,
                 REG_BITS_WIDTH = MEMORY_ADDR_WIDTH + MEMORY_DATA_WIDTH;
 
     parameter   GENERAL_REG_WIDTH   = 16;
@@ -29,7 +29,7 @@ module SCPU_SRAM_8BIT_ALU_SPI_TOP_TEST;
 
     reg     [REG_BITS_WIDTH-1:0]  tmpi_all;//addr+instruction
     reg     [15:0] tmpi_datain; //MEMORY_DATA_WIDTH*2 -1
-    reg     [8:0]  tmpi_adder;  //MEMORY_ADDR_WIDTH -1
+    reg     [MEMORY_ADDR_WIDTH-1:0]  tmpi_adder;  //MEMORY_ADDR_WIDTH -1
 
     reg     CLK;
     reg     RST_N;//no use here
@@ -63,7 +63,7 @@ module SCPU_SRAM_8BIT_ALU_SPI_TOP_TEST;
         .CPU_BGN        (CPU_BGN    ),
         .LOAD_N         (LOAD_N     ),
         .CTRL_SI        (CTRL_SI    ),
-        //.ANA_SI         (ANA_SI     ),
+        .APP_DONE       (1'b1   ),
         .ADC_PI         (ADC_PI     ),
         // output
         .CTRL_RDY       (CTRL_RDY   ),
