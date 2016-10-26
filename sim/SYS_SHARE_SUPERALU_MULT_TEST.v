@@ -21,7 +21,7 @@ module  SYS_SHARE_SUPERALU_MULT_TEST();
                 MULTIPLIER_WIDTH    = 8;// for the random value used by SA, it's the width of LFSR 
 
     parameter   MEMORY_DATA_WIDTH   = 8,
-                MEMORY_ADDR_WIDTH   = 9,
+                MEMORY_ADDR_WIDTH   = 10,
                 REG_BITS_WIDTH = MEMORY_ADDR_WIDTH + MEMORY_DATA_WIDTH;
 
     parameter   GENERAL_REG_WIDTH   = 16;
@@ -33,7 +33,7 @@ module  SYS_SHARE_SUPERALU_MULT_TEST();
     integer error_cnt;
     reg     [15:0] tmpi_datain; //MEMORY_DATA_WIDTH*2 -1
     reg     [REG_BITS_WIDTH-1:0]  tmpi_all;//addr+instruction
-    reg     [8:0]  tmpi_adder;  //MEMORY_ADDR_WIDTH -1
+    reg     [MEMORY_ADDR_WIDTH-1:0]  tmpi_adder;  //MEMORY_ADDR_WIDTH -1
     
     reg     CLK;
     reg     RST_N;
@@ -44,7 +44,7 @@ module  SYS_SHARE_SUPERALU_MULT_TEST();
     reg     LOAD_N;
     reg     CTRL_SI;
     //reg     ANA_SI;
-    reg     [GENERAL_REG_WIDTH-1:0] ADC_PI;
+    reg     [9:0] ADC_PI;
     
     // Wires
     wire    CTRL_RDY;
@@ -68,7 +68,7 @@ module  SYS_SHARE_SUPERALU_MULT_TEST();
         .CPU_BGN        (CPU_BGN    ),
         .LOAD_N         (!coe_ctrl_load_export),
         .CTRL_SI        (coe_ctrl_si_export),
-        //.ANA_SI         (ANA_SI     ),
+        .APP_DONE       (1'b0   ),
         .ADC_PI         (ADC_PI     ),
         // output
         .CTRL_RDY       (coe_ctrl_rdy_export),

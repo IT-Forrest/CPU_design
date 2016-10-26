@@ -53,7 +53,7 @@ module SRAM_IO_CTRL_LOGIC(
     );
 
     parameter   MEMORY_DATA_WIDTH   = 8,
-                MEMORY_ADDR_WIDTH   = 9,
+                MEMORY_ADDR_WIDTH   = 10,
                 REG_BITS_WIDTH = MEMORY_ADDR_WIDTH + MEMORY_DATA_WIDTH;
     
     parameter   AVS_WIDTH       = 32;

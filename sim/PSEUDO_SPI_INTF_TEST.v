@@ -18,7 +18,7 @@
 module PSEUDO_SPI_INTF_TEST;
 
    parameter    MEMORY_DATA_WIDTH   = 8,
-                MEMORY_ADDR_WIDTH   = 9,
+                MEMORY_ADDR_WIDTH   = 10,
                 REG_BITS_WIDTH = MEMORY_ADDR_WIDTH + MEMORY_DATA_WIDTH;
 
     // Inputs
@@ -34,7 +34,7 @@ module PSEUDO_SPI_INTF_TEST;
     wire [7:0]  m_datain;
 
     wire [7:0]  m_dataout;
-    wire [8:0]  m_addr;     //MEMORY_ADDR_WIDTH
+    wire [MEMORY_ADDR_WIDTH-1:0]  m_addr;     //MEMORY_ADDR_WIDTH
     // wire [8:0]  i_addr;
     // wire [8:0]  d_addr;
     wire d_we;
@@ -43,7 +43,7 @@ module PSEUDO_SPI_INTF_TEST;
     
     integer i,j,k;
     reg  [15:0] tmpi_datain;
-    reg  [8:0]  tmpi_adder;
+    reg  [MEMORY_ADDR_WIDTH-1:0]  tmpi_adder;
     reg  LOAD_N;
     integer error_cnt;
    
@@ -78,6 +78,7 @@ module PSEUDO_SPI_INTF_TEST;
         .CEN        (CEN     ),
         .A          (m_addr     ),
         .D_WE       (d_we       ),//memory read or write signal, 1: write
+        .spi_MUX    (spi_MUX    ),
         .spi_is_done(spi_is_done)
     );
   

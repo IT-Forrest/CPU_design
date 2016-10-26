@@ -17,15 +17,25 @@
 `define I_MEMORY_8BIT_V
 
 module I_MEMORY_8BIT(
-    input clk,
-    input rst_n,
-    input [8:0] addr,
-    input d_we,
-    input [7:0] datain,
-    output reg [7:0] dataout
+    clk,
+    rst_n,
+    addr,
+    d_we,
+    datain,
+    dataout
     );
 
-    reg [7:0] I_RAM[511:0];
+    parameter   MEMORY_DATA_WIDTH   = 8,
+                MEMORY_ADDR_WIDTH   = 10;
+
+    input   clk;
+    input   rst_n;
+    input   [MEMORY_ADDR_WIDTH-1:0] addr;
+    input   d_we;
+    input   [MEMORY_DATA_WIDTH-1:0] datain;
+    output reg [MEMORY_DATA_WIDTH-1:0] dataout;
+    
+    reg [MEMORY_DATA_WIDTH-1:0] I_RAM[(1<<MEMORY_ADDR_WIDTH)-1:0];
     //assign dataout = I_RAM[addr];
     always @(posedge clk or negedge rst_n)
         begin

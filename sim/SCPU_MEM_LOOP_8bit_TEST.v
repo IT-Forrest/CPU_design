@@ -5,7 +5,7 @@
 // AUTHER       : Jiafan Wang
 // DATE         : 03/12/2016
 // VERSION      : 1.0
-// PURPOSE      : the SCPU test with self-created SRAM
+// PURPOSE      : the SCPU test with self-created SRAM (1024X8 SRAM)
 // --------------------------------------------------------------------
 // ABSTRACT: ModelSim simulation time 6us given each time period 10ns
 // --------------------------------------------------------------------
@@ -15,7 +15,9 @@
 `include "../I_MEMORY_8bit.v"
 
 module SCPU_MEM_LOOP_8BIT_TEST;
-
+    parameter   MEMORY_DATA_WIDTH   = 8,
+                MEMORY_ADDR_WIDTH   = 10;
+    
     // Inputs
     reg clk;
     reg enable;
@@ -31,9 +33,9 @@ module SCPU_MEM_LOOP_8BIT_TEST;
     wire [7:0]  m_datain;
 
     wire [7:0]  m_dataout;
-    wire [8:0]  m_addr;
-    wire [8:0]  i_addr;
-    wire [8:0]  d_addr;
+    wire [MEMORY_ADDR_WIDTH-1:0]  m_addr;//8
+    wire [MEMORY_ADDR_WIDTH-1:0]  i_addr;
+    wire [MEMORY_ADDR_WIDTH-1:0]  d_addr;
     wire d_we;
 
     integer i,j;

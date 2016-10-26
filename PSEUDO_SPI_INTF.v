@@ -42,7 +42,7 @@ module PSEUDO_SPT_INTF(
 );
 
     parameter   MEMORY_DATA_WIDTH   = 8,
-                MEMORY_ADDR_WIDTH   = 9,
+                MEMORY_ADDR_WIDTH   = 10,
                 RESERVED_DATA_LEN   = 8;
 
     input   CLK;

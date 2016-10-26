@@ -1,21 +1,22 @@
 //+FHDR****************************************************************
 // ECE department, TAMU
 // --------------------------------------------------------------------
-// FILE NAME    : SCPU_IO_CTRL_LOGIC_TEST.v
+// FILE NAME    : SCPU_IO_CTRL_RA1SHD_TEST.v
 // AUTHER       : Jiafan Wang
-// DATE         : 07/10/2016
+// DATE         : 10/26/2016
 // VERSION      : 1.0
-// PURPOSE      : works as PC manager in C Language
+// PURPOSE      : RA1SHD SRAM and ctrl module tester
 // --------------------------------------------------------------------
 // ABSTRACT: ModelSim simulation time 6us given each time period 10ns
 // --------------------------------------------------------------------
 `timescale 1ns / 1ps
 `include "../DEFINE_CPU.v"
 `include "../SRAM_IO_CTRL.v"
-`include "../SRAM_IO_CTRL_LOGIC.v"
+`include "../RA1SHD_IBM1024X8.v"
+//`include "../RA1SHD_IBM512X8.v"
 `include "../I_MEMORY_8bit.v"
 
-module SRAM_IO_CTRL_LOGIC_TEST;
+module SRAM_IO_CTRL_RA1SHD_TEST;
 
    parameter    MEMORY_DATA_WIDTH   = 8,
                 MEMORY_ADDR_WIDTH   = 10,
@@ -23,11 +24,10 @@ module SRAM_IO_CTRL_LOGIC_TEST;
 
     // Inputs
     reg clk;
-    reg rsi_reset_n;
     reg CTRL_BGN;// enable signal for CTRL_SRAM
+    reg rst_n;//no use here
     reg start;// enable signal for SERIAL_CPU_8bit
     reg [1:0]   CTRL_MODE;
-    wire [1:0]  ctrl_mods_dly;
     
     // Wires
     // wire is_i_addr;
@@ -46,104 +46,39 @@ module SRAM_IO_CTRL_LOGIC_TEST;
     wire RDY;
     
     integer i,j,k;
-    integer error_cnt;
     reg  [15:0] tmpi_datain;
     reg  [REG_BITS_WIDTH-1:0]  tmpi_all;//addr+instruction
     reg  [MEMORY_ADDR_WIDTH-1:0]  tmpi_adder;
     reg  SI;
     reg  LOAD_N;
+    integer error_cnt;
    
     // Instantiate the Unit Under Test (UUT)
     SRAM_IO_CTRL cct (
-        .CLK    (clk_dly),
-        .BGN    (ctrl_bgn_dly),
-        .SI     (ctrl_si_dly),
-        .LOAD_N (ctrl_load_dly),
-        .CTRL   (ctrl_mods_dly),
-        .PI     (m_dataout),
-        .RDY    (ctrl_rdy_dly),
-        .D_WE   (d_we),
-        .CEN    (CEN),
-        .SO     (ctrl_so_dly),
-        .A      (m_addr),
-        .PO     (m_datain)
+        .CLK(clk),
+        .BGN(CTRL_BGN),
+        .SI(SI),
+        .LOAD_N(LOAD_N),
+        .CTRL(CTRL_MODE),//2'b00
+        .PI(m_dataout),
+        .RDY(RDY),
+        .D_WE(d_we),
+        .CEN(CEN),
+        .SO(SO),
+        .A(m_addr),
+        .PO(m_datain)
     );
     
-    parameter   IDX_SCPU_CTRL_BGN  = 0;     // SCPU CTRL Module's start bit
-    parameter   IDX_SCPU_CTRL_LOAD = 1;     // SCPU CTRL Module's load bit
-    parameter   IDX_SCPU_CTRL_MOD0 = 2;     // SCPU CTRL Module's mode bit
-    parameter   IDX_SCPU_CTRL_MOD1 = 3;     // SCPU CTRL Module's mode bit
-
-    parameter   IDX_SCPU_CTRL_RDY  = 0;
-    
-    reg     avs_cpuctrl_write;
-    reg     avs_sram_addr_write;
-    reg     avs_sram_data_write;
-    
-    reg     [31:0]  avs_cpuctrl_writedata;
-    wire    [31:0]  avs_cpustat_readdata;
-    reg     [31:0]  avs_sram_addr_writedata;
-    reg     [31:0]  avs_sram_data_writedata;
-    
-    wire    [31:0]  avs_sram_addr_readdata;
-    wire    [31:0]  avs_sram_data_readdata;
-
-    assign  RDY = avs_cpustat_readdata[IDX_SCPU_CTRL_RDY];
-    
-    SRAM_IO_CTRL_LOGIC fpga(
-        //input
-        .csi_clk                (clk                    ),                // Clock
-        .rsi_reset_n            (rsi_reset_n            ),            // Reset (Active Low)
-
-        //// Control Word ////  
-        .avs_cpuctrl_writedata  (avs_cpuctrl_writedata  ),  // wsa control flag
-        .avs_cpuctrl_write      (avs_cpuctrl_write      ),
-
-        //// Status Word ////  
-        .avs_cpustat_readdata   (avs_cpustat_readdata   ),
-
-        .avs_sram_addr_writedata(avs_sram_addr_writedata),    // SRAM address value
-        .avs_sram_addr_write    (avs_sram_addr_write    ),
-
-        .avs_sram_data_writedata(avs_sram_data_writedata),    // Instruction data value
-        .avs_sram_data_write    (avs_sram_data_write    ),
-
-        // .avs_adc_writedata      (avs_adc_writedata      ),          // ADC data from analog
-        // .avs_adc_write          (avs_adc_write          ),
-
-        //// Internal Output Connections ////
-        .avs_sram_addr_readdata (avs_sram_addr_readdata ),     // Instruction addr value
-        .avs_sram_data_readdata (avs_sram_data_readdata ),     // Instruction data value
-
-        //// External I/O Connections (Output)
-        .coe_ctrl_bgn_export    (coe_ctrl_bgn_export    ),
-        .coe_ctrl_mod0_export   (coe_ctrl_mod0_export   ),
-        .coe_ctrl_mod1_export   (coe_ctrl_mod1_export   ),
-        .coe_ctrl_load_export   (coe_ctrl_load_export   ),
-        .coe_ctrl_si_export     (coe_ctrl_si_export     ),
-        //// External I/O Connections (Input)
-        .coe_ctrl_so_export     (coe_ctrl_so_export     ),
-        .coe_ctrl_rdy_export    (coe_ctrl_rdy_export    )
-    );
-    
-    /********* Add delay to mimic communicate between FPGA & CHIP **********/
-    assign  #2 clk_dly = clk;
-    assign  #2 ctrl_bgn_dly  = coe_ctrl_bgn_export;
-    assign  #2 ctrl_mods_dly = {coe_ctrl_mod1_export,coe_ctrl_mod0_export};
-    assign  #2 ctrl_load_dly = (!coe_ctrl_load_export);// might invert later
-    assign  #2 ctrl_si_dly   = coe_ctrl_si_export;
-    assign  #2 coe_ctrl_so_export  = ctrl_so_dly;
-    assign  #2 coe_ctrl_rdy_export = ctrl_rdy_dly;
-    
-    I_MEMORY_8BIT   sram (
-        .clk(clk),
-        .rst_n(!CEN), 
-        .addr(m_addr),
-        .d_we(!d_we),// need a seperate control signal; or instruction set will be overwritten when d_we=1
-        .datain(m_datain),//i_instruct
-        .dataout(m_dataout)
+    RA1SHD_IBM1024X8   sram (
+        .CLK(clk),
+        .CEN(CEN), 
+        .A(m_addr),
+        .WEN(d_we),// need a seperate control signal; or instruction set will be overwritten when d_we=1
+        .D(m_datain),//i_instruct
+        .Q(m_dataout)
     );
 
+    // only used for testbench
     I_MEMORY_8BIT   i_mem(
         // .clk(clk),
         // .rst_n(CEN), 
@@ -155,37 +90,25 @@ module SRAM_IO_CTRL_LOGIC_TEST;
     
     parameter   DEFAULT_PC_ADDR = 16;
     //defparam    uut.DEFAULT_PC_ADDR = DEFAULT_PC_ADDR;
-
+    
+    //assign  m_addr = (is_i_addr)?i_addr:d_addr;
+    //assign  m_datain = d_dataout;
+    //assign  i_datain = (is_i_addr)?m_dataout:0;
+    //assign  d_datain = (is_i_addr)?0:m_dataout;
     
     initial begin
-        // Initialize Inputs
+        // Initialize Inputs Signals
         clk = 0;
-        rsi_reset_n = 0;
+        rst_n = 0;
         CTRL_BGN = 0;
         start = 0;
         LOAD_N = 1;
         error_cnt = 0;
         CTRL_MODE = 2'b00;
-        
-        avs_cpuctrl_writedata   = 0;
-        avs_sram_addr_writedata = 0;
-        avs_sram_data_writedata = 0;
-        
-        avs_cpuctrl_write   = 1;
-        avs_sram_addr_write = 1;
-        avs_sram_data_write = 1;
+        #50;
         // Wait 100 ns for global rst_n to finish
-        #100;
-        
-        // Add stimulus here
-        // $display("pc  :               id_ir                :reg_A :reg_B :reg_C\
-            // : da  :  dd  : w :  gr1  :  gr2  :  gr3   :zf :nf:cf");
-        // $monitor("%3d : %b : %h : %h : %h : %h : %h : %b : %h : %h : %h : %b : %b : %b", 
-            // uut.pc, uut.id_ir, uut.reg_A, uut.reg_B, uut.reg_C,
-            // d_addr, d_dataout, d_we, uut.gr[1], uut.gr[2], uut.gr[3],
-            // uut.zf, uut.nf, uut.cf);
 
-        /* (1) Initilization  */
+        /* (1) Add stimulus here: Using a pseudo memory to load instruction*/ 
         i= DEFAULT_PC_ADDR*2;
         tmpi_datain = {`SET, `gr3, 4'b0000, 4'b0100};//reset the loop controller `gr7
         i_mem.I_RAM[ i] = tmpi_datain[7:0];  i = 1 + DEFAULT_PC_ADDR*2;
@@ -208,9 +131,9 @@ module SRAM_IO_CTRL_LOGIC_TEST;
         //if (`gr3 != 0) go to I_RAM[ 9];
         //make sure to include the offset for DATA SRAM
         tmpi_datain = {`BNZ, `gr0, 4'b0001, 4'b0010};
-        
         i_mem.I_RAM[ i] = tmpi_datain[7:0];  i = 9 + DEFAULT_PC_ADDR*2;
         i_mem.I_RAM[ i] = tmpi_datain[15:8]; i = 10+ DEFAULT_PC_ADDR*2;
+
         // i_mem.I_RAM[11] = {`NOP, 11'b000_0000_0000};
         // i_mem.I_RAM[12] = {`NOP, 11'b000_0000_0000};
         // i_mem.I_RAM[13] = {`NOP, 11'b000_0000_0000};
@@ -241,38 +164,29 @@ module SRAM_IO_CTRL_LOGIC_TEST;
         // i_mem.D_RAM[1] = 16'h3C00;
         // i_mem.D_RAM[2] = 16'h0000;
 
-        #10 rsi_reset_n = 0; 
-        #10 rsi_reset_n = 1;
+        #10 rst_n = 0;
+        #10 rst_n = 1; 
 
         /* (2) Serially Input the address & Instruction to CTRL and then to SRAM */
         for (i = DEFAULT_PC_ADDR; i<7+ DEFAULT_PC_ADDR; i=i+1) begin
-            for (k = 2; k>=1; k=k-1) begin
+            for (k=2; k>=1; k=k-1) begin
                 /** (a) load data to SRAM_IO_CTRL from PC **/
                 // C code modify control word
-
                 #10 CTRL_BGN = 1;
-                avs_cpuctrl_writedata[IDX_SCPU_CTRL_BGN] = 1'b1;
                 #10 CTRL_MODE = 2'b00;
-                avs_cpuctrl_writedata[IDX_SCPU_CTRL_MOD1] = 1'b0;
-                avs_cpuctrl_writedata[IDX_SCPU_CTRL_MOD0] = 1'b0;
-                
                 tmpi_adder = (i<<1)+k-1;
                 tmpi_all = {tmpi_adder, i_mem.I_RAM[tmpi_adder]};
-                avs_sram_addr_writedata = tmpi_adder;
-                avs_sram_data_writedata = i_mem.I_RAM[tmpi_adder];
                 // C code triger FPGA gen Load signal
-                avs_cpuctrl_write = 0;
-                #10 avs_cpuctrl_write = 1;
-                avs_cpuctrl_writedata[IDX_SCPU_CTRL_LOAD] = 1'b1;
-
-                // begin
+            
+                begin
                     // FPGA send Load signal & data to CTRL
-                    // #10 LOAD_N = 0;
-                    // for (j = 0; j < REG_BITS_WIDTH; j=j+1) begin
-                        // #10 SI = tmpi_all[j];
-                    // end
-                // end
-
+                    #10 LOAD_N = 0;
+                    #10;//need to wait one more cycle for the delay
+                    for (j = 0; j < REG_BITS_WIDTH; j=j+1) begin
+                        #10 SI = tmpi_all[j];
+                    end
+                end
+            
                 // C code polling to do next
                 begin: ctrl_module_load_ready
                 forever begin
@@ -282,14 +196,10 @@ module SRAM_IO_CTRL_LOGIC_TEST;
                     end
                 end
                 end
-                
+            
                 // C code modify control word
                 #10 CTRL_BGN = 0;
-                avs_cpuctrl_writedata[IDX_SCPU_CTRL_BGN] = 0;
                 #10 LOAD_N = 1;//this FPGA signal is related to CTRL_BGN
-                avs_cpuctrl_write = 0;
-                #10 avs_cpuctrl_write = 1;
-                avs_cpuctrl_writedata[IDX_SCPU_CTRL_LOAD] = 0;
                 begin: ctrl_module_load_finish
                 forever begin
                     #10;
@@ -298,23 +208,17 @@ module SRAM_IO_CTRL_LOGIC_TEST;
                     end
                 end
                 end
-
+            
                 /** (b) notify SRAM_IO_CTRL to send data to SRAM **/
                 // C code modify control word
                 #10 CTRL_BGN = 1;
-                avs_cpuctrl_writedata[IDX_SCPU_CTRL_BGN] = 1;
                 #10 CTRL_MODE = 2'b11;
-                avs_cpuctrl_writedata[IDX_SCPU_CTRL_MOD1] = 1;
-                avs_cpuctrl_writedata[IDX_SCPU_CTRL_MOD0] = 1;
                 // C code triger FPGA gen Load signal
-                avs_cpuctrl_write = 0;
-                #10 avs_cpuctrl_write = 1;
-                avs_cpuctrl_writedata[IDX_SCPU_CTRL_LOAD] = 1;
                 
-                // begin
+                begin
                     // FPGA send Load signal & data to CTRL
-                    // #10 LOAD_N = 0;
-                // end
+                    #10 LOAD_N = 0;
+                end
                 
                 // C code polling to do next
                 begin: ctrl_module_write_ready
@@ -328,11 +232,7 @@ module SRAM_IO_CTRL_LOGIC_TEST;
                 
                 // C code modify control word
                 #10 CTRL_BGN = 0;
-                avs_cpuctrl_writedata[IDX_SCPU_CTRL_BGN] = 0;
                 #10 LOAD_N = 1;//this FPGA signal is related to CTRL_BGN
-                avs_cpuctrl_write = 0;
-                #10 avs_cpuctrl_write = 1;
-                avs_cpuctrl_writedata[IDX_SCPU_CTRL_LOAD] = 0;
                 begin: ctrl_module_write_finish
                 forever begin
                     #10;
@@ -347,35 +247,27 @@ module SRAM_IO_CTRL_LOGIC_TEST;
         
         // (3) Read the inner instructions
         //force   CEN = 0;//enable RA1SHD_ibm512x8
-        //force   d_we = 0;//read module
+        //force   d_we = 1;//read module
         for (i = DEFAULT_PC_ADDR; i<7+ DEFAULT_PC_ADDR; i=i+1) begin
             $write("%4x\t", (i<<1));
             for (k = 2; k >= 1; k=k-1) begin
                 /** (a) load data to SRAM_IO_CTRL from PC **/
                 // C code modify control word
                 #10 CTRL_BGN = 1;
-                avs_cpuctrl_writedata[IDX_SCPU_CTRL_BGN] = 1;
                 #10 CTRL_MODE = 2'b00;
-                avs_cpuctrl_writedata[IDX_SCPU_CTRL_MOD1] = 0;
-                avs_cpuctrl_writedata[IDX_SCPU_CTRL_MOD0] = 0;
-                
                 tmpi_adder = (i<<1)+k-1;
                 tmpi_all = {tmpi_adder, {MEMORY_DATA_WIDTH{1'b0}}};//i_mem.I_RAM[tmpi_adder]
-                avs_sram_addr_writedata = tmpi_adder;
-                avs_sram_data_writedata = {MEMORY_DATA_WIDTH{1'b0}};
                 // C code triger FPGA gen Load signal
-                avs_cpuctrl_write = 0;
-                #10 avs_cpuctrl_write = 1;
-                avs_cpuctrl_writedata[IDX_SCPU_CTRL_LOAD] = 1;
                 
-                // begin
+                begin
                     // FPGA send Load signal & data to CTRL
-                    // #10 LOAD_N = 0;
-                    // for (j = 0; j < REG_BITS_WIDTH; j=j+1) begin
-                        // #10 SI = tmpi_all[j];
-                    // end
-                // end
-
+                    #10 LOAD_N = 0;
+                    #10;//need to wait one more cycle for the delay
+                    for (j = 0; j < REG_BITS_WIDTH; j=j+1) begin
+                        #10 SI = tmpi_all[j];
+                    end
+                end
+                
                 // C code polling to do next
                 begin: ctrl_module_load_ready_2nd
                 forever begin
@@ -388,11 +280,7 @@ module SRAM_IO_CTRL_LOGIC_TEST;
                 
                 // C code modify control word
                 #10 CTRL_BGN = 0;
-                avs_cpuctrl_writedata[IDX_SCPU_CTRL_BGN] = 0;
                 #10 LOAD_N = 1;//this FPGA signal is related to CTRL_BGN
-                avs_cpuctrl_write = 0;
-                #10 avs_cpuctrl_write = 1;
-                avs_cpuctrl_writedata[IDX_SCPU_CTRL_LOAD] = 0;
                 begin: ctrl_module_load_finish_2nd
                 forever begin
                     #10;
@@ -401,23 +289,17 @@ module SRAM_IO_CTRL_LOGIC_TEST;
                     end
                 end
                 end
-               
+
                 /** (b) notify SRAM_IO_CTRL to send data to SRAM **/
                 // C code modify control word
                 #10 CTRL_BGN = 1;
-                avs_cpuctrl_writedata[IDX_SCPU_CTRL_BGN] = 1;
                 #10 CTRL_MODE = 2'b01;
-                avs_cpuctrl_writedata[IDX_SCPU_CTRL_MOD1] = 0;
-                avs_cpuctrl_writedata[IDX_SCPU_CTRL_MOD0] = 1;
                 // C code triger FPGA gen Load signal
-                avs_cpuctrl_write = 0;
-                #10 avs_cpuctrl_write = 1;
-                avs_cpuctrl_writedata[IDX_SCPU_CTRL_LOAD] = 1;
                 
-                // begin
+                begin
                     // FPGA send Load signal & data to CTRL
-                    // #10 LOAD_N = 0;
-                // end
+                    #10 LOAD_N = 0;
+                end
                 
                 // C code polling to do next
                 begin: ctrl_module_read_ready
@@ -431,11 +313,7 @@ module SRAM_IO_CTRL_LOGIC_TEST;
                 
                 // C code modify control word
                 #10 CTRL_BGN = 0;
-                avs_cpuctrl_writedata[IDX_SCPU_CTRL_BGN] = 0;
                 #10 LOAD_N = 1;//this FPGA signal is related to CTRL_BGN
-                avs_cpuctrl_write = 0;
-                #10 avs_cpuctrl_write = 1;
-                avs_cpuctrl_writedata[IDX_SCPU_CTRL_LOAD] = 0;
                 begin: ctrl_module_read_finish
                 forever begin
                     #10;
@@ -446,61 +324,11 @@ module SRAM_IO_CTRL_LOGIC_TEST;
                 end
                 
                 /** (c) Export SRAM data from SRAM_IO_CTRL**/
-                // C code modify control word
-                #10 CTRL_BGN = 1;
-                avs_cpuctrl_writedata[IDX_SCPU_CTRL_BGN] = 1;
-                #10 CTRL_MODE = 2'b00;
-                avs_cpuctrl_writedata[IDX_SCPU_CTRL_MOD1] = 1;
-                avs_cpuctrl_writedata[IDX_SCPU_CTRL_MOD0] = 0;
-                
-                tmpi_adder = {MEMORY_ADDR_WIDTH{1'b0}};
-                tmpi_all = {tmpi_adder, {MEMORY_DATA_WIDTH{1'b0}}};//i_mem.I_RAM[tmpi_adder]
-                avs_sram_addr_writedata = tmpi_adder;
-                avs_sram_data_writedata = {MEMORY_DATA_WIDTH{1'b0}};
-                // C code triger FPGA gen Load signal
-                avs_cpuctrl_write = 0;
-                #10 avs_cpuctrl_write = 1;
-                avs_cpuctrl_writedata[IDX_SCPU_CTRL_LOAD] = 1;
-                
-                // begin
-                    // FPGA send Load signal & data to CTRL
-                    // #10 LOAD_N = 0;
-                    // for (j = 0; j < REG_BITS_WIDTH; j=j+1) begin
-                        // #10 SI = tmpi_all[j];
-                    // end
-                // end
-
-                // C code polling to do next
-                begin: ctrl_module_load_ready_3nd
-                forever begin
-                    #10;
-                    if (RDY) begin
-                        disable ctrl_module_load_ready_3nd;
-                    end
-                end
-                end
-                
-                // C code modify control word
-                #10 CTRL_BGN = 0;
-                avs_cpuctrl_writedata[IDX_SCPU_CTRL_BGN] = 0;
-                #10 LOAD_N = 1;//this FPGA signal is related to CTRL_BGN
-                avs_cpuctrl_write = 0;
-                #10 avs_cpuctrl_write = 1;
-                avs_cpuctrl_writedata[IDX_SCPU_CTRL_LOAD] = 0;
-                begin: ctrl_module_load_finish_3nd
-                forever begin
-                    #10;
-                    if (!RDY) begin
-                        disable ctrl_module_load_finish_3nd;
-                    end
-                end
-                end
-                
-                $write("%8b ", avs_sram_data_readdata[MEMORY_DATA_WIDTH-1:0]);
+                $write("%8b ", cct.reg_bits[MEMORY_DATA_WIDTH-1:0]);
                 if (k == 1)
-                    tmpi_datain[MEMORY_DATA_WIDTH-1:0] = avs_sram_data_readdata[MEMORY_DATA_WIDTH-1:0];
+                    tmpi_datain[MEMORY_DATA_WIDTH-1:0] = cct.reg_bits[MEMORY_DATA_WIDTH-1:0];
                 else if (k == 2)
-                    tmpi_datain[2*MEMORY_DATA_WIDTH-1:MEMORY_DATA_WIDTH] = avs_sram_data_readdata[MEMORY_DATA_WIDTH-1:0];
+                    tmpi_datain[2*MEMORY_DATA_WIDTH-1:MEMORY_DATA_WIDTH] = cct.reg_bits[MEMORY_DATA_WIDTH-1:0];
             end
         
             if (tmpi_datain != {i_mem.I_RAM[(i<<1)+1],i_mem.I_RAM[i<<1]}) begin

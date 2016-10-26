@@ -19,7 +19,7 @@
 module SRAM_IO_CTRL(CLK, BGN, SI, LOAD_N, CTRL, PI, RDY, D_WE, CEN, SO, A, PO);
 
     parameter   MEMORY_DATA_WIDTH   = 8,
-                MEMORY_ADDR_WIDTH   = 9,
+                MEMORY_ADDR_WIDTH   = 10,
                 REG_BITS_WIDTH = MEMORY_ADDR_WIDTH + MEMORY_DATA_WIDTH;
                 
     parameter   IO_IDLE = 2'b00,

@@ -16,6 +16,9 @@
 
 module SCPU_MEM_INST_END_8BIT_TEST;
 
+   parameter    MEMORY_DATA_WIDTH   = 8,
+                MEMORY_ADDR_WIDTH   = 10;
+
     // Inputs
     reg clk;
     reg enable;
@@ -32,9 +35,9 @@ module SCPU_MEM_INST_END_8BIT_TEST;
     wire [7:0]  m_datain;
 
     wire [7:0]  m_dataout;
-    wire [8:0]  m_addr;
-    wire [8:0]  i_addr;
-    wire [8:0]  d_addr;
+    wire [MEMORY_ADDR_WIDTH-1:0]  m_addr;
+    wire [MEMORY_ADDR_WIDTH-1:0]  i_addr;
+    wire [MEMORY_ADDR_WIDTH-1:0]  d_addr;
     wire d_we;
 
     integer i,j;

@@ -5,7 +5,7 @@
 // AUTHER       : Jiafan Wang
 // DATE         : 01/23/2016
 // VERSION      : 1.0
-// PURPOSE      : test the loop function in serial CPU
+// PURPOSE      : test the loop function in serial CPU (512X16 SRAM)
 // --------------------------------------------------------------------
 // ABSTRACT: simulation time 13us given each time period 10ns
 // --------------------------------------------------------------------

@@ -1,50 +1,63 @@
 //+FHDR****************************************************************
 // ECE department, TAMU
 // --------------------------------------------------------------------
-// FILE NAME    : PSEUDO_SPI_INTF_SCAN_TEST.v
+// FILE NAME    : PSEUDO_SPI_INTF_RA1SHD_TEST.v
 // AUTHER       : Jiafan Wang
-// DATE         : 06/27/2016
+// DATE         : 10/26/2016
 // VERSION      : 1.0
-// PURPOSE      : Pseudo SPI module & Scan chain test
+// PURPOSE      : RA1SHD_1024x8 SRAM and Pseudo SPI module tester
 // --------------------------------------------------------------------
 // ABSTRACT: ModelSim simulation time 6us given each time period 10ns
 // --------------------------------------------------------------------
 `timescale 1ns / 1ps
 `include "../DEFINE_CPU.v"
 `include "../PSEUDO_SPI_INTF.v"
+`include "../RA1SHD_IBM1024X8.v"
 //`include "../RA1SHD_IBM512X8.v"
 `include "../I_MEMORY_8bit.v"
-`include "../SC_CELL_V3.v"
 
-module PSEUDO_SPI_INTF_SCAN_TEST;
+module PSEUDO_SPI_INTF_RA1SHD_TEST;
 
-   parameter    MEMORY_DATA_WIDTH   = 8,
+    parameter   MEMORY_DATA_WIDTH   = 8,
                 MEMORY_ADDR_WIDTH   = 10,
                 REG_BITS_WIDTH = MEMORY_ADDR_WIDTH + MEMORY_DATA_WIDTH;
 
+    parameter   VIRTUAL_DLY = 2;
+                
     // Inputs
     reg CLK;
-    reg BGN;// enable signal for PSEUDO_SPI
+    reg SPI_BGN;// enable signal for PSEUDO_SPI
+    reg CTRL_BGN;// enable signal for CTRL_SRAM
     reg rst_n;//no use here
+    reg [1:0]   CTRL_MODE;
+    reg is_intf_flag;
     
     // Wires
     // wire is_i_addr;
     // wire [7:0]  i_datain;
     // wire [7:0]  d_datain;
     // wire [7:0]  d_dataout;
-    wire [7:0]  m_datain;
 
-    wire [7:0]  m_dataout;
+    wire [7:0]  m_datain;
+    wire [7:0]  m_dataout;  // read from SRAM
     wire [MEMORY_ADDR_WIDTH-1:0]  m_addr;     //MEMORY_ADDR_WIDTH
-    // wire [8:0]  i_addr;
-    // wire [8:0]  d_addr;
+    wire [MEMORY_ADDR_WIDTH-1:0]  m_addr_cct;
+    wire [MEMORY_ADDR_WIDTH-1:0]  m_addr_put;
     wire d_we;
-    wire SPI_SO;
+    wire d_we_cct;
+    wire d_we_put;
+    wire CEN;
+    wire CEN_cct;
+    wire CEN_put;
+    wire CTRL_SO;
     wire RDY;
+    wire SPI_SO;
     
     integer i,j,k;
     reg  [15:0] tmpi_datain;
+    reg  [REG_BITS_WIDTH-1:0]  tmpi_all;//addr+instruction
     reg  [MEMORY_ADDR_WIDTH-1:0]  tmpi_adder;
+    reg  SI;
     reg  LOAD_N;
     integer error_cnt;
    
@@ -53,57 +66,72 @@ module PSEUDO_SPI_INTF_SCAN_TEST;
     reg   [MEMORY_ADDR_WIDTH-1:0] addr_bgn;
     reg   [RESERVED_DATA_LEN-1:0] data_len;    //each data width = MEMORY_DATA_WIDTH
     reg   [7:0]   freq_div;
-    reg   [MEMORY_DATA_WIDTH-1:0] PI;         // read from SRAM
     
     wire  SCLK1;
     wire  SCLK2;
     wire  LAT;
-    wire  CEN;
+    wire  is_i_addr;
     wire  spi_is_done;
-    
-    wire  SEL_B;
-    reg   [9:0]   ADC ;
-    wire  [9:0]   CFSA_ADC;
+
+    wire  CLK_dly;
+    wire  CTRL_BGN_dly;
+    wire  SI_dly;
+    wire  RDY_dly;
+    wire  LOAD_N_dly;
     
     // Instantiate the Unit Under Test (UUT)
+    SRAM_IO_CTRL cct (
+        .CLK(CLK_dly),
+        .BGN(CTRL_BGN_dly),
+        .SI(SI_dly),
+        .LOAD_N(LOAD_N_dly),
+        .CTRL(CTRL_MODE),//2'b00
+        .PI(m_dataout),
+        .RDY(RDY_dly),
+        .D_WE(d_we_cct),
+        .CEN(CEN_cct),
+        .SO(CTRL_SO),
+        .A(m_addr_cct),
+        .PO(m_datain)
+    );
+    
     PSEUDO_SPT_INTF     put(
-        // input
-        .CLK        (CLK        ),
-        .BGN        (BGN        ),
-        .ADDR_BGN   (addr_bgn   ),
-        .DATA_LEN   (data_len   ),
-        //.FREQ_DIV   (freq_div   ),
+        //input
+        .CLK        (CLK_dly),
+        .BGN        (SPI_BGN ),
+        .ADDR_BGN   (addr_bgn),
+        .DATA_LEN   (data_len),
+        //.FREQ_DIV   (freq_div),
         .PI         (m_dataout  ),
-        // output
-        .SCLK1      (SCLK1      ),
-        .SCLK2      (SCLK2      ),
-        .LAT        (LAT        ),//LAT for read; SEL for write
-                                
-        .SPI_SO     (SPI_SO     ),
-        .CEN        (CEN        ),
-        .A          (m_addr     ),
-        .D_WE       (d_we       ),//memory read or write signal, 1: write
+        //output
+        .SCLK1      (SCLK1   ),
+        .SCLK2      (SCLK2   ),
+        .LAT        (LAT     ),//LAT for read; SEL for write
+        .SPI_SO     (SPI_SO  ),
+        .CEN        (CEN_put ),
+        .A          (m_addr_put ),
+        .D_WE       (d_we_put   ),//memory read or write signal, 1: write
         .spi_MUX    (spi_MUX    ),
         .spi_is_done(spi_is_done)
     );
   
-    // RA1SHD_IBM512X8   sram (
-        // .CLK(CLK),
-        // .CEN(CEN), 
-        // .A(m_addr),
-        // .WEN(d_we),// need a seperate control signal; or instruction set will be overwritten when d_we=1
-        // .D(m_datain),//i_instruct
-        // .Q(m_dataout)
-    // );
+    RA1SHD_IBM1024X8   sram (
+        .CLK(CLK_dly),
+        .CEN(CEN), 
+        .A(m_addr),
+        .WEN(d_we),// need a seperate control signal; or instruction set will be overwritten when d_we=1
+        .D(m_datain),//i_instruct
+        .Q(m_dataout)
+    );
 
     // only used for testbench
     I_MEMORY_8BIT   i_mem(
-        .clk(CLK),
-        .rst_n(1'b1), 
-        .addr(m_addr),
-        .d_we(1'b0),// need a seperate control signal; or instruction set will be overwritten when d_we=1
-        .datain(8'h00),//i_instruct
-        .dataout(m_dataout)
+        // .clk(clk),
+        // .rst_n(CEN), 
+        // .addr(m_addr),
+        // .d_we(d_we),// need a seperate control signal; or instruction set will be overwritten when d_we=1
+        // .datain(m_datain),//i_instruct
+        // .dataout(m_dataout)
     );
     
     I_MEMORY_8BIT   c_mem();
@@ -117,53 +145,40 @@ module PSEUDO_SPI_INTF_SCAN_TEST;
                 SPI_DONE = 3'b101;
                 
     //defparam    uut.DEFAULT_PC_ADDR = DEFAULT_PC_ADDR;
-
-    // Scan chain 1: length 14
-    SC_CELL_V3	CS208( .SIN(SIN), .SO(M0  ), .PO(SC_CLRN    ), .PIN(CLRN     ), .SEL(SEL_B), .LAT(LAT_B), .SCK1(SCK1_B), .SCK2(SCK2), .BYP_N(1'b0) );
-    SC_CELL_V3	CS209( .SIN(M0 ), .SO(M1  ), .PO(SC_CLK_ADC ), .PIN(CLK_ADC  ), .SEL(SEL_B), .LAT(LAT_B), .SCK1(SCK1_B), .SCK2(SCK2), .BYP_N(1'b0) );
-    SC_CELL_V3	CS210( .SIN(M1 ), .SO(M2  ), .PO(SC_RSTN_ADC), .PIN(RSTN_ADC ), .SEL(SEL_B), .LAT(LAT_B), .SCK1(SCK1_B), .SCK2(SCK2), .BYP_N(1'b0) );
-    SC_CELL_V3	CS211( .SIN(M2 ), .SO(M3  ), .PO(SC_PO_IDLE ), .PIN(PO_IDLE  ), .SEL(SEL_B), .LAT(LAT_B), .SCK1(SCK1_B), .SCK2(SCK2), .BYP_N(1'b0) );
-    SC_CELL_V3	CS212( .SIN(M3 ), .SO(M4  ), .PO(CFSA_ADC[9]), .PIN(ADC[9]   ), .SEL(SEL_B), .LAT(LAT_B), .SCK1(SCK1_B), .SCK2(SCK2), .BYP_N(1'b0) );
-    SC_CELL_V3	CS213( .SIN(M4 ), .SO(M5  ), .PO(CFSA_ADC[8]), .PIN(ADC[8]   ), .SEL(SEL_B), .LAT(LAT_B), .SCK1(SCK1_B), .SCK2(SCK2), .BYP_N(1'b0) );
-    SC_CELL_V3	CS214( .SIN(M5 ), .SO(M6  ), .PO(CFSA_ADC[7]), .PIN(ADC[7]   ), .SEL(SEL_B), .LAT(LAT_B), .SCK1(SCK1_B), .SCK2(SCK2), .BYP_N(1'b0) );
-    SC_CELL_V3	CS215( .SIN(M6 ), .SO(M7  ), .PO(CFSA_ADC[6]), .PIN(ADC[6]   ), .SEL(SEL_B), .LAT(LAT_B), .SCK1(SCK1_B), .SCK2(SCK2), .BYP_N(1'b0) );
-    SC_CELL_V3	CS216( .SIN(M7 ), .SO(M8  ), .PO(CFSA_ADC[5]), .PIN(ADC[5]   ), .SEL(SEL_B), .LAT(LAT_B), .SCK1(SCK1_B), .SCK2(SCK2), .BYP_N(1'b0) );
-    SC_CELL_V3	CS217( .SIN(M8 ), .SO(M9  ), .PO(CFSA_ADC[4]), .PIN(ADC[4]   ), .SEL(SEL_B), .LAT(LAT_B), .SCK1(SCK1_B), .SCK2(SCK2), .BYP_N(1'b0) );
-    SC_CELL_V3	CS218( .SIN(M9 ), .SO(M10 ), .PO(CFSA_ADC[3]), .PIN(ADC[3]   ), .SEL(SEL_B), .LAT(LAT_B), .SCK1(SCK1_B), .SCK2(SCK2), .BYP_N(1'b0) );
-    SC_CELL_V3	CS219( .SIN(M10), .SO(M11 ), .PO(CFSA_ADC[2]), .PIN(ADC[2]   ), .SEL(SEL_B), .LAT(LAT_B), .SCK1(SCK1_B), .SCK2(SCK2), .BYP_N(1'b0) );
-    SC_CELL_V3	CS220( .SIN(M11), .SO(M12 ), .PO(CFSA_ADC[1]), .PIN(ADC[1]   ), .SEL(SEL_B), .LAT(LAT_B), .SCK1(SCK1_B), .SCK2(SCK2), .BYP_N(1'b0) );
-    SC_CELL_V3	CS221( .SIN(M12), .SO(SO_B), .PO(CFSA_ADC[0]), .PIN(ADC[0]   ), .SEL(SEL_B), .LAT(LAT_B), .SCK1(SCK1_B), .SCK2(SCK2), .BYP_N(1'b0) );
-
-    assign  SIN     = SPI_SO;
-    assign  SCK1_B  = SCLK1;
-    assign  SCK2    = SCLK2;
-    assign  LAT_B   = LAT;
-    assign  SEL_B   = 1'b0;
-    //assign  m_addr = (is_i_addr)?i_addr:d_addr;
-    //assign  m_datain = d_dataout;
+    
+    assign  m_addr  = (is_intf_flag)? m_addr_put: m_addr_cct;
+    assign  CEN     = (is_intf_flag)? CEN_put: CEN_cct;
+    assign  d_we    = (is_intf_flag)? d_we_put: d_we_cct;
     //assign  i_datain = (is_i_addr)?m_dataout:0;
     //assign  d_datain = (is_i_addr)?0:m_dataout;
     
+    assign  #VIRTUAL_DLY    CTRL_BGN_dly = CTRL_BGN;
+    assign  #VIRTUAL_DLY    CLK_dly = CLK;
+    assign  #VIRTUAL_DLY    SI_dly  = SI;
+    assign  #VIRTUAL_DLY    LOAD_N_dly = LOAD_N;
+    assign  #VIRTUAL_DLY    RDY_dly = RDY;
+    
     parameter   DEFAULT_PC_ADDR = 16,
-                MEM_BGN_ADDR    = 0,
-                TRANSFER_LEN    = 1*2;
+                MEM_BGN_ADDR    = DEFAULT_PC_ADDR*2,
+                TRANSFER_LEN    = 7*2;
     
     initial begin
         // Initialize Inputs Signals
         CLK = 0;
         rst_n = 0;
-        BGN = 0;
-        ADC = 10'b0000000000;
-        //addr starts at {MEMORY_ADDR_WIDTH{1'b1}} + 1
-        addr_bgn = {MEMORY_ADDR_WIDTH{1'b1}};
+        SPI_BGN = 0;
+        CTRL_BGN = 0;
+        //addr starts at (MEM_BGN_ADDR - 1)
+        addr_bgn = MEM_BGN_ADDR - 1;
         data_len = TRANSFER_LEN;
-        
         LOAD_N = 1;
         error_cnt = 0;
+        CTRL_MODE = 2'b00;
+        
+        is_intf_flag = 0;
         #50;
-        // Wait 100 ns for global rst_n to finish
 
-        /* Add stimulus here: Using a pseudo memory to load instruction*/ 
+        /* (0) Using a pseudo memory to keep instructions*/ 
         i= DEFAULT_PC_ADDR*2;
         tmpi_datain = {`SET, `gr3, 4'b0000, 4'b0100};//reset the loop controller `gr7
         i_mem.I_RAM[ i] = tmpi_datain[7:0];  i = 1 + DEFAULT_PC_ADDR*2;
@@ -205,7 +220,7 @@ module PSEUDO_SPI_INTF_SCAN_TEST;
         // i_mem.I_RAM[21] = {`NOP, 11'b000_0000_0000};
         
         i = 0; j = 0; k = 0;
-        tmpi_datain = 16'b1010_0111111110_00;//510
+        tmpi_datain = 16'h00AB;
         i_mem.I_RAM[ i] = tmpi_datain[7:0];  i = 1;
         i_mem.I_RAM[ i] = tmpi_datain[15:8]; i = 2;
         tmpi_datain = 16'h3C00;
@@ -230,9 +245,93 @@ module PSEUDO_SPI_INTF_SCAN_TEST;
         // i_mem.D_RAM[1] = 16'h3C00;
         // i_mem.D_RAM[2] = 16'h0000;
 
-        #10 BGN = 1; rst_n = 1; 
+        #10 rst_n = 0;
+        #10 rst_n = 1; CTRL_BGN = 1;
 
-        /* Fetch SRAM info & print inner instructions */
+        /* (1) Import address & Instruction to SRAM via CTRL_SRAM */
+        for (i = DEFAULT_PC_ADDR; i<7+ DEFAULT_PC_ADDR; i=i+1) begin
+            for (k=2; k>=1; k=k-1) begin
+                /** (a) load data to SRAM_IO_CTRL from PC **/
+                // C code modify control word
+                #10 CTRL_BGN = 1;
+                #10 CTRL_MODE = 2'b00;
+                tmpi_adder = (i<<1)+k-1;
+                tmpi_all = {tmpi_adder, i_mem.I_RAM[tmpi_adder]};
+                // C code triger FPGA gen Load signal
+            
+                begin
+                    // FPGA send Load signal & data to CTRL
+                    #10 LOAD_N = 0;
+                    #10;//need to wait one more cycle for the delay
+                    for (j = 0; j < REG_BITS_WIDTH; j=j+1) begin
+                        #10 SI = tmpi_all[j];
+                    end
+                end
+            
+                // C code polling to do next
+                begin: ctrl_module_load_ready
+                forever begin
+                    #10;
+                    if (RDY_dly) begin
+                        disable ctrl_module_load_ready;
+                    end
+                end
+                end
+            
+                // C code modify control word
+                #10 CTRL_BGN = 0;
+                #10 LOAD_N = 1;//this FPGA signal is related to CTRL_BGN
+                begin: ctrl_module_load_finish
+                forever begin
+                    #10;
+                    if (!RDY_dly) begin
+                        disable ctrl_module_load_finish;
+                    end
+                end
+                end
+            
+                /** (b) notify SRAM_IO_CTRL to send data to SRAM **/
+                // C code modify control word
+                #10 CTRL_BGN = 1;
+                #10 CTRL_MODE = 2'b11;
+                // C code triger FPGA gen Load signal
+                
+                begin
+                    // FPGA send Load signal & data to CTRL
+                    #10 LOAD_N = 0;
+                end
+            
+                // C code polling to do next
+                begin: ctrl_module_write_ready
+                forever begin
+                    #10;
+                    if (RDY_dly) begin
+                        disable ctrl_module_write_ready;
+                    end
+                end
+                end
+            
+                // C code modify control word
+                #10 CTRL_BGN = 0;
+                #10 LOAD_N = 1;//this FPGA signal is related to CTRL_BGN
+                begin: ctrl_module_write_finish
+                forever begin
+                    #10;
+                    if (!RDY_dly) begin
+                        disable ctrl_module_write_finish;
+                    end
+                end
+                end
+            end
+        end
+        #800;
+        
+        /* (3) fetch info from Real SRAM & compare with Baseline */ 
+        // C code modify control word
+        error_cnt = 0;
+        is_intf_flag = 1;
+        CTRL_BGN = 0;
+        SPI_BGN = 1; 
         for (i = MEM_BGN_ADDR; i < (MEM_BGN_ADDR + TRANSFER_LEN); i=i+1) begin
             $write("%4x\t", i); tmpi_datain = 0;
             // Wait for data read from real SRAM;
@@ -246,7 +345,7 @@ module PSEUDO_SPI_INTF_SCAN_TEST;
                     end
                     #10;
                 end
-                #10 LOAD_N = 1;
+                //#10 LOAD_N = 1;
             end
             // Write data to tmp SRAM for later comparison
             c_mem.I_RAM[ i] = tmpi_datain[MEMORY_DATA_WIDTH-1:0];
@@ -261,15 +360,6 @@ module PSEUDO_SPI_INTF_SCAN_TEST;
                 error_cnt = error_cnt + 1;
             end
             $display("");
-        end
-        
-        // Judge Bits Correct Result
-        tmpi_datain = {c_mem.I_RAM[1], c_mem.I_RAM[0]};
-        if ((10'd510 == CFSA_ADC) && (tmpi_datain[11:2] == CFSA_ADC))
-            $write("\tScan Chain Correct!\n");
-        else begin
-            $write("\tScan Chain Wrong!\n");
-            error_cnt = error_cnt + 1;
         end
         
         // Judge Final Test Result

@@ -23,7 +23,7 @@ module  SYS_PSEUDO_SPI_INTF_SCAN_TEST();
                 MAX_SQRT_WIDTH      = 13;
                 
     parameter   MEMORY_DATA_WIDTH   = 8,
-                MEMORY_ADDR_WIDTH   = 9,
+                MEMORY_ADDR_WIDTH   = 10,
                 REG_BITS_WIDTH = MEMORY_ADDR_WIDTH + MEMORY_DATA_WIDTH;
 
     parameter   GENERAL_REG_WIDTH   = 16;
@@ -35,7 +35,7 @@ module  SYS_PSEUDO_SPI_INTF_SCAN_TEST();
     integer error_cnt;
     reg     [15:0] tmpi_datain; //MEMORY_DATA_WIDTH*2 -1
     reg     [REG_BITS_WIDTH-1:0]  tmpi_all;//addr+instruction
-    reg     [8:0]  tmpi_adder;  //MEMORY_ADDR_WIDTH -1
+    reg     [MEMORY_ADDR_WIDTH-1:0]  tmpi_adder;  //MEMORY_ADDR_WIDTH -1
     
     reg     CLK;
     reg     RST_N;
@@ -46,7 +46,7 @@ module  SYS_PSEUDO_SPI_INTF_SCAN_TEST();
     reg     LOAD_N;
     reg     CTRL_SI;
     //reg     ANA_SI;
-    reg     [GENERAL_REG_WIDTH-1:0] ADC_PI;
+    reg     [9:0] ADC_PI;
     
     // Wires
     wire    CTRL_RDY;
@@ -72,7 +72,7 @@ module  SYS_PSEUDO_SPI_INTF_SCAN_TEST();
         .CPU_BGN        (CPU_BGN    ),
         .LOAD_N         (LOAD_N_dly),
         .CTRL_SI        (CTRL_SI_dly),
-        //.ANA_SI         (ANA_SI     ),
+        .APP_DONE       (1'b0   ),
         .ADC_PI         (ADC_PI     ),
         // output
         .CTRL_RDY       (CTRL_RDY),

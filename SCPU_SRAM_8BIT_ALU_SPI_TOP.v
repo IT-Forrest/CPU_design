@@ -12,7 +12,7 @@
 `timescale 1ns / 1ps
 `include "DEFINE_CPU.v"
 `include "SCPU_8BIT_ALU_CTRL_SPI.v"
-//`include "RA1SHD_IBM512X8.v"
+`include "RA1SHD_IBM1024X8.v"
 //`include "iogpil_cmrf8sf_rvt.v"
 
 `ifndef SCPU_SRAM_8BIT_ALU_SPI_TOP_V
@@ -53,7 +53,7 @@ module SCPU_SRAM_8BIT_ALU_SPI_TOP(
     input   CPU_BGN;
     input   LOAD_N;
     input   CTRL_SI;
-    //input   ANA_SI;
+    input   APP_DONE;
     input   [9:0] ADC_PI;
     
     // Output
