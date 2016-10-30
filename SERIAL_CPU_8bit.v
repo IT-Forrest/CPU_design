@@ -64,15 +64,15 @@ module SERIAL_CPU_8BIT(
     
     parameter   STATE_IDLE          = 4'b0000,
                 STATE_IF            = 4'b0010,
-                STATE_IF2           = 4'b0100,
-                STATE_ID            = 4'b0101,
-                STATE_EX            = 4'b1101,
-                STATE_WAIT          = 4'b1001,
-                STATE_EX2           = 4'b0001,
-                STATE_MEM           = 4'b0011,
-                STATE_MEM2          = 4'b1011,
-                STATE_WB            = 4'b1010,
-                STATE_LP            = 4'b0110;
+                STATE_IF2           = 4'b0011,
+                STATE_ID            = 4'b0001,
+                STATE_EX            = 4'b0101,
+                STATE_WAIT          = 4'b0111,
+                STATE_EX2           = 4'b0110,
+                STATE_MEM           = 4'b1110,
+                STATE_MEM2          = 4'b1111,
+                STATE_WB            = 4'b1011,
+                STATE_LOAD          = 4'b1010;
     
     input   clk;
     input   enable;
@@ -150,7 +150,7 @@ module SERIAL_CPU_8BIT(
             else if (state == STATE_IF)
             // else if (state == STATE_IF2)
             // else if (state == STATE_ID)
-            // else if (state == STATE_LP)
+            // else if (state == STATE_LOAD)
                 is_i_addr <= 1'b1;
             else if (state == STATE_EX)
                 is_i_addr <= 1'b0;
@@ -185,7 +185,7 @@ module SERIAL_CPU_8BIT(
                         next_state <= STATE_IF;
                     end
                     else if (cpu_suspend && !cpu_restore) begin
-                        next_state <= STATE_LP;
+                        next_state <= STATE_IF;
                     end
                     else begin
                         next_state <= STATE_IF2;
@@ -200,23 +200,17 @@ module SERIAL_CPU_8BIT(
                 STATE_WB:
                     if (code_type == `HALT) begin
                         nxt <= 2'b01;
-                        next_state <= STATE_IDLE;
+                        next_state <= STATE_LOAD;
                     end
                     else if (instr_over) begin
                         nxt <= 2'b10;
-                        next_state <= STATE_IDLE;
+                        next_state <= STATE_LOAD;
                     end
                     else begin
                         nxt <= 2'b00;
                         next_state <= STATE_IF;
                     end
-                STATE_LP:
-                    if (cpu_restore) begin
-                        next_state <= STATE_IF2;
-                    end
-                    else begin
-                        next_state <= STATE_LP;
-                    end
+                STATE_LOAD: next_state <= STATE_IDLE;
                 default:
                     begin
                         nxt <= 2'b00;

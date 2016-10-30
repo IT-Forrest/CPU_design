@@ -1,0 +1,45 @@
+set_pad_physical_constraints -pad_name ipad_clk -side 1 -offset 247
+set_pad_physical_constraints -pad_name ipad_rst_n -side 1 -offset 344
+set_pad_physical_constraints -pad_name ipad_ctrl_mode0 -side 1 -offset 441
+set_pad_physical_constraints -pad_name ipad_ctrl_mode1 -side 1 -offset 538
+set_pad_physical_constraints -pad_name core_vdd1 -side 1 -offset 635
+set_pad_physical_constraints -pad_name core_vss1 -side 1 -offset 732
+set_pad_physical_constraints -pad_name ipad_load_n -side 1 -offset 829
+set_pad_physical_constraints -pad_name ipad_ctrl_bgn -side 1 -offset 926
+set_pad_physical_constraints -pad_name ipad_ctrl_si -side 1 -offset 1023 
+set_pad_physical_constraints -pad_name ipad_cpu_bgn -side 1 -offset 1120
+
+set_pad_physical_constraints -pad_name ipad_cpu_wait -side 2 -offset 247
+set_pad_physical_constraints -pad_name core_vdd2 -side 2 -offset 344
+set_pad_physical_constraints -pad_name core_vss2 -side 2 -offset 441
+set_pad_physical_constraints -pad_name ipad_adc_pi0 -side 2 -offset 538
+set_pad_physical_constraints -pad_name ipad_adc_pi1 -side 2 -offset 635
+set_pad_physical_constraints -pad_name ipad_adc_pi2 -side 2 -offset 732
+set_pad_physical_constraints -pad_name ipad_adc_pi3 -side 2 -offset 829
+set_pad_physical_constraints -pad_name ipad_adc_pi4 -side 2 -offset 926
+set_pad_physical_constraints -pad_name ipad_adc_pi5 -side 2 -offset 1023
+set_pad_physical_constraints -pad_name ipad_adc_pi6 -side 2 -offset 1120
+
+set_pad_physical_constraints -pad_name cornerLR -side 3 -offset 0
+set_pad_physical_constraints -pad_name opad_app_start -side 3 -offset 247
+set_pad_physical_constraints -pad_name ipad_app_done -side 3 -offset 344
+set_pad_physical_constraints -pad_name io_vdd1 -side 3 -offset 441
+set_pad_physical_constraints -pad_name io_vss1 -side 3 -offset 538
+set_pad_physical_constraints -pad_name ipad_test_mux2 -side 3 -offset 635
+set_pad_physical_constraints -pad_name ipad_test_mux1 -side 3 -offset 732
+set_pad_physical_constraints -pad_name ipad_test_mux0 -side 3 -offset 829
+set_pad_physical_constraints -pad_name ipad_adc_pi9 -side 3 -offset 926
+set_pad_physical_constraints -pad_name ipad_adc_pi8 -side 3 -offset 1023
+set_pad_physical_constraints -pad_name ipad_adc_pi7 -side 3 -offset 1120
+
+set_pad_physical_constraints -pad_name cornerLL -side 4 -offset 0
+set_pad_physical_constraints -pad_name core_vdd3 -side 4 -offset 247
+set_pad_physical_constraints -pad_name core_vss3 -side 4 -offset 344
+set_pad_physical_constraints -pad_name opad_ctrl_rdy -side 4 -offset 441
+set_pad_physical_constraints -pad_name opad_ctrl_so -side 4 -offset 538
+set_pad_physical_constraints -pad_name opad_nxt0 -side 4 -offset 635
+set_pad_physical_constraints -pad_name opad_nxt1 -side 4 -offset 732
+set_pad_physical_constraints -pad_name opad_sclk1 -side 4 -offset 829
+set_pad_physical_constraints -pad_name opad_sclk2 -side 4 -offset 926
+set_pad_physical_constraints -pad_name opad_lat -side 4 -offset 1023
+set_pad_physical_constraints -pad_name opad_spi_so -side 4 -offset 1120
