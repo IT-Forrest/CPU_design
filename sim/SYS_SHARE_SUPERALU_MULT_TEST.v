@@ -43,12 +43,13 @@ module  SYS_SHARE_SUPERALU_MULT_TEST();
     reg     CPU_BGN;// enable signal for SERIAL_CPU_8bit
     reg     LOAD_N;
     reg     CTRL_SI;
-    //reg     ANA_SI;
+    reg     CPU_WAIT;
     reg     [9:0] ADC_PI;
+    reg     [2:0] TEST_MUX;
     
     // Wires
     wire    CTRL_RDY;
-    wire    ANA_RDY;
+    wire    APP_START;
     wire    CTRL_SO;
     wire    ANA_SO;
     wire    [1:0]  NXT;
@@ -70,9 +71,11 @@ module  SYS_SHARE_SUPERALU_MULT_TEST();
         .CTRL_SI        (coe_ctrl_si_export),
         .APP_DONE       (1'b0   ),
         .ADC_PI         (ADC_PI     ),
+        .TEST_MUX       (TEST_MUX   ),//for debug
+        .CPU_WAIT       (CPU_WAIT   ),
         // output
         .CTRL_RDY       (coe_ctrl_rdy_export),
-        //.ANA_RDY        (ANA_RDY    ),
+        .APP_START      (APP_START  ),
         .CTRL_SO        (coe_ctrl_so_export ),
         //.ANA_SO         (ANA_SO     ),
         .NXT            (NXT        ),
@@ -162,6 +165,8 @@ module  SYS_SHARE_SUPERALU_MULT_TEST();
         LOAD_N = 1;
         error_cnt = 0;
         CTRL_MODE = 2'b00;
+        CPU_WAIT = 0;
+        TEST_MUX = 3'b000;
         
         avs_cpuctrl_writedata   = 0;
         avs_sram_addr_writedata = 0;

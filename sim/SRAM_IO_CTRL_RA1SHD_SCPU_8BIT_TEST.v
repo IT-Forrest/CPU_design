@@ -28,6 +28,7 @@ module SRAM_IO_CTRL_RA1SHD_SCPU_8BIT_TEST;
     reg  rst_n;//no use here
     reg  start;// enable signal for SERIAL_CPU_8bit
     reg [1:0]   CTRL_MODE;
+    reg CPU_WAIT;
     
     integer i,j,k,first_flag;
     reg  CTRL_BGN;
@@ -70,6 +71,7 @@ module SRAM_IO_CTRL_RA1SHD_SCPU_8BIT_TEST;
         .start(CPU_BGN_dly), 
         .i_datain(i_datain), 
         .d_datain(d_datain), 
+        .CPU_WAIT(CPU_WAIT),
         // output
         .is_i_addr(is_i_addr),
         .nxt(nxt),
@@ -147,6 +149,7 @@ module SRAM_IO_CTRL_RA1SHD_SCPU_8BIT_TEST;
         LOAD_N = 1;
         error_cnt = 0;
         CTRL_MODE = 2'b00;
+        CPU_WAIT = 0;
         #100;
         // Wait 100 ns for global rst_n to finish
 

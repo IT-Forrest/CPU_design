@@ -24,6 +24,7 @@ module SCPU_MEM_LOOP_8BIT_TEST;
     reg rst_n;
     reg start;
     reg select_y;
+    reg CPU_WAIT;
     
     // Wires
     wire is_i_addr;
@@ -49,6 +50,7 @@ module SCPU_MEM_LOOP_8BIT_TEST;
         .start(CPU_BGN_dly), 
         .i_datain(i_datain), 
         .d_datain(d_datain), 
+        .CPU_WAIT(CPU_WAIT),
         // output
         .is_i_addr(is_i_addr),
         .i_addr(i_addr), 
@@ -84,6 +86,7 @@ module SCPU_MEM_LOOP_8BIT_TEST;
         rst_n = 1;
         start = 0;
         select_y = 0;
+        CPU_WAIT = 0;
 
         // Wait 100 ns for global rst_n to finish
         #100;

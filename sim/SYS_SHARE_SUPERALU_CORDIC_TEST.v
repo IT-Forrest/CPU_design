@@ -38,12 +38,13 @@ module  SYS_SHARE_SUPERALU_CORDIC_TEST();
     reg     CPU_BGN;// enable signal for SERIAL_CPU_8bit
     reg     LOAD_N;
     reg     CTRL_SI;
-    //reg     ANA_SI;
+    reg     CPU_WAIT;
     reg     [9:0] ADC_PI;
+    reg     [2:0] TEST_MUX;
     
     // Wires
     wire    CTRL_RDY;
-    wire    ANA_RDY;
+    wire    APP_START;
     wire    CTRL_SO;
     wire    ANA_SO;
     wire    [1:0]  NXT;
@@ -65,9 +66,11 @@ module  SYS_SHARE_SUPERALU_CORDIC_TEST();
         .CTRL_SI        (CTRL_SI    ),
         .APP_DONE       (1'b0   ),
         .ADC_PI         (ADC_PI     ),
+        .TEST_MUX       (TEST_MUX   ),//for debug
+        .CPU_WAIT       (CPU_WAIT   ),
         // output
         .CTRL_RDY       (CTRL_RDY   ),
-        //.ANA_RDY        (ANA_RDY    ),
+        .APP_START      (APP_START  ),
         .CTRL_SO        (CTRL_SO    ),
         //.ANA_SO         (ANA_SO     ),
         .NXT            (NXT        ),
@@ -100,6 +103,8 @@ module  SYS_SHARE_SUPERALU_CORDIC_TEST();
         LOAD_N = 1;
         error_cnt = 0;
         CTRL_MODE = 2'b00;
+        CPU_WAIT = 0;
+        TEST_MUX = 3'b000;
         #100;
         // Wait 100 ns for global RST_N to finish
         

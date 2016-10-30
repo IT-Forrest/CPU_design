@@ -37,9 +37,11 @@ module SCPU_8BIT_ALU_CTRL_SPI(
     CTRL_SI,
     APP_DONE,
     ADC_PI,
+    TEST_MUX,
+    CPU_WAIT,
     // output
     CTRL_RDY,
-    //ANA_RDY,
+    APP_START,
     CTRL_SO,
     //ANA_SO,
     NXT,
@@ -65,10 +67,12 @@ module SCPU_8BIT_ALU_CTRL_SPI(
     input   CTRL_SI;
     input   APP_DONE;
     input   [9:0]   ADC_PI;
+    input   [2:0]   TEST_MUX;
+    input   CPU_WAIT;
     
     // Output
     output  CTRL_RDY;
-    //output  ANA_RDY;
+    output  APP_START;
     output  CTRL_SO;
     //output  ANA_SO;
     output  [1:0]   NXT;
@@ -86,7 +90,8 @@ module SCPU_8BIT_ALU_CTRL_SPI(
     input   [MEMORY_DATA_WIDTH-1:0] Q_from_SRAM;
     
     // Wires
-    // wire is_i_addr;
+    wire [1:0] i_NXT;
+    wire is_i_addr;
     wire enable;// enable signal for CTRL_SRAM
     wire [MEMORY_DATA_WIDTH-1:0]  i_datain;
     wire [MEMORY_DATA_WIDTH-1:0]  d_datain;
@@ -121,6 +126,9 @@ module SCPU_8BIT_ALU_CTRL_SPI(
     wire    [GENERAL_REG_WIDTH-1:0] io_dataoutA;
     wire    [GENERAL_REG_WIDTH-1:0] io_dataoutB;
     wire    [GENERAL_REG_WIDTH-1:0] io_offset;
+    // for debug
+    wire    [5:0]   i_pc;
+    wire    [5:0]   i_reg_C;
    
     // Instantiate the Unit Under Test (UUT)
     SERIAL_CPU_8BIT uut (
@@ -130,9 +138,10 @@ module SCPU_8BIT_ALU_CTRL_SPI(
         .start(CPU_BGN), 
         .i_datain(i_datain), 
         .d_datain(d_datain), 
+        .CPU_WAIT(CPU_WAIT),
         // output
         .is_i_addr(is_i_addr),
-        .nxt(NXT),
+        .nxt(i_NXT),
         .i_addr(i_addr), 
         .d_addr(d_addr), 
         .d_we(D_WE),
@@ -143,7 +152,9 @@ module SCPU_8BIT_ALU_CTRL_SPI(
         .io_datainB(io_datainB),
         .io_dataoutA(io_dataoutA),
         .io_dataoutB(io_dataoutB),
-        .io_offset(io_offset)
+        .io_offset(io_offset),
+        .i_pc(i_pc),
+        .i_reg_C(i_reg_C)
     );
    
     // Instantiate the Control Unit Test (CUT)
@@ -195,7 +206,7 @@ module SCPU_8BIT_ALU_CTRL_SPI(
                         .alu_is_done(alu_is_done));
 
     //// Exterior Analog Control Signal
-    // wire    io_control[IO_APP_STA]; // Actually, this is done by Scan Chain
+    assign  APP_START = io_control[IO_APP_STA];
     
     //// Output Scan Chain Control Module
     wire    spi_start;
@@ -204,7 +215,11 @@ module SCPU_8BIT_ALU_CTRL_SPI(
     wire    [RESERVED_DATA_LEN-1:0] data_len;
     wire    [MEMORY_ADDR_WIDTH-1:0] A_from_SPI;
     wire    [MEMORY_ADDR_WIDTH-1:0] A_spi;
-                    
+    wire    i_SCLK1;
+    wire    i_SCLK2;
+    wire    i_LAT;
+    wire    i_SPI_SO;
+    
     PSEUDO_SPT_INTF     put(
         //input
         .CLK        (CLK        ),
@@ -214,10 +229,10 @@ module SCPU_8BIT_ALU_CTRL_SPI(
         //.FREQ_DIV   (freq_div   ),
         .PI         (m_dataout  ),
         //output
-        .SCLK1      (SCLK1      ),
-        .SCLK2      (SCLK2      ),
-        .LAT        (LAT        ),//LAT for write; SEL for read
-        .SPI_SO     (SPI_SO     ),
+        .SCLK1      (i_SCLK1      ),
+        .SCLK2      (i_SCLK2      ),
+        .LAT        (i_LAT        ),//LAT for write; SEL for read
+        .SPI_SO     (i_SPI_SO     ),
         .CEN        (CEN_spi    ),
         .A          (A_spi ),
         .D_WE       (d_we_spi   ),//memory read or write signal, 1: write
@@ -262,6 +277,16 @@ module SCPU_8BIT_ALU_CTRL_SPI(
     assign  m_datain = d_dataout;
     assign  i_datain = (is_i_addr)?m_dataout:0;
     assign  d_datain = (is_i_addr)?0:m_dataout;
+    
+    /* Mux for CPU debug */
+    assign  {NXT, SCLK1, SCLK2, LAT, SPI_SO} = 
+        (TEST_MUX == 3'b000)? {i_NXT, i_SCLK1, i_SCLK2, i_LAT, i_SPI_SO}:
+        (TEST_MUX == 3'b001)? FOUT[5:0]       :
+        (TEST_MUX == 3'b010)? io_datainA[5:0] :
+        (TEST_MUX == 3'b011)? io_datainB[5:0] :
+        (TEST_MUX == 3'b100)? io_status[5:0]  :
+        (TEST_MUX == 3'b101)? Q_from_SRAM[5:0]:
+        (TEST_MUX == 3'b110)? i_pc: i_reg_C;//(TEST_MUX == 3'b111)? 
     
 endmodule
 `endif//SCPU_8BIT_ALU_CTRL_SPI_V

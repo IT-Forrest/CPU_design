@@ -30,12 +30,23 @@ add wave -noupdate /SYS_PSEUDO_SPI_INTF_SCAN_VG_TEST/fpga/reg_LOAD
 add wave -noupdate /SYS_PSEUDO_SPI_INTF_SCAN_VG_TEST/fpga/reg_ctrl_mode
 add wave -noupdate /SYS_PSEUDO_SPI_INTF_SCAN_VG_TEST/fpga/reg_sram_addr
 add wave -noupdate /SYS_PSEUDO_SPI_INTF_SCAN_VG_TEST/fpga/reg_sram_data
-add wave -noupdate /SYS_PSEUDO_SPI_INTF_SCAN_VG_TEST/fpga/reg_ctrl_bgn_n
 add wave -noupdate /SYS_PSEUDO_SPI_INTF_SCAN_VG_TEST/fpga/is_LOAD
 add wave -noupdate /SYS_PSEUDO_SPI_INTF_SCAN_VG_TEST/fpga/is_load2_ctrl
 add wave -noupdate /SYS_PSEUDO_SPI_INTF_SCAN_VG_TEST/fpga/is_rfrom_ctrl
+add wave -noupdate -divider uut_cpu
+add wave -noupdate {/SYS_PSEUDO_SPI_INTF_SCAN_VG_TEST/scpu_sram_alu/\scpu_ctrl_spi/uut /CLK}
+add wave -noupdate {/SYS_PSEUDO_SPI_INTF_SCAN_VG_TEST/scpu_sram_alu/\scpu_ctrl_spi/uut /START}
+add wave -noupdate {/SYS_PSEUDO_SPI_INTF_SCAN_VG_TEST/scpu_sram_alu/\scpu_ctrl_spi/uut /NXT[1]}
+add wave -noupdate {/SYS_PSEUDO_SPI_INTF_SCAN_VG_TEST/scpu_sram_alu/\scpu_ctrl_spi/uut /NXT[0]}
+add wave -noupdate {/SYS_PSEUDO_SPI_INTF_SCAN_VG_TEST/scpu_sram_alu/\scpu_ctrl_spi/uut /CF_BUF}
+add wave -noupdate {/SYS_PSEUDO_SPI_INTF_SCAN_VG_TEST/scpu_sram_alu/\scpu_ctrl_spi/uut /\nxt_reg[1] /Q}
+add wave -noupdate {/SYS_PSEUDO_SPI_INTF_SCAN_VG_TEST/scpu_sram_alu/\scpu_ctrl_spi/uut /\nxt_reg[0] /Q}
+add wave -noupdate {/SYS_PSEUDO_SPI_INTF_SCAN_VG_TEST/scpu_sram_alu/\scpu_ctrl_spi/uut /cf_reg/Q}
+add wave -noupdate {/SYS_PSEUDO_SPI_INTF_SCAN_VG_TEST/scpu_sram_alu/\scpu_ctrl_spi/uut /\state_reg[2] /Q}
+add wave -noupdate {/SYS_PSEUDO_SPI_INTF_SCAN_VG_TEST/scpu_sram_alu/\scpu_ctrl_spi/uut /\state_reg[1] /Q}
+add wave -noupdate {/SYS_PSEUDO_SPI_INTF_SCAN_VG_TEST/scpu_sram_alu/\scpu_ctrl_spi/uut /\state_reg[0] /Q}
 TreeUpdate [SetDefaultTree]
-WaveRestoreCursors {{Cursor 2} {1238064722 ps} 0} {{Cursor 2} {540344 ps} 0}
+WaveRestoreCursors {{Cursor 2} {1238064722 ps} 0} {{Cursor 2} {166082951 ps} 0}
 quietly wave cursor active 2
 configure wave -namecolwidth 318
 configure wave -valuecolwidth 185
@@ -51,4 +62,4 @@ configure wave -griddelta 40
 configure wave -timeline 0
 configure wave -timelineunits ps
 update
-WaveRestoreZoom {257899 ps} {572899 ps}
+WaveRestoreZoom {165898688 ps} {166267214 ps}

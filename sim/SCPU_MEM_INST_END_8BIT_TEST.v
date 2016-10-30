@@ -20,6 +20,7 @@ module SCPU_MEM_INST_END_8BIT_TEST;
                 MEMORY_ADDR_WIDTH   = 10;
 
     // Inputs
+    reg CPU_WAIT;
     reg clk;
     reg enable;
     reg rst_n;
@@ -51,6 +52,7 @@ module SCPU_MEM_INST_END_8BIT_TEST;
         .start(start),
         .i_datain(i_datain), 
         .d_datain(d_datain), 
+        .CPU_WAIT(CPU_WAIT),
         // output
         .is_i_addr(is_i_addr),
         .nxt(nxt),
@@ -77,6 +79,7 @@ module SCPU_MEM_INST_END_8BIT_TEST;
     
     initial begin
         // Initialize Inputs
+        CPU_WAIT = 0;
         clk = 0;
         enable = 0;
         rst_n = 1;

@@ -12,7 +12,7 @@
 `timescale 1ns / 1ps
 `include "DEFINE_CPU.v"
 `include "SCPU_8BIT_ALU_CTRL_SPI.v"
-`include "RA1SHD_IBM1024X8.v"
+//`include "RA1SHD_IBM1024X8.v"
 //`include "iogpil_cmrf8sf_rvt.v"
 
 `ifndef SCPU_SRAM_8BIT_ALU_SPI_TOP_V
@@ -28,9 +28,11 @@ module SCPU_SRAM_8BIT_ALU_SPI_TOP(
     CTRL_SI,
     APP_DONE,
     ADC_PI,
+    TEST_MUX,
+    CPU_WAIT,
     // output
     CTRL_RDY,
-    //ANA_RDY,
+    APP_START,
     CTRL_SO,
     //ANA_SO,
     NXT,
@@ -55,10 +57,12 @@ module SCPU_SRAM_8BIT_ALU_SPI_TOP(
     input   CTRL_SI;
     input   APP_DONE;
     input   [9:0] ADC_PI;
+    input   [2:0] TEST_MUX;
+    input   CPU_WAIT;
     
     // Output
     output  CTRL_RDY;
-    //output  ANA_RDY;
+    output  APP_START;
     output  CTRL_SO;
     //output  ANA_SO;
     output  [1:0]   NXT;
@@ -72,6 +76,7 @@ module SCPU_SRAM_8BIT_ALU_SPI_TOP(
     wire    [1:0]   i_CTRL_MODE;
     wire    [1:0]   i_NXT;
     wire    [9:0]   i_ADC_PI;
+    wire    [2:0]   i_TEST_MUX;
     wire    WEN_after_mux;
     wire    CEN_after_mux;
     wire [MEMORY_ADDR_WIDTH-1:0]  A_after_mux;
@@ -95,9 +100,11 @@ module SCPU_SRAM_8BIT_ALU_SPI_TOP(
         .CTRL_SI        (i_CTRL_SI      ),
         .APP_DONE       (i_APP_DONE     ),
         .ADC_PI         (i_ADC_PI       ),
+        .TEST_MUX       (i_TEST_MUX     ),
+        .CPU_WAIT       (i_CPU_WAIT     ),
         // output
         .CTRL_RDY       (i_CTRL_RDY     ),
-        //.ANA_RDY        (i_ANA_RDY      ),
+        .APP_START      (i_APP_START    ),
         .CTRL_SO        (i_CTRL_SO      ),
         //.ANA_SO         (i_ANA_SO       ),
         .NXT            (i_NXT          ),
@@ -139,8 +146,13 @@ module SCPU_SRAM_8BIT_ALU_SPI_TOP(
     PIC     ipad_adc_pi7	(.Y(i_ADC_PI[7]), .P(ADC_PI[7]), .IE(1'b1));
     PIC     ipad_adc_pi8	(.Y(i_ADC_PI[8]), .P(ADC_PI[8]), .IE(1'b1));
     PIC     ipad_adc_pi9	(.Y(i_ADC_PI[9]), .P(ADC_PI[9]), .IE(1'b1));
+    PIC     ipad_test_mux0	(.Y(i_TEST_MUX[0]), .P(TEST_MUX[0]), .IE(1'b1));
+    PIC     ipad_test_mux1	(.Y(i_TEST_MUX[1]), .P(TEST_MUX[1]), .IE(1'b1));
+    PIC     ipad_test_mux2	(.Y(i_TEST_MUX[2]), .P(TEST_MUX[2]), .IE(1'b1));
+    PIC     ipad_cpu_wait   (.Y(i_CPU_WAIT), .P(CPU_WAIT), .IE(1'b1));
     
     // output Pad information
+    POC8B   opad_app_start  (.P(APP_START), .A(i_APP_START));
     POC8B   opad_ctrl_rdy   (.P(CTRL_RDY), .A(i_CTRL_RDY));
     POC8B   opad_ctrl_so    (.P(CTRL_SO), .A(i_CTRL_SO));
     POC8B   opad_nxt0       (.P(NXT[0]), .A(i_NXT[0]));

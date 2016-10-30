@@ -34,8 +34,12 @@ add wave -noupdate /SYS_PSEUDO_SPI_INTF_SCAN_TEST/fpga/reg_ctrl_bgn_dly
 add wave -noupdate /SYS_PSEUDO_SPI_INTF_SCAN_TEST/fpga/is_LOAD
 add wave -noupdate /SYS_PSEUDO_SPI_INTF_SCAN_TEST/fpga/is_load2_ctrl
 add wave -noupdate /SYS_PSEUDO_SPI_INTF_SCAN_TEST/fpga/is_rfrom_ctrl
+add wave -noupdate -divider uut_cpu
+add wave -noupdate {/SYS_PSEUDO_SPI_INTF_SCAN_TEST/scpu_sram_alu/scpu_ctrl_spi/uut/nxt[1]}
+add wave -noupdate {/SYS_PSEUDO_SPI_INTF_SCAN_TEST/scpu_sram_alu/scpu_ctrl_spi/uut/nxt[0]}
+add wave -noupdate /SYS_PSEUDO_SPI_INTF_SCAN_TEST/scpu_sram_alu/scpu_ctrl_spi/uut/clk
 TreeUpdate [SetDefaultTree]
-WaveRestoreCursors {{Cursor 2} {1238064722 ps} 0} {{Cursor 2} {540344 ps} 0}
+WaveRestoreCursors {{Cursor 2} {1238064722 ps} 0} {{Cursor 2} {16606000 ps} 0}
 quietly wave cursor active 2
 configure wave -namecolwidth 318
 configure wave -valuecolwidth 185
@@ -51,4 +55,4 @@ configure wave -griddelta 40
 configure wave -timeline 0
 configure wave -timelineunits ps
 update
-WaveRestoreZoom {257899 ps} {572899 ps}
+WaveRestoreZoom {16458589 ps} {16753411 ps}

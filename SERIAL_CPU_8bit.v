@@ -24,6 +24,7 @@ module SERIAL_CPU_8BIT(
     start,
     i_datain,
     d_datain,
+    CPU_WAIT,
     // output
     is_i_addr,
     nxt,
@@ -37,7 +38,10 @@ module SERIAL_CPU_8BIT(
     io_datainB,
     io_dataoutA,
     io_dataoutB,
-    io_offset
+    io_offset,
+    // for debug
+    i_pc,
+    i_reg_C
     );
 
     parameter   INSTRT_ADDR_WIDTH   = 8,
@@ -76,6 +80,7 @@ module SERIAL_CPU_8BIT(
     input   start;
     input   [MEMORY_DATA_WIDTH-1:0] i_datain;    //input instruction data
     input   [MEMORY_DATA_WIDTH-1:0] d_datain;    //input memory data
+    input   CPU_WAIT;
     output  is_i_addr;
     output  [1:0] nxt;
     output  [MEMORY_ADDR_WIDTH-1:0] i_addr;      //output instruction address
@@ -90,6 +95,9 @@ module SERIAL_CPU_8BIT(
     output  [GENERAL_REG_WIDTH-1:0]  io_dataoutA;
     output  [GENERAL_REG_WIDTH-1:0]  io_dataoutB;
     output  [GENERAL_REG_WIDTH-1:0]  io_offset;
+    // for debug
+    output  [5:0]   i_pc;
+    output  [5:0]   i_reg_C;
     
     reg     is_i_addr;
     reg     lowest_bit;
@@ -112,6 +120,9 @@ module SERIAL_CPU_8BIT(
     assign  io_offset   = gr[4];
     assign  cpu_suspend = (io_control[7:4]!= 4'b0000);
     assign  cpu_restore = (io_status[3:0] != 4'b0000);
+    
+    assign  i_pc = pc[5:0];
+    assign  i_reg_C = reg_C[5:0];
     
     //*********** Facilitate code learning ***********//
     wire    instr_over; // instructions in SRAM are over
@@ -170,7 +181,10 @@ module SERIAL_CPU_8BIT(
                         next_state <= STATE_IDLE;
                     end
                 STATE_IF:
-                    if (cpu_suspend && !cpu_restore) begin
+                    if (CPU_WAIT) begin
+                        next_state <= STATE_IF;
+                    end
+                    else if (cpu_suspend && !cpu_restore) begin
                         next_state <= STATE_LP;
                     end
                     else begin
