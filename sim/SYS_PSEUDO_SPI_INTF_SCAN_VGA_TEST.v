@@ -13,7 +13,7 @@
 `include    "../ibm13rfrvt_neg.v"       //IBM130 standard cells
 `include    "../iogpil_cmrf8sf_rvt.v"   //Pad cells
 `include    "../DEFINE_CPU.v"
-`include    "../RA1SHD_IBM512X8.v"
+`include    "../RA1SHD_IBM1024X8.v"
 `include    "../SCPU_SRAM_8BIT_ALU_SPI_TOP_VGA.v"
 `include    "../SRAM_IO_CTRL_LOGIC.v"
 `include    "../I_MEMORY_8bit.v"
@@ -27,7 +27,7 @@ module  SYS_PSEUDO_SPI_INTF_SCAN_VGA_TEST();
                 MAX_SQRT_WIDTH      = 13;
                 
     parameter   MEMORY_DATA_WIDTH   = 8,
-                MEMORY_ADDR_WIDTH   = 9,
+                MEMORY_ADDR_WIDTH   = 10,
                 REG_BITS_WIDTH = MEMORY_ADDR_WIDTH + MEMORY_DATA_WIDTH;
 
     parameter   GENERAL_REG_WIDTH   = 16;
@@ -39,7 +39,7 @@ module  SYS_PSEUDO_SPI_INTF_SCAN_VGA_TEST();
     integer error_cnt;
     reg     [15:0] tmpi_datain; //MEMORY_DATA_WIDTH*2 -1
     reg     [REG_BITS_WIDTH-1:0]  tmpi_all;//addr+instruction
-    reg     [8:0]  tmpi_adder;  //MEMORY_ADDR_WIDTH -1
+    reg     [MEMORY_ADDR_WIDTH-1:0]  tmpi_adder;  //MEMORY_ADDR_WIDTH -1
     
     reg     CLK;
     reg     RST_N;
@@ -49,8 +49,9 @@ module  SYS_PSEUDO_SPI_INTF_SCAN_VGA_TEST();
     reg     CPU_BGN;// enable signal for SERIAL_CPU_8bit
     reg     LOAD_N;
     reg     CTRL_SI;
-    //reg     ANA_SI;
+    reg     CPU_WAIT;
     reg     [9:0] ADC_PI;
+    reg     [2:0] TEST_MUX;
     
     // Wires
     wire    CTRL_RDY;
@@ -76,8 +77,10 @@ module  SYS_PSEUDO_SPI_INTF_SCAN_VGA_TEST();
         .CPU_BGN        (CPU_BGN    ),
         .LOAD_N         (LOAD_N_dly),
         .CTRL_SI        (CTRL_SI_dly),
-        //.ANA_SI         (ANA_SI     ),
+        .APP_DONE       (1'b0  ),
         .ADC_PI         (ADC_PI     ),
+        .TEST_MUX       (TEST_MUX   ),//for debug
+        .CPU_WAIT       (CPU_WAIT   ),
         // output
         .CTRL_RDY       (CTRL_RDY),
         //.ANA_RDY        (ANA_RDY    ),
@@ -207,7 +210,9 @@ module  SYS_PSEUDO_SPI_INTF_SCAN_VGA_TEST();
         LOAD_N = 1;
         error_cnt = 0;
         CTRL_MODE = 2'b00;
-        
+        CPU_WAIT = 0;
+        TEST_MUX = 3'b000;
+ 
         avs_cpuctrl_writedata   = 0;
         avs_sram_addr_writedata = 0;
         avs_sram_data_writedata = 0;

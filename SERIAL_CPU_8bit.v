@@ -63,16 +63,16 @@ module SERIAL_CPU_8BIT(
                 MSB_VAL3_3B         = 3;//  index of the MSB bit of value3
     
     parameter   STATE_IDLE          = 4'b0000,
-                STATE_IF            = 4'b0010,
+                STATE_IF            = 4'b0001,
                 STATE_IF2           = 4'b0011,
-                STATE_ID            = 4'b0001,
-                STATE_EX            = 4'b0101,
-                STATE_WAIT          = 4'b0111,
-                STATE_EX2           = 4'b0110,
-                STATE_MEM           = 4'b1110,
-                STATE_MEM2          = 4'b1111,
-                STATE_WB            = 4'b1011,
-                STATE_LOAD          = 4'b1010;
+                STATE_ID            = 4'b0010,
+                STATE_EX            = 4'b0110,
+                STATE_WAIT          = 4'b1010,
+                STATE_EX2           = 4'b1011,
+                STATE_MEM           = 4'b1111,
+                STATE_MEM2          = 4'b1101,
+                STATE_WB            = 4'b0101,
+                STATE_LOAD          = 4'b0100;
     
     input   clk;
     input   enable;
@@ -110,6 +110,7 @@ module SERIAL_CPU_8BIT(
     reg     [GENERAL_REG_WIDTH-1:0] id_ir;// instruction registers, ex_ir, mem_ir, wb_ir
     reg     [GENERAL_REG_WIDTH-1:0] reg_A, reg_B, reg_C, smdr;// reg_C1, smdr1;
     reg     [GENERAL_REG_WIDTH-1:0] gr[7:0];
+    reg     instr_over; // instructions in SRAM are over
     wire    branch_flag;
     wire    cpu_suspend;
     wire    cpu_restore;
@@ -125,16 +126,14 @@ module SERIAL_CPU_8BIT(
     assign  i_reg_C = reg_C[5:0];
     
     //*********** Facilitate code learning ***********//
-    wire    instr_over; // instructions in SRAM are over
     wire    [4:0]   code_type;
     wire    [2:0]   oper1_r1;
     wire    [3:0]   oper2_r2;
     wire    oper2_is_val;
     wire    [3:0]   oper3_r3;
     wire    oper3_is_val;
-    
+
     //assign  is_i_addr = ((state == STATE_IF)||(state == STATE_IF2));
-    assign  instr_over = (pc == {PC_MEM_ADDR_WIDTH{1'b1}});
     assign  code_type = id_ir[MSB_OP_16B-1:MSB_OPER1_11B];
     assign  oper1_r1 = id_ir[MSB_OPER1_11B-1:MSB_OPER2_8B];
     assign  oper2_r2 = id_ir[MSB_OPER2_8B-1:MSB_OPER3_4B];
@@ -420,6 +419,17 @@ module SERIAL_CPU_8BIT(
                         || ((code_type == `BC) && (cf == 1'b1))
                         || ((code_type == `BNC) && (cf == 1'b0)));
 
+    //************* instr_over signal *************//
+    always @(posedge clk or negedge rst_n)
+        begin
+            if (!rst_n)
+                instr_over <= 1'b0;
+            else if (pc == {PC_MEM_ADDR_WIDTH{1'b1}})
+                instr_over <= 1'b1;
+            else
+                instr_over <= 1'b0;
+        end
+                        
     //************* WB *************//
     always @(posedge clk or negedge rst_n)
         begin

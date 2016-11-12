@@ -13,21 +13,21 @@
 `include    "../ibm13rfrvt_neg.v"       //IBM130 standard cells
 `include    "../iogpil_cmrf8sf_rvt.v"   //Pad cells
 `include    "../DEFINE_CPU.v"
-//`include    "../RA1SHD_IBM1024X8.v"
+`include    "../RA1SHD_IBM1024X8.v"
 `include    "../SCPU_SRAM_8BIT_ALU_SPI_TOP_VG.v"
 `include    "../SRAM_IO_CTRL_LOGIC.v"
 `include    "../I_MEMORY_8bit.v"
 `include    "../SC_CELL_V3.v"
 
 module  SCPU_SRAM_8BIT_ALU_SPI_TOP_MUX_VG_TEST();
-    parameter   CLKPERIOD = 40;
+    parameter   CLKPERIOD = 20;
 
     parameter   MULTIPLICAND_WIDTH  = 9,// the division of CF
                 MULTIPLIER_WIDTH    = 8,// for the random value used by SA, it's the width of LFSR 
                 MAX_SQRT_WIDTH      = 13;
                 
     parameter   MEMORY_DATA_WIDTH   = 8,
-                MEMORY_ADDR_WIDTH   = 9,
+                MEMORY_ADDR_WIDTH   = 10,
                 REG_BITS_WIDTH = MEMORY_ADDR_WIDTH + MEMORY_DATA_WIDTH;
 
     parameter   GENERAL_REG_WIDTH   = 16;
@@ -39,7 +39,7 @@ module  SCPU_SRAM_8BIT_ALU_SPI_TOP_MUX_VG_TEST();
     integer error_cnt;
     reg     [15:0] tmpi_datain; //MEMORY_DATA_WIDTH*2 -1
     reg     [REG_BITS_WIDTH-1:0]  tmpi_all;//addr+instruction
-    reg     [8:0]  tmpi_adder;  //MEMORY_ADDR_WIDTH -1
+    reg     [MEMORY_ADDR_WIDTH-1:0]  tmpi_adder;  //MEMORY_ADDR_WIDTH -1
     
     reg     CLK;
     reg     RST_N;

@@ -27,7 +27,7 @@ module  SYS_PSEUDO_SPI_INTF_SCAN_VG_TEST();
                 MAX_SQRT_WIDTH      = 13;
                 
     parameter   MEMORY_DATA_WIDTH   = 8,
-                MEMORY_ADDR_WIDTH   = 9,
+                MEMORY_ADDR_WIDTH   = 10,
                 REG_BITS_WIDTH = MEMORY_ADDR_WIDTH + MEMORY_DATA_WIDTH;
 
     parameter   GENERAL_REG_WIDTH   = 16;
@@ -39,7 +39,7 @@ module  SYS_PSEUDO_SPI_INTF_SCAN_VG_TEST();
     integer error_cnt;
     reg     [15:0] tmpi_datain; //MEMORY_DATA_WIDTH*2 -1
     reg     [REG_BITS_WIDTH-1:0]  tmpi_all;//addr+instruction
-    reg     [8:0]  tmpi_adder;  //MEMORY_ADDR_WIDTH -1
+    reg     [MEMORY_ADDR_WIDTH-1:0]  tmpi_adder;  //9
     
     reg     CLK;
     reg     RST_N;
@@ -443,6 +443,7 @@ module  SYS_PSEUDO_SPI_INTF_SCAN_VG_TEST();
             end
         end
         
+        #(CLKPERIOD*100);
         /* (3) fetch multiplication result from scan chain */
         for (i = 2; i<3; i=i+1) begin
             $write("%4x\t", (i<<1));
