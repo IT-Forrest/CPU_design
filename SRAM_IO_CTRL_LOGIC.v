@@ -34,8 +34,8 @@ module SRAM_IO_CTRL_LOGIC(
     avs_sram_data_writedata,    // Instruction data value
     avs_sram_data_write,
     
-    // avs_adc_writedata,          // ADC data from analog
-    // avs_adc_write,
+    avs_adc_writedata,          // ADC data from analog
+    avs_adc_write,
     
     //// Internal Output Connections ////
     avs_sram_addr_readdata,     // Instruction addr value
@@ -47,11 +47,19 @@ module SRAM_IO_CTRL_LOGIC(
     coe_ctrl_mod1_export,
     coe_ctrl_load_export,
     coe_ctrl_si_export,
+    coe_adc_value_export,
+    coe_app_done_export,
+    
     //// External I/O Connections (Input)
     coe_ctrl_so_export,
-    coe_ctrl_rdy_export
+    coe_ctrl_rdy_export,
+    coe_ctrl_nxt_end_export,
+    coe_ctrl_nxt_cont_export,
+    coe_app_start_export
     );
 
+    parameter   ADC_DATA_WIDTH      = 10;
+    
     parameter   MEMORY_DATA_WIDTH   = 8,
                 MEMORY_ADDR_WIDTH   = 10,
                 REG_BITS_WIDTH = MEMORY_ADDR_WIDTH + MEMORY_DATA_WIDTH;
@@ -71,13 +79,15 @@ module SRAM_IO_CTRL_LOGIC(
     parameter   IDX_SCPU_CTRL_LOAD = 1;     // SCPU CTRL Module's load bit
     parameter   IDX_SCPU_CTRL_MOD0 = 2;     // SCPU CTRL Module's mode bit
     parameter   IDX_SCPU_CTRL_MOD1 = 3;     // SCPU CTRL Module's mode bit
+    parameter   IDX_SCPU_APP_DONE  = 4;     // External App's done signal
     
     //// Status Word ////
     output  [31 : 0]            avs_cpustat_readdata;
 
     parameter   IDX_SCPU_CTRL_RDY  = 0;     // SCPU CTRL Module's ready signal
-    // parameter   IDX_SCPU_NXT_EXT   = 1;     // SCPU process finish
-    // parameter   IDX_SCPU_NXT_INS   = 2;     // SCPU Instructions run over
+    parameter   IDX_SCPU_NXT_END   = 1;     // SCPU process finish
+    parameter   IDX_SCPU_NXT_CONT  = 2;     // SCPU Instructions run over
+    parameter   IDX_SCPU_APP_START = 3;     // External APP's start signal
     
     input   [31 : 0]            avs_sram_addr_writedata;// SRAM address value
     input                       avs_sram_addr_write;
@@ -85,8 +95,8 @@ module SRAM_IO_CTRL_LOGIC(
     input   [31 : 0]            avs_sram_data_writedata;// Instruction data value
     input                       avs_sram_data_write;
     
-    // input   [31 : 0]            avs_adc_writedata;      // ADC data from analog
-    // input                       avs_adc_write;
+    input   [31 : 0]            avs_adc_writedata;      // ADC data from analog
+    input                       avs_adc_write;
     
     //// Internal Output Connections ////
     output  [31 : 0]            avs_sram_addr_readdata; // Instruction addr value
@@ -98,9 +108,14 @@ module SRAM_IO_CTRL_LOGIC(
     output                      coe_ctrl_mod1_export;
     output                      coe_ctrl_load_export;
     output                      coe_ctrl_si_export;
+    output  [ 9 : 0]            coe_adc_value_export;
+    output                      coe_app_done_export;
     
     input                       coe_ctrl_so_export;
     input                       coe_ctrl_rdy_export;
+    input                       coe_ctrl_nxt_end_export;
+    input                       coe_ctrl_nxt_cont_export;
+    input                       coe_app_start_export;
     
     // Registers and wires
     reg         reg_ctrl_bgn, reg_ctrl_bgn_dly, reg_load_dly;
@@ -108,6 +123,9 @@ module SRAM_IO_CTRL_LOGIC(
     reg         [1:0]   reg_ctrl_mode;
     reg         [CT_WIDTH-1:0]  reg_sram_addr;
     reg         [CT_WIDTH-1:0]  reg_sram_data;
+    reg         [ADC_DATA_WIDTH-1:0]  reg_adc_value;
+    reg         [1:0]   reg_APP_DONE;
+    reg         reg_app_done_dly;
             
     reg         [REG_BITS_WIDTH-1:0]  reg_sram_all;//addr+instruction
     reg         [7:0]   cnt_bit_load;
@@ -122,6 +140,9 @@ module SRAM_IO_CTRL_LOGIC(
     wire    is_rfrom_ctrl = (reg_ctrl_mode == 2'b10);
     
     assign  avs_cpustat_readdata[IDX_SCPU_CTRL_RDY] = coe_ctrl_rdy_export;
+    assign  avs_cpustat_readdata[IDX_SCPU_NXT_END]  = coe_ctrl_nxt_end_export;
+    assign  avs_cpustat_readdata[IDX_SCPU_NXT_CONT] = coe_ctrl_nxt_cont_export;
+    assign  avs_cpustat_readdata[IDX_SCPU_APP_START]= coe_app_start_export;
     assign  avs_sram_addr_readdata = reg_sram_all[REG_BITS_WIDTH-1:MEMORY_DATA_WIDTH];
     assign  avs_sram_data_readdata = reg_sram_all[MEMORY_DATA_WIDTH-1:0];
     
@@ -130,6 +151,8 @@ module SRAM_IO_CTRL_LOGIC(
     assign  coe_ctrl_si_export   = reg_sram_all[0];
     assign  coe_ctrl_mod1_export = (reg_ctrl_mode[0])?reg_ctrl_mode[1]:1'b0;
     assign  coe_ctrl_mod0_export = reg_ctrl_mode[0];
+    assign  coe_adc_value_export = reg_adc_value;
+    assign  coe_app_done_export  = reg_app_done_dly;
     
     //************* Combinational Mapping For CTRL MODE *************//
     /* always @(*) begin
@@ -233,6 +256,7 @@ module SRAM_IO_CTRL_LOGIC(
             
             reg_sram_addr <= {CT_WIDTH{1'b0}};
             reg_sram_data <= {CT_WIDTH{1'b0}};
+            reg_adc_value <= {ADC_DATA_WIDTH{1'b0}};
         end else
         begin
             if (avs_cpuctrl_write)// Set registers if any value changes
@@ -248,6 +272,33 @@ module SRAM_IO_CTRL_LOGIC(
             if (avs_sram_data_write)
                 reg_sram_data <= avs_sram_data_writedata[CT_WIDTH-1:0];
 
+            if (avs_adc_write)
+                reg_adc_value <= avs_adc_writedata[ADC_DATA_WIDTH-1:0];
+        end
+    end
+    
+    always @(negedge csi_clk)
+    begin
+        if (~rsi_reset_n)
+            reg_app_done_dly <= 1'b0;
+        else
+            reg_app_done_dly <= reg_APP_DONE[0];
+    end
+    
+    //************* make IDX_SCPU_APP_DONE only works for one cycle *************//
+    always @(posedge csi_clk)
+    begin
+        if ((~rsi_reset_n) | (~avs_cpuctrl_write))
+        begin
+            reg_APP_DONE <= 2'b00;
+        end else if (avs_cpuctrl_write &
+                    avs_cpuctrl_writedata[IDX_SCPU_APP_DONE] &
+                    (reg_APP_DONE == 2'b00))
+        begin
+            reg_APP_DONE <= 2'b01;//is_LOAD = reg_APP_DONE[0];
+        end else 
+        begin
+            reg_APP_DONE <= 2'b10;
         end
     end
 endmodule
