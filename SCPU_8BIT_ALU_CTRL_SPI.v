@@ -11,11 +11,11 @@
 // ABSTRACT: ModelSim simulation time 6us given each time period 10ns
 // --------------------------------------------------------------------
 `timescale 1ns / 1ps
-`include "DEFINE_CPU.v"
-`include "SERIAL_CPU_8bit.v"
-`include "SHARE_SUPERALU.v"
-`include "SRAM_IO_CTRL.v"
-`include "PSEUDO_SPI_INTF.v"
+//`include "DEFINE_CPU.v"
+//`include "SERIAL_CPU_8bit.v"
+//`include "SHARE_SUPERALU.v"
+//`include "SRAM_IO_CTRL.v"
+//`include "PSEUDO_SPI_INTF.v"
 
 `ifndef SCPU_8BIT_ALU_CTRL_SPI_V
 `define SCPU_8BIT_ALU_CTRL_SPI_V

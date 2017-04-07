@@ -14,7 +14,7 @@
 // --------------------------------------------------------------------
 
 `timescale 1ns / 1ps
-`include "DEFINE_CPU.v"
+//`include "DEFINE_CPU.v"
 
 `ifndef PSEUDO_SPI_OUT_V
 `define PSEUDO_SPI_OUT_V

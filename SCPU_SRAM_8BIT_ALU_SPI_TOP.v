@@ -10,8 +10,8 @@
 // ABSTRACT: ModelSim simulation time 6us given each time period 10ns
 // --------------------------------------------------------------------
 `timescale 1ns / 1ps
-`include "DEFINE_CPU.v"
-`include "SCPU_8BIT_ALU_CTRL_SPI.v"
+//`include "DEFINE_CPU.v"
+//`include "SCPU_8BIT_ALU_CTRL_SPI.v"
 //`include "RA1SHD_IBM1024X8.v"
 //`include "iogpil_cmrf8sf_rvt.v"
 

@@ -16,11 +16,16 @@
 `include    "../iogpil_cmrf8sf_rvt.v"   //Pad cells
 `include    "../DEFINE_CPU.v"
 `include    "../RA1SHD_IBM1024X8.v"
-`include    "../SCPU_SRAM_8BIT_ALU_SPI_TOP_VG.v"
+`include    "../SERIAL_CPU_8bit.v"
+`include    "../SHARE_SUPERALU.v"
+`include    "../SRAM_IO_CTRL.v"
+`include    "../PSEUDO_SPI_INTF.v"
+`include    "../SCPU_8BIT_ALU_CTRL_SPI.v"
+`include    "../SCPU_SRAM_8BIT_ALU_SPI_TOP.v"
 `include    "../SRAM_IO_CTRL_LOGIC.v"
 `include    "../I_MEMORY_8bit.v"
 `include    "../SC_CELL_V3.v"
-
+`include    "../I_MEMORY_TASK_8BIT.v"
 
 module MIMIC_ADC(
     TUNE_X1,
@@ -83,7 +88,7 @@ module  SCPU_MIMIC_CFSA_TOP_TEST();
     parameter   MAX_SQRT_WIDTH      = 13;
 
     parameter   MEMORY_DATA_WIDTH   = 8,
-                MEMORY_ADDR_WIDTH   = 9,
+                MEMORY_ADDR_WIDTH   = 10,
                 REG_BITS_WIDTH = MEMORY_ADDR_WIDTH + MEMORY_DATA_WIDTH;
     
     parameter   DEFAULT_PC_ADDR     = 16;//reserve for parameters
@@ -396,6 +401,8 @@ module  SCPU_MIMIC_CFSA_TOP_TEST();
         .adc_val(ADC_VALUE)
     );
 
+    I_MEMORY_TASK_8BIT  mem_help();
+    
     // Initial Settings
     initial begin
 /*
@@ -455,91 +462,7 @@ module  SCPU_MIMIC_CFSA_TOP_TEST();
         // Wait 100 ns for global RST_N to finish
         #(CLKPERIOD*10);//100;
         
-        /* (0) Add stimulus here: Using a pseudo memory to load instruction*/ 
-        i= DEFAULT_PC_ADDR*2;
-        //Load I/O data_A to `gr2 as XIN
-        tmpi_datain = {`LIOA, `gr2, 4'b0000, 4'b0000};
-        i_mem.I_RAM[ i] = tmpi_datain[7:0];  i = 1 + DEFAULT_PC_ADDR*2;
-        i_mem.I_RAM[ i] = tmpi_datain[15:8]; i = 2 + DEFAULT_PC_ADDR*2;
-        //Load I/O data_A to `gr3 as YIN
-        tmpi_datain = {`LIOA, `gr3, 4'b0000, 4'b0000};
-        i_mem.I_RAM[ i] = tmpi_datain[7:0];  i = 3 + DEFAULT_PC_ADDR*2;
-        i_mem.I_RAM[ i] = tmpi_datain[15:8]; i = 4 + DEFAULT_PC_ADDR*2;
-        //set OFFSET as 0
-        tmpi_datain = {`SUB, `gr4, 1'b0, `gr4, 1'b0, `gr4};
-        i_mem.I_RAM[ i] = tmpi_datain[7:0];  i = 5 + DEFAULT_PC_ADDR*2;
-        i_mem.I_RAM[ i] = tmpi_datain[15:8]; i = 6 + DEFAULT_PC_ADDR*2;
-        //set the control reg for ALU
-        tmpi_datain = {`SET, `gr1, 3'b001, 3'b100, 2'b01};
-        i_mem.I_RAM[ i] = tmpi_datain[7:0];  i = 7 + DEFAULT_PC_ADDR*2;
-        i_mem.I_RAM[ i] = tmpi_datain[15:8]; i = 8 + DEFAULT_PC_ADDR*2;
-        
-        //if (`gr3 != 0) go to I_RAM[ 9];
-        // CPU is supposed to finish the loop automatically
-        
-        //Load I/O data_A to `gr2 as FOUT
-        tmpi_datain = {`LIOA, `gr2, 4'b0000, 4'b0000};
-        i_mem.I_RAM[ i] = tmpi_datain[7:0];  i = 9 + DEFAULT_PC_ADDR*2;
-        i_mem.I_RAM[ i] = tmpi_datain[15:8]; i = 10+ DEFAULT_PC_ADDR*2;
-        //Left Shift `gr2 and then save to SRAM
-        tmpi_datain = {`SLL, `gr2, 1'b0, `gr2, 4'b0011};
-        i_mem.I_RAM[ i] = tmpi_datain[7:0];  i = 11+ DEFAULT_PC_ADDR*2;
-        i_mem.I_RAM[ i] = tmpi_datain[15:8]; i = 12+ DEFAULT_PC_ADDR*2;
-        //reset the control reg for ALU
-        tmpi_datain = {`SET, `gr1, 3'b000, 3'b000, 2'b00};
-        i_mem.I_RAM[ i] = tmpi_datain[7:0];  i = 13+ DEFAULT_PC_ADDR*2;
-        i_mem.I_RAM[ i] = tmpi_datain[15:8]; i = 14+ DEFAULT_PC_ADDR*2;
-        //Save Multiplication to SRAM at 0x2;
-        tmpi_datain = {`STORE, `gr2, 1'b0, `gr0, 4'b0010};
-        i_mem.I_RAM[ i] = tmpi_datain[7:0];  i = 15+ DEFAULT_PC_ADDR*2;
-        i_mem.I_RAM[ i] = tmpi_datain[15:8]; i = 16+ DEFAULT_PC_ADDR*2;
-        
-        //Clear OUT_A & Set SPI starting address;
-        tmpi_datain = {`SUB, `gr2, 1'b0, `gr2, 1'b0, `gr2};
-        i_mem.I_RAM[ i] = tmpi_datain[7:0];  i = 17 + DEFAULT_PC_ADDR*2;
-        i_mem.I_RAM[ i] = tmpi_datain[15:8]; i = 18 + DEFAULT_PC_ADDR*2;
-        tmpi_datain = {`SET, `gr2, 4'b0000, 4'b0011};
-        i_mem.I_RAM[ i] = tmpi_datain[7:0];  i = 19 + DEFAULT_PC_ADDR*2;
-        i_mem.I_RAM[ i] = tmpi_datain[15:8]; i = 20 + DEFAULT_PC_ADDR*2;
-        
-        //Clear OUT_B & Set SPI send data length;
-        tmpi_datain = {`SUB, `gr3, 1'b0, `gr3, 1'b0, `gr3};
-        i_mem.I_RAM[ i] = tmpi_datain[7:0];  i = 21 + DEFAULT_PC_ADDR*2;
-        i_mem.I_RAM[ i] = tmpi_datain[15:8]; i = 22 + DEFAULT_PC_ADDR*2;
-        tmpi_datain = {`SET, `gr3, 4'b0000, 4'b0010};
-        i_mem.I_RAM[ i] = tmpi_datain[7:0];  i = 23 + DEFAULT_PC_ADDR*2;
-        i_mem.I_RAM[ i] = tmpi_datain[15:8]; i = 24 + DEFAULT_PC_ADDR*2;
-       
-        //set the control reg for SPI
-        tmpi_datain = {`SET, `gr1, 3'b010, 3'b000, 2'b00};
-        i_mem.I_RAM[ i] = tmpi_datain[7:0];  i = 25 + DEFAULT_PC_ADDR*2;
-        i_mem.I_RAM[ i] = tmpi_datain[15:8]; i = 26 + DEFAULT_PC_ADDR*2;
-        
-        // CPU is supposed to finish the loop automatically
-        
-        //reset the control reg for SPI
-        tmpi_datain = {`SET, `gr1, 3'b000, 3'b000, 2'b00};
-        i_mem.I_RAM[ i] = tmpi_datain[7:0];  i = 27 + DEFAULT_PC_ADDR*2;
-        i_mem.I_RAM[ i] = tmpi_datain[15:8]; i = 28 + DEFAULT_PC_ADDR*2;
-        
-        //System finish
-        tmpi_datain = {`HALT, 11'b000_0000_0000};
-        i_mem.I_RAM[ i] = tmpi_datain[7:0];  i = 29 + DEFAULT_PC_ADDR*2;
-        i_mem.I_RAM[ i] = tmpi_datain[15:8]; i = 30 + DEFAULT_PC_ADDR*2;
-        
-        i = 0;
-        tmpi_datain = {`JUMP, 3'b000, 4'b0001, 4'b0000};// Jump to certain address
-        i_mem.I_RAM[ i] = tmpi_datain[7:0];  i = 1;
-        i_mem.I_RAM[ i] = tmpi_datain[15:8]; i = 2;
-        tmpi_datain = 16'h3C00;
-        i_mem.I_RAM[ i] = tmpi_datain[7:0];  i = 3;
-        i_mem.I_RAM[ i] = tmpi_datain[15:8]; i = 4;
-        tmpi_datain = 16'h0000;
-        i_mem.I_RAM[ i] = tmpi_datain[7:0];  i = 5;
-        i_mem.I_RAM[ i] = tmpi_datain[15:8]; i = 6;
-        // i_mem.D_RAM[0] = 16'h00AB;
-        // i_mem.D_RAM[1] = 16'h3C00;
-        // i_mem.D_RAM[2] = 16'h0000;
+        mem_help.convert(tmpi_datain[15:8],tmpi_datain[7:1]);//init_mem_8bit
         
         #CLKPERIOD RST_N = 0; rsi_reset_n = 0; CTRL_BGN = 1;
         #CLKPERIOD RST_N = 1; rsi_reset_n = 1;
