@@ -34,15 +34,15 @@
 `define OR      5'b0_1110
 `define XOR     5'b0_1111
 `define LDIH    5'b1_0000
-//`define ADDC    5'b1_0001
+//`define ADDC    5'b1_0001//I need a ABS
 //`define SUBC    5'b1_0010
 `define SUIH    5'b1_0011
 `define LIOA    5'b1_0100
 `define LIOB    5'b1_0101
-`define LIOS    5'b1_0110
+`define LIOS    5'b1_0110//seems not needed
 `define SET     5'b1_0111
 `define JUMP    5'b1_1000
-`define JMPR    5'b1_1001
+`define JMPR    5'b1_1001//longer jump
 `define BZ      5'b1_1010
 `define BNZ     5'b1_1011
 `define BN      5'b1_1100

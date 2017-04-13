@@ -27,8 +27,8 @@ module PCPU_MEM_LOOP_TOP;
     // Wires
     wire [15:0] i_datain;
     wire [15:0] d_datain;
-    wire [7:0] i_addr;
-    wire [7:0] d_addr;
+    wire [8:0] i_addr;
+    wire [8:0] d_addr;
     wire d_we;
     wire [15:0] d_dataout;
 
