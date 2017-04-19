@@ -28,12 +28,14 @@ module SRAM_IO_CTRL_LOGIC(
     //// Status Word ////
     avs_cpustat_readdata,
     
+    avs_cntsclk_writedata,
+    avs_cntsclk_write,
+    
     avs_sram_addr_writedata,    // SRAM address value
     avs_sram_addr_write,
 
     avs_sram_data_writedata,    // Instruction data value
     avs_sram_data_write,
-    
     avs_adc_writedata,          // ADC data from analog
     avs_adc_write,
     
@@ -42,20 +44,31 @@ module SRAM_IO_CTRL_LOGIC(
     avs_sram_data_readdata,     // Instruction data value
     
     //// External I/O Connections (Output)
+    coe_cpu_bgn_export,
     coe_ctrl_bgn_export,
     coe_ctrl_mod0_export,
     coe_ctrl_mod1_export,
     coe_ctrl_load_export,
     coe_ctrl_si_export,
+    coe_cpu_wait_export,
     coe_adc_value_export,
     coe_app_done_export,
+    coe_rst_n_export,
+    coe_clk_export,
+    coe_test_mux0_export,
+    coe_test_mux1_export,
+    coe_test_mux2_export,
     
     //// External I/O Connections (Input)
     coe_ctrl_so_export,
     coe_ctrl_rdy_export,
     coe_ctrl_nxt_end_export,
     coe_ctrl_nxt_cont_export,
-    coe_app_start_export
+    coe_app_start_export,
+    coe_anag_sclk1_export,
+    coe_anag_sclk2_export,
+    coe_anag_lat_export,
+    coe_anag_spi_o_export
     );
 
     parameter   ADC_DATA_WIDTH      = 10;
@@ -80,6 +93,12 @@ module SRAM_IO_CTRL_LOGIC(
     parameter   IDX_SCPU_CTRL_MOD0 = 2;     // SCPU CTRL Module's mode bit
     parameter   IDX_SCPU_CTRL_MOD1 = 3;     // SCPU CTRL Module's mode bit
     parameter   IDX_SCPU_APP_DONE  = 4;     // External App's done signal
+    parameter   IDX_SCPU_CPU_BGN   = 5;     // SCPU BGN start bit
+    parameter   IDX_SCPU_RST_N     = 6;	    // SCPU RST_N bit
+    parameter   IDX_SCPU_CPU_WAIT  = 7;     // SCPU CPU WAIT signal bit
+    parameter   IDX_SCPU_TEST_MUX0 = 8;     // SCPU TEST MUX signal0
+    parameter   IDX_SCPU_TEST_MUX1 = 9;     // SCPU TEST MUX signal1
+    parameter   IDX_SCPU_TEST_MUX2 = 10;    // SCPU TEST MUX signal2
     
     //// Status Word ////
     output  [31 : 0]            avs_cpustat_readdata;
@@ -88,13 +107,15 @@ module SRAM_IO_CTRL_LOGIC(
     parameter   IDX_SCPU_NXT_END   = 1;     // SCPU process finish
     parameter   IDX_SCPU_NXT_CONT  = 2;     // SCPU Instructions run over
     parameter   IDX_SCPU_APP_START = 3;     // External APP's start signal
-    
+
+    input   [31 : 0]            avs_cntsclk_writedata;// freq divider value
+    input                       avs_cntsclk_write;
+
     input   [31 : 0]            avs_sram_addr_writedata;// SRAM address value
     input                       avs_sram_addr_write;
 
     input   [31 : 0]            avs_sram_data_writedata;// Instruction data value
     input                       avs_sram_data_write;
-    
     input   [31 : 0]            avs_adc_writedata;      // ADC data from analog
     input                       avs_adc_write;
     
@@ -103,24 +124,38 @@ module SRAM_IO_CTRL_LOGIC(
     output  [31 : 0]            avs_sram_data_readdata; // Instruction data value
     
     //// External I/O Connections
+    output                      coe_cpu_bgn_export;
     output                      coe_ctrl_bgn_export;
     output                      coe_ctrl_mod0_export;
     output                      coe_ctrl_mod1_export;
     output                      coe_ctrl_load_export;
     output                      coe_ctrl_si_export;
+    output                      coe_cpu_wait_export;
     output  [ 9 : 0]            coe_adc_value_export;
     output                      coe_app_done_export;
+    output                      coe_rst_n_export;
+    output                      coe_clk_export;
+    output                      coe_test_mux0_export;
+    output                      coe_test_mux1_export;
+    output                      coe_test_mux2_export;
     
     input                       coe_ctrl_so_export;
     input                       coe_ctrl_rdy_export;
     input                       coe_ctrl_nxt_end_export;
     input                       coe_ctrl_nxt_cont_export;
     input                       coe_app_start_export;
+    input                       coe_anag_sclk1_export;
+    input                       coe_anag_sclk2_export;
+    input                       coe_anag_lat_export;
+    input                       coe_anag_spi_o_export;
     
     // Registers and wires
     reg         reg_ctrl_bgn, reg_ctrl_bgn_dly, reg_load_dly;
+    reg         reg_rst_n, reg_cpu_bgn_dly, reg_cpu_wait;
+    reg         [1:0]   reg_cpu_bgn;
     reg         [1:0]   reg_LOAD;
     reg         [1:0]   reg_ctrl_mode;
+    reg         [2:0]   reg_test_mux;
     reg         [CT_WIDTH-1:0]  reg_sram_addr;
     reg         [CT_WIDTH-1:0]  reg_sram_data;
     reg         [ADC_DATA_WIDTH-1:0]  reg_adc_value;
@@ -146,13 +181,23 @@ module SRAM_IO_CTRL_LOGIC(
     assign  avs_sram_addr_readdata = reg_sram_all[REG_BITS_WIDTH-1:MEMORY_DATA_WIDTH];
     assign  avs_sram_data_readdata = reg_sram_all[MEMORY_DATA_WIDTH-1:0];
     
+    assign  coe_cpu_bgn_export   = reg_cpu_bgn_dly;//reg_cpu_bgn
     assign  coe_ctrl_bgn_export  = reg_ctrl_bgn_dly;//reg_ctrl_bgn
     assign  coe_ctrl_load_export = is_LOAD;
     assign  coe_ctrl_si_export   = reg_sram_all[0];
     assign  coe_ctrl_mod1_export = (reg_ctrl_mode[0])?reg_ctrl_mode[1]:1'b0;
     assign  coe_ctrl_mod0_export = reg_ctrl_mode[0];
+    assign  coe_rst_n_export     = reg_rst_n;
+    assign  coe_clk_export       = csi_clk;//need to adjust the frequency?
+    assign  coe_cpu_wait_export  = reg_cpu_wait;
     assign  coe_adc_value_export = reg_adc_value;
+    assign  coe_test_mux0_export = reg_test_mux[0];
+    assign  coe_test_mux1_export = reg_test_mux[1];
+    assign  coe_test_mux2_export = reg_test_mux[2];
     assign  coe_app_done_export  = reg_app_done_dly;
+    
+    //************* Need a scan chain module??? *************//
+    
     
     //************* Combinational Mapping For CTRL MODE *************//
     /* always @(*) begin
@@ -175,6 +220,14 @@ module SRAM_IO_CTRL_LOGIC(
     always @(negedge csi_clk)
     begin
         if (~rsi_reset_n)
+            reg_cpu_bgn_dly <= 1'b0;
+        else
+            reg_cpu_bgn_dly <= reg_cpu_bgn[0];
+    end
+    
+    always @(negedge csi_clk)
+    begin
+        if (~rsi_reset_n)
             reg_ctrl_bgn_dly <= 1'b0;
         else
             reg_ctrl_bgn_dly <= reg_ctrl_bgn;
@@ -186,6 +239,23 @@ module SRAM_IO_CTRL_LOGIC(
             reg_load_dly <= 1'b0;
         else
             reg_load_dly <= reg_LOAD[0];
+    end
+    
+    //************* make IDX_SCPU_CPU_BGN only works for one cycle *************//
+    always @(posedge csi_clk)
+    begin
+        if ((~rsi_reset_n) | (~avs_cpuctrl_write))
+        begin
+            reg_cpu_bgn <= 2'b00;
+        end else if (avs_cpuctrl_write &
+                    avs_cpuctrl_writedata[IDX_SCPU_CPU_BGN] &
+                    (reg_cpu_bgn == 2'b00))
+        begin
+            reg_cpu_bgn <= 2'b01;
+        end else
+        begin
+            reg_cpu_bgn <= 2'b10;
+        end
     end
     
     //************* make IDX_SCPU_CTRL_LOAD only works for one cycle *************//
@@ -253,6 +323,7 @@ module SRAM_IO_CTRL_LOGIC(
         begin
             reg_ctrl_bgn  <= 1'b0;
             reg_ctrl_mode <= 2'b00;
+            reg_test_mux <= 3'b000;
             
             reg_sram_addr <= {CT_WIDTH{1'b0}};
             reg_sram_data <= {CT_WIDTH{1'b0}};
@@ -264,6 +335,11 @@ module SRAM_IO_CTRL_LOGIC(
                 reg_ctrl_bgn <= avs_cpuctrl_writedata[IDX_SCPU_CTRL_BGN];
                 reg_ctrl_mode <= {avs_cpuctrl_writedata[IDX_SCPU_CTRL_MOD1],
                                 avs_cpuctrl_writedata[IDX_SCPU_CTRL_MOD0]};
+                reg_rst_n <= avs_cpuctrl_writedata[IDX_SCPU_RST_N];
+                reg_cpu_wait <= avs_cpuctrl_writedata[IDX_SCPU_CPU_WAIT];
+                reg_test_mux <= {avs_cpuctrl_writedata[IDX_SCPU_TEST_MUX2],
+                                avs_cpuctrl_writedata[IDX_SCPU_TEST_MUX1],
+                                avs_cpuctrl_writedata[IDX_SCPU_TEST_MUX0]};
             end
                 
             if (avs_sram_addr_write)
