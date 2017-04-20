@@ -42,6 +42,7 @@ module SRAM_IO_CTRL_LOGIC(
     //// Internal Output Connections ////
     avs_sram_addr_readdata,     // Instruction addr value
     avs_sram_data_readdata,     // Instruction data value
+    avs_scan_chain_readdata,    // Scan chain data value
     
     //// External I/O Connections (Output)
     coe_cpu_bgn_export,
@@ -68,17 +69,20 @@ module SRAM_IO_CTRL_LOGIC(
     coe_anag_sclk1_export,
     coe_anag_sclk2_export,
     coe_anag_lat_export,
-    coe_anag_spi_o_export
+    coe_anag_spi_so_export
     );
 
-    parameter   ADC_DATA_WIDTH      = 10;
-    
+    parameter   ADC_DATA_WIDTH      = 10,
+				MAX_SQRT_WIDTH		= 13;
     parameter   MEMORY_DATA_WIDTH   = 8,
                 MEMORY_ADDR_WIDTH   = 10,
                 REG_BITS_WIDTH = MEMORY_ADDR_WIDTH + MEMORY_DATA_WIDTH;
     
     parameter   AVS_WIDTH       = 32;
     parameter   CT_WIDTH        = 16;
+    parameter   CLK_WIDTH       =  8;
+    
+    parameter   DEFAULT_CNTSCLK = 0;//0: 1/2 freq; 1: 1/4 freq
     
     //// Global ////
     input                       csi_clk;
@@ -99,6 +103,8 @@ module SRAM_IO_CTRL_LOGIC(
     parameter   IDX_SCPU_TEST_MUX0 = 8;     // SCPU TEST MUX signal0
     parameter   IDX_SCPU_TEST_MUX1 = 9;     // SCPU TEST MUX signal1
     parameter   IDX_SCPU_TEST_MUX2 = 10;    // SCPU TEST MUX signal2
+    parameter   IDX_SCPU_CLK_STOP  = 11;    // SCPU STOP the clock signal
+    parameter   IDX_SCPU_CLK_CHG   = 12;    // SCPU CHANGE the clock frequency
     
     //// Status Word ////
     output  [31 : 0]            avs_cpustat_readdata;
@@ -110,6 +116,9 @@ module SRAM_IO_CTRL_LOGIC(
 
     input   [31 : 0]            avs_cntsclk_writedata;// freq divider value
     input                       avs_cntsclk_write;
+    reg     [CLK_WIDTH-1 : 0]   reg_cntsclk;
+    reg     [CLK_WIDTH-1 : 0]   cntsclk;
+    reg                         csi_split_clk, reg_clk_stop, reg_clk_chg;
 
     input   [31 : 0]            avs_sram_addr_writedata;// SRAM address value
     input                       avs_sram_addr_write;
@@ -122,7 +131,8 @@ module SRAM_IO_CTRL_LOGIC(
     //// Internal Output Connections ////
     output  [31 : 0]            avs_sram_addr_readdata; // Instruction addr value
     output  [31 : 0]            avs_sram_data_readdata; // Instruction data value
-    
+    output	[31 : 0]			avs_scan_chain_readdata;// Scan chain data value
+	
     //// External I/O Connections
     output                      coe_cpu_bgn_export;
     output                      coe_ctrl_bgn_export;
@@ -147,7 +157,7 @@ module SRAM_IO_CTRL_LOGIC(
     input                       coe_anag_sclk1_export;
     input                       coe_anag_sclk2_export;
     input                       coe_anag_lat_export;
-    input                       coe_anag_spi_o_export;
+    input                       coe_anag_spi_so_export;
     
     // Registers and wires
     reg         reg_ctrl_bgn, reg_ctrl_bgn_dly, reg_load_dly;
@@ -178,8 +188,8 @@ module SRAM_IO_CTRL_LOGIC(
     assign  avs_cpustat_readdata[IDX_SCPU_NXT_END]  = coe_ctrl_nxt_end_export;
     assign  avs_cpustat_readdata[IDX_SCPU_NXT_CONT] = coe_ctrl_nxt_cont_export;
     assign  avs_cpustat_readdata[IDX_SCPU_APP_START]= coe_app_start_export;
-    assign  avs_sram_addr_readdata = reg_sram_all[REG_BITS_WIDTH-1:MEMORY_DATA_WIDTH];
-    assign  avs_sram_data_readdata = reg_sram_all[MEMORY_DATA_WIDTH-1:0];
+    assign  avs_sram_addr_readdata = {{(32-MEMORY_ADDR_WIDTH){1'b0}}, reg_sram_all[REG_BITS_WIDTH-1:MEMORY_DATA_WIDTH]};
+    assign  avs_sram_data_readdata = {{(32-MEMORY_DATA_WIDTH){1'b0}}, reg_sram_all[MEMORY_DATA_WIDTH-1:0]};
     
     assign  coe_cpu_bgn_export   = reg_cpu_bgn_dly;//reg_cpu_bgn
     assign  coe_ctrl_bgn_export  = reg_ctrl_bgn_dly;//reg_ctrl_bgn
@@ -188,7 +198,8 @@ module SRAM_IO_CTRL_LOGIC(
     assign  coe_ctrl_mod1_export = (reg_ctrl_mode[0])?reg_ctrl_mode[1]:1'b0;
     assign  coe_ctrl_mod0_export = reg_ctrl_mode[0];
     assign  coe_rst_n_export     = reg_rst_n;
-    assign  coe_clk_export       = csi_clk;//need to adjust the frequency?
+    assign  coe_clk_export       = (reg_clk_stop)?1'b0: 
+                                    ((reg_clk_chg)?csi_split_clk:csi_clk);//need to adjust the frequency?
     assign  coe_cpu_wait_export  = reg_cpu_wait;
     assign  coe_adc_value_export = reg_adc_value;
     assign  coe_test_mux0_export = reg_test_mux[0];
@@ -196,8 +207,31 @@ module SRAM_IO_CTRL_LOGIC(
     assign  coe_test_mux2_export = reg_test_mux[2];
     assign  coe_app_done_export  = reg_app_done_dly;
     
+	wire	SEL_B;//
+	assign	SEL_B = 1'b0;
+	reg		[MAX_SQRT_WIDTH-1:0]        FOUT;
+	wire	[MAX_SQRT_WIDTH-1:0]        CFSA_FOUT;
+	assign	SPI_SO_dly = coe_anag_spi_so_export;
+	assign	LAT_dly = coe_anag_lat_export;
+	assign	SCLK1_dly = coe_anag_sclk1_export;
+	assign	SCLK2_dly = coe_anag_sclk2_export;
+	
     //************* Need a scan chain module??? *************//
-    
+    SC_CELL_V3	CS208( .SIN(SPI_SO_dly), .SO(M0  ), .PO(CFSA_FOUT[12]), .PIN(FOUT[12]), .SEL(SEL_B), .LAT(LAT_dly), .SCK1(SCLK1_dly), .SCK2(SCLK2_dly), .BYP_N(1'b0) );
+    SC_CELL_V3	CS209( .SIN(M0        ), .SO(M1  ), .PO(CFSA_FOUT[11]), .PIN(FOUT[11]), .SEL(SEL_B), .LAT(LAT_dly), .SCK1(SCLK1_dly), .SCK2(SCLK2_dly), .BYP_N(1'b0) );
+    SC_CELL_V3	CS210( .SIN(M1        ), .SO(M2  ), .PO(CFSA_FOUT[10]), .PIN(FOUT[10]), .SEL(SEL_B), .LAT(LAT_dly), .SCK1(SCLK1_dly), .SCK2(SCLK2_dly), .BYP_N(1'b0) );
+    SC_CELL_V3	CS211( .SIN(M2        ), .SO(M3  ), .PO(CFSA_FOUT[9 ]), .PIN(FOUT[9 ]), .SEL(SEL_B), .LAT(LAT_dly), .SCK1(SCLK1_dly), .SCK2(SCLK2_dly), .BYP_N(1'b0) );
+    SC_CELL_V3	CS212( .SIN(M3        ), .SO(M4  ), .PO(CFSA_FOUT[8 ]), .PIN(FOUT[8 ]), .SEL(SEL_B), .LAT(LAT_dly), .SCK1(SCLK1_dly), .SCK2(SCLK2_dly), .BYP_N(1'b0) );
+    SC_CELL_V3	CS213( .SIN(M4        ), .SO(M5  ), .PO(CFSA_FOUT[7 ]), .PIN(FOUT[7 ]), .SEL(SEL_B), .LAT(LAT_dly), .SCK1(SCLK1_dly), .SCK2(SCLK2_dly), .BYP_N(1'b0) );
+    SC_CELL_V3	CS214( .SIN(M5        ), .SO(M6  ), .PO(CFSA_FOUT[6 ]), .PIN(FOUT[6 ]), .SEL(SEL_B), .LAT(LAT_dly), .SCK1(SCLK1_dly), .SCK2(SCLK2_dly), .BYP_N(1'b0) );
+    SC_CELL_V3	CS215( .SIN(M6        ), .SO(M7  ), .PO(CFSA_FOUT[5 ]), .PIN(FOUT[5 ]), .SEL(SEL_B), .LAT(LAT_dly), .SCK1(SCLK1_dly), .SCK2(SCLK2_dly), .BYP_N(1'b0) );
+    SC_CELL_V3	CS216( .SIN(M7        ), .SO(M8  ), .PO(CFSA_FOUT[4 ]), .PIN(FOUT[4 ]), .SEL(SEL_B), .LAT(LAT_dly), .SCK1(SCLK1_dly), .SCK2(SCLK2_dly), .BYP_N(1'b0) );
+    SC_CELL_V3	CS217( .SIN(M8        ), .SO(M9  ), .PO(CFSA_FOUT[3 ]), .PIN(FOUT[3 ]), .SEL(SEL_B), .LAT(LAT_dly), .SCK1(SCLK1_dly), .SCK2(SCLK2_dly), .BYP_N(1'b0) );
+    SC_CELL_V3	CS218( .SIN(M9        ), .SO(M10 ), .PO(CFSA_FOUT[2 ]), .PIN(FOUT[2 ]), .SEL(SEL_B), .LAT(LAT_dly), .SCK1(SCLK1_dly), .SCK2(SCLK2_dly), .BYP_N(1'b0) );
+    SC_CELL_V3	CS219( .SIN(M10       ), .SO(M11 ), .PO(CFSA_FOUT[1 ]), .PIN(FOUT[1 ]), .SEL(SEL_B), .LAT(LAT_dly), .SCK1(SCLK1_dly), .SCK2(SCLK2_dly), .BYP_N(1'b0) );
+    SC_CELL_V3	CS220( .SIN(M11       ), .SO(SO_B), .PO(CFSA_FOUT[0 ]), .PIN(FOUT[0 ]), .SEL(SEL_B), .LAT(LAT_dly), .SCK1(SCLK1_dly), .SCK2(SCLK2_dly), .BYP_N(1'b0) );
+
+	assign	avs_scan_chain_readdata = {{(32-MAX_SQRT_WIDTH){1'b0}},CFSA_FOUT};
     
     //************* Combinational Mapping For CTRL MODE *************//
     /* always @(*) begin
@@ -321,6 +355,9 @@ module SRAM_IO_CTRL_LOGIC(
     begin
         if (~rsi_reset_n)
         begin
+            reg_cntsclk <= DEFAULT_CNTSCLK;
+            reg_clk_stop <= 1'b0;
+            reg_clk_chg <= 1'b0;
             reg_ctrl_bgn  <= 1'b0;
             reg_ctrl_mode <= 2'b00;
             reg_test_mux <= 3'b000;
@@ -332,6 +369,8 @@ module SRAM_IO_CTRL_LOGIC(
         begin
             if (avs_cpuctrl_write)// Set registers if any value changes
             begin
+                reg_clk_stop <= avs_cpuctrl_writedata[IDX_SCPU_CLK_STOP];
+                reg_clk_chg <= avs_cpuctrl_writedata[IDX_SCPU_CLK_CHG];
                 reg_ctrl_bgn <= avs_cpuctrl_writedata[IDX_SCPU_CTRL_BGN];
                 reg_ctrl_mode <= {avs_cpuctrl_writedata[IDX_SCPU_CTRL_MOD1],
                                 avs_cpuctrl_writedata[IDX_SCPU_CTRL_MOD0]};
@@ -350,6 +389,9 @@ module SRAM_IO_CTRL_LOGIC(
 
             if (avs_adc_write)
                 reg_adc_value <= avs_adc_writedata[ADC_DATA_WIDTH-1:0];
+                
+            if (avs_cntsclk_write)
+                reg_cntsclk <= avs_cntsclk_writedata[CT_WIDTH-1:0];
         end
     end
     
@@ -377,5 +419,28 @@ module SRAM_IO_CTRL_LOGIC(
             reg_APP_DONE <= 2'b10;
         end
     end
+    
+    //************* make splited clock works *************//
+    always @(posedge csi_clk)
+    begin
+        if (~rsi_reset_n)
+        begin
+            cntsclk <= 0;
+            csi_split_clk <= 0;
+        end
+        else
+        begin
+            if (cntsclk == reg_cntsclk)
+            begin
+                cntsclk <= 0;
+                csi_split_clk <= ~csi_split_clk;
+            end else
+            begin
+                cntsclk <= cntsclk + 1;
+                csi_split_clk <= csi_split_clk;
+            end
+        end
+    end
+    
 endmodule
 `endif//SRAM_IO_CTRL_LOGIC_V

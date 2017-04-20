@@ -22,6 +22,7 @@ vlog -work work RA1SHD_IBM1024X8.v
 vlog -work work SERIAL_CPU_8bit.v
 vlog -work work SHARE_SUPERALU.v
 vlog -work work SRAM_IO_CTRL.v
+vlog -work work SC_CELL_V3.v
 vlog -work work SRAM_IO_CTRL_LOGIC.v
 vlog -work work PSEUDO_SPI_INTF.v
 vlog -work work SCPU_8BIT_ALU_CTRL_SPI.v

@@ -16891,6 +16891,7 @@ Top level modules:
 } {} {}} {F:/05.Code_Battle/04. Verilog/CPU_design/sim/SRAM_IO_CTRL_LOGIC_TEST.v} {1 {vlog -work work -stats=none {F:/05.Code_Battle/04. Verilog/CPU_design/sim/SRAM_IO_CTRL_LOGIC_TEST.v}
 Model Technology ModelSim ALTERA vlog 10.4d Compiler 2015.12 Dec 30 2015
 -- Compiling module SRAM_IO_CTRL
+-- Compiling module SC_CELL_V3
 -- Compiling module SRAM_IO_CTRL_LOGIC
 -- Compiling module I_MEMORY_8BIT
 -- Compiling module SRAM_IO_CTRL_LOGIC_TEST
@@ -20068,6 +20069,13 @@ Model Technology ModelSim ALTERA vlog 10.4d Compiler 2015.12 Dec 30 2015
 
 Top level modules:
 	SCPU_SRAM_8BIT_ALU_SPI_TOP_VG
+
+} {} {}} {F:/05.Code_Battle/04. Verilog/CPU_design/SC_CELL_V3.v} {1 {vlog -work work -stats=none {F:/05.Code_Battle/04. Verilog/CPU_design/SC_CELL_V3.v}
+Model Technology ModelSim ALTERA vlog 10.4d Compiler 2015.12 Dec 30 2015
+-- Compiling module SC_CELL_V3
+
+Top level modules:
+	SC_CELL_V3
 
 } {} {}} {F:/05.Code_Battle/04. Verilog/CPU_design/sim/SCPU_MIMIC_CFSA_TOP_TEST.v} {1 {vlog -work work -sv -stats=none {F:/05.Code_Battle/04. Verilog/CPU_design/sim/SCPU_MIMIC_CFSA_TOP_TEST.v}
 Model Technology ModelSim ALTERA vlog 10.4d Compiler 2015.12 Dec 30 2015

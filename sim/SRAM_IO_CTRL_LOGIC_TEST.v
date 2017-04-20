@@ -12,6 +12,7 @@
 `timescale 1ns / 1ps
 `include "../DEFINE_CPU.v"
 `include "../SRAM_IO_CTRL.v"
+`include "../SC_CELL_V3.v"
 `include "../SRAM_IO_CTRL_LOGIC.v"
 `include "../I_MEMORY_8bit.v"
 
