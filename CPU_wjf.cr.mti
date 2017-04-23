@@ -16933,6 +16933,17 @@ Model Technology ModelSim ALTERA vlog 10.4d Compiler 2015.12 Dec 30 2015
 Top level modules:
 	SRAM_IO_CTRL_TEST
 
+} {} {}} {F:/05.Code_Battle/04. Verilog/CPU_design/sim/SYS_PC_PSEUDO_SPI_INTF_SCAN_TEST.v} {1 {vlog -work work -stats=none {F:/05.Code_Battle/04. Verilog/CPU_design/sim/SYS_PC_PSEUDO_SPI_INTF_SCAN_TEST.v}
+Model Technology ModelSim ALTERA vlog 10.4d Compiler 2015.12 Dec 30 2015
+-- Compiling module SCPU_SRAM_8BIT_ALU_SPI_TOP
+-- Compiling module SRAM_IO_CTRL_LOGIC
+-- Compiling module I_MEMORY_8BIT
+-- Compiling module SC_CELL_V3
+-- Compiling module SYS_PC_PSEUDO_SPI_INTF_SCAN_TEST
+
+Top level modules:
+	SYS_PC_PSEUDO_SPI_INTF_SCAN_TEST
+
 } {} {}} {F:/05. Code Battle/04. Verilog/CPU_design/sim/PSEUDO_SPI_INTF_RA1512_TEST.v} {1 {vlog -work work -stats=none {F:/05. Code Battle/04. Verilog/CPU_design/sim/PSEUDO_SPI_INTF_RA1512_TEST.v}
 Model Technology ModelSim ALTERA vlog 10.4d Compiler 2015.12 Dec 30 2015
 -- Compiling module PSEUDO_SPT_INTF
