@@ -11,6 +11,12 @@
 // --------------------------------------------------------------------
 `timescale  1 ns / 100 ps
 `include    "../DEFINE_CPU.v"
+`include    "../RA1SHD_IBM1024X8.v"
+`include    "../SERIAL_CPU_8bit.v"
+`include    "../SHARE_SUPERALU.v"
+`include    "../SRAM_IO_CTRL.v"
+`include    "../PSEUDO_SPI_INTF.v"
+`include    "../SCPU_8BIT_ALU_CTRL_SPI.v"
 `include    "../SCPU_SRAM_8BIT_ALU_SPI_TOP.v"
 `include    "../SRAM_IO_CTRL_LOGIC.v"
 `include    "../I_MEMORY_8bit.v"
@@ -47,6 +53,7 @@ module  SYS_PC_PSEUDO_SPI_INTF_SCAN_TEST();
     reg     CTRL_SI;
     reg     CPU_WAIT;
     reg     [9:0] ADC_PI;
+    wire    [9:0] ADC_PI_dly;
     reg     [2:0] TEST_MUX;
     wire    [2:0] TEST_MUX_dly;
     
@@ -74,8 +81,8 @@ module  SYS_PC_PSEUDO_SPI_INTF_SCAN_TEST();
         .CPU_BGN        (CPU_BGN    ),
         .LOAD_N         (LOAD_N_dly),
         .CTRL_SI        (CTRL_SI_dly),
-        .APP_DONE       (1'b0   ),
-        .ADC_PI         (ADC_PI     ),
+        .APP_DONE       (APP_DONE_dly),//1'b0
+        .ADC_PI         (ADC_PI_dly ),
         .TEST_MUX       (TEST_MUX_dly),
         .CPU_WAIT       (CPU_WAIT   ),//CPU_WAIT_dly
         // output
@@ -94,7 +101,16 @@ module  SYS_PC_PSEUDO_SPI_INTF_SCAN_TEST();
     parameter   IDX_SCPU_CTRL_LOAD = 1;     // SCPU CTRL Module's load bit
     parameter   IDX_SCPU_CTRL_MOD0 = 2;     // SCPU CTRL Module's mode bit
     parameter   IDX_SCPU_CTRL_MOD1 = 3;     // SCPU CTRL Module's mode bit
-
+    parameter   IDX_SCPU_APP_DONE  = 4;     // External App's done signal
+    parameter   IDX_SCPU_CPU_BGN   = 5;     // SCPU BGN start bit
+    parameter   IDX_SCPU_RST_N     = 6;	    // SCPU RST_N bit
+    parameter   IDX_SCPU_CPU_WAIT  = 7;     // SCPU CPU WAIT signal bit
+    parameter   IDX_SCPU_TEST_MUX0 = 8;     // SCPU TEST MUX signal0
+    parameter   IDX_SCPU_TEST_MUX1 = 9;     // SCPU TEST MUX signal1
+    parameter   IDX_SCPU_TEST_MUX2 = 10;    // SCPU TEST MUX signal2
+    parameter   IDX_SCPU_CLK_STOP  = 11;    // SCPU STOP the clock signal
+    parameter   IDX_SCPU_CLK_CHG   = 12;    // SCPU CHANGE the clock frequency
+    
     parameter   IDX_SCPU_CTRL_RDY  = 0;
     parameter   IDX_SCPU_NXT_END   = 1;     // SCPU process finish
     parameter   IDX_SCPU_NXT_CONT  = 2;     // SCPU Instructions run over
@@ -193,8 +209,10 @@ module  SYS_PC_PSEUDO_SPI_INTF_SCAN_TEST();
     
     parameter   VIRTUAL_DLY = 2;
 
+    /// input to CPU chip
     // assign  #VIRTUAL_DLY    CPU_WAIT_dly = coe_cpu_wait_export;
-    // assign  #VIRTUAL_DLY    APP_DONE_dly = coe_app_done_export;
+    assign  #VIRTUAL_DLY    ADC_PI_dly = coe_adc_value_export;//ADC_PI
+    assign  #VIRTUAL_DLY    APP_DONE_dly = coe_app_done_export;
     assign  #VIRTUAL_DLY    TEST_MUX_dly = {coe_test_mux2_export,coe_test_mux1_export,coe_test_mux0_export};
     assign  #VIRTUAL_DLY    CTRL_MODE_dly = {coe_ctrl_mod1_export,coe_ctrl_mod0_export};
     assign  #VIRTUAL_DLY    CTRL_BGN_dly = coe_ctrl_bgn_export;
@@ -203,6 +221,7 @@ module  SYS_PC_PSEUDO_SPI_INTF_SCAN_TEST();
     assign  #VIRTUAL_DLY    CSI_CLK_dly = coe_clk_export;
     //assign  #VIRTUAL_DLY    RST_N_dly = coe_rst_n_export;
     
+    /// output from CPU chip
     assign  #VIRTUAL_DLY    coe_ctrl_so_export = CTRL_SO;
     assign  #VIRTUAL_DLY    coe_ctrl_rdy_export = CTRL_RDY;
     assign  #VIRTUAL_DLY    coe_app_start_export = APP_START;
@@ -239,75 +258,93 @@ module  SYS_PC_PSEUDO_SPI_INTF_SCAN_TEST();
         
         /* (0) Add stimulus here: Using a pseudo memory to load instruction*/ 
         i= DEFAULT_PC_ADDR*2;
-        //Load I/O data_A to `gr2 as XIN
-        tmpi_datain = {`LIOA, `gr2, 4'b0000, 4'b0000};
+        //Set configuration flag `gr1
+        tmpi_datain = {`SET, `gr1, 4'b1000, 4'b0000};
         i_mem.I_RAM[ i] = tmpi_datain[7:0];  i = 1 + DEFAULT_PC_ADDR*2;
         i_mem.I_RAM[ i] = tmpi_datain[15:8]; i = 2 + DEFAULT_PC_ADDR*2;
-        //Load I/O data_A to `gr3 as YIN
-        tmpi_datain = {`LIOA, `gr3, 4'b0000, 4'b0000};
+        //Load ADC to `gr2 as XIN
+        tmpi_datain = {`LIOA, `gr2, 4'b0000, 4'b0000};
         i_mem.I_RAM[ i] = tmpi_datain[7:0];  i = 3 + DEFAULT_PC_ADDR*2;
         i_mem.I_RAM[ i] = tmpi_datain[15:8]; i = 4 + DEFAULT_PC_ADDR*2;
-        //set OFFSET as 0
-        tmpi_datain = {`SUB, `gr4, 1'b0, `gr4, 1'b0, `gr4};
+        //reset ADC bit flag
+        tmpi_datain = {`SET, `gr1, 4'b0000, 4'b0000};
         i_mem.I_RAM[ i] = tmpi_datain[7:0];  i = 5 + DEFAULT_PC_ADDR*2;
         i_mem.I_RAM[ i] = tmpi_datain[15:8]; i = 6 + DEFAULT_PC_ADDR*2;
-        //set the control reg for ALU
-        tmpi_datain = {`SET, `gr1, 3'b001, 3'b100, 2'b01};
+
+        //Set configuration flag `gr1
+        tmpi_datain = {`SET, `gr1, 4'b1000, 4'b0000};
         i_mem.I_RAM[ i] = tmpi_datain[7:0];  i = 7 + DEFAULT_PC_ADDR*2;
         i_mem.I_RAM[ i] = tmpi_datain[15:8]; i = 8 + DEFAULT_PC_ADDR*2;
+        //Load ADC to `gr3 as YIN
+        tmpi_datain = {`LIOA, `gr3, 4'b0000, 4'b0000};
+        i_mem.I_RAM[ i] = tmpi_datain[7:0];  i =  9 + DEFAULT_PC_ADDR*2;
+        i_mem.I_RAM[ i] = tmpi_datain[15:8]; i = 10 + DEFAULT_PC_ADDR*2;
+        //reset ADC bit flag
+        tmpi_datain = {`SET, `gr1, 4'b0000, 4'b0000};
+        i_mem.I_RAM[ i] = tmpi_datain[7:0];  i = 11 + DEFAULT_PC_ADDR*2;
+        i_mem.I_RAM[ i] = tmpi_datain[15:8]; i = 12 + DEFAULT_PC_ADDR*2;
+        
+        //set OFFSET as 0
+        tmpi_datain = {`SUB, `gr4, 1'b0, `gr4, 1'b0, `gr4};
+        i_mem.I_RAM[ i] = tmpi_datain[7:0];  i = 13 + DEFAULT_PC_ADDR*2;
+        i_mem.I_RAM[ i] = tmpi_datain[15:8]; i = 14 + DEFAULT_PC_ADDR*2;
+        //set the control reg for ALU
+        tmpi_datain = {`SET, `gr1, 3'b001, 3'b100, 2'b01};
+        i_mem.I_RAM[ i] = tmpi_datain[7:0];  i = 15 + DEFAULT_PC_ADDR*2;
+        i_mem.I_RAM[ i] = tmpi_datain[15:8]; i = 16 + DEFAULT_PC_ADDR*2;
         
         //if (`gr3 != 0) go to I_RAM[ 9];
         // CPU is supposed to finish the loop automatically
         
         //Load I/O data_A to `gr2 as FOUT
         tmpi_datain = {`LIOA, `gr2, 4'b0000, 4'b0000};
-        i_mem.I_RAM[ i] = tmpi_datain[7:0];  i = 9 + DEFAULT_PC_ADDR*2;
-        i_mem.I_RAM[ i] = tmpi_datain[15:8]; i = 10+ DEFAULT_PC_ADDR*2;
+        i_mem.I_RAM[ i] = tmpi_datain[7:0];  i = 17 + DEFAULT_PC_ADDR*2;
+        i_mem.I_RAM[ i] = tmpi_datain[15:8]; i = 18 + DEFAULT_PC_ADDR*2;
         //Left Shift `gr2 and then save to SRAM
         tmpi_datain = {`SLL, `gr2, 1'b0, `gr2, 4'b0011};
-        i_mem.I_RAM[ i] = tmpi_datain[7:0];  i = 11+ DEFAULT_PC_ADDR*2;
-        i_mem.I_RAM[ i] = tmpi_datain[15:8]; i = 12+ DEFAULT_PC_ADDR*2;
+        i_mem.I_RAM[ i] = tmpi_datain[7:0];  i = 19 + DEFAULT_PC_ADDR*2;
+        i_mem.I_RAM[ i] = tmpi_datain[15:8]; i = 20 + DEFAULT_PC_ADDR*2;
         //reset the control reg for ALU
         tmpi_datain = {`SET, `gr1, 3'b000, 3'b000, 2'b00};
-        i_mem.I_RAM[ i] = tmpi_datain[7:0];  i = 13+ DEFAULT_PC_ADDR*2;
-        i_mem.I_RAM[ i] = tmpi_datain[15:8]; i = 14+ DEFAULT_PC_ADDR*2;
+        i_mem.I_RAM[ i] = tmpi_datain[7:0];  i = 21 + DEFAULT_PC_ADDR*2;
+        i_mem.I_RAM[ i] = tmpi_datain[15:8]; i = 22 + DEFAULT_PC_ADDR*2;
         //Save Multiplication to SRAM at 0x2;
         tmpi_datain = {`STORE, `gr2, 1'b0, `gr0, 4'b0010};
-        i_mem.I_RAM[ i] = tmpi_datain[7:0];  i = 15+ DEFAULT_PC_ADDR*2;
-        i_mem.I_RAM[ i] = tmpi_datain[15:8]; i = 16+ DEFAULT_PC_ADDR*2;
+        i_mem.I_RAM[ i] = tmpi_datain[7:0];  i = 23 + DEFAULT_PC_ADDR*2;
+        i_mem.I_RAM[ i] = tmpi_datain[15:8]; i = 24 + DEFAULT_PC_ADDR*2;
         
         //Clear OUT_A & Set SPI starting address;
         tmpi_datain = {`SUB, `gr2, 1'b0, `gr2, 1'b0, `gr2};
-        i_mem.I_RAM[ i] = tmpi_datain[7:0];  i = 17 + DEFAULT_PC_ADDR*2;
-        i_mem.I_RAM[ i] = tmpi_datain[15:8]; i = 18 + DEFAULT_PC_ADDR*2;
+        i_mem.I_RAM[ i] = tmpi_datain[7:0];  i = 25 + DEFAULT_PC_ADDR*2;
+        i_mem.I_RAM[ i] = tmpi_datain[15:8]; i = 26 + DEFAULT_PC_ADDR*2;
         tmpi_datain = {`SET, `gr2, 4'b0000, 4'b0011};
-        i_mem.I_RAM[ i] = tmpi_datain[7:0];  i = 19 + DEFAULT_PC_ADDR*2;
-        i_mem.I_RAM[ i] = tmpi_datain[15:8]; i = 20 + DEFAULT_PC_ADDR*2;
+        i_mem.I_RAM[ i] = tmpi_datain[7:0];  i = 27 + DEFAULT_PC_ADDR*2;
+        i_mem.I_RAM[ i] = tmpi_datain[15:8]; i = 28 + DEFAULT_PC_ADDR*2;
         
         //Clear OUT_B & Set SPI send data length;
         tmpi_datain = {`SUB, `gr3, 1'b0, `gr3, 1'b0, `gr3};
-        i_mem.I_RAM[ i] = tmpi_datain[7:0];  i = 21 + DEFAULT_PC_ADDR*2;
-        i_mem.I_RAM[ i] = tmpi_datain[15:8]; i = 22 + DEFAULT_PC_ADDR*2;
+        i_mem.I_RAM[ i] = tmpi_datain[7:0];  i = 29 + DEFAULT_PC_ADDR*2;
+        i_mem.I_RAM[ i] = tmpi_datain[15:8]; i = 30 + DEFAULT_PC_ADDR*2;
         tmpi_datain = {`SET, `gr3, 4'b0000, 4'b0010};
-        i_mem.I_RAM[ i] = tmpi_datain[7:0];  i = 23 + DEFAULT_PC_ADDR*2;
-        i_mem.I_RAM[ i] = tmpi_datain[15:8]; i = 24 + DEFAULT_PC_ADDR*2;
+        i_mem.I_RAM[ i] = tmpi_datain[7:0];  i = 31 + DEFAULT_PC_ADDR*2;
+        i_mem.I_RAM[ i] = tmpi_datain[15:8]; i = 32 + DEFAULT_PC_ADDR*2;
        
         //set the control reg for SPI
         tmpi_datain = {`SET, `gr1, 3'b010, 3'b000, 2'b00};
-        i_mem.I_RAM[ i] = tmpi_datain[7:0];  i = 25 + DEFAULT_PC_ADDR*2;
-        i_mem.I_RAM[ i] = tmpi_datain[15:8]; i = 26 + DEFAULT_PC_ADDR*2;
+        i_mem.I_RAM[ i] = tmpi_datain[7:0];  i = 33 + DEFAULT_PC_ADDR*2;
+        i_mem.I_RAM[ i] = tmpi_datain[15:8]; i = 34 + DEFAULT_PC_ADDR*2;
         
         // CPU is supposed to finish the loop automatically
         
         //reset the control reg for SPI
         tmpi_datain = {`SET, `gr1, 3'b000, 3'b000, 2'b00};
-        i_mem.I_RAM[ i] = tmpi_datain[7:0];  i = 27 + DEFAULT_PC_ADDR*2;
-        i_mem.I_RAM[ i] = tmpi_datain[15:8]; i = 28 + DEFAULT_PC_ADDR*2;
+        i_mem.I_RAM[ i] = tmpi_datain[7:0];  i = 35 + DEFAULT_PC_ADDR*2;
+        i_mem.I_RAM[ i] = tmpi_datain[15:8]; i = 36 + DEFAULT_PC_ADDR*2;
         
         //System finish
         tmpi_datain = {`HALT, 11'b000_0000_0000};
-        i_mem.I_RAM[ i] = tmpi_datain[7:0];  i = 29 + DEFAULT_PC_ADDR*2;
-        i_mem.I_RAM[ i] = tmpi_datain[15:8]; i = 30 + DEFAULT_PC_ADDR*2;
+        i_mem.I_RAM[ i] = tmpi_datain[7:0];  i = 37 + DEFAULT_PC_ADDR*2;
+        i_mem.I_RAM[ i] = tmpi_datain[15:8]; i = 38 + DEFAULT_PC_ADDR*2;
         
         i = 0;
         tmpi_datain = {`JUMP, 3'b000, 4'b0001, 4'b0000};// Jump to certain address
@@ -441,10 +478,69 @@ module  SYS_PC_PSEUDO_SPI_INTF_SCAN_TEST();
         #100;
         multiplicand = 240;//7
         multiplier = 8'b01101011;//0.4140625 or 106 out of 256
-        ADC_PI = multiplicand;
+        /// mimic PC inputs ADC data to Chip
+        begin : cpu_adc_x_wait_loop
+            forever begin
+                #10;
+                if (avs_cpustat_app_start) begin
+                    avs_adc_write = 0;
+                    #10 avs_adc_write = 1;
+                    avs_adc_writedata = multiplicand;//ADC_PI
+                    disable cpu_adc_x_wait_loop;
+                end
+            end
+        end
+        #150;//wait to the next instruction and then done
+        avs_cpuctrl_write = 0;
+        #10 avs_cpuctrl_write = 1;
+        avs_cpuctrl_writedata[IDX_SCPU_APP_DONE] = 1'b1;
         #50;
-        ADC_PI = multiplier;
+        /// mimic PC waiting for the end of the Chip
+        begin : cpu_adc_x_end_loop
+            forever begin
+                #10;
+                if (!avs_cpustat_app_start) begin
+                    disable cpu_adc_x_end_loop;
+                end
+            end
+        end
+        avs_cpuctrl_write = 0;
+        #10 avs_cpuctrl_write = 1;
+        avs_cpuctrl_writedata[IDX_SCPU_APP_DONE] = 1'b0;
+
+        /// mimic PC inputs ADC data to Chip
+        begin : cpu_adc_y_wait_loop
+            forever begin
+                #10;
+                if (avs_cpustat_app_start) begin
+                    avs_adc_write = 0;
+                    #10 avs_adc_write = 1;
+                    avs_adc_writedata = multiplier;//ADC_PI
+                    disable cpu_adc_y_wait_loop;
+                end
+            end
+        end
+        #150;//wait to the next instruction and then done
+        avs_cpuctrl_write = 0;
+        #10 avs_cpuctrl_write = 1;
+        avs_cpuctrl_writedata[IDX_SCPU_APP_DONE] = 1'b1;
         #50;
+        /// mimic PC waiting for the end of the Chip
+        begin : cpu_adc_y_end_loop
+            forever begin
+                #10;
+                if (!avs_cpustat_app_start) begin
+                    disable cpu_adc_y_end_loop;
+                end
+            end
+        end
+        avs_cpuctrl_write = 0;
+        #10 avs_cpuctrl_write = 1;
+        avs_cpuctrl_writedata[IDX_SCPU_APP_DONE] = 1'b0;
+        // ADC_PI = multiplicand;
+        // #50;
+        // ADC_PI = multiplier;
+        // #50;
         
         // C code polling to do next
         //polling_wait(NXT[0]);
@@ -637,7 +733,7 @@ module  SYS_PC_PSEUDO_SPI_INTF_SCAN_TEST();
             $display("Test Passed!");
         #20 $stop();
     end
-
+    
     always #5
         CLK = ~CLK;
    

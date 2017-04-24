@@ -16935,6 +16935,12 @@ Top level modules:
 
 } {} {}} {F:/05.Code_Battle/04. Verilog/CPU_design/sim/SYS_PC_PSEUDO_SPI_INTF_SCAN_TEST.v} {1 {vlog -work work -stats=none {F:/05.Code_Battle/04. Verilog/CPU_design/sim/SYS_PC_PSEUDO_SPI_INTF_SCAN_TEST.v}
 Model Technology ModelSim ALTERA vlog 10.4d Compiler 2015.12 Dec 30 2015
+-- Compiling module RA1SHD_IBM1024X8
+-- Compiling module SERIAL_CPU_8BIT
+-- Compiling module SHARE_SUPERALU
+-- Compiling module SRAM_IO_CTRL
+-- Compiling module PSEUDO_SPT_INTF
+-- Compiling module SCPU_8BIT_ALU_CTRL_SPI
 -- Compiling module SCPU_SRAM_8BIT_ALU_SPI_TOP
 -- Compiling module SRAM_IO_CTRL_LOGIC
 -- Compiling module I_MEMORY_8BIT

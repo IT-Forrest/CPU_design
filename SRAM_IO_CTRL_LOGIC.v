@@ -171,6 +171,7 @@ module SRAM_IO_CTRL_LOGIC(
     reg         [ADC_DATA_WIDTH-1:0]  reg_adc_value;
     reg         [1:0]   reg_APP_DONE;
     reg         reg_app_done_dly;
+    reg         reg_app_done_keep;// keep the app done signal all the time
             
     reg         [REG_BITS_WIDTH-1:0]  reg_sram_all;//addr+instruction
     reg         [7:0]   cnt_bit_load;
@@ -205,7 +206,7 @@ module SRAM_IO_CTRL_LOGIC(
     assign  coe_test_mux0_export = reg_test_mux[0];
     assign  coe_test_mux1_export = reg_test_mux[1];
     assign  coe_test_mux2_export = reg_test_mux[2];
-    assign  coe_app_done_export  = reg_app_done_dly;
+    assign  coe_app_done_export  = reg_app_done_keep;//reg_app_done_dly;
     
 	wire	SEL_B;//
 	assign	SEL_B = 1'b0;
@@ -355,16 +356,17 @@ module SRAM_IO_CTRL_LOGIC(
     begin
         if (~rsi_reset_n)
         begin
-            reg_cntsclk <= DEFAULT_CNTSCLK;
-            reg_clk_stop <= 1'b0;
-            reg_clk_chg <= 1'b0;
+            reg_clk_stop <= 1'b0;// clock control flag
+            reg_clk_chg <= 1'b0;// split the frequency
             reg_ctrl_bgn  <= 1'b0;
             reg_ctrl_mode <= 2'b00;
             reg_test_mux <= 3'b000;
+            reg_app_done_keep <= 1'b0;
             
             reg_sram_addr <= {CT_WIDTH{1'b0}};
             reg_sram_data <= {CT_WIDTH{1'b0}};
             reg_adc_value <= {ADC_DATA_WIDTH{1'b0}};
+            reg_cntsclk <= DEFAULT_CNTSCLK;
         end else
         begin
             if (avs_cpuctrl_write)// Set registers if any value changes
@@ -379,6 +381,7 @@ module SRAM_IO_CTRL_LOGIC(
                 reg_test_mux <= {avs_cpuctrl_writedata[IDX_SCPU_TEST_MUX2],
                                 avs_cpuctrl_writedata[IDX_SCPU_TEST_MUX1],
                                 avs_cpuctrl_writedata[IDX_SCPU_TEST_MUX0]};
+                reg_app_done_keep <= avs_cpuctrl_writedata[IDX_SCPU_APP_DONE];
             end
                 
             if (avs_sram_addr_write)
