@@ -360,6 +360,8 @@ module SRAM_IO_CTRL_LOGIC(
             reg_clk_chg <= 1'b0;// split the frequency
             reg_ctrl_bgn  <= 1'b0;
             reg_ctrl_mode <= 2'b00;
+            reg_rst_n <= 1'b0;
+            reg_cpu_wait <= 1'b0;
             reg_test_mux <= 3'b000;
             reg_app_done_keep <= 1'b0;
             

@@ -75,16 +75,16 @@ module  SYS_PC_PSEUDO_SPI_INTF_SCAN_TEST();
     
     SCPU_SRAM_8BIT_ALU_SPI_TOP  scpu_sram_alu(
         .CLK            (CSI_CLK_dly),
-        .RST_N          (RST_N      ),//RST_N_dly
+        .RST_N          (RST_N_dly  ),//RST_N_dly
         .CTRL_MODE      (CTRL_MODE_dly),
         .CTRL_BGN       (CTRL_BGN_dly),
-        .CPU_BGN        (CPU_BGN    ),
+        .CPU_BGN        (CPU_BGN_dly),//CPU_BGN_dly
         .LOAD_N         (LOAD_N_dly),
         .CTRL_SI        (CTRL_SI_dly),
         .APP_DONE       (APP_DONE_dly),//1'b0
         .ADC_PI         (ADC_PI_dly ),
         .TEST_MUX       (TEST_MUX_dly),
-        .CPU_WAIT       (CPU_WAIT   ),//CPU_WAIT_dly
+        .CPU_WAIT       (CPU_WAIT_dly),//CPU_WAIT_dly
         // output
         .CTRL_RDY       (CTRL_RDY),
         .APP_START      (APP_START  ),
@@ -210,7 +210,7 @@ module  SYS_PC_PSEUDO_SPI_INTF_SCAN_TEST();
     parameter   VIRTUAL_DLY = 2;
 
     /// input to CPU chip
-    // assign  #VIRTUAL_DLY    CPU_WAIT_dly = coe_cpu_wait_export;
+    assign  #VIRTUAL_DLY    CPU_WAIT_dly = coe_cpu_wait_export;
     assign  #VIRTUAL_DLY    ADC_PI_dly = coe_adc_value_export;//ADC_PI
     assign  #VIRTUAL_DLY    APP_DONE_dly = coe_app_done_export;
     assign  #VIRTUAL_DLY    TEST_MUX_dly = {coe_test_mux2_export,coe_test_mux1_export,coe_test_mux0_export};
@@ -219,7 +219,8 @@ module  SYS_PC_PSEUDO_SPI_INTF_SCAN_TEST();
     assign  #VIRTUAL_DLY    LOAD_N_dly = !coe_ctrl_load_export;
     assign  #VIRTUAL_DLY    CTRL_SI_dly = coe_ctrl_si_export;
     assign  #VIRTUAL_DLY    CSI_CLK_dly = coe_clk_export;
-    //assign  #VIRTUAL_DLY    RST_N_dly = coe_rst_n_export;
+    assign  #VIRTUAL_DLY    RST_N_dly = coe_rst_n_export;
+    assign  #VIRTUAL_DLY    CPU_BGN_dly = coe_cpu_bgn_export;
     
     /// output from CPU chip
     assign  #VIRTUAL_DLY    coe_ctrl_so_export = CTRL_SO;
@@ -362,6 +363,9 @@ module  SYS_PC_PSEUDO_SPI_INTF_SCAN_TEST();
         
         #10 RST_N = 0; rsi_reset_n = 0; CTRL_BGN = 1;
         #10 RST_N = 1; rsi_reset_n = 1;
+        avs_cpuctrl_write = 0;
+        #10 avs_cpuctrl_write = 1;
+        avs_cpuctrl_writedata[IDX_SCPU_RST_N] = 1'b1;
         
         /* (1) Serially Input the address & Instruction to CTRL and then to SRAM */
         for (i = 0; i<19+ DEFAULT_PC_ADDR; i=i) begin
@@ -472,8 +476,17 @@ module  SYS_PC_PSEUDO_SPI_INTF_SCAN_TEST();
         
         /* (2) Activate CPU to load from LIOA */
         #10     CTRL_BGN = 0;
+        avs_cpuctrl_write = 0;
+        #10 avs_cpuctrl_write = 1;
+        avs_cpuctrl_writedata[IDX_SCPU_CTRL_BGN] = 1'b0;
         #10     CPU_BGN = 1;
+        avs_cpuctrl_write = 0;
+        #10 avs_cpuctrl_write = 1;
+        avs_cpuctrl_writedata[IDX_SCPU_CPU_BGN] = 1'b1;
         #10     CPU_BGN = 0;
+        avs_cpuctrl_write = 0;
+        #10 avs_cpuctrl_write = 1;
+        avs_cpuctrl_writedata[IDX_SCPU_CPU_BGN] = 1'b0;
         
         #100;
         multiplicand = 240;//7
