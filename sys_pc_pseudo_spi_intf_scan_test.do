@@ -40,10 +40,11 @@ add wave -noupdate {/SYS_PC_PSEUDO_SPI_INTF_SCAN_TEST/scpu_sram_alu/scpu_ctrl_sp
 add wave -noupdate {/SYS_PC_PSEUDO_SPI_INTF_SCAN_TEST/scpu_sram_alu/scpu_ctrl_spi/uut/nxt[0]}
 add wave -noupdate /SYS_PC_PSEUDO_SPI_INTF_SCAN_TEST/scpu_sram_alu/scpu_ctrl_spi/uut/clk
 add wave -noupdate /SYS_PC_PSEUDO_SPI_INTF_SCAN_TEST/scpu_sram_alu/scpu_ctrl_spi/uut/state
+add wave -noupdate /SYS_PC_PSEUDO_SPI_INTF_SCAN_TEST/scpu_sram_alu/scpu_ctrl_spi/ALU_01/FOUT
 TreeUpdate [SetDefaultTree]
-WaveRestoreCursors {{Cursor 2} {7695061 ps} 0} {{Cursor 2} {16341992 ps} 0}
+WaveRestoreCursors {{Cursor 1} {2068828 ps} 0} {{Cursor 2} {18506364 ps} 0}
 quietly wave cursor active 2
-configure wave -namecolwidth 421
+configure wave -namecolwidth 363
 configure wave -valuecolwidth 131
 configure wave -justifyvalue left
 configure wave -signalnamewidth 0
@@ -57,4 +58,4 @@ configure wave -griddelta 40
 configure wave -timeline 0
 configure wave -timelineunits ps
 update
-WaveRestoreZoom {16524697 ps} {16622189 ps}
+WaveRestoreZoom {21564147 ps} {22780835 ps}

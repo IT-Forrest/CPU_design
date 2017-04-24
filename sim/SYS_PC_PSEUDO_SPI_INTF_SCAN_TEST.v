@@ -364,7 +364,7 @@ module  SYS_PC_PSEUDO_SPI_INTF_SCAN_TEST();
         #10 RST_N = 1; rsi_reset_n = 1;
         
         /* (1) Serially Input the address & Instruction to CTRL and then to SRAM */
-        for (i = 0; i<15+ DEFAULT_PC_ADDR; i=i) begin
+        for (i = 0; i<19+ DEFAULT_PC_ADDR; i=i) begin
             for (k=2; k>=1; k=k-1) begin
                 /** (a) load data to SRAM_IO_CTRL from PC **/
                 // C code modify control word
