@@ -344,7 +344,7 @@ module SRAM_IO_CTRL_LOGIC(
                 cnt_bit_load <= REG_BITS_WIDTH-1;
             else if (is_rfrom_ctrl)
                 // Due to clock delay, FPGA starts to read when is_LOAD
-                cnt_bit_load <= REG_BITS_WIDTH-1;
+                cnt_bit_load <= REG_BITS_WIDTH;
             else
                 cnt_bit_load <= 0;
         else if (cnt_bit_load)

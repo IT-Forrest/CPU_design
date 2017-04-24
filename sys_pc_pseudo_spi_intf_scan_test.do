@@ -22,7 +22,10 @@ add wave -noupdate /SYS_PC_PSEUDO_SPI_INTF_SCAN_TEST/coe_anag_spi_so_export
 add wave -noupdate /SYS_PC_PSEUDO_SPI_INTF_SCAN_TEST/coe_app_done_export
 add wave -noupdate /SYS_PC_PSEUDO_SPI_INTF_SCAN_TEST/coe_app_start_export
 add wave -noupdate /SYS_PC_PSEUDO_SPI_INTF_SCAN_TEST/ADC_PI_dly
+add wave -noupdate /SYS_PC_PSEUDO_SPI_INTF_SCAN_TEST/scpu_sram_alu/scpu_ctrl_spi/ALU_01/FOUT
+add wave -noupdate /SYS_PC_PSEUDO_SPI_INTF_SCAN_TEST/scpu_sram_alu/scpu_ctrl_spi/cct/reg_bits
 add wave -noupdate -divider ctrl_logic
+add wave -noupdate /SYS_PC_PSEUDO_SPI_INTF_SCAN_TEST/fpga/CFSA_FOUT
 add wave -noupdate /SYS_PC_PSEUDO_SPI_INTF_SCAN_TEST/fpga/csi_clk
 add wave -noupdate /SYS_PC_PSEUDO_SPI_INTF_SCAN_TEST/fpga/CTRL_SO
 add wave -noupdate -radix unsigned /SYS_PC_PSEUDO_SPI_INTF_SCAN_TEST/fpga/cnt_bit_load
@@ -42,7 +45,7 @@ add wave -noupdate /SYS_PC_PSEUDO_SPI_INTF_SCAN_TEST/scpu_sram_alu/scpu_ctrl_spi
 add wave -noupdate /SYS_PC_PSEUDO_SPI_INTF_SCAN_TEST/scpu_sram_alu/scpu_ctrl_spi/uut/state
 add wave -noupdate /SYS_PC_PSEUDO_SPI_INTF_SCAN_TEST/scpu_sram_alu/scpu_ctrl_spi/ALU_01/FOUT
 TreeUpdate [SetDefaultTree]
-WaveRestoreCursors {{Cursor 1} {2068828 ps} 0} {{Cursor 2} {18506364 ps} 0}
+WaveRestoreCursors {{Cursor 1} {2068828 ps} 0} {{Cursor 2} {21770699 ps} 0}
 quietly wave cursor active 2
 configure wave -namecolwidth 363
 configure wave -valuecolwidth 131
@@ -58,4 +61,4 @@ configure wave -griddelta 40
 configure wave -timeline 0
 configure wave -timelineunits ps
 update
-WaveRestoreZoom {21564147 ps} {22780835 ps}
+WaveRestoreZoom {22514973 ps} {22701349 ps}
