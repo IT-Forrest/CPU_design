@@ -31,17 +31,17 @@ module SRAM_IO_CTRL_LOGIC(
     avs_cntsclk_writedata,
     avs_cntsclk_write,
     
-    avs_sram_addr_writedata,    // SRAM address value
-    avs_sram_addr_write,
+    avs_sram_addr_wrt_writedata,    // SRAM address value
+    avs_sram_addr_wrt_write,
 
-    avs_sram_data_writedata,    // Instruction data value
-    avs_sram_data_write,
+    avs_sram_data_wrt_writedata,    // Instruction data value
+    avs_sram_data_wrt_write,
     avs_adc_writedata,          // ADC data from analog
     avs_adc_write,
     
     //// Internal Output Connections ////
-    avs_sram_addr_readdata,     // Instruction addr value
-    avs_sram_data_readdata,     // Instruction data value
+    avs_sram_addr_rd_readdata,     // Instruction addr value
+    avs_sram_data_rd_readdata,     // Instruction data value
     avs_scan_chain_readdata,    // Scan chain data value
     
     //// External I/O Connections (Output)
@@ -120,17 +120,17 @@ module SRAM_IO_CTRL_LOGIC(
     reg     [CLK_WIDTH-1 : 0]   cntsclk;
     reg                         csi_split_clk, reg_clk_stop, reg_clk_chg;
 
-    input   [31 : 0]            avs_sram_addr_writedata;// SRAM address value
-    input                       avs_sram_addr_write;
+    input   [31 : 0]            avs_sram_addr_wrt_writedata;// SRAM address value
+    input                       avs_sram_addr_wrt_write;
 
-    input   [31 : 0]            avs_sram_data_writedata;// Instruction data value
-    input                       avs_sram_data_write;
+    input   [31 : 0]            avs_sram_data_wrt_writedata;// Instruction data value
+    input                       avs_sram_data_wrt_write;
     input   [31 : 0]            avs_adc_writedata;      // ADC data from analog
     input                       avs_adc_write;
     
     //// Internal Output Connections ////
-    output  [31 : 0]            avs_sram_addr_readdata; // Instruction addr value
-    output  [31 : 0]            avs_sram_data_readdata; // Instruction data value
+    output  [31 : 0]            avs_sram_addr_rd_readdata; // Instruction addr value
+    output  [31 : 0]            avs_sram_data_rd_readdata; // Instruction data value
     output	[31 : 0]			avs_scan_chain_readdata;// Scan chain data value
 	
     //// External I/O Connections
@@ -189,8 +189,8 @@ module SRAM_IO_CTRL_LOGIC(
     assign  avs_cpustat_readdata[IDX_SCPU_NXT_END]  = coe_ctrl_nxt_end_export;
     assign  avs_cpustat_readdata[IDX_SCPU_NXT_CONT] = coe_ctrl_nxt_cont_export;
     assign  avs_cpustat_readdata[IDX_SCPU_APP_START]= coe_app_start_export;
-    assign  avs_sram_addr_readdata = {{(32-MEMORY_ADDR_WIDTH){1'b0}}, reg_sram_all[REG_BITS_WIDTH-1:MEMORY_DATA_WIDTH]};
-    assign  avs_sram_data_readdata = {{(32-MEMORY_DATA_WIDTH){1'b0}}, reg_sram_all[MEMORY_DATA_WIDTH-1:0]};
+    assign  avs_sram_addr_rd_readdata = {{(32-MEMORY_ADDR_WIDTH){1'b0}}, reg_sram_all[REG_BITS_WIDTH-1:MEMORY_DATA_WIDTH]};
+    assign  avs_sram_data_rd_readdata = {{(32-MEMORY_DATA_WIDTH){1'b0}}, reg_sram_all[MEMORY_DATA_WIDTH-1:0]};
     
     assign  coe_cpu_bgn_export   = reg_cpu_bgn_dly;//reg_cpu_bgn
     assign  coe_ctrl_bgn_export  = reg_ctrl_bgn_dly;//reg_ctrl_bgn
@@ -386,17 +386,17 @@ module SRAM_IO_CTRL_LOGIC(
                 reg_app_done_keep <= avs_cpuctrl_writedata[IDX_SCPU_APP_DONE];
             end
                 
-            if (avs_sram_addr_write)
-                reg_sram_addr <= avs_sram_addr_writedata[CT_WIDTH-1:0];
+            if (avs_sram_addr_wrt_write)
+                reg_sram_addr <= avs_sram_addr_wrt_writedata[CT_WIDTH-1:0];
                 
-            if (avs_sram_data_write)
-                reg_sram_data <= avs_sram_data_writedata[CT_WIDTH-1:0];
+            if (avs_sram_data_wrt_write)
+                reg_sram_data <= avs_sram_data_wrt_writedata[CT_WIDTH-1:0];
 
             if (avs_adc_write)
                 reg_adc_value <= avs_adc_writedata[ADC_DATA_WIDTH-1:0];
                 
             if (avs_cntsclk_write)
-                reg_cntsclk <= avs_cntsclk_writedata[CT_WIDTH-1:0];
+                reg_cntsclk <= avs_cntsclk_writedata[CLK_WIDTH-1:0];
         end
     end
     

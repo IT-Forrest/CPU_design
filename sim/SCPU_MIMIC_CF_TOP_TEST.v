@@ -206,18 +206,18 @@ module  SCPU_MIMIC_CF_TOP_TEST();
                 IDX_SCPU_APP_START = 3;
     
     reg     avs_cpuctrl_write;
-    reg     avs_sram_addr_write;
-    reg     avs_sram_data_write;
+    reg     avs_sram_addr_wrt_write;
+    reg     avs_sram_data_wrt_write;
     reg     avs_adc_write;
     
     reg     [31:0]  avs_cpuctrl_writedata;
     wire    [31:0]  avs_cpustat_readdata;
-    reg     [31:0]  avs_sram_addr_writedata;
-    reg     [31:0]  avs_sram_data_writedata;
+    reg     [31:0]  avs_sram_addr_wrt_writedata;
+    reg     [31:0]  avs_sram_data_wrt_writedata;
     reg     [31:0]  avs_adc_writedata;
     
-    wire    [31:0]  avs_sram_addr_readdata;
-    wire    [31:0]  avs_sram_data_readdata;
+    wire    [31:0]  avs_sram_addr_rd_readdata;
+    wire    [31:0]  avs_sram_data_rd_readdata;
    
     wire    [9:0]   coe_adc_value_export;
     wire            coe_app_done_export;
@@ -239,18 +239,18 @@ module  SCPU_MIMIC_CF_TOP_TEST();
         //// Status Word ////  
         .avs_cpustat_readdata   (avs_cpustat_readdata   ),
 
-        .avs_sram_addr_writedata(avs_sram_addr_writedata),    // SRAM address value
-        .avs_sram_addr_write    (avs_sram_addr_write    ),
+        .avs_sram_addr_wrt_writedata(avs_sram_addr_wrt_writedata),    // SRAM address value
+        .avs_sram_addr_wrt_write    (avs_sram_addr_wrt_write    ),
 
-        .avs_sram_data_writedata(avs_sram_data_writedata),    // Instruction data value
-        .avs_sram_data_write    (avs_sram_data_write    ),
+        .avs_sram_data_wrt_writedata(avs_sram_data_wrt_writedata),    // Instruction data value
+        .avs_sram_data_wrt_write    (avs_sram_data_wrt_write    ),
 
         .avs_adc_writedata      (avs_adc_writedata      ),      // ADC data from analog
         .avs_adc_write          (avs_adc_write          ),
 
         //// Internal Output Connections ////
-        .avs_sram_addr_readdata (avs_sram_addr_readdata ),     // Instruction addr value
-        .avs_sram_data_readdata (avs_sram_data_readdata ),     // Instruction data value
+        .avs_sram_addr_rd_readdata (avs_sram_addr_rd_readdata ),     // Instruction addr value
+        .avs_sram_data_rd_readdata (avs_sram_data_rd_readdata ),     // Instruction data value
 
         //// External I/O Connections (Output)
         .coe_ctrl_bgn_export    (coe_ctrl_bgn_export    ),
@@ -342,13 +342,13 @@ module  SCPU_MIMIC_CF_TOP_TEST();
         TEST_MUX = 3'b000;
         
         avs_cpuctrl_writedata   = 0;
-        avs_sram_addr_writedata = 0;
-        avs_sram_data_writedata = 0;
+        avs_sram_addr_wrt_writedata = 0;
+        avs_sram_data_wrt_writedata = 0;
         avs_adc_writedata = 0;
         
         avs_cpuctrl_write   = 1;
-        avs_sram_addr_write = 1;
-        avs_sram_data_write = 1;
+        avs_sram_addr_wrt_write = 1;
+        avs_sram_data_wrt_write = 1;
         avs_adc_write = 1;
         // Wait 100 ns for global RST_N to finish
         #(CLKPERIOD*10);//100;
@@ -369,8 +369,8 @@ module  SCPU_MIMIC_CF_TOP_TEST();
 
                 tmpi_adder = (i<<1)+k-1;
                 tmpi_all = {tmpi_adder, i_mem.I_RAM[tmpi_adder]};
-                avs_sram_addr_writedata = tmpi_adder;
-                avs_sram_data_writedata = i_mem.I_RAM[tmpi_adder];
+                avs_sram_addr_wrt_writedata = tmpi_adder;
+                avs_sram_data_wrt_writedata = i_mem.I_RAM[tmpi_adder];
                 // C code triger FPGA gen Load signal
                 avs_cpuctrl_write = 0;
                 #CLKPERIOD avs_cpuctrl_write = 1;

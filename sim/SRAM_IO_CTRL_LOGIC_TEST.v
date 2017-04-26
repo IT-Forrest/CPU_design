@@ -78,16 +78,16 @@ module SRAM_IO_CTRL_LOGIC_TEST;
     parameter   IDX_SCPU_CTRL_RDY  = 0;
     
     reg     avs_cpuctrl_write;
-    reg     avs_sram_addr_write;
-    reg     avs_sram_data_write;
+    reg     avs_sram_addr_wrt_write;
+    reg     avs_sram_data_wrt_write;
     
     reg     [31:0]  avs_cpuctrl_writedata;
     wire    [31:0]  avs_cpustat_readdata;
-    reg     [31:0]  avs_sram_addr_writedata;
-    reg     [31:0]  avs_sram_data_writedata;
+    reg     [31:0]  avs_sram_addr_wrt_writedata;
+    reg     [31:0]  avs_sram_data_wrt_writedata;
     
-    wire    [31:0]  avs_sram_addr_readdata;
-    wire    [31:0]  avs_sram_data_readdata;
+    wire    [31:0]  avs_sram_addr_rd_readdata;
+    wire    [31:0]  avs_sram_data_rd_readdata;
 
     assign  RDY = avs_cpustat_readdata[IDX_SCPU_CTRL_RDY];
     
@@ -103,18 +103,18 @@ module SRAM_IO_CTRL_LOGIC_TEST;
         //// Status Word ////  
         .avs_cpustat_readdata   (avs_cpustat_readdata   ),
 
-        .avs_sram_addr_writedata(avs_sram_addr_writedata),    // SRAM address value
-        .avs_sram_addr_write    (avs_sram_addr_write    ),
+        .avs_sram_addr_wrt_writedata(avs_sram_addr_wrt_writedata),    // SRAM address value
+        .avs_sram_addr_wrt_write    (avs_sram_addr_wrt_write    ),
 
-        .avs_sram_data_writedata(avs_sram_data_writedata),    // Instruction data value
-        .avs_sram_data_write    (avs_sram_data_write    ),
+        .avs_sram_data_wrt_writedata(avs_sram_data_wrt_writedata),    // Instruction data value
+        .avs_sram_data_wrt_write    (avs_sram_data_wrt_write    ),
 
         // .avs_adc_writedata      (avs_adc_writedata      ),          // ADC data from analog
         // .avs_adc_write          (avs_adc_write          ),
 
         //// Internal Output Connections ////
-        .avs_sram_addr_readdata (avs_sram_addr_readdata ),     // Instruction addr value
-        .avs_sram_data_readdata (avs_sram_data_readdata ),     // Instruction data value
+        .avs_sram_addr_rd_readdata (avs_sram_addr_rd_readdata ),     // Instruction addr value
+        .avs_sram_data_rd_readdata (avs_sram_data_rd_readdata ),     // Instruction data value
 
         //// External I/O Connections (Output)
         .coe_ctrl_bgn_export    (coe_ctrl_bgn_export    ),
@@ -169,12 +169,12 @@ module SRAM_IO_CTRL_LOGIC_TEST;
         CTRL_MODE = 2'b00;
         
         avs_cpuctrl_writedata   = 0;
-        avs_sram_addr_writedata = 0;
-        avs_sram_data_writedata = 0;
+        avs_sram_addr_wrt_writedata = 0;
+        avs_sram_data_wrt_writedata = 0;
         
         avs_cpuctrl_write   = 1;
-        avs_sram_addr_write = 1;
-        avs_sram_data_write = 1;
+        avs_sram_addr_wrt_write = 1;
+        avs_sram_data_wrt_write = 1;
         // Wait 100 ns for global rst_n to finish
         #100;
         
@@ -259,8 +259,8 @@ module SRAM_IO_CTRL_LOGIC_TEST;
                 
                 tmpi_adder = (i<<1)+k-1;
                 tmpi_all = {tmpi_adder, i_mem.I_RAM[tmpi_adder]};
-                avs_sram_addr_writedata = tmpi_adder;
-                avs_sram_data_writedata = i_mem.I_RAM[tmpi_adder];
+                avs_sram_addr_wrt_writedata = tmpi_adder;
+                avs_sram_data_wrt_writedata = i_mem.I_RAM[tmpi_adder];
                 // C code triger FPGA gen Load signal
                 avs_cpuctrl_write = 0;
                 #10 avs_cpuctrl_write = 1;
@@ -362,8 +362,8 @@ module SRAM_IO_CTRL_LOGIC_TEST;
                 
                 tmpi_adder = (i<<1)+k-1;
                 tmpi_all = {tmpi_adder, {MEMORY_DATA_WIDTH{1'b0}}};//i_mem.I_RAM[tmpi_adder]
-                avs_sram_addr_writedata = tmpi_adder;
-                avs_sram_data_writedata = {MEMORY_DATA_WIDTH{1'b0}};
+                avs_sram_addr_wrt_writedata = tmpi_adder;
+                avs_sram_data_wrt_writedata = {MEMORY_DATA_WIDTH{1'b0}};
                 // C code triger FPGA gen Load signal
                 avs_cpuctrl_write = 0;
                 #10 avs_cpuctrl_write = 1;
@@ -456,8 +456,8 @@ module SRAM_IO_CTRL_LOGIC_TEST;
                 
                 tmpi_adder = {MEMORY_ADDR_WIDTH{1'b0}};
                 tmpi_all = {tmpi_adder, {MEMORY_DATA_WIDTH{1'b0}}};//i_mem.I_RAM[tmpi_adder]
-                avs_sram_addr_writedata = tmpi_adder;
-                avs_sram_data_writedata = {MEMORY_DATA_WIDTH{1'b0}};
+                avs_sram_addr_wrt_writedata = tmpi_adder;
+                avs_sram_data_wrt_writedata = {MEMORY_DATA_WIDTH{1'b0}};
                 // C code triger FPGA gen Load signal
                 avs_cpuctrl_write = 0;
                 #10 avs_cpuctrl_write = 1;
@@ -497,11 +497,11 @@ module SRAM_IO_CTRL_LOGIC_TEST;
                 end
                 end
                 
-                $write("%8b ", avs_sram_data_readdata[MEMORY_DATA_WIDTH-1:0]);
+                $write("%8b ", avs_sram_data_rd_readdata[MEMORY_DATA_WIDTH-1:0]);
                 if (k == 1)
-                    tmpi_datain[MEMORY_DATA_WIDTH-1:0] = avs_sram_data_readdata[MEMORY_DATA_WIDTH-1:0];
+                    tmpi_datain[MEMORY_DATA_WIDTH-1:0] = avs_sram_data_rd_readdata[MEMORY_DATA_WIDTH-1:0];
                 else if (k == 2)
-                    tmpi_datain[2*MEMORY_DATA_WIDTH-1:MEMORY_DATA_WIDTH] = avs_sram_data_readdata[MEMORY_DATA_WIDTH-1:0];
+                    tmpi_datain[2*MEMORY_DATA_WIDTH-1:MEMORY_DATA_WIDTH] = avs_sram_data_rd_readdata[MEMORY_DATA_WIDTH-1:0];
             end
         
             if (tmpi_datain != {i_mem.I_RAM[(i<<1)+1],i_mem.I_RAM[i<<1]}) begin
