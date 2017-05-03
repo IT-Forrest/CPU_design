@@ -382,8 +382,8 @@ module  I_MEMORY_CF_TASK_8BIT(
         
         //System finish
         tmpi_datain = {`HALT, 11'b000_0000_0000};
-        mem_out[ i] = tmpi_datain[7:0];  i = 134 + DEFAULT_PC_ADDR*2;
-        mem_out[ i] = tmpi_datain[15:8]; i = 135 + DEFAULT_PC_ADDR*2;
+        mem_out[ i] = tmpi_datain[7:0];  i = 133 + DEFAULT_PC_ADDR*2;
+        mem_out[ i] = tmpi_datain[15:8]; i = 134 + DEFAULT_PC_ADDR*2;
         
         // tmpi_datain = {`CMP, 4'b0000, `gr2, 1'b0, `gr6};
         // mem_out[ i] = tmpi_datain[7:0];  i = 79 + DEFAULT_PC_ADDR*2;

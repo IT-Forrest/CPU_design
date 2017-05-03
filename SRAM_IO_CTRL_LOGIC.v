@@ -113,7 +113,8 @@ module SRAM_IO_CTRL_LOGIC(
     parameter   IDX_SCPU_NXT_END   = 1;     // SCPU process finish
     parameter   IDX_SCPU_NXT_CONT  = 2;     // SCPU Instructions run over
     parameter   IDX_SCPU_APP_START = 3;     // External APP's start signal
-
+    parameter   IDX_SCPU_CTRL_SO   = 4;     // Serial output signal from chip
+    
     input   [31 : 0]            avs_cntsclk_writedata;// freq divider value
     input                       avs_cntsclk_write;
     reg     [CLK_WIDTH-1 : 0]   reg_cntsclk;
@@ -189,6 +190,7 @@ module SRAM_IO_CTRL_LOGIC(
     assign  avs_cpustat_readdata[IDX_SCPU_NXT_END]  = coe_ctrl_nxt_end_export;
     assign  avs_cpustat_readdata[IDX_SCPU_NXT_CONT] = coe_ctrl_nxt_cont_export;
     assign  avs_cpustat_readdata[IDX_SCPU_APP_START]= coe_app_start_export;
+    assign  avs_cpustat_readdata[IDX_SCPU_CTRL_SO]  = coe_ctrl_so_export;
     assign  avs_sram_addr_rd_readdata = {{(32-MEMORY_ADDR_WIDTH){1'b0}}, reg_sram_all[REG_BITS_WIDTH-1:MEMORY_DATA_WIDTH]};
     assign  avs_sram_data_rd_readdata = {{(32-MEMORY_DATA_WIDTH){1'b0}}, reg_sram_all[MEMORY_DATA_WIDTH-1:0]};
     
