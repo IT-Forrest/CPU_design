@@ -254,15 +254,18 @@ module SRAM_IO_CTRL_LOGIC(
     end */
     
     //************* CEN should not active at posedge *************//
-    always @(negedge csi_clk)
+    always @(negedge coe_clk_export)//csi_clk
     begin
         if (~rsi_reset_n)
             reg_cpu_bgn_dly <= 1'b0;
+        else if ((reg_cpu_bgn == 2'b01) &
+            (reg_cpu_bgn_dly == 1'b0))
+            reg_cpu_bgn_dly <= 1'b1;
         else
-            reg_cpu_bgn_dly <= reg_cpu_bgn[0];
+            reg_cpu_bgn_dly <= 1'b0;
     end
     
-    always @(negedge csi_clk)
+    always @(negedge coe_clk_export)//csi_clk
     begin
         if (~rsi_reset_n)
             reg_ctrl_bgn_dly <= 1'b0;
@@ -270,50 +273,51 @@ module SRAM_IO_CTRL_LOGIC(
             reg_ctrl_bgn_dly <= reg_ctrl_bgn;
     end
     
-    always @(negedge csi_clk)
+    always @(negedge coe_clk_export)//csi_clk
     begin
         if (~rsi_reset_n)
             reg_load_dly <= 1'b0;
+        else if ((reg_LOAD == 2'b01) & 
+            (reg_load_dly == 1'b0))
+            reg_load_dly <= 1'b1;//reg_LOAD[0];
         else
-            reg_load_dly <= reg_LOAD[0];
+            reg_load_dly <= 1'b0;
     end
     
     //************* make IDX_SCPU_CPU_BGN only works for one cycle *************//
     always @(posedge csi_clk)
     begin
-        if ((~rsi_reset_n) | (~avs_cpuctrl_write))
+        if (~rsi_reset_n)
         begin
             reg_cpu_bgn <= 2'b00;
-        end else if (avs_cpuctrl_write &
-                    avs_cpuctrl_writedata[IDX_SCPU_CPU_BGN] &
-                    (reg_cpu_bgn == 2'b00))
+        end else if (avs_cpuctrl_write)
         begin
-            reg_cpu_bgn <= 2'b01;
-        end else
-        begin
-            reg_cpu_bgn <= 2'b10;
+            reg_cpu_bgn <= {1'b0, avs_cpuctrl_writedata[IDX_SCPU_CPU_BGN]};
         end
+        // else
+        // begin
+            // reg_cpu_bgn <= 2'b10;
+        // end
     end
     
     //************* make IDX_SCPU_CTRL_LOAD only works for one cycle *************//
     always @(posedge csi_clk)
     begin
-        if ((~rsi_reset_n) | (~avs_cpuctrl_write))
+        if (~rsi_reset_n)
         begin
             reg_LOAD <= 2'b00;
-        end else if (avs_cpuctrl_write &
-                    avs_cpuctrl_writedata[IDX_SCPU_CTRL_LOAD] &
-                    (reg_LOAD == 2'b00))
-        begin
-            reg_LOAD <= 2'b01;//is_LOAD = reg_LOAD[0];
-        end else 
-        begin
-            reg_LOAD <= 2'b10;
+        end else if (avs_cpuctrl_write)
+        begin//is_LOAD = reg_LOAD[0];
+            reg_LOAD <= {1'b0, avs_cpuctrl_writedata[IDX_SCPU_CTRL_LOAD]};
         end
+        // else 
+        // begin
+            // reg_LOAD <= 2'b10;
+        // end
     end
     
     /************** Send Serial data to SRAM_IO_CTRL  ***********/
-    always @(negedge csi_clk)
+    always @(negedge coe_clk_export)//csi_clk
     begin
         if (cnt_bit_load)
             is_shift <= 1'b1;
@@ -321,7 +325,7 @@ module SRAM_IO_CTRL_LOGIC(
             is_shift <= 1'b0;
     end
     
-    always @(negedge csi_clk)
+    always @(negedge coe_clk_export)//csi_clk
     begin
         if (~rsi_reset_n)
             reg_sram_all <= {REG_BITS_WIDTH{1'b0}};
@@ -337,7 +341,7 @@ module SRAM_IO_CTRL_LOGIC(
             reg_sram_all <= {CTRL_SO, reg_sram_all[REG_BITS_WIDTH-1:1]};
     end
     
-    always @(negedge csi_clk)
+    always @(negedge coe_clk_export)//csi_clk
     begin
         if (~rsi_reset_n)
             cnt_bit_load <= 0;
@@ -402,12 +406,12 @@ module SRAM_IO_CTRL_LOGIC(
         end
     end
     
-    always @(negedge csi_clk)
+    always @(negedge coe_clk_export)//csi_clk
     begin
         if (~rsi_reset_n)
             reg_app_done_dly <= 1'b0;
         else
-            reg_app_done_dly <= reg_APP_DONE[0];
+            reg_app_done_dly <= reg_app_done_keep;//reg_APP_DONE[0];
     end
     
     //************* make IDX_SCPU_APP_DONE only works for one cycle *************//
