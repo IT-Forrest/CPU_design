@@ -40,6 +40,10 @@ add wave -noupdate /SYC_PC_MEM_LOOP_8BIT_TEST/fpga/is_LOAD
 add wave -noupdate /SYC_PC_MEM_LOOP_8BIT_TEST/fpga/is_load2_ctrl
 add wave -noupdate /SYC_PC_MEM_LOOP_8BIT_TEST/fpga/is_rfrom_ctrl
 add wave -noupdate /SYC_PC_MEM_LOOP_8BIT_TEST/fpga/reg_cpu_bgn
+add wave -noupdate /SYC_PC_MEM_LOOP_8BIT_TEST/fpga/csi_split_clk
+add wave -noupdate /SYC_PC_MEM_LOOP_8BIT_TEST/fpga/coe_clk_export
+add wave -noupdate /SYC_PC_MEM_LOOP_8BIT_TEST/fpga/cntsclk
+add wave -noupdate /SYC_PC_MEM_LOOP_8BIT_TEST/fpga/reg_cpu_bgn_dly
 add wave -noupdate -divider uut_cpu
 add wave -noupdate {/SYC_PC_MEM_LOOP_8BIT_TEST/scpu_sram_alu/scpu_ctrl_spi/uut/nxt[1]}
 add wave -noupdate {/SYC_PC_MEM_LOOP_8BIT_TEST/scpu_sram_alu/scpu_ctrl_spi/uut/nxt[0]}
@@ -48,8 +52,8 @@ add wave -noupdate /SYC_PC_MEM_LOOP_8BIT_TEST/scpu_sram_alu/scpu_ctrl_spi/uut/cl
 add wave -noupdate /SYC_PC_MEM_LOOP_8BIT_TEST/scpu_sram_alu/scpu_ctrl_spi/uut/state
 add wave -noupdate /SYC_PC_MEM_LOOP_8BIT_TEST/scpu_sram_alu/scpu_ctrl_spi/ALU_01/FOUT
 TreeUpdate [SetDefaultTree]
-WaveRestoreCursors {{Cursor 1} {31047212 ps} 0} {{Cursor 2} {1090221151 ps} 0}
-quietly wave cursor active 1
+WaveRestoreCursors {{Cursor 1} {10000 ps} 0} {{Cursor 2} {272450000 ps} 0}
+quietly wave cursor active 2
 configure wave -namecolwidth 250
 configure wave -valuecolwidth 102
 configure wave -justifyvalue left
@@ -64,4 +68,4 @@ configure wave -griddelta 40
 configure wave -timeline 0
 configure wave -timelineunits ps
 update
-WaveRestoreZoom {29083473 ps} {33514473 ps}
+WaveRestoreZoom {272005103 ps} {272894897 ps}

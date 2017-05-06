@@ -34,6 +34,8 @@ module  SYS_PC_PSEUDO_SPI_INTF_SCAN_TEST();
 
     parameter   GENERAL_REG_WIDTH   = 16;
     parameter   DEFAULT_PC_ADDR     = 16;
+    parameter   CLK_PERIOD          = 20;
+    
     reg     [MULTIPLICAND_WIDTH-1:0]    multiplicand;
     reg     [MULTIPLIER_WIDTH-1:0]      multiplier;
 
@@ -255,7 +257,7 @@ module  SYS_PC_PSEUDO_SPI_INTF_SCAN_TEST();
         avs_sram_addr_wrt_write = 1;
         avs_sram_data_wrt_write = 1;
         // Wait 100 ns for global RST_N to finish
-        #100;
+        #(CLK_PERIOD*10);
         
         /* (0) Add stimulus here: Using a pseudo memory to load instruction*/ 
         i= DEFAULT_PC_ADDR*2;
@@ -361,10 +363,10 @@ module  SYS_PC_PSEUDO_SPI_INTF_SCAN_TEST();
         // i_mem.D_RAM[1] = 16'h3C00;
         // i_mem.D_RAM[2] = 16'h0000;
         
-        #10 RST_N = 0; rsi_reset_n = 0; CTRL_BGN = 1;
-        #10 RST_N = 1; rsi_reset_n = 1;
+        #(CLK_PERIOD) RST_N = 0; rsi_reset_n = 0; CTRL_BGN = 1;
+        #(CLK_PERIOD) RST_N = 1; rsi_reset_n = 1;
         avs_cpuctrl_write = 0;
-        #10 avs_cpuctrl_write = 1;
+        #(CLK_PERIOD) avs_cpuctrl_write = 1;
         avs_cpuctrl_writedata[IDX_SCPU_RST_N] = 1'b1;
         
         /* (1) Serially Input the address & Instruction to CTRL and then to SRAM */
@@ -372,9 +374,9 @@ module  SYS_PC_PSEUDO_SPI_INTF_SCAN_TEST();
             for (k=2; k>=1; k=k-1) begin
                 /** (a) load data to SRAM_IO_CTRL from PC **/
                 // C code modify control word
-                #10 CTRL_BGN = 1;
+                #(CLK_PERIOD) CTRL_BGN = 1;
                 avs_cpuctrl_writedata[IDX_SCPU_CTRL_BGN] = 1'b1;
-                #10 CTRL_MODE = 2'b00;
+                #(CLK_PERIOD) CTRL_MODE = 2'b00;
                 avs_cpuctrl_writedata[IDX_SCPU_CTRL_MOD1] = 1'b0;
                 avs_cpuctrl_writedata[IDX_SCPU_CTRL_MOD0] = 1'b0;
 
@@ -384,7 +386,7 @@ module  SYS_PC_PSEUDO_SPI_INTF_SCAN_TEST();
                 avs_sram_data_wrt_writedata = i_mem.I_RAM[tmpi_adder];
                 // C code triger FPGA gen Load signal
                 avs_cpuctrl_write = 0;
-                #10 avs_cpuctrl_write = 1;
+                #(CLK_PERIOD) avs_cpuctrl_write = 1;
                 avs_cpuctrl_writedata[IDX_SCPU_CTRL_LOAD] = 1'b1;
                 
                 // begin
@@ -399,7 +401,7 @@ module  SYS_PC_PSEUDO_SPI_INTF_SCAN_TEST();
                 //polling_wait(CTRL_RDY);
                 begin: ctrl_module_load_ready
                 forever begin
-                    #10;
+                    #(CLK_PERIOD);
                     if (avs_cpustat_ctrl_rdy) begin
                         disable ctrl_module_load_ready;
                     end
@@ -407,15 +409,15 @@ module  SYS_PC_PSEUDO_SPI_INTF_SCAN_TEST();
                 end
                 
                 // C code modify control word
-                #10 CTRL_BGN = 0;
+                #(CLK_PERIOD) CTRL_BGN = 0;
                 avs_cpuctrl_writedata[IDX_SCPU_CTRL_BGN] = 0;
-                #10 LOAD_N = 1;//this FPGA signal is related to CTRL_BGN
+                #(CLK_PERIOD) LOAD_N = 1;//this FPGA signal is related to CTRL_BGN
                 avs_cpuctrl_write = 0;
-                #10 avs_cpuctrl_write = 1;
+                #(CLK_PERIOD) avs_cpuctrl_write = 1;
                 avs_cpuctrl_writedata[IDX_SCPU_CTRL_LOAD] = 0;
                 begin: ctrl_module_load_finish
                 forever begin
-                    #10;
+                    #(CLK_PERIOD);
                     if (!avs_cpustat_ctrl_rdy) begin
                         disable ctrl_module_load_finish;
                     end
@@ -424,14 +426,14 @@ module  SYS_PC_PSEUDO_SPI_INTF_SCAN_TEST();
                 
                 /** (b) notify SRAM_IO_CTRL to send data to SRAM **/
                 // C code modify control word
-                #10 CTRL_BGN = 1;
+                #(CLK_PERIOD) CTRL_BGN = 1;
                 avs_cpuctrl_writedata[IDX_SCPU_CTRL_BGN] = 1;
-                #10 CTRL_MODE = 2'b11;
+                #(CLK_PERIOD) CTRL_MODE = 2'b11;
                 avs_cpuctrl_writedata[IDX_SCPU_CTRL_MOD1] = 1;
                 avs_cpuctrl_writedata[IDX_SCPU_CTRL_MOD0] = 1;
                 // C code triger FPGA gen Load signal
                 avs_cpuctrl_write = 0;
-                #10 avs_cpuctrl_write = 1;
+                #(CLK_PERIOD) avs_cpuctrl_write = 1;
                 avs_cpuctrl_writedata[IDX_SCPU_CTRL_LOAD] = 1;
 
                 // begin
@@ -443,7 +445,7 @@ module  SYS_PC_PSEUDO_SPI_INTF_SCAN_TEST();
                 //polling_wait(CTRL_RDY);
                 begin: ctrl_module_write_ready
                 forever begin
-                    #10;
+                    #(CLK_PERIOD);
                     if (avs_cpustat_ctrl_rdy) begin
                         disable ctrl_module_write_ready;
                     end
@@ -451,15 +453,15 @@ module  SYS_PC_PSEUDO_SPI_INTF_SCAN_TEST();
                 end
                 
                 // C code modify control word
-                #10 CTRL_BGN = 0;
+                #(CLK_PERIOD) CTRL_BGN = 0;
                 avs_cpuctrl_writedata[IDX_SCPU_CTRL_BGN] = 0;
-                #10 LOAD_N = 1;//this FPGA signal is related to CTRL_BGN
+                #(CLK_PERIOD) LOAD_N = 1;//this FPGA signal is related to CTRL_BGN
                 avs_cpuctrl_write = 0;
-                #10 avs_cpuctrl_write = 1;
+                #(CLK_PERIOD) avs_cpuctrl_write = 1;
                 avs_cpuctrl_writedata[IDX_SCPU_CTRL_LOAD] = 0;
                 begin: ctrl_module_write_finish
                 forever begin
-                    #10;
+                    #(CLK_PERIOD);
                     if (!avs_cpustat_ctrl_rdy) begin
                         disable ctrl_module_write_finish;
                     end
@@ -472,83 +474,83 @@ module  SYS_PC_PSEUDO_SPI_INTF_SCAN_TEST();
             else
                 i = i + 1;
         end
-        #1500;
+        #(CLK_PERIOD*150);
         
         /* (2) Activate CPU to load from LIOA */
-        #10     CTRL_BGN = 0;
+        #(CLK_PERIOD)     CTRL_BGN = 0;
         avs_cpuctrl_write = 0;
-        #10 avs_cpuctrl_write = 1;
+        #(CLK_PERIOD) avs_cpuctrl_write = 1;
         avs_cpuctrl_writedata[IDX_SCPU_CTRL_BGN] = 1'b0;
-        #10     CPU_BGN = 1;
+        #(CLK_PERIOD)     CPU_BGN = 1;
         avs_cpuctrl_write = 0;
-        #10 avs_cpuctrl_write = 1;
+        #(CLK_PERIOD) avs_cpuctrl_write = 1;
         avs_cpuctrl_writedata[IDX_SCPU_CPU_BGN] = 1'b1;
-        #10     CPU_BGN = 0;
+        #(CLK_PERIOD)     CPU_BGN = 0;
         avs_cpuctrl_write = 0;
-        #10 avs_cpuctrl_write = 1;
+        #(CLK_PERIOD) avs_cpuctrl_write = 1;
         avs_cpuctrl_writedata[IDX_SCPU_CPU_BGN] = 1'b0;
         
-        #100;
+        #(CLK_PERIOD*10);
         multiplicand = 240;//7
         multiplier = 8'b01101011;//0.4140625 or 106 out of 256
         /// mimic PC inputs ADC data to Chip
         begin : cpu_adc_x_wait_loop
             forever begin
-                #10;
+                #(CLK_PERIOD);
                 if (avs_cpustat_app_start) begin
                     avs_adc_write = 0;
-                    #10 avs_adc_write = 1;
+                    #(CLK_PERIOD) avs_adc_write = 1;
                     avs_adc_writedata = multiplicand;//ADC_PI
                     disable cpu_adc_x_wait_loop;
                 end
             end
         end
-        #150;//wait to the next instruction and then done
+        #(CLK_PERIOD*15);//wait to the next instruction and then done
         avs_cpuctrl_write = 0;
-        #10 avs_cpuctrl_write = 1;
+        #(CLK_PERIOD) avs_cpuctrl_write = 1;
         avs_cpuctrl_writedata[IDX_SCPU_APP_DONE] = 1'b1;
-        #50;
+        #(CLK_PERIOD*5);
         /// mimic PC waiting for the end of the Chip
         begin : cpu_adc_x_end_loop
             forever begin
-                #10;
+                #(CLK_PERIOD);
                 if (!avs_cpustat_app_start) begin
                     disable cpu_adc_x_end_loop;
                 end
             end
         end
         avs_cpuctrl_write = 0;
-        #10 avs_cpuctrl_write = 1;
+        #(CLK_PERIOD) avs_cpuctrl_write = 1;
         avs_cpuctrl_writedata[IDX_SCPU_APP_DONE] = 1'b0;
 
         /// mimic PC inputs ADC data to Chip
         begin : cpu_adc_y_wait_loop
             forever begin
-                #10;
+                #(CLK_PERIOD);
                 if (avs_cpustat_app_start) begin
                     avs_adc_write = 0;
-                    #10 avs_adc_write = 1;
+                    #(CLK_PERIOD) avs_adc_write = 1;
                     avs_adc_writedata = multiplier;//ADC_PI
                     disable cpu_adc_y_wait_loop;
                 end
             end
         end
-        #150;//wait to the next instruction and then done
+        #(CLK_PERIOD*15);//wait to the next instruction and then done
         avs_cpuctrl_write = 0;
-        #10 avs_cpuctrl_write = 1;
+        #(CLK_PERIOD) avs_cpuctrl_write = 1;
         avs_cpuctrl_writedata[IDX_SCPU_APP_DONE] = 1'b1;
-        #50;
+        #(CLK_PERIOD*5);
         /// mimic PC waiting for the end of the Chip
         begin : cpu_adc_y_end_loop
             forever begin
-                #10;
+                #(CLK_PERIOD);
                 if (!avs_cpustat_app_start) begin
                     disable cpu_adc_y_end_loop;
                 end
             end
         end
         avs_cpuctrl_write = 0;
-        #10 avs_cpuctrl_write = 1;
+        #(CLK_PERIOD) avs_cpuctrl_write = 1;
         avs_cpuctrl_writedata[IDX_SCPU_APP_DONE] = 1'b0;
         // ADC_PI = multiplicand;
         // #50;
@@ -559,23 +561,23 @@ module  SYS_PC_PSEUDO_SPI_INTF_SCAN_TEST();
         //polling_wait(NXT[0]);
         begin : cpu_process_loop
             forever begin
-                #10;
+                #(CLK_PERIOD);
                 if (avs_cpustat_nxt_end) begin //CPU_NXT_dly[0]
                     disable cpu_process_loop;
                 end
             end
         end
         
-        #100;
+        #(CLK_PERIOD*10);
         /* (3) fetch multiplication result from scan chain */
         for (i = 2; i<3; i=i+1) begin
             $write("%4x\t", (i<<1));
             for (k=2; k>=1; k=k-1) begin
                 /** (a) load data to SRAM_IO_CTRL from PC **/
                 // C code modify control word
-                #10 CTRL_BGN = 1;
+                #(CLK_PERIOD) CTRL_BGN = 1;
                 avs_cpuctrl_writedata[IDX_SCPU_CTRL_BGN] = 1;
-                #10 CTRL_MODE = 2'b00;
+                #(CLK_PERIOD) CTRL_MODE = 2'b00;
                 avs_cpuctrl_writedata[IDX_SCPU_CTRL_MOD1] = 0;
                 avs_cpuctrl_writedata[IDX_SCPU_CTRL_MOD0] = 0;
 
@@ -585,7 +587,7 @@ module  SYS_PC_PSEUDO_SPI_INTF_SCAN_TEST();
                 avs_sram_data_wrt_writedata = {MEMORY_DATA_WIDTH{1'b1}};
                 // C code triger FPGA gen Load signal
                 avs_cpuctrl_write = 0;
-                #10 avs_cpuctrl_write = 1;
+                #(CLK_PERIOD) avs_cpuctrl_write = 1;
                 avs_cpuctrl_writedata[IDX_SCPU_CTRL_LOAD] = 1;
 
                 // begin
@@ -600,7 +602,7 @@ module  SYS_PC_PSEUDO_SPI_INTF_SCAN_TEST();
                 //polling_wait(CTRL_RDY);
                 begin: ctrl_module_load_ready_2nd
                 forever begin
-                    #10;
+                    #(CLK_PERIOD);
                     if (avs_cpustat_ctrl_rdy) begin
                         disable ctrl_module_load_ready_2nd;
                     end
@@ -608,15 +610,15 @@ module  SYS_PC_PSEUDO_SPI_INTF_SCAN_TEST();
                 end
         
                 // C code modify control word
-                #10 CTRL_BGN = 0;
+                #(CLK_PERIOD) CTRL_BGN = 0;
                 avs_cpuctrl_writedata[IDX_SCPU_CTRL_BGN] = 0;
-                #10 LOAD_N = 1;//this FPGA signal is related to CTRL_BGN
+                #(CLK_PERIOD) LOAD_N = 1;//this FPGA signal is related to CTRL_BGN
                 avs_cpuctrl_write = 0;
-                #10 avs_cpuctrl_write = 1;
+                #(CLK_PERIOD) avs_cpuctrl_write = 1;
                 avs_cpuctrl_writedata[IDX_SCPU_CTRL_LOAD] = 0;
                 begin: ctrl_module_load_finish_2nd
                 forever begin
-                    #10;
+                    #(CLK_PERIOD);
                     if (!avs_cpustat_ctrl_rdy) begin
                         disable ctrl_module_load_finish_2nd;
                     end
@@ -625,14 +627,14 @@ module  SYS_PC_PSEUDO_SPI_INTF_SCAN_TEST();
         
                 /** (b) notify SRAM_IO_CTRL to send data to SRAM **/
                 // C code modify control word
-                #10 CTRL_BGN = 1;
+                #(CLK_PERIOD) CTRL_BGN = 1;
                 avs_cpuctrl_writedata[IDX_SCPU_CTRL_BGN] = 1;
-                #10 CTRL_MODE = 2'b01;
+                #(CLK_PERIOD) CTRL_MODE = 2'b01;
                 avs_cpuctrl_writedata[IDX_SCPU_CTRL_MOD1] = 0;
                 avs_cpuctrl_writedata[IDX_SCPU_CTRL_MOD0] = 1;
                 // C code triger FPGA gen Load signal
                 avs_cpuctrl_write = 0;
-                #10 avs_cpuctrl_write = 1;
+                #(CLK_PERIOD) avs_cpuctrl_write = 1;
                 avs_cpuctrl_writedata[IDX_SCPU_CTRL_LOAD] = 1;
 
                 // begin
@@ -644,7 +646,7 @@ module  SYS_PC_PSEUDO_SPI_INTF_SCAN_TEST();
                 //polling_wait(CTRL_RDY);
                 begin: ctrl_module_read_ready
                 forever begin
-                    #10;
+                    #(CLK_PERIOD);
                     if (avs_cpustat_ctrl_rdy) begin
                         disable ctrl_module_read_ready;
                     end
@@ -652,15 +654,15 @@ module  SYS_PC_PSEUDO_SPI_INTF_SCAN_TEST();
                 end
 
                 // C code modify control word
-                #10 CTRL_BGN = 0;
+                #(CLK_PERIOD) CTRL_BGN = 0;
                 avs_cpuctrl_writedata[IDX_SCPU_CTRL_BGN] = 0;
-                #10 LOAD_N = 1;//this FPGA signal is related to CTRL_BGN
+                #(CLK_PERIOD) LOAD_N = 1;//this FPGA signal is related to CTRL_BGN
                 avs_cpuctrl_write = 0;
-                #10 avs_cpuctrl_write = 1;
+                #(CLK_PERIOD) avs_cpuctrl_write = 1;
                 avs_cpuctrl_writedata[IDX_SCPU_CTRL_LOAD] = 0;
                 begin: ctrl_module_read_finish
                 forever begin
-                    #10;
+                    #(CLK_PERIOD);
                     if (!avs_cpustat_ctrl_rdy) begin
                         disable ctrl_module_read_finish;
                     end
@@ -669,9 +671,9 @@ module  SYS_PC_PSEUDO_SPI_INTF_SCAN_TEST();
                 
                 /** (c) Export SRAM data from SRAM_IO_CTRL **/
                 // C code modify control word
-                #10 CTRL_BGN = 1;
+                #(CLK_PERIOD) CTRL_BGN = 1;
                 avs_cpuctrl_writedata[IDX_SCPU_CTRL_BGN] = 1;
-                #10 CTRL_MODE = 2'b00;
+                #(CLK_PERIOD) CTRL_MODE = 2'b00;
                 avs_cpuctrl_writedata[IDX_SCPU_CTRL_MOD1] = 1;
                 avs_cpuctrl_writedata[IDX_SCPU_CTRL_MOD0] = 0;
                 
@@ -681,7 +683,7 @@ module  SYS_PC_PSEUDO_SPI_INTF_SCAN_TEST();
                 avs_sram_data_wrt_writedata = {MEMORY_DATA_WIDTH{1'b0}};
                 // C code triger FPGA gen Load signal
                 avs_cpuctrl_write = 0;
-                #10 avs_cpuctrl_write = 1;
+                #(CLK_PERIOD) avs_cpuctrl_write = 1;
                 avs_cpuctrl_writedata[IDX_SCPU_CTRL_LOAD] = 1;
                 
                 // begin
@@ -695,7 +697,7 @@ module  SYS_PC_PSEUDO_SPI_INTF_SCAN_TEST();
                 // C code polling to do next
                 begin: ctrl_module_load_ready_3nd
                 forever begin
-                    #10;
+                    #(CLK_PERIOD);
                     if (avs_cpustat_ctrl_rdy) begin
                         disable ctrl_module_load_ready_3nd;
                     end
@@ -703,15 +705,15 @@ module  SYS_PC_PSEUDO_SPI_INTF_SCAN_TEST();
                 end
                 
                 // C code modify control word
-                #10 CTRL_BGN = 0;
+                #(CLK_PERIOD) CTRL_BGN = 0;
                 avs_cpuctrl_writedata[IDX_SCPU_CTRL_BGN] = 0;
-                #10 LOAD_N = 1;//this FPGA signal is related to CTRL_BGN
+                #(CLK_PERIOD) LOAD_N = 1;//this FPGA signal is related to CTRL_BGN
                 avs_cpuctrl_write = 0;
-                #10 avs_cpuctrl_write = 1;
+                #(CLK_PERIOD) avs_cpuctrl_write = 1;
                 avs_cpuctrl_writedata[IDX_SCPU_CTRL_LOAD] = 0;
                 begin: ctrl_module_load_finish_3nd
                 forever begin
-                    #10;
+                    #(CLK_PERIOD);
                     if (!avs_cpustat_ctrl_rdy) begin
                         disable ctrl_module_load_finish_3nd;
                     end
@@ -744,10 +746,10 @@ module  SYS_PC_PSEUDO_SPI_INTF_SCAN_TEST();
             $display("Test Failed!");
         else
             $display("Test Passed!");
-        #20 $stop();
+        #(CLK_PERIOD) $stop();
     end
     
-    always #5
+    always #(CLK_PERIOD/2)
         CLK = ~CLK;
    
 endmodule

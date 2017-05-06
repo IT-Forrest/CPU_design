@@ -1,7 +1,7 @@
 //+FHDR****************************************************************
 // ECE department, TAMU
 // --------------------------------------------------------------------
-// FILE NAME    : SYC_PC_MEM_LOOP_8BIT_TEST.v
+// FILE NAME    : SYS_PC_MEM_LOOP_8BIT_TEST.v
 // AUTHER       : Jiafan Wang
 // DATE         : 05/01/2017
 // VERSION      : 1.0
@@ -22,7 +22,7 @@
 `include    "../I_MEMORY_8bit.v"
 `include    "../SC_CELL_V3.v"
 
-module SYC_PC_MEM_LOOP_8BIT_TEST;
+module SYS_PC_MEM_LOOP_8BIT_TEST;
     parameter   MEMORY_DATA_WIDTH   = 8,
                 MEMORY_ADDR_WIDTH   = 10,
                 REG_BITS_WIDTH = MEMORY_ADDR_WIDTH + MEMORY_DATA_WIDTH;
@@ -245,6 +245,11 @@ module SYC_PC_MEM_LOOP_8BIT_TEST;
         avs_sram_data_wrt_write = 1;
         // Wait 100 ns for global RST_N to finish
         #(CLK_PERIOD*10);
+        avs_cpuctrl_write = 1;
+        avs_cpuctrl_writedata[IDX_SCPU_CLK_CHG] = 1'b1;
+        avs_cntsclk_write = 1;
+        avs_cntsclk_writedata = 9;//0: 1/2 freq; 1: 1/4 freq; 2: 1/6 freq; 3: 1/8 freq;
+        //4: 1/10 freq; 5: 1/12 freq; 6: 1/14 freq; 7: 1/16 freq; 8: 1/18 freq; 9: 1/20 freq;
         
         // Add stimulus here
         $display("pc  :               id_ir                :reg_A :reg_B :reg_C\
@@ -456,7 +461,8 @@ module SYC_PC_MEM_LOOP_8BIT_TEST;
         avs_cpuctrl_write = 0;
         #(CLK_PERIOD) avs_cpuctrl_write = 1;
         avs_cpuctrl_writedata[IDX_SCPU_CPU_BGN] = 1'b1;
-        #(CLK_PERIOD)     CPU_BGN = 0;
+        /// need to wait enough time and then turn off the signal
+        #(CLK_PERIOD*avs_cntsclk_writedata*2)     CPU_BGN = 0;
         avs_cpuctrl_write = 0;
         #(CLK_PERIOD) avs_cpuctrl_write = 1;
         avs_cpuctrl_writedata[IDX_SCPU_CPU_BGN] = 1'b0;

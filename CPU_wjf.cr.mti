@@ -2949,12 +2949,12 @@ Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
 -- Compiling module SRAM_IO_CTRL_LOGIC
 -- Compiling module I_MEMORY_8BIT
 -- Compiling module SC_CELL_V3
--- Compiling module SYC_PC_MEM_LOOP_8BIT_TEST
-** Warning: F:/05.Code_Battle/04. Verilog/CPU_design/sim/SYS_PC_MEM_LOOP_8BIT_TEST.v(250): (vlog-2643) Unterminated string literal continues onto next line.
+-- Compiling module SYS_PC_MEM_LOOP_8BIT_TEST
+** Warning: F:/05.Code_Battle/04. Verilog/CPU_design/sim/SYS_PC_MEM_LOOP_8BIT_TEST.v(255): (vlog-2643) Unterminated string literal continues onto next line.
 
 
 Top level modules:
-	SYC_PC_MEM_LOOP_8BIT_TEST
+	SYS_PC_MEM_LOOP_8BIT_TEST
 
 } {} {}} {F:/05. Code Battle/04. Verilog/CPU_design/sim/SHARE_SUPERALU_DIV_TEST.v} {1 {vlog -work work -stats=none {F:/05. Code Battle/04. Verilog/CPU_design/sim/SHARE_SUPERALU_DIV_TEST.v}
 Model Technology ModelSim ALTERA vlog 10.4d Compiler 2015.12 Dec 30 2015
@@ -16945,16 +16945,6 @@ Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
 Top level modules:
 	SRAM_IO_CTRL_TEST
 
-} {} {}} {F:/05. Code Battle/04. Verilog/CPU_design/sim/PSEUDO_SPI_INTF_RA1512_TEST.v} {1 {vlog -work work -stats=none {F:/05. Code Battle/04. Verilog/CPU_design/sim/PSEUDO_SPI_INTF_RA1512_TEST.v}
-Model Technology ModelSim ALTERA vlog 10.4d Compiler 2015.12 Dec 30 2015
--- Compiling module PSEUDO_SPT_INTF
--- Compiling module RA1SHD_IBM512X8
--- Compiling module I_MEMORY_8BIT
--- Compiling module PSEUDO_SPI_INTF_RA1512_TEST
-
-Top level modules:
-	PSEUDO_SPI_INTF_RA1512_TEST
-
 } {} {}} {F:/05.Code_Battle/04. Verilog/CPU_design/sim/SYS_PC_PSEUDO_SPI_INTF_SCAN_TEST.v} {1 {vlog -work work -stats=none {F:/05.Code_Battle/04. Verilog/CPU_design/sim/SYS_PC_PSEUDO_SPI_INTF_SCAN_TEST.v}
 Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
 -- Compiling module RA1SHD_IBM1024X8
@@ -16971,6 +16961,16 @@ Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
 
 Top level modules:
 	SYS_PC_PSEUDO_SPI_INTF_SCAN_TEST
+
+} {} {}} {F:/05. Code Battle/04. Verilog/CPU_design/sim/PSEUDO_SPI_INTF_RA1512_TEST.v} {1 {vlog -work work -stats=none {F:/05. Code Battle/04. Verilog/CPU_design/sim/PSEUDO_SPI_INTF_RA1512_TEST.v}
+Model Technology ModelSim ALTERA vlog 10.4d Compiler 2015.12 Dec 30 2015
+-- Compiling module PSEUDO_SPT_INTF
+-- Compiling module RA1SHD_IBM512X8
+-- Compiling module I_MEMORY_8BIT
+-- Compiling module PSEUDO_SPI_INTF_RA1512_TEST
+
+Top level modules:
+	PSEUDO_SPI_INTF_RA1512_TEST
 
 } {} {}} {F:/05.Code_Battle/04. Verilog/CPU_design/sim/PCPU_SINGLE_TEST.v} {1 {vlog -work work -stats=none {F:/05.Code_Battle/04. Verilog/CPU_design/sim/PCPU_SINGLE_TEST.v}
 Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
