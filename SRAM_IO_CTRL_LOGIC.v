@@ -161,10 +161,10 @@ module SRAM_IO_CTRL_LOGIC(
     input                       coe_anag_spi_so_export;
     
     // Registers and wires
-    reg         reg_ctrl_bgn, reg_ctrl_bgn_dly, reg_load_dly;
-    reg         reg_rst_n, reg_cpu_bgn_dly, reg_cpu_wait;
-    reg         [1:0]   reg_cpu_bgn;
-    reg         [1:0]   reg_LOAD;
+    reg         reg_ctrl_bgn, reg_ctrl_bgn_dly;
+    reg         [1:0]   reg_load_dly, reg_cpu_bgn_dly;
+    reg         reg_rst_n, reg_cpu_wait;
+    reg         reg_LOAD, reg_cpu_bgn;
     reg         [1:0]   reg_ctrl_mode;
     reg         [2:0]   reg_test_mux;
     reg         [CT_WIDTH-1:0]  reg_sram_addr;
@@ -181,7 +181,7 @@ module SRAM_IO_CTRL_LOGIC(
     wire    CTRL_SO;
     assign  CTRL_SO = coe_ctrl_so_export;
     wire    is_LOAD;
-    assign  is_LOAD = reg_load_dly;//reg_LOAD[0];
+    assign  is_LOAD = reg_load_dly[0];//reg_LOAD[0];
 
     wire    is_load2_ctrl = (reg_ctrl_mode == 2'b00);
     wire    is_rfrom_ctrl = (reg_ctrl_mode == 2'b10);
@@ -194,7 +194,7 @@ module SRAM_IO_CTRL_LOGIC(
     assign  avs_sram_addr_rd_readdata = {{(32-MEMORY_ADDR_WIDTH){1'b0}}, reg_sram_all[REG_BITS_WIDTH-1:MEMORY_DATA_WIDTH]};
     assign  avs_sram_data_rd_readdata = {{(32-MEMORY_DATA_WIDTH){1'b0}}, reg_sram_all[MEMORY_DATA_WIDTH-1:0]};
     
-    assign  coe_cpu_bgn_export   = reg_cpu_bgn_dly;//reg_cpu_bgn
+    assign  coe_cpu_bgn_export   = reg_cpu_bgn_dly[0];//reg_cpu_bgn
     assign  coe_ctrl_bgn_export  = reg_ctrl_bgn_dly;//reg_ctrl_bgn
     assign  coe_ctrl_load_export = is_LOAD;
     assign  coe_ctrl_si_export   = reg_sram_all[0];
@@ -256,13 +256,12 @@ module SRAM_IO_CTRL_LOGIC(
     //************* CEN should not active at posedge *************//
     always @(negedge coe_clk_export)//csi_clk
     begin
-        if (~rsi_reset_n)
-            reg_cpu_bgn_dly <= 1'b0;
-        else if ((reg_cpu_bgn == 2'b01) &
-            (reg_cpu_bgn_dly == 1'b0))
-            reg_cpu_bgn_dly <= 1'b1;
+        if ((~rsi_reset_n) | (~reg_cpu_bgn))
+            reg_cpu_bgn_dly <= 2'b00;
+        else if (reg_cpu_bgn & (reg_cpu_bgn_dly == 2'b00))
+            reg_cpu_bgn_dly <= 2'b01;
         else
-            reg_cpu_bgn_dly <= 1'b0;
+            reg_cpu_bgn_dly <= 2'b10;
     end
     
     always @(negedge coe_clk_export)//csi_clk
@@ -275,13 +274,12 @@ module SRAM_IO_CTRL_LOGIC(
     
     always @(negedge coe_clk_export)//csi_clk
     begin
-        if (~rsi_reset_n)
-            reg_load_dly <= 1'b0;
-        else if ((reg_LOAD == 2'b01) & 
-            (reg_load_dly == 1'b0))
-            reg_load_dly <= 1'b1;//reg_LOAD[0];
+        if ((~rsi_reset_n) | (~reg_LOAD))
+            reg_load_dly <= 2'b00;
+        else if (reg_LOAD & (reg_load_dly == 2'b00))
+            reg_load_dly <= 2'b01;
         else
-            reg_load_dly <= 1'b0;
+            reg_load_dly <= 2'b10;
     end
     
     //************* make IDX_SCPU_CPU_BGN only works for one cycle *************//
@@ -289,10 +287,10 @@ module SRAM_IO_CTRL_LOGIC(
     begin
         if (~rsi_reset_n)
         begin
-            reg_cpu_bgn <= 2'b00;
+            reg_cpu_bgn <= 1'b0;
         end else if (avs_cpuctrl_write)
         begin
-            reg_cpu_bgn <= {1'b0, avs_cpuctrl_writedata[IDX_SCPU_CPU_BGN]};
+            reg_cpu_bgn <= avs_cpuctrl_writedata[IDX_SCPU_CPU_BGN];
         end
         // else
         // begin
@@ -305,10 +303,10 @@ module SRAM_IO_CTRL_LOGIC(
     begin
         if (~rsi_reset_n)
         begin
-            reg_LOAD <= 2'b00;
+            reg_LOAD <= 1'b0;
         end else if (avs_cpuctrl_write)
-        begin//is_LOAD = reg_LOAD[0];
-            reg_LOAD <= {1'b0, avs_cpuctrl_writedata[IDX_SCPU_CTRL_LOAD]};
+        begin
+            reg_LOAD <= avs_cpuctrl_writedata[IDX_SCPU_CTRL_LOAD];
         end
         // else 
         // begin
@@ -350,7 +348,7 @@ module SRAM_IO_CTRL_LOGIC(
                 cnt_bit_load <= REG_BITS_WIDTH-1;
             else if (is_rfrom_ctrl)
                 // Due to clock delay, FPGA starts to read when is_LOAD
-                cnt_bit_load <= REG_BITS_WIDTH;
+                cnt_bit_load <= REG_BITS_WIDTH-1;
             else
                 cnt_bit_load <= 0;
         else if (cnt_bit_load)

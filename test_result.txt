@@ -1,0 +1,25 @@
+else if (is_rfrom_ctrl)
+    // Due to clock delay, FPGA starts to read when is_LOAD
+    cnt_bit_load <= REG_BITS_WIDTH;
+
+# 10ns
+# 0004	00000000 00001010 	<--- Sum_i=1+2+3+4 Correct!
+# Test Passed!
+
+# 20ns
+# 0004	10000000 00000101 	<--- Sum_i=1+2+3+4 Wrong!
+# Test Failed!
+
+
+
+
+else if (is_rfrom_ctrl)
+    // Due to clock delay, FPGA starts to read when is_LOAD
+    cnt_bit_load <= REG_BITS_WIDTH-1;
+# 10ns
+# 0004	00000000 00010100 	<--- Sum_i=1+2+3+4 Wrong!
+# Test Failed!
+
+# 20ns
+# 0004	00000000 00001010 	<--- Sum_i=1+2+3+4 Correct!
+# Test Passed!
