@@ -1,9 +1,9 @@
 //+FHDR****************************************************************
 // ECE department, TAMU
 // --------------------------------------------------------------------
-// FILE NAME    : SYS_PC_MEM_LOOP_8BIT_TEST.v
+// FILE NAME    : SYS_PC_CTRL_LOOP_INOUT_TEST.v
 // AUTHER       : Jiafan Wang
-// DATE         : 05/01/2017
+// DATE         : 05/07/2017
 // VERSION      : 1.0
 // PURPOSE      : the SCPU test with self-created SRAM (1024X8 SRAM)
 // --------------------------------------------------------------------
@@ -22,7 +22,7 @@
 `include    "../I_MEMORY_8bit.v"
 `include    "../SC_CELL_V3.v"
 
-module SYS_PC_MEM_LOOP_8BIT_TEST;
+module SYS_PC_CTRL_LOOP_INOUT_TEST;
     parameter   MEMORY_DATA_WIDTH   = 8,
                 MEMORY_ADDR_WIDTH   = 10,
                 REG_BITS_WIDTH = MEMORY_ADDR_WIDTH + MEMORY_DATA_WIDTH;
@@ -365,14 +365,6 @@ module SYS_PC_MEM_LOOP_8BIT_TEST;
                 #(CLK_PERIOD) avs_cpuctrl_write = 1;
                 avs_cpuctrl_writedata[IDX_SCPU_CTRL_LOAD] = 1'b1;
                 
-                // begin
-                    // FPGA send Load signal & data to CTRL
-                    // #10 LOAD_N = 0;
-                    // for (j = 0; j < REG_BITS_WIDTH; j=j+1) begin
-                        // #10 CTRL_SI = tmpi_all[j];
-                    // end
-                // end
-                
                 // C code polling to do next
                 //polling_wait(CTRL_RDY);
                 begin: ctrl_module_load_ready
@@ -412,11 +404,6 @@ module SYS_PC_MEM_LOOP_8BIT_TEST;
                 #(CLK_PERIOD) avs_cpuctrl_write = 1;
                 avs_cpuctrl_writedata[IDX_SCPU_CTRL_LOAD] = 1;
 
-                // begin
-                    // FPGA send Load signal & data to CTRL
-                    // #10 LOAD_N = 0;
-                // end
-
                 // C code polling to do next
                 //polling_wait(CTRL_RDY);
                 begin: ctrl_module_write_ready
@@ -452,36 +439,9 @@ module SYS_PC_MEM_LOOP_8BIT_TEST;
         end
         #(CLK_PERIOD*150);
         
-        /* (2) Activate CPU to load from LIOA */
-        #(CLK_PERIOD)     CTRL_BGN = 0;
-        avs_cpuctrl_write = 0;
-        #(CLK_PERIOD) avs_cpuctrl_write = 1;
-        avs_cpuctrl_writedata[IDX_SCPU_CTRL_BGN] = 1'b0;
-        #(CLK_PERIOD)     CPU_BGN = 1;
-        avs_cpuctrl_write = 0;
-        #(CLK_PERIOD) avs_cpuctrl_write = 1;
-        avs_cpuctrl_writedata[IDX_SCPU_CPU_BGN] = 1'b1;
-        /// need to wait enough time and then turn off the signal
-        #(CLK_PERIOD*avs_cntsclk_writedata*2);
-        // #(CLK_PERIOD*avs_cntsclk_writedata*2)     CPU_BGN = 0;
-        // avs_cpuctrl_write = 0;
-        // #(CLK_PERIOD) avs_cpuctrl_write = 1;
-        // avs_cpuctrl_writedata[IDX_SCPU_CPU_BGN] = 1'b0;
         
-        // C code polling to do next
-        //polling_wait(NXT[0]);
-        begin : cpu_process_loop
-            forever begin
-                #(CLK_PERIOD);
-                if (avs_cpustat_nxt_end) begin //CPU_NXT_dly[0]
-                    disable cpu_process_loop;
-                end
-            end
-        end
-        
-        #(CLK_PERIOD*10);
-        /* (3) fetch sum_1+2+3+4 from control path */
-        for (i = 2; i<3; i=i+1) begin
+        /* (2) Loop out the instructions from SRAM */
+        for (i = DEFAULT_PC_ADDR; i<DEFAULT_PC_ADDR+1; i=i+1) begin
             $write("%4x\t", (i<<1));
             for (k=2; k>=1; k=k-1) begin
                 /** (a) load data to SRAM_IO_CTRL from PC **/
@@ -501,14 +461,6 @@ module SYS_PC_MEM_LOOP_8BIT_TEST;
                 #(CLK_PERIOD) avs_cpuctrl_write = 1;
                 avs_cpuctrl_writedata[IDX_SCPU_CTRL_LOAD] = 1;
 
-                // begin
-                    // FPGA send Load signal & data to CTRL
-                    // #10 LOAD_N = 0;
-                    // for (j = 0; j < REG_BITS_WIDTH; j=j+1) begin
-                        // #10 CTRL_SI = tmpi_all[j];
-                    // end
-                // end
-        
                 // C code polling to do next
                 //polling_wait(CTRL_RDY);
                 begin: ctrl_module_load_ready_2nd
@@ -547,11 +499,6 @@ module SYS_PC_MEM_LOOP_8BIT_TEST;
                 avs_cpuctrl_write = 0;
                 #(CLK_PERIOD) avs_cpuctrl_write = 1;
                 avs_cpuctrl_writedata[IDX_SCPU_CTRL_LOAD] = 1;
-
-                // begin
-                    // FPGA send Load signal & data to CTRL
-                    // #10 LOAD_N = 0;
-                // end
 
                 // C code polling to do next
                 //polling_wait(CTRL_RDY);
@@ -597,14 +544,6 @@ module SYS_PC_MEM_LOOP_8BIT_TEST;
                 #(CLK_PERIOD) avs_cpuctrl_write = 1;
                 avs_cpuctrl_writedata[IDX_SCPU_CTRL_LOAD] = 1;
                 
-                // begin
-                    // FPGA send Load signal & data to CTRL
-                    // #10 LOAD_N = 0;
-                    // for (j = 0; j < REG_BITS_WIDTH; j=j+1) begin
-                        // #10 SI = tmpi_all[j];
-                    // end
-                // end
-
                 // C code polling to do next
                 begin: ctrl_module_load_ready_3nd
                 forever begin
@@ -638,18 +577,88 @@ module SYS_PC_MEM_LOOP_8BIT_TEST;
                     tmpi_datain[2*MEMORY_DATA_WIDTH-1:MEMORY_DATA_WIDTH] = avs_sram_data_rd_readdata[MEMORY_DATA_WIDTH-1:0];
             end
             
-            if (i == 2) begin
-                if (tmpi_datain == 16'd10)
-                    $write("\t<--- Sum_i=1+2+3+4 Correct!");
+            if (i == DEFAULT_PC_ADDR) begin
+                if (tmpi_datain == {`SET, `gr3, 4'b0000, 4'b0100})
+                    $write("\t<--- Instruction SET gr3=4 Correct!");
                 else begin
-                    $write("\t<--- Sum_i=1+2+3+4 Wrong!");
+                    $write("\t<--- Instruction SET gr3=4 Wrong!");
                     error_cnt = error_cnt + 1;
                 end
             end
             $display("");
         end
         
-        // (4) Judge Final Test Result
+        // (4) Loop IN/OUT Test start
+        for (i = DEFAULT_PC_ADDR; i<DEFAULT_PC_ADDR+1; i=i+1) begin
+            //$write("%4x\t", (i<<1));
+            for (k=2; k>=1; k=k-1) begin
+                /** (a) load data to SRAM_IO_CTRL from PC **/
+                // C code modify control word
+                #(CLK_PERIOD) CTRL_BGN = 1;
+                avs_cpuctrl_writedata[IDX_SCPU_CTRL_BGN] = 1;
+                #(CLK_PERIOD) CTRL_MODE = 2'b00;
+                avs_cpuctrl_writedata[IDX_SCPU_CTRL_MOD1] = 0;
+                avs_cpuctrl_writedata[IDX_SCPU_CTRL_MOD0] = 0;
+
+                tmpi_adder = 10'd240;//(i<<1)+k-1;
+                tmpi_all = {tmpi_adder, 8'd100};//{MEMORY_DATA_WIDTH{1'b0}}
+                avs_sram_addr_wrt_writedata = tmpi_adder;
+                avs_sram_data_wrt_writedata = 8'd100;//{MEMORY_DATA_WIDTH{1'b1}}
+                // C code triger FPGA gen Load signal
+                avs_cpuctrl_write = 0;
+                #(CLK_PERIOD) avs_cpuctrl_write = 1;
+                avs_cpuctrl_writedata[IDX_SCPU_CTRL_LOAD] = 1;
+
+                // C code polling to do next
+                //polling_wait(CTRL_RDY);
+                begin: ctrl_module_load_ready_3rd
+                forever begin
+                    #(CLK_PERIOD);
+                    if (avs_cpustat_ctrl_rdy) begin
+                        disable ctrl_module_load_ready_3rd;
+                    end
+                end
+                end
+        
+                // C code modify control word
+                #(CLK_PERIOD) CTRL_BGN = 0;
+                avs_cpuctrl_writedata[IDX_SCPU_CTRL_BGN] = 0;
+                #(CLK_PERIOD) LOAD_N = 1;//this FPGA signal is related to CTRL_BGN
+                avs_cpuctrl_write = 0;
+                #(CLK_PERIOD) avs_cpuctrl_write = 1;
+                avs_cpuctrl_writedata[IDX_SCPU_CTRL_LOAD] = 0;
+                begin: ctrl_module_load_finish_3rd
+                forever begin
+                    #(CLK_PERIOD);
+                    if (!avs_cpustat_ctrl_rdy) begin
+                        disable ctrl_module_load_finish_3rd;
+                    end
+                end
+                end
+        
+                $write("%10b ",avs_sram_addr_rd_readdata[MEMORY_ADDR_WIDTH-1:0]);
+                $write("%8b ", avs_sram_data_rd_readdata[MEMORY_DATA_WIDTH-1:0]);
+                $write("Loop k=%d\n", k);
+                if (k == 1) begin
+                    tmpi_datain[MEMORY_DATA_WIDTH-1:0] = avs_sram_data_rd_readdata[MEMORY_DATA_WIDTH-1:0];
+                end
+                else if (k == 2) begin
+                    tmpi_datain[2*MEMORY_DATA_WIDTH-1:MEMORY_DATA_WIDTH] = avs_sram_data_rd_readdata[MEMORY_DATA_WIDTH-1:0];
+                end
+            end
+            
+            if (i == DEFAULT_PC_ADDR) begin
+                if (tmpi_all == {avs_sram_addr_rd_readdata[MEMORY_ADDR_WIDTH-1:0], avs_sram_data_rd_readdata[MEMORY_DATA_WIDTH-1:0]})
+                    $write("\t<--- Loop in/out Test Correct!");
+                else begin
+                    $write("\t<--- Loop in/out Test Wrong!");
+                    error_cnt = error_cnt + 1;
+                end
+            end
+            $display("");
+        end
+        
+        // (5) Judge Final Test Result
         if (error_cnt) begin
             $display("Test Failed!");
         end
