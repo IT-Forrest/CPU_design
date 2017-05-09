@@ -105,6 +105,8 @@ module SRAM_IO_CTRL_LOGIC(
     parameter   IDX_SCPU_TEST_MUX2 = 10;    // SCPU TEST MUX signal2
     parameter   IDX_SCPU_CLK_STOP  = 11;    // SCPU STOP the clock signal
     parameter   IDX_SCPU_CLK_CHG   = 12;    // SCPU CHANGE the clock frequency
+    parameter   IDX_SCPU_CLK_DISCRT= 13;    // SCPU switch between continous/discrete timer
+    parameter   IDX_SCPU_CLK_1TIME = 14;    // SCPU give 1 clk cycle during IDX_SCPU_CLK_DISCRT
     
     //// Status Word ////
     output  [31 : 0]            avs_cpustat_readdata;
@@ -162,8 +164,8 @@ module SRAM_IO_CTRL_LOGIC(
     
     // Registers and wires
     reg         reg_ctrl_bgn, reg_ctrl_bgn_dly;
-    reg         [1:0]   reg_load_dly, reg_cpu_bgn_dly;
-    reg         reg_rst_n, reg_cpu_wait;
+    reg         [1:0]   reg_load_dly, reg_cpu_bgn_dly, reg_clk_1time_dly;
+    reg         reg_rst_n, reg_cpu_wait, reg_clk_discrt;
     reg         reg_LOAD, reg_cpu_bgn;
     reg         [1:0]   reg_ctrl_mode;
     reg         [2:0]   reg_test_mux;
@@ -182,6 +184,10 @@ module SRAM_IO_CTRL_LOGIC(
     assign  CTRL_SO = coe_ctrl_so_export;
     wire    is_LOAD;
     assign  is_LOAD = reg_load_dly[0];//reg_LOAD[0];
+    wire    is_1time_init;
+    assign  is_1time_init = reg_clk_1time_dly[0];
+    wire    is_start_cnt;
+    assign  is_start_cnt = reg_clk_1time_dly[1];
 
     wire    is_load2_ctrl = (reg_ctrl_mode == 2'b00);
     wire    is_rfrom_ctrl = (reg_ctrl_mode == 2'b10);
@@ -373,6 +379,8 @@ module SRAM_IO_CTRL_LOGIC(
             reg_sram_data <= {CT_WIDTH{1'b0}};
             reg_adc_value <= {ADC_DATA_WIDTH{1'b0}};
             reg_cntsclk <= DEFAULT_CNTSCLK;
+            
+            reg_clk_discrt <= 1'b0;
         end else
         begin
             if (avs_cpuctrl_write)// Set registers if any value changes
@@ -388,6 +396,7 @@ module SRAM_IO_CTRL_LOGIC(
                                 avs_cpuctrl_writedata[IDX_SCPU_TEST_MUX1],
                                 avs_cpuctrl_writedata[IDX_SCPU_TEST_MUX0]};
                 reg_app_done_keep <= avs_cpuctrl_writedata[IDX_SCPU_APP_DONE];
+                reg_clk_discrt <= avs_cpuctrl_writedata[IDX_SCPU_CLK_DISCRT];
             end
                 
             if (avs_sram_addr_wrt_write)
@@ -429,6 +438,24 @@ module SRAM_IO_CTRL_LOGIC(
         end
     end
     
+    //************* make IDX_SCPU_CLK_1TIME only works for one cycle *************//
+    always @(posedge csi_clk)
+    begin
+        if ((~rsi_reset_n) | (~avs_cpuctrl_write))
+        begin
+            reg_clk_1time_dly <= 2'b00;
+        end else if (avs_cpuctrl_write &
+                    avs_cpuctrl_writedata[IDX_SCPU_CLK_1TIME] &
+                    (reg_clk_1time_dly == 2'b00))
+        begin
+            reg_clk_1time_dly <= 2'b01;
+        end else 
+        begin
+            //reg_clk_1time_dly[1]shows IDX_SCPU_CLK_1TIME has been set
+            reg_clk_1time_dly <= 2'b10;
+        end
+    end
+    
     //************* make splited clock works *************//
     always @(posedge csi_clk)
     begin
@@ -437,7 +464,7 @@ module SRAM_IO_CTRL_LOGIC(
             cntsclk <= 0;
             csi_split_clk <= 0;
         end
-        else
+        else if (~reg_clk_discrt)
         begin
             if (cntsclk == reg_cntsclk)
             begin
@@ -447,6 +474,36 @@ module SRAM_IO_CTRL_LOGIC(
             begin
                 cntsclk <= cntsclk + 1;
                 csi_split_clk <= csi_split_clk;
+            end
+        end
+        else
+        begin
+            if (is_1time_init) begin
+                cntsclk <= 0;//initialize the counter;
+                csi_split_clk <= 0;// keep the csi_split_clk value;
+            end
+            else if (is_start_cnt) begin
+                //reg_cntsclk should not be zeros
+                if (cntsclk > (reg_cntsclk <<1)) begin
+                    cntsclk <= cntsclk;// keep the cntsclk value;
+                    csi_split_clk <= csi_split_clk;// keep the csi_split_clk value;
+                end
+                else if (cntsclk == (reg_cntsclk <<1)) begin
+                    cntsclk <= cntsclk + 1;
+                    csi_split_clk <= ~csi_split_clk;
+                end
+                else if (cntsclk == reg_cntsclk) begin
+                    cntsclk <= cntsclk + 1;
+                    csi_split_clk <= ~csi_split_clk;
+                end
+                else begin
+                    cntsclk <= cntsclk + 1;
+                    csi_split_clk <= csi_split_clk;
+                end
+            end
+            else begin
+                cntsclk <= 0;
+                csi_split_clk <= 0;//csi_split_clk
             end
         end
     end
