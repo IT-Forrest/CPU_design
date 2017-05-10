@@ -441,18 +441,22 @@ module SRAM_IO_CTRL_LOGIC(
     //************* make IDX_SCPU_CLK_1TIME only works for one cycle *************//
     always @(posedge csi_clk)
     begin
-        if ((~rsi_reset_n) | (~avs_cpuctrl_write))
+        if (~rsi_reset_n)
         begin
             reg_clk_1time_dly <= 2'b00;
-        end else if (avs_cpuctrl_write &
-                    avs_cpuctrl_writedata[IDX_SCPU_CLK_1TIME] &
-                    (reg_clk_1time_dly == 2'b00))
-        begin
-            reg_clk_1time_dly <= 2'b01;
-        end else 
-        begin
-            //reg_clk_1time_dly[1]shows IDX_SCPU_CLK_1TIME has been set
-            reg_clk_1time_dly <= 2'b10;
+        end
+        else begin 
+            if (avs_cpuctrl_writedata[IDX_SCPU_CLK_1TIME])
+            begin
+                if (reg_clk_1time_dly == 2'b00)
+                    reg_clk_1time_dly <= 2'b01;
+                else if (reg_clk_1time_dly == 2'b01)
+                //reg_clk_1time_dly[1]shows IDX_SCPU_CLK_1TIME has been set
+                    reg_clk_1time_dly <= 2'b10;
+            end
+            else begin
+                reg_clk_1time_dly <= 2'b00;
+            end
         end
     end
     
@@ -503,7 +507,7 @@ module SRAM_IO_CTRL_LOGIC(
             end
             else begin
                 cntsclk <= 0;
-                csi_split_clk <= 0;//csi_split_clk
+                csi_split_clk <= csi_split_clk;//
             end
         end
     end

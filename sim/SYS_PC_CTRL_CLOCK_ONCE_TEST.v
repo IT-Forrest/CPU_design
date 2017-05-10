@@ -30,7 +30,7 @@ module SYS_PC_CTRL_CLOCK_ONCE_TEST;
     parameter   DEFAULT_PC_ADDR     = 16;
     parameter   CLK_PERIOD          = 20;
     
-    integer i,j,k;
+    integer i,j,k,p;
     integer error_cnt;
     reg     [15:0] tmpi_datain; //MEMORY_DATA_WIDTH*2 -1
     reg     [REG_BITS_WIDTH-1:0]  tmpi_all;//addr+instruction
@@ -246,16 +246,12 @@ module SYS_PC_CTRL_CLOCK_ONCE_TEST;
         avs_sram_addr_wrt_write = 1;
         avs_sram_data_wrt_write = 1;
         // Wait 100 ns for global RST_N to finish
-        #(CLK_PERIOD*10);
-        avs_cpuctrl_write = 0;
+        #(CLK_PERIOD*10) avs_cpuctrl_write = 1;
         avs_cpuctrl_writedata[IDX_SCPU_CLK_CHG] = 1'b1;
+        #(CLK_PERIOD*10) avs_cpuctrl_write = 0;
         avs_cntsclk_write = 1;
         avs_cntsclk_writedata = 9;//0: 1/2 freq; 1: 1/4 freq; 2: 1/6 freq; 3: 1/8 freq;
         //4: 1/10 freq; 5: 1/12 freq; 6: 1/14 freq; 7: 1/16 freq; 8: 1/18 freq; 9: 1/20 freq;
-        
-        // #(CLK_PERIOD) avs_cpuctrl_write = 0;
-        // #(CLK_PERIOD) avs_cpuctrl_write = 1;
-        // avs_cpuctrl_writedata[IDX_SCPU_CLK_DISCRT] = 1;
         
         // Add stimulus here
         $display("pc  :               id_ir                :reg_A :reg_B :reg_C\
@@ -347,10 +343,14 @@ module SYS_PC_CTRL_CLOCK_ONCE_TEST;
         
         #(CLK_PERIOD) RST_N = 0; rsi_reset_n = 0; CTRL_BGN = 1;
         #(CLK_PERIOD) RST_N = 1; rsi_reset_n = 1;
-        #(CLK_PERIOD) avs_cpuctrl_write = 0;
-        #(CLK_PERIOD) avs_cpuctrl_write = 1;
+        #(CLK_PERIOD*10) avs_cpuctrl_write = 1;
         avs_cpuctrl_writedata[IDX_SCPU_RST_N] = 1'b1;
-        
+        #(CLK_PERIOD*10) avs_cpuctrl_write = 0;
+                
+        #(CLK_PERIOD*10) avs_cpuctrl_write = 1;
+        avs_cpuctrl_writedata[IDX_SCPU_CLK_DISCRT] = 1'b1;
+        #(CLK_PERIOD*10) avs_cpuctrl_write = 0;
+                
         /* (1) Serially Input the address & Instruction to CTRL and then to SRAM */
 //        for (i = 0; i<13+ DEFAULT_PC_ADDR; i=i) begin
 //            for (k=2; k>=1; k=k-1) begin
@@ -593,8 +593,18 @@ module SYS_PC_CTRL_CLOCK_ONCE_TEST;
 //            end
 //            $display("");
 //        end
-        
 
+        //initialize one cycle
+        #(CLK_PERIOD*10) avs_cpuctrl_write = 1;
+        avs_cpuctrl_writedata[IDX_SCPU_CLK_1TIME] = 1'b1;
+        #(CLK_PERIOD*10) avs_cpuctrl_write = 0;
+        #(CLK_PERIOD*avs_cntsclk_writedata*5);// wait enough time
+        
+        #(CLK_PERIOD*10) avs_cpuctrl_write = 1;
+        avs_cpuctrl_writedata[IDX_SCPU_CLK_1TIME] = 1'b0;
+        #(CLK_PERIOD*10) avs_cpuctrl_write = 0;
+        #(CLK_PERIOD*avs_cntsclk_writedata*5);// wait enough time
+        
         // (4) Loop IN/OUT Test start
         for (i = DEFAULT_PC_ADDR; i<DEFAULT_PC_ADDR+1; i=i+1) begin
             //$write("%4x\t", (i<<1));
@@ -616,6 +626,20 @@ module SYS_PC_CTRL_CLOCK_ONCE_TEST;
                 #(CLK_PERIOD) avs_cpuctrl_write = 1;
                 avs_cpuctrl_writedata[IDX_SCPU_CTRL_LOAD] = 1;
 
+                // sleep 10 cycles to mimic the polling process
+                // invoke several clock cycles; p is changed by ModelSim
+                p = 21;
+                for (j=0; j<p; j=j+1) begin
+                    #(CLK_PERIOD) avs_cpuctrl_write = 1;
+                    avs_cpuctrl_writedata[IDX_SCPU_CLK_1TIME] = 1'b1;
+                    #(CLK_PERIOD) avs_cpuctrl_write = 0;
+                    #(CLK_PERIOD*avs_cntsclk_writedata*5);// wait enough time
+                    #(CLK_PERIOD) avs_cpuctrl_write = 1;
+                    avs_cpuctrl_writedata[IDX_SCPU_CLK_1TIME] = 1'b0;
+                    #(CLK_PERIOD) avs_cpuctrl_write = 0;
+                    #(CLK_PERIOD*avs_cntsclk_writedata*5);// wait enough time
+                end
+
                 // C code polling to do next
                 //polling_wait(CTRL_RDY);
                 begin: ctrl_module_load_ready_3rd
@@ -626,14 +650,29 @@ module SYS_PC_CTRL_CLOCK_ONCE_TEST;
                     end
                 end
                 end
-        
+                
                 // C code modify control word
                 #(CLK_PERIOD) CTRL_BGN = 0;
+                #(CLK_PERIOD*10) avs_cpuctrl_write = 1;
                 avs_cpuctrl_writedata[IDX_SCPU_CTRL_BGN] = 0;
+                #(CLK_PERIOD*10) avs_cpuctrl_write = 0;
                 #(CLK_PERIOD) LOAD_N = 1;//this FPGA signal is related to CTRL_BGN
-                #(CLK_PERIOD) avs_cpuctrl_write = 0;
-                #(CLK_PERIOD) avs_cpuctrl_write = 1;
+                #(CLK_PERIOD*10) avs_cpuctrl_write = 1;
                 avs_cpuctrl_writedata[IDX_SCPU_CTRL_LOAD] = 0;
+                #(CLK_PERIOD*10) avs_cpuctrl_write = 0;
+
+                p = 21;
+                for (j=0; j<p; j=j+1) begin
+                    #(CLK_PERIOD) avs_cpuctrl_write = 1;
+                    avs_cpuctrl_writedata[IDX_SCPU_CLK_1TIME] = 1'b1;
+                    #(CLK_PERIOD) avs_cpuctrl_write = 0;
+                    #(CLK_PERIOD*avs_cntsclk_writedata*5);// wait enough time
+                    #(CLK_PERIOD) avs_cpuctrl_write = 1;
+                    avs_cpuctrl_writedata[IDX_SCPU_CLK_1TIME] = 1'b0;
+                    #(CLK_PERIOD) avs_cpuctrl_write = 0;
+                    #(CLK_PERIOD*avs_cntsclk_writedata*5);// wait enough time
+                end
+                
                 begin: ctrl_module_load_finish_3rd
                 forever begin
                     #(CLK_PERIOD);

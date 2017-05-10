@@ -44,6 +44,13 @@ add wave -noupdate /SYS_PC_CTRL_CLOCK_ONCE_TEST/fpga/csi_split_clk
 add wave -noupdate /SYS_PC_CTRL_CLOCK_ONCE_TEST/fpga/coe_clk_export
 add wave -noupdate /SYS_PC_CTRL_CLOCK_ONCE_TEST/fpga/cntsclk
 add wave -noupdate /SYS_PC_CTRL_CLOCK_ONCE_TEST/fpga/reg_cpu_bgn_dly
+add wave -noupdate /SYS_PC_CTRL_CLOCK_ONCE_TEST/fpga/reg_cntsclk
+add wave -noupdate /SYS_PC_CTRL_CLOCK_ONCE_TEST/fpga/rsi_reset_n
+add wave -noupdate /SYS_PC_CTRL_CLOCK_ONCE_TEST/fpga/reg_clk_chg
+add wave -noupdate /SYS_PC_CTRL_CLOCK_ONCE_TEST/fpga/reg_clk_discrt
+add wave -noupdate /SYS_PC_CTRL_CLOCK_ONCE_TEST/fpga/is_start_cnt
+add wave -noupdate /SYS_PC_CTRL_CLOCK_ONCE_TEST/fpga/is_1time_init
+add wave -noupdate /SYS_PC_CTRL_CLOCK_ONCE_TEST/fpga/reg_clk_1time_dly
 add wave -noupdate -divider uut_cpu
 add wave -noupdate {/SYS_PC_CTRL_CLOCK_ONCE_TEST/scpu_sram_alu/scpu_ctrl_spi/uut/nxt[1]}
 add wave -noupdate {/SYS_PC_CTRL_CLOCK_ONCE_TEST/scpu_sram_alu/scpu_ctrl_spi/uut/nxt[0]}
@@ -52,8 +59,8 @@ add wave -noupdate /SYS_PC_CTRL_CLOCK_ONCE_TEST/scpu_sram_alu/scpu_ctrl_spi/uut/
 add wave -noupdate /SYS_PC_CTRL_CLOCK_ONCE_TEST/scpu_sram_alu/scpu_ctrl_spi/uut/state
 add wave -noupdate /SYS_PC_CTRL_CLOCK_ONCE_TEST/scpu_sram_alu/scpu_ctrl_spi/ALU_01/FOUT
 TreeUpdate [SetDefaultTree]
-WaveRestoreCursors {{Cursor 1} {10000 ps} 0} {{Cursor 2} {272519319 ps} 0}
-quietly wave cursor active 2
+WaveRestoreCursors {{Cursor 1} {642600 ps} 0} {{Cursor 2} {2738209 ps} 0}
+quietly wave cursor active 1
 configure wave -namecolwidth 250
 configure wave -valuecolwidth 102
 configure wave -justifyvalue left
@@ -68,4 +75,4 @@ configure wave -griddelta 40
 configure wave -timeline 0
 configure wave -timelineunits ps
 update
-WaveRestoreZoom {312355147 ps} {326591835 ps}
+WaveRestoreZoom {0 ps} {4284 ns}
