@@ -245,15 +245,6 @@ module SYS_PC_CTRL_CLOCK_ONCE_TEST;
         avs_cpuctrl_write   = 1;
         avs_sram_addr_wrt_write = 1;
         avs_sram_data_wrt_write = 1;
-        // Wait 100 ns for global RST_N to finish
-        #(CLK_PERIOD*10) avs_cntsclk_write = 1;
-        avs_cntsclk_writedata = 9;//0: 1/2 freq; 1: 1/4 freq; 2: 1/6 freq; 3: 1/8 freq;
-        //4: 1/10 freq; 5: 1/12 freq; 6: 1/14 freq; 7: 1/16 freq; 8: 1/18 freq; 9: 1/20 freq;
-        #(CLK_PERIOD*10) avs_cntsclk_write = 0;
-
-        #(CLK_PERIOD*10) avs_cpuctrl_write = 1;
-        avs_cpuctrl_writedata[IDX_SCPU_CLK_CHG] = 1'b1;
-        #(CLK_PERIOD*10) avs_cpuctrl_write = 0;
         
         // Add stimulus here
         $display("pc  :               id_ir                :reg_A :reg_B :reg_C\
@@ -343,10 +334,23 @@ module SYS_PC_CTRL_CLOCK_ONCE_TEST;
         // i_mem.I_RAM[20] = {`NOP, 11'b000_0000_0000};
         // i_mem.I_RAM[21] = {`NOP, 11'b000_0000_0000};
         
-        #(CLK_PERIOD) RST_N = 0; rsi_reset_n = 0; CTRL_BGN = 1;
+        #(CLK_PERIOD) RST_N = 0; rsi_reset_n = 0;
+        #(CLK_PERIOD*10) avs_cpuctrl_write = 1;
+        avs_cpuctrl_writedata[IDX_SCPU_RST_N] = 1'b0;
+        #(CLK_PERIOD*10) avs_cpuctrl_write = 0;
         #(CLK_PERIOD) RST_N = 1; rsi_reset_n = 1;
         #(CLK_PERIOD*10) avs_cpuctrl_write = 1;
         avs_cpuctrl_writedata[IDX_SCPU_RST_N] = 1'b1;
+        #(CLK_PERIOD*10) avs_cpuctrl_write = 0;
+                
+        // Change clock freq
+        #(CLK_PERIOD*10) avs_cntsclk_write = 1;
+        avs_cntsclk_writedata = 9;//0: 1/2 freq; 1: 1/4 freq; 2: 1/6 freq; 3: 1/8 freq;
+        //4: 1/10 freq; 5: 1/12 freq; 6: 1/14 freq; 7: 1/16 freq; 8: 1/18 freq; 9: 1/20 freq;
+        #(CLK_PERIOD*10) avs_cntsclk_write = 0;
+
+        #(CLK_PERIOD*10) avs_cpuctrl_write = 1;
+        avs_cpuctrl_writedata[IDX_SCPU_CLK_CHG] = 1'b1;
         #(CLK_PERIOD*10) avs_cpuctrl_write = 0;
                 
         #(CLK_PERIOD*10) avs_cpuctrl_write = 1;
@@ -608,7 +612,7 @@ module SYS_PC_CTRL_CLOCK_ONCE_TEST;
         #(CLK_PERIOD*avs_cntsclk_writedata*5);// wait enough time
         
         // (4) Loop IN/OUT Test start
-        for (i = DEFAULT_PC_ADDR; i<DEFAULT_PC_ADDR+1; i=i+1) begin
+        for (i = 0; i<10; i=i+1) begin//DEFAULT_PC_ADDR
             //$write("%4x\t", (i<<1));
             for (k=2; k>=1; k=k-1) begin
                 /** (a) load data to SRAM_IO_CTRL from PC **/
@@ -630,7 +634,7 @@ module SYS_PC_CTRL_CLOCK_ONCE_TEST;
 
                 // sleep 10 cycles to mimic the polling process
                 // invoke several clock cycles; p is changed by ModelSim
-                p = 21;
+                p = 23;// minium 21 is OK for simulation
                 for (j=0; j<p; j=j+1) begin
                     #(CLK_PERIOD) avs_cpuctrl_write = 1;
                     avs_cpuctrl_writedata[IDX_SCPU_CLK_1TIME] = 1'b1;
@@ -663,7 +667,7 @@ module SYS_PC_CTRL_CLOCK_ONCE_TEST;
                 avs_cpuctrl_writedata[IDX_SCPU_CTRL_LOAD] = 0;
                 #(CLK_PERIOD*10) avs_cpuctrl_write = 0;
 
-                p = 2;
+                p = 4;// minium 2 is OK for simulation
                 for (j=0; j<p; j=j+1) begin
                     #(CLK_PERIOD) avs_cpuctrl_write = 1;
                     avs_cpuctrl_writedata[IDX_SCPU_CLK_1TIME] = 1'b1;
@@ -686,7 +690,7 @@ module SYS_PC_CTRL_CLOCK_ONCE_TEST;
         
                 $write("%10b ",avs_sram_addr_rd_readdata[MEMORY_ADDR_WIDTH-1:0]);
                 $write("%8b ", avs_sram_data_rd_readdata[MEMORY_DATA_WIDTH-1:0]);
-                $write("Loop k=%d\n", k);
+                $write("Loop i=%d,k=%d\n", i,k);
                 if (k == 1) begin
                     tmpi_datain[MEMORY_DATA_WIDTH-1:0] = avs_sram_data_rd_readdata[MEMORY_DATA_WIDTH-1:0];
                 end
@@ -694,18 +698,16 @@ module SYS_PC_CTRL_CLOCK_ONCE_TEST;
                     tmpi_datain[2*MEMORY_DATA_WIDTH-1:MEMORY_DATA_WIDTH] = avs_sram_data_rd_readdata[MEMORY_DATA_WIDTH-1:0];
                 end
             end
-            
-            if (i == DEFAULT_PC_ADDR) begin
-                if (tmpi_all == {avs_sram_addr_rd_readdata[MEMORY_ADDR_WIDTH-1:0], avs_sram_data_rd_readdata[MEMORY_DATA_WIDTH-1:0]})
-                    $write("\t<--- Loop in/out Test Correct!");
-                else begin
-                    $write("\t<--- Loop in/out Test Wrong!");
-                    error_cnt = error_cnt + 1;
-                end
-            end
-            $display("");
         end
-        
+        // only check at the last round
+        if (tmpi_all == {avs_sram_addr_rd_readdata[MEMORY_ADDR_WIDTH-1:0], avs_sram_data_rd_readdata[MEMORY_DATA_WIDTH-1:0]})
+            $write("\t<--- Loop in/out Test Correct!");
+        else begin
+            $write("\t<--- Loop in/out Test Wrong!");
+            error_cnt = error_cnt + 1;
+        end
+        $display("");
+            
         // (5) Judge Final Test Result
         if (error_cnt) begin
             $display("Test Failed!");
