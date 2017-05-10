@@ -246,12 +246,14 @@ module SYS_PC_CTRL_CLOCK_ONCE_TEST;
         avs_sram_addr_wrt_write = 1;
         avs_sram_data_wrt_write = 1;
         // Wait 100 ns for global RST_N to finish
+        #(CLK_PERIOD*10) avs_cntsclk_write = 1;
+        avs_cntsclk_writedata = 9;//0: 1/2 freq; 1: 1/4 freq; 2: 1/6 freq; 3: 1/8 freq;
+        //4: 1/10 freq; 5: 1/12 freq; 6: 1/14 freq; 7: 1/16 freq; 8: 1/18 freq; 9: 1/20 freq;
+        #(CLK_PERIOD*10) avs_cntsclk_write = 0;
+
         #(CLK_PERIOD*10) avs_cpuctrl_write = 1;
         avs_cpuctrl_writedata[IDX_SCPU_CLK_CHG] = 1'b1;
         #(CLK_PERIOD*10) avs_cpuctrl_write = 0;
-        avs_cntsclk_write = 1;
-        avs_cntsclk_writedata = 9;//0: 1/2 freq; 1: 1/4 freq; 2: 1/6 freq; 3: 1/8 freq;
-        //4: 1/10 freq; 5: 1/12 freq; 6: 1/14 freq; 7: 1/16 freq; 8: 1/18 freq; 9: 1/20 freq;
         
         // Add stimulus here
         $display("pc  :               id_ir                :reg_A :reg_B :reg_C\
@@ -622,9 +624,9 @@ module SYS_PC_CTRL_CLOCK_ONCE_TEST;
                 avs_sram_addr_wrt_writedata = tmpi_adder;
                 avs_sram_data_wrt_writedata = 8'd100;//{MEMORY_DATA_WIDTH{1'b1}}
                 // C code triger FPGA gen Load signal
-                #(CLK_PERIOD) avs_cpuctrl_write = 0;
-                #(CLK_PERIOD) avs_cpuctrl_write = 1;
+                #(CLK_PERIOD*10) avs_cpuctrl_write = 1;
                 avs_cpuctrl_writedata[IDX_SCPU_CTRL_LOAD] = 1;
+                #(CLK_PERIOD*10) avs_cpuctrl_write = 0;
 
                 // sleep 10 cycles to mimic the polling process
                 // invoke several clock cycles; p is changed by ModelSim
@@ -661,7 +663,7 @@ module SYS_PC_CTRL_CLOCK_ONCE_TEST;
                 avs_cpuctrl_writedata[IDX_SCPU_CTRL_LOAD] = 0;
                 #(CLK_PERIOD*10) avs_cpuctrl_write = 0;
 
-                p = 21;
+                p = 2;
                 for (j=0; j<p; j=j+1) begin
                     #(CLK_PERIOD) avs_cpuctrl_write = 1;
                     avs_cpuctrl_writedata[IDX_SCPU_CLK_1TIME] = 1'b1;
