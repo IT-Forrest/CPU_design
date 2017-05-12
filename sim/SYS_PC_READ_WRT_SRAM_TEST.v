@@ -1,7 +1,7 @@
 //+FHDR****************************************************************
 // ECE department, TAMU
 // --------------------------------------------------------------------
-// FILE NAME    : SYS_PC_CTRL_CLOCK_ONCE_TEST.v
+// FILE NAME    : SYS_PC_READ_WRT_SRAM_TEST.v
 // AUTHER       : Jiafan Wang
 // DATE         : 05/09/2017
 // VERSION      : 1.0
@@ -22,7 +22,7 @@
 `include    "../I_MEMORY_8bit.v"
 `include    "../SC_CELL_V3.v"
 
-module SYS_PC_CTRL_CLOCK_ONCE_TEST;
+module SYS_PC_READ_WRT_SRAM_TEST;
     parameter   MEMORY_DATA_WIDTH   = 8,
                 MEMORY_ADDR_WIDTH   = 10,
                 REG_BITS_WIDTH = MEMORY_ADDR_WIDTH + MEMORY_DATA_WIDTH;
@@ -369,10 +369,10 @@ module SYS_PC_CTRL_CLOCK_ONCE_TEST;
         #(CLK_PERIOD*10) avs_cpuctrl_write = 0;
         #(CLK_PERIOD*avs_cntsclk_writedata*5);// wait enough time
         
-        // (4) Loop IN/OUT Test start
+        // (4) write data to SRAM
         for (i = 0; i<10; i=i+1) begin//DEFAULT_PC_ADDR
             //$write("%4x\t", (i<<1));
-            for (k=2; k>=1; k=k-1) begin
+            for (k=2; k>1; k=k-1) begin
                 /** (a) load data to SRAM_IO_CTRL from PC **/
                 // C code modify control word
                 #(CLK_PERIOD) CTRL_BGN = 1;
@@ -384,7 +384,7 @@ module SYS_PC_CTRL_CLOCK_ONCE_TEST;
                 tmpi_adder = 10'd240;//(i<<1)+k-1;
                 tmpi_all = {tmpi_adder, 8'd100};//{MEMORY_DATA_WIDTH{1'b0}}
                 avs_sram_addr_wrt_writedata = tmpi_adder;
-                avs_sram_data_wrt_writedata = 8'd100;//{MEMORY_DATA_WIDTH{1'b1}}
+                avs_sram_data_wrt_writedata = 8'd131;//{MEMORY_DATA_WIDTH{1'b1}}
                 // C code triger FPGA gen Load signal
                 #(CLK_PERIOD*10) avs_cpuctrl_write = 1;
                 avs_cpuctrl_writedata[IDX_SCPU_CTRL_LOAD] = 1;
@@ -446,22 +446,234 @@ module SYS_PC_CTRL_CLOCK_ONCE_TEST;
                 end
                 end
         
-                $write("%10b ",avs_sram_addr_rd_readdata[MEMORY_ADDR_WIDTH-1:0]);
-                $write("%8b ", avs_sram_data_rd_readdata[MEMORY_DATA_WIDTH-1:0]);
-                $write("Loop i=%d,k=%d\n", i,k);
-                if (k == 1) begin
-                    tmpi_datain[MEMORY_DATA_WIDTH-1:0] = avs_sram_data_rd_readdata[MEMORY_DATA_WIDTH-1:0];
+                /** (b) notify SRAM_IO_CTRL to send data to SRAM **/
+                // C code modify control word
+                #(CLK_PERIOD) CTRL_BGN = 1;
+                avs_cpuctrl_writedata[IDX_SCPU_CTRL_BGN] = 1;
+                #(CLK_PERIOD) CTRL_MODE = 2'b11;
+                avs_cpuctrl_writedata[IDX_SCPU_CTRL_MOD1] = 1;
+                avs_cpuctrl_writedata[IDX_SCPU_CTRL_MOD0] = 1;
+                // C code triger FPGA gen Load signal
+                #(CLK_PERIOD*10) avs_cpuctrl_write = 1;
+                avs_cpuctrl_writedata[IDX_SCPU_CTRL_LOAD] = 1;
+                #(CLK_PERIOD*10) avs_cpuctrl_write = 0;
+
+                p = 4;// waiting for the write ready
+                for (j=0; j<p; j=j+1) begin
+                    #(CLK_PERIOD) avs_cpuctrl_write = 1;
+                    avs_cpuctrl_writedata[IDX_SCPU_CLK_1TIME] = 1'b1;
+                    #(CLK_PERIOD) avs_cpuctrl_write = 0;
+                    #(CLK_PERIOD*avs_cntsclk_writedata*5);// wait enough time
+                    #(CLK_PERIOD) avs_cpuctrl_write = 1;
+                    avs_cpuctrl_writedata[IDX_SCPU_CLK_1TIME] = 1'b0;
+                    #(CLK_PERIOD) avs_cpuctrl_write = 0;
+                    #(CLK_PERIOD*avs_cntsclk_writedata*5);// wait enough time
                 end
-                else if (k == 2) begin
-                    tmpi_datain[2*MEMORY_DATA_WIDTH-1:MEMORY_DATA_WIDTH] = avs_sram_data_rd_readdata[MEMORY_DATA_WIDTH-1:0];
+                
+                // C code polling to do next
+                //polling_wait(CTRL_RDY);
+                begin: ctrl_module_write_ready
+                forever begin
+                    #(CLK_PERIOD);
+                    if (avs_cpustat_ctrl_rdy) begin
+                        disable ctrl_module_write_ready;
+                    end
+                end
+                end
+                
+                // C code modify control word
+                #(CLK_PERIOD) CTRL_BGN = 0;
+                #(CLK_PERIOD*10) avs_cpuctrl_write = 1;
+                avs_cpuctrl_writedata[IDX_SCPU_CTRL_BGN] = 0;
+                #(CLK_PERIOD*10) avs_cpuctrl_write = 0;
+                #(CLK_PERIOD) LOAD_N = 1;//this FPGA signal is related to CTRL_BGN
+                #(CLK_PERIOD*10) avs_cpuctrl_write = 1;
+                avs_cpuctrl_writedata[IDX_SCPU_CTRL_LOAD] = 0;
+                #(CLK_PERIOD*10) avs_cpuctrl_write = 0;        
+                
+                p = 4;// waiting for the write ready
+                for (j=0; j<p; j=j+1) begin
+                    #(CLK_PERIOD) avs_cpuctrl_write = 1;
+                    avs_cpuctrl_writedata[IDX_SCPU_CLK_1TIME] = 1'b1;
+                    #(CLK_PERIOD) avs_cpuctrl_write = 0;
+                    #(CLK_PERIOD*avs_cntsclk_writedata*5);// wait enough time
+                    #(CLK_PERIOD) avs_cpuctrl_write = 1;
+                    avs_cpuctrl_writedata[IDX_SCPU_CLK_1TIME] = 1'b0;
+                    #(CLK_PERIOD) avs_cpuctrl_write = 0;
+                    #(CLK_PERIOD*avs_cntsclk_writedata*5);// wait enough time
+                end
+                
+                begin: ctrl_module_write_finish
+                forever begin
+                    #(CLK_PERIOD);
+                    if (!avs_cpustat_ctrl_rdy) begin
+                        disable ctrl_module_write_finish;
+                    end
+                end
                 end
             end
         end
+
+        // (5) Read data from SRAM
+        for (i = 0; i<2; i=i+1) begin//DEFAULT_PC_ADDR
+            //$write("%4x\t", (i<<1));
+            for (k=2; k>1; k=k-1) begin
+                /** (a) load data to SRAM_IO_CTRL from PC **/
+                // C code modify control word
+                #(CLK_PERIOD) CTRL_BGN = 1;
+                avs_cpuctrl_writedata[IDX_SCPU_CTRL_BGN] = 1;
+                #(CLK_PERIOD) CTRL_MODE = 2'b00;
+                avs_cpuctrl_writedata[IDX_SCPU_CTRL_MOD1] = 0;
+                avs_cpuctrl_writedata[IDX_SCPU_CTRL_MOD0] = 0;
+
+                tmpi_adder = 10'd240;//(i<<1)+k-1;
+                tmpi_all = {tmpi_adder, 8'd100};//{MEMORY_DATA_WIDTH{1'b0}}
+                avs_sram_addr_wrt_writedata = tmpi_adder;
+                avs_sram_data_wrt_writedata = 8'd255;//{MEMORY_DATA_WIDTH{1'b1}}
+                // C code triger FPGA gen Load signal
+                #(CLK_PERIOD*10) avs_cpuctrl_write = 1;
+                avs_cpuctrl_writedata[IDX_SCPU_CTRL_LOAD] = 1;
+                #(CLK_PERIOD*10) avs_cpuctrl_write = 0;
+
+                // sleep 10 cycles to mimic the polling process
+                // invoke several clock cycles; p is changed by ModelSim
+                p = 23;// minium 21 is OK for simulation
+                for (j=0; j<p; j=j+1) begin
+                    #(CLK_PERIOD) avs_cpuctrl_write = 1;
+                    avs_cpuctrl_writedata[IDX_SCPU_CLK_1TIME] = 1'b1;
+                    #(CLK_PERIOD) avs_cpuctrl_write = 0;
+                    #(CLK_PERIOD*avs_cntsclk_writedata*5);// wait enough time
+                    #(CLK_PERIOD) avs_cpuctrl_write = 1;
+                    avs_cpuctrl_writedata[IDX_SCPU_CLK_1TIME] = 1'b0;
+                    #(CLK_PERIOD) avs_cpuctrl_write = 0;
+                    #(CLK_PERIOD*avs_cntsclk_writedata*5);// wait enough time
+                end
+
+                // C code polling to do next
+                //polling_wait(CTRL_RDY);
+                begin: ctrl_module_load_ready_4th
+                forever begin
+                    #(CLK_PERIOD);
+                    if (avs_cpustat_ctrl_rdy) begin
+                        disable ctrl_module_load_ready_4th;
+                    end
+                end
+                end
+                
+                // C code modify control word
+                #(CLK_PERIOD) CTRL_BGN = 0;
+                #(CLK_PERIOD*10) avs_cpuctrl_write = 1;
+                avs_cpuctrl_writedata[IDX_SCPU_CTRL_BGN] = 0;
+                #(CLK_PERIOD*10) avs_cpuctrl_write = 0;
+                #(CLK_PERIOD) LOAD_N = 1;//this FPGA signal is related to CTRL_BGN
+                #(CLK_PERIOD*10) avs_cpuctrl_write = 1;
+                avs_cpuctrl_writedata[IDX_SCPU_CTRL_LOAD] = 0;
+                #(CLK_PERIOD*10) avs_cpuctrl_write = 0;
+
+                p = 4;// minium 2 is OK for simulation
+                for (j=0; j<p; j=j+1) begin
+                    #(CLK_PERIOD) avs_cpuctrl_write = 1;
+                    avs_cpuctrl_writedata[IDX_SCPU_CLK_1TIME] = 1'b1;
+                    #(CLK_PERIOD) avs_cpuctrl_write = 0;
+                    #(CLK_PERIOD*avs_cntsclk_writedata*5);// wait enough time
+                    #(CLK_PERIOD) avs_cpuctrl_write = 1;
+                    avs_cpuctrl_writedata[IDX_SCPU_CLK_1TIME] = 1'b0;
+                    #(CLK_PERIOD) avs_cpuctrl_write = 0;
+                    #(CLK_PERIOD*avs_cntsclk_writedata*5);// wait enough time
+                end
+                
+                begin: ctrl_module_load_finish_4th
+                forever begin
+                    #(CLK_PERIOD);
+                    if (!avs_cpustat_ctrl_rdy) begin
+                        disable ctrl_module_load_finish_4th;
+                    end
+                end
+                end
+        
+                /** (b) Read data from SRAM **/
+                // C code modify control word
+                #(CLK_PERIOD) CTRL_BGN = 1;
+                avs_cpuctrl_writedata[IDX_SCPU_CTRL_BGN] = 1;
+                #(CLK_PERIOD) CTRL_MODE = 2'b01;
+                avs_cpuctrl_writedata[IDX_SCPU_CTRL_MOD1] = 0;
+                avs_cpuctrl_writedata[IDX_SCPU_CTRL_MOD0] = 1;
+                // C code triger FPGA gen Load signal
+                #(CLK_PERIOD*10) avs_cpuctrl_write = 1;
+                avs_cpuctrl_writedata[IDX_SCPU_CTRL_LOAD] = 1;
+                #(CLK_PERIOD*10) avs_cpuctrl_write = 0;
+
+                p = 4;// waiting for the write ready
+                for (j=0; j<p; j=j+1) begin
+                    #(CLK_PERIOD) avs_cpuctrl_write = 1;
+                    avs_cpuctrl_writedata[IDX_SCPU_CLK_1TIME] = 1'b1;
+                    #(CLK_PERIOD) avs_cpuctrl_write = 0;
+                    #(CLK_PERIOD*avs_cntsclk_writedata*5);// wait enough time
+                    #(CLK_PERIOD) avs_cpuctrl_write = 1;
+                    avs_cpuctrl_writedata[IDX_SCPU_CLK_1TIME] = 1'b0;
+                    #(CLK_PERIOD) avs_cpuctrl_write = 0;
+                    #(CLK_PERIOD*avs_cntsclk_writedata*5);// wait enough time
+                end
+                
+                // C code polling to do next
+                //polling_wait(CTRL_RDY);
+                begin: ctrl_module_write_ready_5th
+                forever begin
+                    #(CLK_PERIOD);
+                    if (avs_cpustat_ctrl_rdy) begin
+                        disable ctrl_module_write_ready_5th;
+                    end
+                end
+                end
+                
+                // C code modify control word
+                #(CLK_PERIOD) CTRL_BGN = 0;
+                #(CLK_PERIOD*10) avs_cpuctrl_write = 1;
+                avs_cpuctrl_writedata[IDX_SCPU_CTRL_BGN] = 0;
+                #(CLK_PERIOD*10) avs_cpuctrl_write = 0;
+                #(CLK_PERIOD) LOAD_N = 1;//this FPGA signal is related to CTRL_BGN
+                #(CLK_PERIOD*10) avs_cpuctrl_write = 1;
+                avs_cpuctrl_writedata[IDX_SCPU_CTRL_LOAD] = 0;
+                #(CLK_PERIOD*10) avs_cpuctrl_write = 0;        
+                
+                p = 4;// waiting for the write ready
+                for (j=0; j<p; j=j+1) begin
+                    #(CLK_PERIOD) avs_cpuctrl_write = 1;
+                    avs_cpuctrl_writedata[IDX_SCPU_CLK_1TIME] = 1'b1;
+                    #(CLK_PERIOD) avs_cpuctrl_write = 0;
+                    #(CLK_PERIOD*avs_cntsclk_writedata*5);// wait enough time
+                    #(CLK_PERIOD) avs_cpuctrl_write = 1;
+                    avs_cpuctrl_writedata[IDX_SCPU_CLK_1TIME] = 1'b0;
+                    #(CLK_PERIOD) avs_cpuctrl_write = 0;
+                    #(CLK_PERIOD*avs_cntsclk_writedata*5);// wait enough time
+                end
+                
+                begin: ctrl_module_write_finish_5th
+                forever begin
+                    #(CLK_PERIOD);
+                    if (!avs_cpustat_ctrl_rdy) begin
+                        disable ctrl_module_write_finish_5th;
+                    end
+                end
+                end
+            end
+        end
+
+        $write("%10b ",avs_sram_addr_rd_readdata[MEMORY_ADDR_WIDTH-1:0]);
+        $write("%8b ", avs_sram_data_rd_readdata[MEMORY_DATA_WIDTH-1:0]);
+        $write("Loop i=%d\n", i);
+        // if (k == 1) begin
+            // tmpi_datain[MEMORY_DATA_WIDTH-1:0] = avs_sram_data_rd_readdata[MEMORY_DATA_WIDTH-1:0];
+        // end
+        // else if (k == 2) begin
+            // tmpi_datain[2*MEMORY_DATA_WIDTH-1:MEMORY_DATA_WIDTH] = avs_sram_data_rd_readdata[MEMORY_DATA_WIDTH-1:0];
+        // end
+        
         // only check at the last round
-        if (tmpi_all == {avs_sram_addr_rd_readdata[MEMORY_ADDR_WIDTH-1:0], avs_sram_data_rd_readdata[MEMORY_DATA_WIDTH-1:0]})
-            $write("\t<--- Loop in/out Test Correct!");
+        if (8'd131 == avs_sram_data_rd_readdata[MEMORY_DATA_WIDTH-1:0])
+            $write("\t<--- Read SRAM Test Correct!");
         else begin
-            $write("\t<--- Loop in/out Test Wrong!");
+            $write("\t<--- Read SRAM Test Wrong!");
             error_cnt = error_cnt + 1;
         end
         $display("");

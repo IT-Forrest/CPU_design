@@ -91,18 +91,6 @@ Model Technology ModelSim ALTERA vlog 10.4d Compiler 2015.12 Dec 30 2015
 Top level modules:
 	SRAM_IO_CTRL_RA1SHD_TEST
 
-} {} {}} {F:/05.Code_Battle/04. Verilog/CPU_design/sim/SYS_SHARE_SUPERALU_MULT_TEST.v} {2 {vlog -work work -stats=none {F:/05.Code_Battle/04. Verilog/CPU_design/sim/SYS_SHARE_SUPERALU_MULT_TEST.v}
-Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
--- Compiling module SCPU_SRAM_8BIT_ALU_SPI_TOP
--- Compiling module SRAM_IO_CTRL_LOGIC
--- Compiling module I_MEMORY_8BIT
--- Compiling module SYS_SHARE_SUPERALU_MULT_TEST
-** Warning: F:/05.Code_Battle/04. Verilog/CPU_design/sim/SYS_SHARE_SUPERALU_MULT_TEST.v(242): (vlog-2252) Missing incrementer in "FOR" statement.
-
-
-Top level modules:
-	SYS_SHARE_SUPERALU_MULT_TEST
-
 } {} {}} {F:/05.Code_Battle/04. Verilog/CPU_design/ibm13rfrvt_neg.v} {1 {vlog -work work -stats=none {F:/05.Code_Battle/04. Verilog/CPU_design/ibm13rfrvt_neg.v}
 Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
 -- Compiling module BUFX2TF
@@ -1173,6 +1161,37 @@ Top level modules:
 	DLY4X4TF
 	TIEHITF
 	TIELOTF
+
+} {} {}} {F:/05.Code_Battle/04. Verilog/CPU_design/sim/SYS_PC_READ_WRT_SRAM_TEST.v} {2 {vlog -work work -stats=none {F:/05.Code_Battle/04. Verilog/CPU_design/sim/SYS_PC_READ_WRT_SRAM_TEST.v}
+Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
+-- Compiling module RA1SHD_IBM1024X8
+-- Compiling module SERIAL_CPU_8BIT
+-- Compiling module SHARE_SUPERALU
+-- Compiling module SRAM_IO_CTRL
+-- Compiling module PSEUDO_SPT_INTF
+-- Compiling module SCPU_8BIT_ALU_CTRL_SPI
+-- Compiling module SCPU_SRAM_8BIT_ALU_SPI_TOP
+-- Compiling module SRAM_IO_CTRL_LOGIC
+-- Compiling module I_MEMORY_8BIT
+-- Compiling module SC_CELL_V3
+-- Compiling module SYS_PC_READ_WRT_SRAM_TEST
+** Warning: F:/05.Code_Battle/04. Verilog/CPU_design/sim/SYS_PC_READ_WRT_SRAM_TEST.v(250): (vlog-2643) Unterminated string literal continues onto next line.
+
+
+Top level modules:
+	SYS_PC_READ_WRT_SRAM_TEST
+
+} {} {}} {F:/05.Code_Battle/04. Verilog/CPU_design/sim/SYS_SHARE_SUPERALU_MULT_TEST.v} {2 {vlog -work work -stats=none {F:/05.Code_Battle/04. Verilog/CPU_design/sim/SYS_SHARE_SUPERALU_MULT_TEST.v}
+Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
+-- Compiling module SCPU_SRAM_8BIT_ALU_SPI_TOP
+-- Compiling module SRAM_IO_CTRL_LOGIC
+-- Compiling module I_MEMORY_8BIT
+-- Compiling module SYS_SHARE_SUPERALU_MULT_TEST
+** Warning: F:/05.Code_Battle/04. Verilog/CPU_design/sim/SYS_SHARE_SUPERALU_MULT_TEST.v(242): (vlog-2252) Missing incrementer in "FOR" statement.
+
+
+Top level modules:
+	SYS_SHARE_SUPERALU_MULT_TEST
 
 } {} {}} {F:/05.Code_Battle/04. Verilog/CPU_design/SCPU_SRAM_8BIT_ALU_SPI_TOP.v} {1 {vlog -work work -stats=none {F:/05.Code_Battle/04. Verilog/CPU_design/SCPU_SRAM_8BIT_ALU_SPI_TOP.v}
 Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
@@ -7398,13 +7417,6 @@ Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
 Top level modules:
 	PCPU_MEM_CTRL_TOP
 
-} {} {}} {F:/05.Code_Battle/04. Verilog/CPU_design/CTRL_LOGIC.v} {1 {vlog -work work -stats=none {F:/05.Code_Battle/04. Verilog/CPU_design/CTRL_LOGIC.v}
-Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
--- Compiling module CTRL_LOGIC
-
-Top level modules:
-	CTRL_LOGIC
-
 } {} {}} {F:/05. Code Battle/04. Verilog/CPU_design/sim/SCPU_SRAM_8BIT_ALU_SPI_TOP_MUX_TEST.v} {1 {vlog -work work -stats=none {F:/05. Code Battle/04. Verilog/CPU_design/sim/SCPU_SRAM_8BIT_ALU_SPI_TOP_MUX_TEST.v}
 Model Technology ModelSim ALTERA vlog 10.4d Compiler 2015.12 Dec 30 2015
 -- Compiling module BUFX2TF
@@ -9113,24 +9125,12 @@ Top level modules:
 	POSC4
 	SCPU_SRAM_8BIT_ALU_SPI_TOP_MUX_TEST
 
-} {} {}} {F:/05.Code_Battle/04. Verilog/CPU_design/sim/SYS_PC_CTRL_CLOCK_ONCE_TEST.v} {2 {vlog -work work -stats=none {F:/05.Code_Battle/04. Verilog/CPU_design/sim/SYS_PC_CTRL_CLOCK_ONCE_TEST.v}
+} {} {}} {F:/05.Code_Battle/04. Verilog/CPU_design/CTRL_LOGIC.v} {1 {vlog -work work -stats=none {F:/05.Code_Battle/04. Verilog/CPU_design/CTRL_LOGIC.v}
 Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
--- Compiling module RA1SHD_IBM1024X8
--- Compiling module SERIAL_CPU_8BIT
--- Compiling module SHARE_SUPERALU
--- Compiling module SRAM_IO_CTRL
--- Compiling module PSEUDO_SPT_INTF
--- Compiling module SCPU_8BIT_ALU_CTRL_SPI
--- Compiling module SCPU_SRAM_8BIT_ALU_SPI_TOP
--- Compiling module SRAM_IO_CTRL_LOGIC
--- Compiling module I_MEMORY_8BIT
--- Compiling module SC_CELL_V3
--- Compiling module SYS_PC_CTRL_CLOCK_ONCE_TEST
-** Warning: F:/05.Code_Battle/04. Verilog/CPU_design/sim/SYS_PC_CTRL_CLOCK_ONCE_TEST.v(250): (vlog-2643) Unterminated string literal continues onto next line.
-
+-- Compiling module CTRL_LOGIC
 
 Top level modules:
-	SYS_PC_CTRL_CLOCK_ONCE_TEST
+	CTRL_LOGIC
 
 } {} {}} {F:/05. Code Battle/04. Verilog/CPU_design/CTRL_LOGIC.v} {1 {vlog -work work -stats=none {F:/05. Code Battle/04. Verilog/CPU_design/CTRL_LOGIC.v}
 Model Technology ModelSim ALTERA vlog 10.4d Compiler 2015.12 Dec 30 2015
@@ -9153,6 +9153,25 @@ Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
 
 Top level modules:
 	SHARE_SUPERALU
+
+} {} {}} {F:/05.Code_Battle/04. Verilog/CPU_design/sim/SYS_PC_CTRL_CLOCK_ONCE_TEST.v} {2 {vlog -work work -stats=none {F:/05.Code_Battle/04. Verilog/CPU_design/sim/SYS_PC_CTRL_CLOCK_ONCE_TEST.v}
+Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
+-- Compiling module RA1SHD_IBM1024X8
+-- Compiling module SERIAL_CPU_8BIT
+-- Compiling module SHARE_SUPERALU
+-- Compiling module SRAM_IO_CTRL
+-- Compiling module PSEUDO_SPT_INTF
+-- Compiling module SCPU_8BIT_ALU_CTRL_SPI
+-- Compiling module SCPU_SRAM_8BIT_ALU_SPI_TOP
+-- Compiling module SRAM_IO_CTRL_LOGIC
+-- Compiling module I_MEMORY_8BIT
+-- Compiling module SC_CELL_V3
+-- Compiling module SYS_PC_CTRL_CLOCK_ONCE_TEST
+** Warning: F:/05.Code_Battle/04. Verilog/CPU_design/sim/SYS_PC_CTRL_CLOCK_ONCE_TEST.v(250): (vlog-2643) Unterminated string literal continues onto next line.
+
+
+Top level modules:
+	SYS_PC_CTRL_CLOCK_ONCE_TEST
 
 } {} {}} {F:/05.Code_Battle/04. Verilog/CPU_design/sim/SCPU_SRAM_8BIT_ALU_SPI_TOP_MUX_VG_TEST.v} {1 {vlog -work work -stats=none {F:/05.Code_Battle/04. Verilog/CPU_design/sim/SCPU_SRAM_8BIT_ALU_SPI_TOP_MUX_VG_TEST.v}
 Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
