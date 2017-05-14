@@ -345,7 +345,7 @@ module SYS_PC_READ_WRT_SRAM_TEST;
                 
         // Change clock freq
         #(CLK_PERIOD*10) avs_cntsclk_write = 1;
-        avs_cntsclk_writedata = 9;//0: 1/2 freq; 1: 1/4 freq; 2: 1/6 freq; 3: 1/8 freq;
+        avs_cntsclk_writedata = 1;//0: 1/2 freq; 1: 1/4 freq; 2: 1/6 freq; 3: 1/8 freq;
         //4: 1/10 freq; 5: 1/12 freq; 6: 1/14 freq; 7: 1/16 freq; 8: 1/18 freq; 9: 1/20 freq;
         #(CLK_PERIOD*10) avs_cntsclk_write = 0;
 
@@ -370,9 +370,9 @@ module SYS_PC_READ_WRT_SRAM_TEST;
         #(CLK_PERIOD*avs_cntsclk_writedata*5);// wait enough time
         
         // (4) write data to SRAM
-        for (i = 0; i<10; i=i+1) begin//DEFAULT_PC_ADDR
+        for (i = 0; i<13+ DEFAULT_PC_ADDR; i=i) begin//DEFAULT_PC_ADDR
             //$write("%4x\t", (i<<1));
-            for (k=2; k>1; k=k-1) begin
+            for (k=2; k>=1; k=k-1) begin
                 /** (a) load data to SRAM_IO_CTRL from PC **/
                 // C code modify control word
                 #(CLK_PERIOD) CTRL_BGN = 1;
@@ -381,10 +381,10 @@ module SYS_PC_READ_WRT_SRAM_TEST;
                 avs_cpuctrl_writedata[IDX_SCPU_CTRL_MOD1] = 0;
                 avs_cpuctrl_writedata[IDX_SCPU_CTRL_MOD0] = 0;
 
-                tmpi_adder = 10'd240;//(i<<1)+k-1;
+                tmpi_adder = (i<<1)+k-1;//10'd240;//
                 tmpi_all = {tmpi_adder, 8'd100};//{MEMORY_DATA_WIDTH{1'b0}}
                 avs_sram_addr_wrt_writedata = tmpi_adder;
-                avs_sram_data_wrt_writedata = 8'd131;//{MEMORY_DATA_WIDTH{1'b1}}
+                avs_sram_data_wrt_writedata = i_mem.I_RAM[tmpi_adder];//8'd131;//{MEMORY_DATA_WIDTH{1'b1}}
                 // C code triger FPGA gen Load signal
                 #(CLK_PERIOD*10) avs_cpuctrl_write = 1;
                 avs_cpuctrl_writedata[IDX_SCPU_CTRL_LOAD] = 1;
@@ -512,12 +512,17 @@ module SYS_PC_READ_WRT_SRAM_TEST;
                 end
                 end
             end
+            
+            if (i == 0)
+                i = DEFAULT_PC_ADDR;
+            else
+                i = i + 1;
         end
 
         // (5) Read data from SRAM
-        for (i = 0; i<2; i=i+1) begin//DEFAULT_PC_ADDR
+        for (i = DEFAULT_PC_ADDR; i<DEFAULT_PC_ADDR+2; i=i+1) begin//DEFAULT_PC_ADDR
             //$write("%4x\t", (i<<1));
-            for (k=2; k>1; k=k-1) begin
+            for (k=2; k>=1; k=k-1) begin
                 /** (a) load data to SRAM_IO_CTRL from PC **/
                 // C code modify control word
                 #(CLK_PERIOD) CTRL_BGN = 1;
@@ -526,7 +531,7 @@ module SYS_PC_READ_WRT_SRAM_TEST;
                 avs_cpuctrl_writedata[IDX_SCPU_CTRL_MOD1] = 0;
                 avs_cpuctrl_writedata[IDX_SCPU_CTRL_MOD0] = 0;
 
-                tmpi_adder = 10'd240;//(i<<1)+k-1;
+                tmpi_adder = (i<<1)+k-1;//10'd240;//
                 tmpi_all = {tmpi_adder, 8'd100};//{MEMORY_DATA_WIDTH{1'b0}}
                 avs_sram_addr_wrt_writedata = tmpi_adder;
                 avs_sram_data_wrt_writedata = 8'd255;//{MEMORY_DATA_WIDTH{1'b1}}
@@ -664,7 +669,7 @@ module SYS_PC_READ_WRT_SRAM_TEST;
                 avs_cpuctrl_writedata[IDX_SCPU_CTRL_MOD1] = 1;
                 avs_cpuctrl_writedata[IDX_SCPU_CTRL_MOD0] = 0;
                 
-                tmpi_adder = 10'd0;//(i<<1)+k-1;
+                tmpi_adder = (i<<1)+k-1;//10'd0;//
                 tmpi_all = {tmpi_adder, 8'd0};//{MEMORY_DATA_WIDTH{1'b0}}
                 avs_sram_addr_wrt_writedata = tmpi_adder;
                 avs_sram_data_wrt_writedata = 8'd0;//{MEMORY_DATA_WIDTH{1'b1}}
@@ -728,7 +733,12 @@ module SYS_PC_READ_WRT_SRAM_TEST;
                 
                 $write("%10b ",avs_sram_addr_rd_readdata[MEMORY_ADDR_WIDTH-1:0]);
                 $write("%8b ", avs_sram_data_rd_readdata[MEMORY_DATA_WIDTH-1:0]);
-                $write("Loop i=%d\n", i);
+                $write("Addr =0x%.3x\n", tmpi_adder);
+                
+                if (avs_sram_data_rd_readdata[MEMORY_DATA_WIDTH-1:0] == i_mem.I_RAM[tmpi_adder])
+                    error_cnt = error_cnt;
+                else
+                    error_cnt = error_cnt + 1;
             end
         end
         // if (k == 1) begin
@@ -739,13 +749,13 @@ module SYS_PC_READ_WRT_SRAM_TEST;
         // end
         
         // only check at the last round
-        if (8'd131 == avs_sram_data_rd_readdata[MEMORY_DATA_WIDTH-1:0])
-            $write("\t<--- Read SRAM Test Correct!");
-        else begin
-            $write("\t<--- Read SRAM Test Wrong!");
-            error_cnt = error_cnt + 1;
-        end
-        $display("");
+        // if (8'd131 == avs_sram_data_rd_readdata[MEMORY_DATA_WIDTH-1:0])
+            // $write("\t<--- Read SRAM Test Correct!");
+        // else begin
+            // $write("\t<--- Read SRAM Test Wrong!");
+            // error_cnt = error_cnt + 1;
+        // end
+        // $display("");
             
         // (5) Judge Final Test Result
         if (error_cnt) begin

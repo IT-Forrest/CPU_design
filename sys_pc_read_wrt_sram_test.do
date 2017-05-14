@@ -59,7 +59,7 @@ add wave -noupdate /SYS_PC_READ_WRT_SRAM_TEST/scpu_sram_alu/scpu_ctrl_spi/uut/cl
 add wave -noupdate /SYS_PC_READ_WRT_SRAM_TEST/scpu_sram_alu/scpu_ctrl_spi/uut/state
 add wave -noupdate /SYS_PC_READ_WRT_SRAM_TEST/scpu_sram_alu/scpu_ctrl_spi/ALU_01/FOUT
 TreeUpdate [SetDefaultTree]
-WaveRestoreCursors {{Cursor 1} {642600 ps} 0} {{Cursor 2} {71070160 ps} 0}
+WaveRestoreCursors {{Cursor 1} {950894000 ps} 0} {{Cursor 2} {1909054000 ps} 0}
 quietly wave cursor active 2
 configure wave -namecolwidth 250
 configure wave -valuecolwidth 102
@@ -75,4 +75,4 @@ configure wave -griddelta 40
 configure wave -timeline 0
 configure wave -timelineunits ps
 update
-WaveRestoreZoom {0 ps} {119112 ns}
+WaveRestoreZoom {961772250 ps} {2478917250 ps}
