@@ -67,7 +67,7 @@ module  SYS_SHARE_SUPERALU_MULT_TEST();
         .CTRL_MODE      ({coe_ctrl_mod1_export,coe_ctrl_mod0_export}),
         .CTRL_BGN       (coe_ctrl_bgn_export),
         .CPU_BGN        (CPU_BGN    ),
-        .LOAD_N         (!coe_ctrl_load_export),
+        .LOAD_N         (coe_ctrl_load_export),
         .CTRL_SI        (coe_ctrl_si_export),
         .APP_DONE       (1'b0   ),
         .ADC_PI         (ADC_PI     ),
