@@ -202,7 +202,7 @@ module SRAM_IO_CTRL_LOGIC(
     
     assign  coe_cpu_bgn_export   = reg_cpu_bgn_dly[0];//reg_cpu_bgn
     assign  coe_ctrl_bgn_export  = reg_ctrl_bgn_dly;//reg_ctrl_bgn
-    assign  coe_ctrl_load_export = is_LOAD;
+    assign  coe_ctrl_load_export = !is_LOAD;
     assign  coe_ctrl_si_export   = reg_sram_all[0];
     assign  coe_ctrl_mod1_export = (reg_ctrl_mode[0])?reg_ctrl_mode[1]:1'b0;
     assign  coe_ctrl_mod0_export = reg_ctrl_mode[0];

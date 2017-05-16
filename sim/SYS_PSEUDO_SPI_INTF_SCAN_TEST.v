@@ -189,7 +189,7 @@ module  SYS_PSEUDO_SPI_INTF_SCAN_TEST();
 
     assign  #VIRTUAL_DLY    CTRL_MODE_dly = {coe_ctrl_mod1_export,coe_ctrl_mod0_export};
     assign  #VIRTUAL_DLY    CTRL_BGN_dly = coe_ctrl_bgn_export;
-    assign  #VIRTUAL_DLY    LOAD_N_dly = !coe_ctrl_load_export;
+    assign  #VIRTUAL_DLY    LOAD_N_dly = coe_ctrl_load_export;
     assign  #VIRTUAL_DLY    CTRL_SI_dly = coe_ctrl_si_export;
     
     assign  #VIRTUAL_DLY    coe_ctrl_rdy_export = CTRL_RDY;

@@ -131,7 +131,7 @@ module SRAM_IO_CTRL_LOGIC_TEST;
     assign  #2 clk_dly = clk;
     assign  #2 ctrl_bgn_dly  = coe_ctrl_bgn_export;
     assign  #2 ctrl_mods_dly = {coe_ctrl_mod1_export,coe_ctrl_mod0_export};
-    assign  #2 ctrl_load_dly = (!coe_ctrl_load_export);// might invert later
+    assign  #2 ctrl_load_dly = (coe_ctrl_load_export);// might invert later
     assign  #2 ctrl_si_dly   = coe_ctrl_si_export;
     assign  #2 coe_ctrl_so_export  = ctrl_so_dly;
     assign  #2 coe_ctrl_rdy_export = ctrl_rdy_dly;
