@@ -794,9 +794,9 @@ module SYS_PC_WRT_SRAM_SUM10_VG_TEST;
         
         // (5) Judge Final Test Result
         if (16'd5050 == tmpi_datain)
-            $write("\t<--- Read SRAM Test Correct!");
+            $write("\t<--- Read SRAM Test Passed!");
         else begin
-            $write("\t<--- Read SRAM Test Wrong!");
+            $write("\t<--- Read SRAM Test Failed!");
         end
         $display("");
 
