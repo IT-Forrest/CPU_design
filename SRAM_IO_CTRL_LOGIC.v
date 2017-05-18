@@ -172,7 +172,7 @@ module SRAM_IO_CTRL_LOGIC(
     reg         [CT_WIDTH-1:0]  reg_sram_addr;
     reg         [CT_WIDTH-1:0]  reg_sram_data;
     reg         [ADC_DATA_WIDTH-1:0]  reg_adc_value;
-    reg         [1:0]   reg_app_done_dly;
+    reg         reg_app_done_dly;
     //reg         reg_app_done_keep;// keep the app done signal all the time
             
     reg         [REG_BITS_WIDTH-1:0]  reg_sram_all;//addr+instruction
@@ -213,7 +213,7 @@ module SRAM_IO_CTRL_LOGIC(
     assign  coe_test_mux0_export = reg_test_mux[0];
     assign  coe_test_mux1_export = reg_test_mux[1];
     assign  coe_test_mux2_export = reg_test_mux[2];
-    assign  coe_app_done_export  = reg_app_done_dly[0];
+    assign  coe_app_done_export  = reg_app_done_dly;
     
 	wire	SEL_B;//
 	assign	SEL_B = 1'b0;
@@ -412,23 +412,25 @@ module SRAM_IO_CTRL_LOGIC(
         end
     end
     
+    //************* app_done only when app_start active ******************//
     always @(negedge coe_clk_export)//csi_clk
     begin
-        if ((~rsi_reset_n) | (~reg_APP_DONE))
-            reg_app_done_dly <= 2'b00;
-        else if (reg_APP_DONE & (reg_app_done_dly == 2'b00))
-            reg_app_done_dly <= 2'b01;
+        if (~rsi_reset_n)
+            reg_app_done_dly <= 1'b0;
+        else if (!coe_app_start_export)
+            reg_app_done_dly <= 1'b0;
         else
-            reg_app_done_dly <= 2'b10;
+            reg_app_done_dly <= reg_APP_DONE;
     end
     
     //************* make IDX_SCPU_APP_DONE only works for one cycle *************//
     always @(posedge csi_clk)
     begin
         if (~rsi_reset_n)
-        begin
             reg_APP_DONE <= 1'b0;
-        end else if (avs_cpuctrl_write)
+        else if (!coe_app_start_export)
+            reg_APP_DONE <= 1'b0;
+        else if (avs_cpuctrl_write)
         begin
             reg_APP_DONE <= avs_cpuctrl_writedata[IDX_SCPU_APP_DONE];
         end

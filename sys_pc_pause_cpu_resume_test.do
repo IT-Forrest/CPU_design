@@ -51,6 +51,7 @@ add wave -noupdate /SYS_PC_PAUSE_CPU_RESUME_TEST/fpga/reg_clk_discrt
 add wave -noupdate /SYS_PC_PAUSE_CPU_RESUME_TEST/fpga/is_start_cnt
 add wave -noupdate /SYS_PC_PAUSE_CPU_RESUME_TEST/fpga/is_1time_init
 add wave -noupdate /SYS_PC_PAUSE_CPU_RESUME_TEST/fpga/reg_clk_1time_dly
+add wave -noupdate /SYS_PC_PAUSE_CPU_RESUME_TEST/fpga/coe_app_done_export
 add wave -noupdate -divider uut_cpu
 add wave -noupdate {/SYS_PC_PAUSE_CPU_RESUME_TEST/scpu_sram_alu/scpu_ctrl_spi/uut/nxt[1]}
 add wave -noupdate {/SYS_PC_PAUSE_CPU_RESUME_TEST/scpu_sram_alu/scpu_ctrl_spi/uut/nxt[0]}
@@ -59,7 +60,7 @@ add wave -noupdate /SYS_PC_PAUSE_CPU_RESUME_TEST/scpu_sram_alu/scpu_ctrl_spi/uut
 add wave -noupdate /SYS_PC_PAUSE_CPU_RESUME_TEST/scpu_sram_alu/scpu_ctrl_spi/uut/state
 add wave -noupdate /SYS_PC_PAUSE_CPU_RESUME_TEST/scpu_sram_alu/scpu_ctrl_spi/ALU_01/FOUT
 TreeUpdate [SetDefaultTree]
-WaveRestoreCursors {{Cursor 1} {950894000 ps} 0} {{Cursor 2} {1909054000 ps} 0}
+WaveRestoreCursors {{Cursor 1} {248260091 ps} 0} {{Cursor 2} {0 ps} 0}
 quietly wave cursor active 2
 configure wave -namecolwidth 250
 configure wave -valuecolwidth 102
@@ -75,4 +76,4 @@ configure wave -griddelta 40
 configure wave -timeline 0
 configure wave -timelineunits ps
 update
-WaveRestoreZoom {961772250 ps} {2478917250 ps}
+WaveRestoreZoom {0 ps} {240240 ns}

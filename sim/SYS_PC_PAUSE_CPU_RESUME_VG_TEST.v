@@ -1,7 +1,7 @@
 //+FHDR****************************************************************
 // ECE department, TAMU
 // --------------------------------------------------------------------
-// FILE NAME    : SYS_PC_PAUSE_CPU_RESUME_TEST.v
+// FILE NAME    : SYS_PC_PAUSE_CPU_RESUME_VG_TEST.v
 // AUTHER       : Jiafan Wang
 // DATE         : 05/09/2017
 // VERSION      : 1.0
@@ -19,13 +19,13 @@
 `include    "../SRAM_IO_CTRL.v"
 `include    "../PSEUDO_SPI_INTF.v"
 `include    "../SCPU_8BIT_ALU_CTRL_SPI.v"
-`include    "../SCPU_SRAM_8BIT_ALU_SPI_TOP.v"
-//`include    "../SCPU_SRAM_8BIT_ALU_SPI_TOP_VG.v"
+//`include    "../SCPU_SRAM_8BIT_ALU_SPI_TOP.v"
+`include    "../SCPU_SRAM_8BIT_ALU_SPI_TOP_VG.v"
 `include    "../SRAM_IO_CTRL_LOGIC.v"
 `include    "../I_MEMORY_8bit.v"
 `include    "../SC_CELL_V3.v"
 
-module SYS_PC_PAUSE_CPU_RESUME_TEST;
+module SYS_PC_PAUSE_CPU_RESUME_VG_TEST;
     parameter   MEMORY_DATA_WIDTH   = 8,
                 MEMORY_ADDR_WIDTH   = 10,
                 REG_BITS_WIDTH = MEMORY_ADDR_WIDTH + MEMORY_DATA_WIDTH;
@@ -69,7 +69,7 @@ module SYS_PC_PAUSE_CPU_RESUME_TEST;
     wire    [1:0]   CTRL_MODE_dly;
     //wire    [1:0]   CPU_NXT_dly;
     
-    SCPU_SRAM_8BIT_ALU_SPI_TOP  scpu_sram_alu(
+    SCPU_SRAM_8BIT_ALU_SPI_TOP_VG  scpu_sram_alu(
         .CLK            (CSI_CLK_dly),
         .RST_N          (RST_N_dly  ),//RST_N_dly
         .CTRL_MODE      (CTRL_MODE_dly),
