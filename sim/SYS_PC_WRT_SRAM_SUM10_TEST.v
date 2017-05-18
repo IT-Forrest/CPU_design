@@ -269,16 +269,16 @@ module SYS_PC_WRT_SRAM_SUM10_TEST;
         i_mem.I_RAM[ i] = tmpi_datain[15:8]; i = 6;
 
         i= DEFAULT_PC_ADDR*2;
-        tmpi_datain = {`SET, `gr3, 4'b0000, 4'b0100};//reset the loop controller `gr7
+        tmpi_datain = {`SET, `gr3, 4'b0110, 4'b0100};//reset the loop controller `gr7
         i_mem.I_RAM[ i] = tmpi_datain[7:0];  i = 1 + DEFAULT_PC_ADDR*2;
         i_mem.I_RAM[ i] = tmpi_datain[15:8]; i = 2 + DEFAULT_PC_ADDR*2;
-        tmpi_datain = {`SET, `gr1, 4'b0000, 4'b0000};//reset the sum value
+        tmpi_datain = {`SET, `gr5, 4'b0000, 4'b0000};//reset the sum value
         i_mem.I_RAM[ i] = tmpi_datain[7:0];  i = 3 + DEFAULT_PC_ADDR*2;
         i_mem.I_RAM[ i] = tmpi_datain[15:8]; i = 4 + DEFAULT_PC_ADDR*2;
         // i_mem.I_RAM[ 2] = {`NOP, 11'b000_0000_0000};
         // i_mem.I_RAM[ 3] = {`NOP, 11'b000_0000_0000};
         // i_mem.I_RAM[ 4] = {`NOP, 11'b000_0000_0000};
-        tmpi_datain = {`ADD, `gr1, 1'b0, `gr1, 1'b0, `gr3};//set the loop controller `gr7 = 25
+        tmpi_datain = {`ADD, `gr5, 1'b0, `gr5, 1'b0, `gr3};//set the loop controller `gr7 = 25
         i_mem.I_RAM[ i] = tmpi_datain[7:0];  i = 5 + DEFAULT_PC_ADDR*2;
         i_mem.I_RAM[ i] = tmpi_datain[15:8]; i = 6 + DEFAULT_PC_ADDR*2;
         // i_mem.I_RAM[ 7] = {`NOP, 11'b000_0000_0000};
@@ -295,7 +295,7 @@ module SYS_PC_WRT_SRAM_SUM10_TEST;
         // i_mem.I_RAM[11] = {`NOP, 11'b000_0000_0000};
         // i_mem.I_RAM[12] = {`NOP, 11'b000_0000_0000};
         // i_mem.I_RAM[13] = {`NOP, 11'b000_0000_0000};
-        tmpi_datain = {`STORE, `gr1, 1'b0, `gr0, 4'b0010};//if (`gr7 != 0) go to I_RAM[ 9];
+        tmpi_datain = {`STORE, `gr5, 1'b0, `gr0, 4'b0010};//if (`gr7 != 0) go to I_RAM[ 9];
         i_mem.I_RAM[ i] = tmpi_datain[7:0];  i = 11+ DEFAULT_PC_ADDR*2;
         i_mem.I_RAM[ i] = tmpi_datain[15:8]; i = 12+ DEFAULT_PC_ADDR*2;
         // i_mem.I_RAM[15] = {`NOP, 11'b000_0000_0000};
@@ -792,7 +792,7 @@ module SYS_PC_WRT_SRAM_SUM10_TEST;
         end
         
         // (5) Judge Final Test Result
-        if (16'd10 == tmpi_datain)
+        if (16'd5050 == tmpi_datain)
             $write("\t<--- Read SRAM Test Correct!");
         else begin
             $write("\t<--- Read SRAM Test Wrong!");
