@@ -14133,6 +14133,26 @@ Model Technology ModelSim ALTERA vlog 10.4d Compiler 2015.12 Dec 30 2015
 Top level modules:
 	SRAM_IO_CTRL_RA1512_TEST
 
+} {} {}} {F:/05.Code_Battle/04. Verilog/CPU_design/sim/SCPU_MIMIC_CF_TOP_TEST.v} {2 {vlog -work work -stats=none {F:/05.Code_Battle/04. Verilog/CPU_design/sim/SCPU_MIMIC_CF_TOP_TEST.v}
+Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
+-- Compiling module RA1SHD_IBM1024X8
+-- Compiling module SERIAL_CPU_8BIT
+-- Compiling module SHARE_SUPERALU
+-- Compiling module SRAM_IO_CTRL
+-- Compiling module PSEUDO_SPT_INTF
+-- Compiling module SCPU_8BIT_ALU_CTRL_SPI
+-- Compiling module SCPU_SRAM_8BIT_ALU_SPI_TOP
+-- Compiling module SRAM_IO_CTRL_LOGIC
+-- Compiling module SC_CELL_V3
+-- Compiling module I_MEMORY_CF_TASK_8BIT
+-- Compiling module MIMIC_ADC_VAL
+** Warning: F:/05.Code_Battle/04. Verilog/CPU_design/sim/SCPU_MIMIC_CF_TOP_TEST.v(111): (vlog-2600) [RDGN] - Redundant digits in numeric literal.
+
+-- Compiling module SCPU_MIMIC_CF_TOP_TEST
+
+Top level modules:
+	SCPU_MIMIC_CF_TOP_TEST
+
 } {} {}} {F:/05. Code Battle/04. Verilog/CPU_design/I_MEMORY.v} {1 {vlog -work work -stats=none {F:/05. Code Battle/04. Verilog/CPU_design/I_MEMORY.v}
 Model Technology ModelSim ALTERA vlog 10.4d Compiler 2015.12 Dec 30 2015
 -- Compiling module I_MEMORY
@@ -14155,26 +14175,6 @@ Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
 
 Top level modules:
 	RA1SHD_IBM512X8
-
-} {} {}} {F:/05.Code_Battle/04. Verilog/CPU_design/sim/SCPU_MIMIC_CF_TOP_TEST.v} {2 {vlog -work work -stats=none {F:/05.Code_Battle/04. Verilog/CPU_design/sim/SCPU_MIMIC_CF_TOP_TEST.v}
-Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
--- Compiling module RA1SHD_IBM1024X8
--- Compiling module SERIAL_CPU_8BIT
--- Compiling module SHARE_SUPERALU
--- Compiling module SRAM_IO_CTRL
--- Compiling module PSEUDO_SPT_INTF
--- Compiling module SCPU_8BIT_ALU_CTRL_SPI
--- Compiling module SCPU_SRAM_8BIT_ALU_SPI_TOP
--- Compiling module SRAM_IO_CTRL_LOGIC
--- Compiling module SC_CELL_V3
--- Compiling module I_MEMORY_CF_TASK_8BIT
--- Compiling module MIMIC_ADC_VAL
-** Warning: F:/05.Code_Battle/04. Verilog/CPU_design/sim/SCPU_MIMIC_CF_TOP_TEST.v(108): (vlog-2600) [RDGN] - Redundant digits in numeric literal.
-
--- Compiling module SCPU_MIMIC_CF_TOP_TEST
-
-Top level modules:
-	SCPU_MIMIC_CF_TOP_TEST
 
 } {} {}} {F:/05.Code_Battle/04. Verilog/CPU_design/sim/SYS_PC_WRT_SRAM_SUM10_TEST.v} {2 {vlog -work work -stats=none {F:/05.Code_Battle/04. Verilog/CPU_design/sim/SYS_PC_WRT_SRAM_SUM10_TEST.v}
 Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014

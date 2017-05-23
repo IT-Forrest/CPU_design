@@ -353,8 +353,8 @@ module  I_MEMORY_CF_TASK_8BIT(
     /* (Step three) */
         //Left Shift `gr6 and use as the threshold
         tmpi_datain = {`SLL, `gr6, 1'b0, `gr6, 4'b0001};
-        i_mem.I_RAM[ i] = tmpi_datain[7:0];  i = 121 + DEFAULT_PC_ADDR*2;
-        i_mem.I_RAM[ i] = tmpi_datain[15:8]; i = 122 + DEFAULT_PC_ADDR*2;
+        mem_out[ i] = tmpi_datain[7:0];  i = 121 + DEFAULT_PC_ADDR*2;
+        mem_out[ i] = tmpi_datain[15:8]; i = 122 + DEFAULT_PC_ADDR*2;
 
         // compare the result with threshold 255
         tmpi_datain = {`CMP, 4'b0000, `gr6, 1'b0, `gr7};
