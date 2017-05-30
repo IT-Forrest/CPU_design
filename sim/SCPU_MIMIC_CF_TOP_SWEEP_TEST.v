@@ -900,7 +900,7 @@ module  SCPU_MIMIC_CF_TOP_SWEEP_TEST();
         end
         
         // (5) Judge Final Test Result
-        if (error_cnt)
+        if (error_cnt || (q!= 1024))
             $display("Test Failed!");
         else
             $display("Test Passed!");
