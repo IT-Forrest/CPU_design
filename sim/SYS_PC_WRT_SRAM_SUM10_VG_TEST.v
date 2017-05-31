@@ -330,9 +330,34 @@ module SYS_PC_WRT_SRAM_SUM10_VG_TEST;
         i_mem.I_RAM[ i] = tmpi_datain[7:0];  i = 23 + DEFAULT_PC_ADDR*2;
         i_mem.I_RAM[ i] = tmpi_datain[15:8]; i = 24 + DEFAULT_PC_ADDR*2;
         
+    tmpi_datain = {`SUB, `gr6, 1'b0, `gr6, 1'b0, `gr6};
+    i_mem.I_RAM[ i] = tmpi_datain[7:0];  i = 25 + DEFAULT_PC_ADDR*2;
+    i_mem.I_RAM[ i] = tmpi_datain[15:8]; i = 26 + DEFAULT_PC_ADDR*2;
+
+    tmpi_datain = {`SUB, `gr7, 1'b0, `gr7, 1'b0, `gr7};
+    i_mem.I_RAM[ i] = tmpi_datain[7:0];  i = 27 + DEFAULT_PC_ADDR*2;
+    i_mem.I_RAM[ i] = tmpi_datain[15:8]; i = 28 + DEFAULT_PC_ADDR*2;
+
+    tmpi_datain = {`SET, `gr6, 4'b0100, 4'b0000};
+    i_mem.I_RAM[ i] = tmpi_datain[7:0];  i = 29 + DEFAULT_PC_ADDR*2;
+    i_mem.I_RAM[ i] = tmpi_datain[15:8]; i = 30 + DEFAULT_PC_ADDR*2;
+        
+    tmpi_datain = {`SLL, `gr6, 1'b0, `gr6, 4'b0001};
+    i_mem.I_RAM[ i] = tmpi_datain[7:0];  i = 31 + DEFAULT_PC_ADDR*2;
+    i_mem.I_RAM[ i] = tmpi_datain[15:8]; i = 32 + DEFAULT_PC_ADDR*2;
+    
+    //tmpi_datain = {`ADD, `gr7, 1'b0, `gr6, 1'b0, `gr7};
+    tmpi_datain = {`SET, `gr7, 4'b1111, 4'b1111};
+    i_mem.I_RAM[ i] = tmpi_datain[7:0];  i = 33 + DEFAULT_PC_ADDR*2;
+    i_mem.I_RAM[ i] = tmpi_datain[15:8]; i = 34 + DEFAULT_PC_ADDR*2;
+        
+    tmpi_datain = {`SUB, `gr0, 1'b0, `gr6, 1'b0, `gr7};
+    i_mem.I_RAM[ i] = tmpi_datain[7:0];  i = 35 + DEFAULT_PC_ADDR*2;
+    i_mem.I_RAM[ i] = tmpi_datain[15:8]; i = 36 + DEFAULT_PC_ADDR*2;
+        
         tmpi_datain = {`HALT, 11'b000_0000_0000};//due to the pipeline, we need to add many `NOP to the instruction set
-        i_mem.I_RAM[ i] = tmpi_datain[7:0];  i = 25+ DEFAULT_PC_ADDR*2;
-        i_mem.I_RAM[ i] = tmpi_datain[15:8]; i = 26+ DEFAULT_PC_ADDR*2;
+        i_mem.I_RAM[ i] = tmpi_datain[7:0];  i = 37+ DEFAULT_PC_ADDR*2;
+        i_mem.I_RAM[ i] = tmpi_datain[15:8]; i = 38+ DEFAULT_PC_ADDR*2;
         // i_mem.I_RAM[19] = {`NOP, 11'b000_0000_0000};
         // i_mem.I_RAM[20] = {`NOP, 11'b000_0000_0000};
         // i_mem.I_RAM[21] = {`NOP, 11'b000_0000_0000};
@@ -373,7 +398,7 @@ module SYS_PC_WRT_SRAM_SUM10_VG_TEST;
         #(CLK_PERIOD*avs_cntsclk_writedata*5);// wait enough time
         
         // (2) write data to SRAM
-        for (i = 0; i<13+ DEFAULT_PC_ADDR; i=i) begin//DEFAULT_PC_ADDR
+        for (i = 0; i<19+ DEFAULT_PC_ADDR; i=i) begin//DEFAULT_PC_ADDR
             //$write("%4x\t", (i<<1));
             for (k=2; k>=1; k=k-1) begin
                 /** (a) load data to SRAM_IO_CTRL from PC **/
