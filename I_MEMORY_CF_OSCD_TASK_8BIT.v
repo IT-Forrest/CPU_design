@@ -110,7 +110,7 @@ module  I_MEMORY_CF_OSCD_TASK_8BIT(
     mem_out[ i] = tmpi_datain[15:8]; i = 26 + DEFAULT_PC_ADDR*2;
 
     ////if (gr7 < gr0) do normal process: CORDIC + Division
-    tmpi_datain = {`BN, `gr1, 4'b0010, 4'b1000};//gr1 must be all 0's
+    tmpi_datain = {`BN, `gr1, 4'b0100, 4'b0100};//gr1 must be all 0's
     mem_out[ i] = tmpi_datain[7:0];  i = 27 + DEFAULT_PC_ADDR*2;
     mem_out[ i] = tmpi_datain[15:8]; i = 28 + DEFAULT_PC_ADDR*2;
 
@@ -124,7 +124,7 @@ module  I_MEMORY_CF_OSCD_TASK_8BIT(
     mem_out[ i] = tmpi_datain[15:8]; i = 32 + DEFAULT_PC_ADDR*2;
         
     ////if (gr6 < gr0) do normal process: CORDIC + Division
-    tmpi_datain = {`BN, `gr1, 4'b0010, 4'b1000};//gr1 must be all 0's
+    tmpi_datain = {`BN, `gr1, 4'b0100, 4'b0100};//gr1 must be all 0's
     mem_out[ i] = tmpi_datain[7:0];  i = 33 + DEFAULT_PC_ADDR*2;
     mem_out[ i] = tmpi_datain[15:8]; i = 34 + DEFAULT_PC_ADDR*2;
     
@@ -189,7 +189,7 @@ module  I_MEMORY_CF_OSCD_TASK_8BIT(
     mem_out[ i] = tmpi_datain[15:8]; i = 58 + DEFAULT_PC_ADDR*2;
     
     //if (I_o >= I_s) then jump to the next
-    tmpi_datain = {`BNC, `gr0, 4'b0101, 4'b0110};
+    tmpi_datain = {`BNC, `gr0, 4'b0011, 4'b1101};
     mem_out[ i] = tmpi_datain[7:0];  i = 59 + DEFAULT_PC_ADDR*2;
     mem_out[ i] = tmpi_datain[15:8]; i = 60 + DEFAULT_PC_ADDR*2;
     
@@ -205,13 +205,13 @@ module  I_MEMORY_CF_OSCD_TASK_8BIT(
     mem_out[ i] = tmpi_datain[15:8]; i = 64 + DEFAULT_PC_ADDR*2;
     
     //if (Q_o >= Q_s) then jump to the next
-    tmpi_datain = {`BNC, `gr0, 4'b0101, 4'b1001};
+    tmpi_datain = {`BNC, `gr0, 4'b0100, 4'b0000};
     mem_out[ i] = tmpi_datain[7:0];  i = 65 + DEFAULT_PC_ADDR*2;
     mem_out[ i] = tmpi_datain[15:8]; i = 66 + DEFAULT_PC_ADDR*2;
     
     //else use gr0 - (gr5) ..........  ABS will make this easier
     // the result is negative, revert it
-    tmpi_datain = {`SUB, `gr5 1'b0, `gr0, 1'b0, `gr5};
+    tmpi_datain = {`SUB, `gr5, 1'b0, `gr0, 1'b0, `gr5};
     mem_out[ i] = tmpi_datain[7:0];  i = 67 + DEFAULT_PC_ADDR*2;
     mem_out[ i] = tmpi_datain[15:8]; i = 68 + DEFAULT_PC_ADDR*2;
     
@@ -231,7 +231,7 @@ module  I_MEMORY_CF_OSCD_TASK_8BIT(
     mem_out[ i] = tmpi_datain[15:8]; i = 74 + DEFAULT_PC_ADDR*2;
     
     //if (gr4 >= gr0) then jump to ANA = 255
-    tmpi_datain = {`BNC, `gr1, 4'b0101, 4'b1001};
+    tmpi_datain = {`BNC, `gr1, 4'b0111, 4'b1111};
     mem_out[ i] = tmpi_datain[7:0];  i = 75 + DEFAULT_PC_ADDR*2;
     mem_out[ i] = tmpi_datain[15:8]; i = 76 + DEFAULT_PC_ADDR*2;
     
@@ -263,11 +263,11 @@ module  I_MEMORY_CF_OSCD_TASK_8BIT(
         mem_out[ i] = tmpi_datain[15:8]; i = 88 + DEFAULT_PC_ADDR*2;
         
         //if (`gr6 == 0) finish the Cordic and jump to the division;
-        //else save the Cordic result of sqrt(Qo^2+Io^2) to gr5;
-        tmpi_datain = {`BZ, `gr0, 4'b0011, 4'b0001};
+        tmpi_datain = {`BZ, `gr0, 4'b0100, 4'b1110};
         mem_out[ i] = tmpi_datain[7:0];  i = 89 + DEFAULT_PC_ADDR*2;
         mem_out[ i] = tmpi_datain[15:8]; i = 90 + DEFAULT_PC_ADDR*2;
         
+        //else save the Cordic result of sqrt(Qo^2+Io^2) to gr5;
         //Load Amp data_A to (`gr5) as FOUT, this is the dividend
         tmpi_datain = {`LIOA, `gr5, 4'b0000, 4'b0000};
         mem_out[ i] = tmpi_datain[7:0];  i = 91 + DEFAULT_PC_ADDR*2;
@@ -339,10 +339,10 @@ module  I_MEMORY_CF_OSCD_TASK_8BIT(
         mem_out[ i] = tmpi_datain[15:8]; i = 118 + DEFAULT_PC_ADDR*2;
 
         //if (`gr7 != 0) return back to frequency sampling& calc
-        //else start the summation and multiplication of costfunc;
         tmpi_datain = {`BNZ, `gr0, 4'b0010, 4'b0001};
         mem_out[ i] = tmpi_datain[7:0];  i = 119 + DEFAULT_PC_ADDR*2;
         mem_out[ i] = tmpi_datain[15:8]; i = 120 + DEFAULT_PC_ADDR*2;
+        //else start the summation and multiplication of costfunc;
 
     /* (Step two) Do multiplication and summation*/ 
         //(a) readback A_4 in gr2
@@ -418,7 +418,7 @@ module  I_MEMORY_CF_OSCD_TASK_8BIT(
 
         //if (gr3 >= gr4) then jump to the next
         //else use gr0 - (gr7) ..........  ABS will make this easier
-        tmpi_datain = {`BNC, `gr0, 4'b0100, 4'b1101};
+        tmpi_datain = {`BNC, `gr0, 4'b0110, 4'b1010};
         mem_out[ i] = tmpi_datain[7:0];  i = 149 + DEFAULT_PC_ADDR*2;
         mem_out[ i] = tmpi_datain[15:8]; i = 150 + DEFAULT_PC_ADDR*2;
         
@@ -434,7 +434,7 @@ module  I_MEMORY_CF_OSCD_TASK_8BIT(
         
         //if (gr2 >= gr5) then jump to the next
         //else use gr0 - (gr4) ..........  ABS will make this easier
-        tmpi_datain = {`BNC, `gr0, 4'b0101, 4'b0000};
+        tmpi_datain = {`BNC, `gr0, 4'b0110, 4'b1101};
         mem_out[ i] = tmpi_datain[7:0];  i = 155 + DEFAULT_PC_ADDR*2;
         mem_out[ i] = tmpi_datain[15:8]; i = 156 + DEFAULT_PC_ADDR*2;
 
@@ -460,7 +460,7 @@ module  I_MEMORY_CF_OSCD_TASK_8BIT(
         
         //if (gr3 >= gr5) then jump to the next
         //else use gr0 - (gr2) ..........  ABS will make this easier
-        tmpi_datain = {`BNC, `gr0, 4'b0101, 4'b0101};
+        tmpi_datain = {`BNC, `gr0, 4'b0111, 4'b0010};
         mem_out[ i] = tmpi_datain[7:0];  i = 165 + DEFAULT_PC_ADDR*2;
         mem_out[ i] = tmpi_datain[15:8]; i = 166 + DEFAULT_PC_ADDR*2;
         
@@ -481,7 +481,7 @@ module  I_MEMORY_CF_OSCD_TASK_8BIT(
         
         //if (gr5 >= gr6) then jump to the next
         //else use gr0 - (gr2) ..........  ABS will make this easier
-        tmpi_datain = {`BNC, `gr0, 4'b0101, 4'b1001};
+        tmpi_datain = {`BNC, `gr0, 4'b0111, 4'b0110};
         mem_out[ i] = tmpi_datain[7:0];  i = 173 + DEFAULT_PC_ADDR*2;
         mem_out[ i] = tmpi_datain[15:8]; i = 174 + DEFAULT_PC_ADDR*2;
         
@@ -510,11 +510,11 @@ module  I_MEMORY_CF_OSCD_TASK_8BIT(
         mem_out[ i] = tmpi_datain[15:8]; i = 184 + DEFAULT_PC_ADDR*2;
         
         //if (gr5 >= gr6) then jump to the next
-        //else use gr7 - (gr2) ..........  ABS will make this easier
-        tmpi_datain = {`BNC, `gr0, 4'b0101, 4'b1111};
+        tmpi_datain = {`BNC, `gr0, 4'b0111, 4'b1100};
         mem_out[ i] = tmpi_datain[7:0];  i = 185 + DEFAULT_PC_ADDR*2;
         mem_out[ i] = tmpi_datain[15:8]; i = 186 + DEFAULT_PC_ADDR*2;
         
+        //else use gr7 - (gr2) ..........  ABS will make this easier
         tmpi_datain = {`SUB, `gr7, 1'b0, `gr7, 1'b0, `gr2};
         mem_out[ i] = tmpi_datain[7:0];  i = 187 + DEFAULT_PC_ADDR*2;
         mem_out[ i] = tmpi_datain[15:8]; i = 188 + DEFAULT_PC_ADDR*2;
@@ -532,7 +532,7 @@ module  I_MEMORY_CF_OSCD_TASK_8BIT(
 
         ////if (gr6 >= gr7) then simply use gr7
         ////else truncate gr7 as 255
-        tmpi_datain = {`BNC, `gr0, 4'b0110, 4'b0100};
+        tmpi_datain = {`BNC, `gr0, 4'b1000, 4'b0001};
         mem_out[ i] = tmpi_datain[7:0];  i = 193 + DEFAULT_PC_ADDR*2;
         mem_out[ i] = tmpi_datain[15:8]; i = 194 + DEFAULT_PC_ADDR*2;
 
