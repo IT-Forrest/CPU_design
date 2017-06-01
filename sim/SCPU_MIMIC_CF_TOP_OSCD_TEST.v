@@ -140,12 +140,19 @@ module  SCPU_MIMIC_CF_TOP_OSCD_TEST();
     parameter   CLK_PERIOD          = 20;
     parameter   MAX_SQRT_WIDTH      = 13;
     
+    parameter   OSCD_TOL            = 18;//set gr0 = TOL, by default = 18 or (63)
+    parameter   ADC_DATA_WIDTH      = 10;
+    parameter   ADC_IODATA_NUM      = 16;
+    parameter   ADC_IOOSCD_NUM      = 18;
+
     integer i,j,k,p,adc_addr;
     integer error_cnt;
     reg     [15:0] tmpi_datain; //MEMORY_DATA_WIDTH*2 -1
     reg     [REG_BITS_WIDTH-1:0]  tmpi_all;//addr+instruction
     reg     [9:0]  tmpi_adder;  //MEMORY_ADDR_WIDTH -1
     wire    [7:0]  tmp_mem_data;//MEMORY_DATA_WIDTH-1
+    reg     [ADC_DATA_WIDTH-1:0]    IQ_data[0:ADC_IOOSCD_NUM-1];
+    reg     [ADC_DATA_WIDTH-1:0]    IQ_abs[0:1];
     
    //Set the connecting wire
     reg     CLK;
@@ -603,10 +610,11 @@ module  SCPU_MIMIC_CF_TOP_OSCD_TEST();
         #(CLK_PERIOD*10) avs_cpuctrl_write = 0;
 
         for (j=0; j<1; j=j+1) begin//1024
-            for (k=0; k <18; k=k+1) begin
+            for (k=0; k <18; k=k) begin
                 adc_addr = 0;
                 adc_addr = (j*18)+k;
                 ADC_PI = ADC01.mem_adc[adc_addr];
+                IQ_data[k] = ADC01.mem_adc[adc_addr];
                 // if (j==0)
                     // ADC_PI = 10'd537;//1st ADC data
                 // else
@@ -645,6 +653,20 @@ module  SCPU_MIMIC_CF_TOP_OSCD_TEST();
                 #(CLK_PERIOD*10) avs_cpuctrl_write = 1;
                 avs_cpuctrl_writedata[IDX_SCPU_APP_DONE] = 1'b0;
                 #(CLK_PERIOD*10) avs_cpuctrl_write = 0;
+                    
+                if (k == 3) begin//the OSCD process
+                    IQ_abs[0] = (IQ_data[0]>IQ_data[2])?(IQ_data[0]-IQ_data[2]):(IQ_data[2]-IQ_data[0]);
+                    IQ_abs[1] = (IQ_data[1]>IQ_data[3])?(IQ_data[1]-IQ_data[3]):(IQ_data[3]-IQ_data[1]);
+                    
+                    //set gr0 = TOL, by default = 18 or (63)
+                    if ((IQ_abs[0] + IQ_abs[1]) < OSCD_TOL)
+                        k = k + 1;
+                    else
+                        k=18;//break the for loop
+                end
+                else begin
+                    k = k + 1;
+                end
             end
         end
         
@@ -897,7 +919,6 @@ module  SCPU_MIMIC_CF_TOP_OSCD_TEST();
                 // error_cnt = error_cnt + 1;//2nd ADC data
             $display("ANA_bits = %d", tmpi_datain[9:0]);
         end
-        
         
         // (5) Judge Final Test Result
         if (error_cnt)

@@ -1,7 +1,7 @@
 //+FHDR****************************************************************
 // ECE department, TAMU
 // --------------------------------------------------------------------
-// FILE NAME    : SCPU_MIMIC_CF_TOP_OSCD_SWEEP_TEST.v
+// FILE NAME    : SCPU_MIMIC_CF_TOP_OSCD_SWEEP_VG_TEST.v
 // AUTHER       : Jiafan Wang
 // DATE         : 05/31/2017
 // VERSION      : 1.0
@@ -21,7 +21,7 @@
 `include    "../SRAM_IO_CTRL.v"
 `include    "../PSEUDO_SPI_INTF.v"
 `include    "../SCPU_8BIT_ALU_CTRL_SPI.v"
-`include    "../SCPU_SRAM_8BIT_ALU_SPI_TOP.v"
+`include    "../SCPU_SRAM_8BIT_ALU_SPI_TOP_VG.v"
 `include    "../SRAM_IO_CTRL_LOGIC.v"
 `include    "../SC_CELL_V3.v"
 
@@ -131,7 +131,7 @@ module MIMIC_ADC_VAL(
 endmodule
 
 
-module  SCPU_MIMIC_CF_TOP_OSCD_SWEEP_TEST();
+module  SCPU_MIMIC_CF_TOP_OSCD_SWEEP_VG_TEST();
     parameter   MEMORY_DATA_WIDTH   = 8,
                 MEMORY_ADDR_WIDTH   = 10,
                 REG_BITS_WIDTH = MEMORY_ADDR_WIDTH + MEMORY_DATA_WIDTH;
@@ -185,7 +185,7 @@ module  SCPU_MIMIC_CF_TOP_OSCD_SWEEP_TEST();
     wire    [1:0]   CTRL_MODE_dly;
     //wire    [4:0]   TUNE_X1, TUNE_X2;
 
-    SCPU_SRAM_8BIT_ALU_SPI_TOP  scpu_sram_alu(
+    SCPU_SRAM_8BIT_ALU_SPI_TOP_VG  scpu_sram_alu(
         .CLK            (CSI_CLK_dly),
         .RST_N          (RST_N_dly  ),//RST_N_dly
         .CTRL_MODE      (CTRL_MODE_dly),
@@ -589,9 +589,9 @@ module  SCPU_MIMIC_CF_TOP_OSCD_SWEEP_TEST();
             #(CLK_PERIOD*10) avs_cpuctrl_write = 0;
             
             // 50MHz clock frequency
-            #(CLK_PERIOD*10) avs_cpuctrl_write = 1;
-            avs_cpuctrl_writedata[IDX_SCPU_CLK_CHG] = 1'b0;
-            #(CLK_PERIOD*10) avs_cpuctrl_write = 0;
+            // #(CLK_PERIOD*10) avs_cpuctrl_write = 1;
+            // avs_cpuctrl_writedata[IDX_SCPU_CLK_CHG] = 1'b0;
+            // #(CLK_PERIOD*10) avs_cpuctrl_write = 0;
             
             #(CLK_PERIOD*10) avs_cpuctrl_write = 1;
             avs_cpuctrl_writedata[IDX_SCPU_RST_N] = 1'b1;

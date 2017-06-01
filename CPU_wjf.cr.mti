@@ -20494,6 +20494,29 @@ Model Technology ModelSim ALTERA vlog 10.4d Compiler 2015.12 Dec 30 2015
 Top level modules:
 	I_MEMORY_8BIT
 
+} {} {}} {F:/05.Code_Battle/04. Verilog/CPU_design/sim/SCPU_MIMIC_CF_TOP_OSCD_SWEEP_VG_TEST.v} {2 {vlog -work work -stats=none {F:/05.Code_Battle/04. Verilog/CPU_design/sim/SCPU_MIMIC_CF_TOP_OSCD_SWEEP_VG_TEST.v}
+Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
+-- Compiling module RA1SHD_IBM1024X8
+-- Compiling module SERIAL_CPU_8BIT
+-- Compiling module SHARE_SUPERALU
+-- Compiling module SRAM_IO_CTRL
+-- Compiling module PSEUDO_SPT_INTF
+-- Compiling module SCPU_8BIT_ALU_CTRL_SPI
+-- Compiling module SHARE_SUPERALU_VG
+-- Compiling module SERIAL_CPU_8BIT_VG
+-- Compiling module SCPU_SRAM_8BIT_ALU_SPI_TOP_VG
+-- Compiling module SRAM_IO_CTRL_LOGIC
+-- Compiling module SC_CELL_V3
+-- Compiling module I_MEMORY_CF_OSCD_TASK_8BIT
+-- Compiling module MIMIC_ADC_VAL
+** Warning: F:/05.Code_Battle/04. Verilog/CPU_design/sim/SCPU_MIMIC_CF_TOP_OSCD_SWEEP_VG_TEST.v(112): (vlog-2600) [RDGN] - Redundant digits in numeric literal.
+
+-- Compiling module SCPU_MIMIC_CF_TOP_OSCD_SWEEP_VG_TEST
+
+Top level modules:
+	SCPU_8BIT_ALU_CTRL_SPI
+	SCPU_MIMIC_CF_TOP_OSCD_SWEEP_VG_TEST
+
 } {} {}} {F:/05.Code_Battle/04. Verilog/CPU_design/sim/SCPU_SRAM_8BIT_ALU_SPI_TOP_MUX_TEST.v} {1 {vlog -work work -stats=none {F:/05.Code_Battle/04. Verilog/CPU_design/sim/SCPU_SRAM_8BIT_ALU_SPI_TOP_MUX_TEST.v}
 Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
 -- Compiling module BUFX2TF

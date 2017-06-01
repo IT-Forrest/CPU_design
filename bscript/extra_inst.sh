@@ -5,11 +5,14 @@ echo $MACRO_1
 
 #vfile_name="SYS_PC_PSEUDO_SPI_INTF_SCAN_TEST.v"
 #vfile_name="SYS_PC_MEM_LOOP_8BIT_TEST.v"
-vfile_name="SYS_PC_WRT_SRAM_SUM10_VG_TEST.v"
+#vfile_name="SYS_PC_WRT_SRAM_SUM10_VG_TEST.v"
 #vfile_name="I_MEMORY_CF_TASK_8BIT.v"
 #vfile_name="SYS_PC_PAUSE_CPU_RESUME_VG_TEST.v"
-tcase_name="testcase_3.txt"
-finst_name="testcase_3.bin"
+vfile_name="I_MEMORY_CF_OSCD_TASK_8BIT.v"
+tcase_name="testcase_6.txt"
+finst_name="testcase_6.bin"
+echo $vfile_name
+echo $finst_name
 
 # (1) extract commonds from verilog tb;
 cat $vfile_name | grep 'tmpi_datain = {' > $tcase_name

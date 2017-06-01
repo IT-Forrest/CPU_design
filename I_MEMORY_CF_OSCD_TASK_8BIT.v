@@ -545,7 +545,7 @@ module  I_MEMORY_CF_OSCD_TASK_8BIT(
         mem_out[ i] = tmpi_datain[15:8]; i = 198 + DEFAULT_PC_ADDR*2;
         
         //finally save cost value to overwrite SRAM at 0xb, 0xa;
-        tmpi_datain = {`STORE, `gr7, 1'b0, `gr0, 4'b0101};
+        tmpi_datain = {`STORE, `gr7, 1'b0, `gr1, 4'b0101};//gr1 must be all 0's
         mem_out[ i] = tmpi_datain[7:0];  i = 199 + DEFAULT_PC_ADDR*2;
         mem_out[ i] = tmpi_datain[15:8]; i = 200 + DEFAULT_PC_ADDR*2;
         

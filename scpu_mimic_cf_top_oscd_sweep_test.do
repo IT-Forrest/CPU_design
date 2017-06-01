@@ -60,9 +60,10 @@ add wave -noupdate /SCPU_MIMIC_CF_TOP_OSCD_SWEEP_TEST/scpu_sram_alu/scpu_ctrl_sp
 add wave -noupdate /SCPU_MIMIC_CF_TOP_OSCD_SWEEP_TEST/scpu_sram_alu/scpu_ctrl_spi/uut/state
 add wave -noupdate /SCPU_MIMIC_CF_TOP_OSCD_SWEEP_TEST/scpu_sram_alu/scpu_ctrl_spi/ALU_01/FOUT
 add wave -noupdate /SCPU_MIMIC_CF_TOP_OSCD_SWEEP_TEST/scpu_sram_alu/scpu_ctrl_spi/uut/io_status
+add wave -noupdate {/SCPU_MIMIC_CF_TOP_OSCD_SWEEP_TEST/scpu_sram_alu/scpu_ctrl_spi/uut/gr[1]}
 TreeUpdate [SetDefaultTree]
-WaveRestoreCursors {{Cursor 1} {1706988139 ps} 0} {{Cursor 2} {34437 ps} 0}
-quietly wave cursor active 2
+WaveRestoreCursors {{Cursor 1} {2692079284 ps} 0} {{Cursor 2} {34437 ps} 0}
+quietly wave cursor active 1
 configure wave -namecolwidth 250
 configure wave -valuecolwidth 102
 configure wave -justifyvalue left
@@ -77,4 +78,4 @@ configure wave -griddelta 40
 configure wave -timeline 0
 configure wave -timelineunits ps
 update
-WaveRestoreZoom {1697244855 ps} {1698123955 ps}
+WaveRestoreZoom {2691853930 ps} {2692154858 ps}
