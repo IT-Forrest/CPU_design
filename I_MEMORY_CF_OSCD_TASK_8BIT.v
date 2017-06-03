@@ -8,7 +8,7 @@
 // PURPOSE      : Use a seperate file to initialize the Pseudo SRAM 
 // --------------------------------------------------------------------
 // ABSTRACT: SRAM size 1024 X 8 bit length; Simulation under time period 20ns
-//      no OSCD judgement:    dp_oscd_test_is_faild <= (A_ARRAY[2] > TOL);
+//      with OSCD judgement:    dp_oscd_test_is_faild <= (A_ARRAY[2] > TOL);
 //      A_ARRAY[2] <--> |Io - Ii| + |Qo - Qi|; // TOL threshold 32
 // --------------------------------------------------------------------
 
