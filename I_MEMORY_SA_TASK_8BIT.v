@@ -65,7 +65,7 @@ module  I_MEMORY_SA_TASK_8BIT(
         mem_out[ i] = tmpi_datain[7:0];  i = 13;
         mem_out[ i] = tmpi_datain[15:8]; i = 14;
         
-        tmpi_datain = {8'b0000_0000, 4'b0010, 4'b0101};// LFSR random seed 37
+        tmpi_datain = {8'b0101_1111, 4'b0010, 4'b0101};// LFSR random seed 37 (0x5F25)
         mem_out[ i] = tmpi_datain[7:0];  i = 15;
         mem_out[ i] = tmpi_datain[15:8]; i = 16;
         
@@ -89,7 +89,7 @@ module  I_MEMORY_SA_TASK_8BIT(
         mem_out[ i] = tmpi_datain[15:8]; i = 24;
         
         // The old Tune bits x_old and y_old (by default 15, 15)
-        tmpi_datain = {8'b0000_0000, 4'b1111, 4'b1111};
+        tmpi_datain = {8'b0000_1111, 4'b0000, 4'b1111};
         mem_out[ i] = tmpi_datain[7:0];  i = 25;
         mem_out[ i] = tmpi_datain[15:8]; i = 26;
         
@@ -111,7 +111,17 @@ module  I_MEMORY_SA_TASK_8BIT(
     mem_out[ i] = tmpi_datain[7:0];  i = 161 + DEFAULT_PC_ADDR*2;
     mem_out[ i] = tmpi_datain[15:8]; i = 162 + DEFAULT_PC_ADDR*2;
     
-    //Clear OUT_A & Set SPI starting address;
+    // Compare gr2 and gr1 to judge if SA has done
+    tmpi_datain = {`CMP, 4'b0000, `gr2, 1'b0, `gr1};//gr1 must be all 0's
+    mem_out[ i] = tmpi_datain[7:0];  i = 25 + DEFAULT_PC_ADDR*2;
+    mem_out[ i] = tmpi_datain[15:8]; i = 26 + DEFAULT_PC_ADDR*2;
+    
+    // if (SA_iteration (gr2) == 0) Jump to SA finish
+    tmpi_datain = {`BZ, `gr1, 4'b0000, 4'b0110};// gr1 must be all 0's
+    mem_out[ i] = tmpi_datain[7:0];  i = 199 + DEFAULT_PC_ADDR*2;
+    mem_out[ i] = tmpi_datain[15:8]; i = 200 + DEFAULT_PC_ADDR*2;
+    
+    // Clear OUT_A & Set SPI starting address;
     tmpi_datain = {`SUB, `gr2, 1'b0, `gr2, 1'b0, `gr2};
     mem_out[ i] = tmpi_datain[7:0];  i = 17 + DEFAULT_PC_ADDR*2;
     mem_out[ i] = tmpi_datain[15:8]; i = 18 + DEFAULT_PC_ADDR*2;
@@ -135,7 +145,7 @@ module  I_MEMORY_SA_TASK_8BIT(
     mem_out[ i] = tmpi_datain[15:8]; i = 26 + DEFAULT_PC_ADDR*2;
     
     //reset the control reg for SPI to end output
-    tmpi_datain = {`SET, `gr1, 3'b010, 3'b000, 2'b00};
+    tmpi_datain = {`SET, `gr1, 4'b0000, 4'b0000};
     mem_out[ i] = tmpi_datain[7:0];  i = 25 + DEFAULT_PC_ADDR*2;
     mem_out[ i] = tmpi_datain[15:8]; i = 26 + DEFAULT_PC_ADDR*2;
     
@@ -666,7 +676,7 @@ module  I_MEMORY_SA_TASK_8BIT(
     mem_out[ i] = tmpi_datain[15:8]; i = 192 + DEFAULT_PC_ADDR*2;
 
     // if (gr2 == gr0) Jump to Sensitivity Algorithm
-    tmpi_datain = {`BZ, `gr0, 4'bXXXX, 4'b0001};
+    tmpi_datain = {`BZ, `gr0, 4'bXXXX, 4'b0001};// must be SA is done
     mem_out[ i] = tmpi_datain[7:0];  i = 193 + DEFAULT_PC_ADDR*2;
     mem_out[ i] = tmpi_datain[15:8]; i = 194 + DEFAULT_PC_ADDR*2;
     // else start the Simulated Annealing process
@@ -681,7 +691,7 @@ module  I_MEMORY_SA_TASK_8BIT(
     mem_out[ i] = tmpi_datain[7:0];  i = 191 + DEFAULT_PC_ADDR*2;
     mem_out[ i] = tmpi_datain[15:8]; i = 192 + DEFAULT_PC_ADDR*2;
 
-    // if (gr2 < gr7) Jump to judge with Ana_old
+    // if (Ana_best(gr2) < Ana_new(gr7)) Jump to judge with Ana_old
     tmpi_datain = {`BN, `gr0, 4'bXXXX, 4'b0001};
     mem_out[ i] = tmpi_datain[7:0];  i = 193 + DEFAULT_PC_ADDR*2;
     mem_out[ i] = tmpi_datain[15:8]; i = 194 + DEFAULT_PC_ADDR*2;
@@ -706,7 +716,7 @@ module  I_MEMORY_SA_TASK_8BIT(
     mem_out[ i] = tmpi_datain[7:0];  i = 95 + DEFAULT_PC_ADDR*2;
     mem_out[ i] = tmpi_datain[15:8]; i = 96 + DEFAULT_PC_ADDR*2;
     
-    // load Ana_old to gr4
+    // Start to compare Ana_old: load Ana_old to gr4
     tmpi_datain = {`LOAD, `gr4, 1'b0, `gr0, 4'b1101};
     mem_out[ i] = tmpi_datain[7:0];  i = 161 + DEFAULT_PC_ADDR*2;
     mem_out[ i] = tmpi_datain[15:8]; i = 162 + DEFAULT_PC_ADDR*2;
@@ -716,40 +726,40 @@ module  I_MEMORY_SA_TASK_8BIT(
     mem_out[ i] = tmpi_datain[7:0];  i = 191 + DEFAULT_PC_ADDR*2;
     mem_out[ i] = tmpi_datain[15:8]; i = 192 + DEFAULT_PC_ADDR*2;
     
-    // if (gr4 >= gr7) Jump to update Ana_old 
+    // if (Ana_old(gr4) >= Ana_new(gr7)) Jump to update Ana_old 
     tmpi_datain = {`BNC, `gr0, 4'bXXXX, 4'b0001};
     mem_out[ i] = tmpi_datain[7:0];  i = 193 + DEFAULT_PC_ADDR*2;
     mem_out[ i] = tmpi_datain[15:8]; i = 194 + DEFAULT_PC_ADDR*2;
 
     // needs to calculate probability
-    // else gr4 < gr7 reverse the result in gr5
-    tmpi_datain = {`SUB, `gr5, 1'b0, `gr0, 1'b0, `gr5};
+    // else (Ana_old(gr4) < Ana_new(gr7)) reverse the result in gr2
+    tmpi_datain = {`SUB, `gr2, 1'b0, `gr0, 1'b0, `gr5};
     mem_out[ i] = tmpi_datain[7:0];  i = 191 + DEFAULT_PC_ADDR*2;
     mem_out[ i] = tmpi_datain[15:8]; i = 192 + DEFAULT_PC_ADDR*2;
         
-    // Load current Temperature to gr6
-    tmpi_datain = {`LOAD, `gr6, 1'b0, `gr0, 4'b1000};
+    // Load current Temperature to gr3
+    tmpi_datain = {`LOAD, `gr3, 1'b0, `gr0, 4'b1000};
     mem_out[ i] = tmpi_datain[7:0];  i = 161 + DEFAULT_PC_ADDR*2;
     mem_out[ i] = tmpi_datain[15:8]; i = 162 + DEFAULT_PC_ADDR*2;
     
-    // Compare the delta_Ana (gr5) with T (gr6)
-    tmpi_datain = {`CMP, 4'b0000, `gr5, 1'b0, `gr6};
+    // Compare the delta_Ana (gr2) with T (gr3)
+    tmpi_datain = {`CMP, 4'b0000, `gr2, 1'b0, `gr3};
     mem_out[ i] = tmpi_datain[7:0];  i = 191 + DEFAULT_PC_ADDR*2;
     mem_out[ i] = tmpi_datain[15:8]; i = 192 + DEFAULT_PC_ADDR*2;
 
-    // if (gr5 >= gr6) Jump to Update T, SA counter and Neighbour
+    // if (delta_Ana(gr2) >= T(gr3)) Jump to Update T, SA counter and Neighbour
     tmpi_datain = {`BNC, `gr0, 4'bXXXX, 4'b0001};
     mem_out[ i] = tmpi_datain[7:0];  i = 193 + DEFAULT_PC_ADDR*2;
     mem_out[ i] = tmpi_datain[15:8]; i = 194 + DEFAULT_PC_ADDR*2;
 
-    // else (gr5 < gr6) Activate the Division (delta_Ana)/T
+    // else (delta_Ana(gr2) < T(gr3)) Activate the Division (delta_Ana)/T
     // start division process; (div_mode == CF_T27)? 128(2'b01) : 64(2'b10);
     tmpi_datain = {`SET, `gr1, 3'b001, 3'b010, 2'b01};
     mem_out[ i] = tmpi_datain[7:0];  i = 105 + DEFAULT_PC_ADDR*2;
     mem_out[ i] = tmpi_datain[15:8]; i = 106 + DEFAULT_PC_ADDR*2;
 
-    // Load division result data (delta_Ana/T) to gr
-    tmpi_datain = {`LIOA, `gr, 4'b0000, 4'b0000};
+    // Load division result data (delta_Ana/T) to gr4
+    tmpi_datain = {`LIOA, `gr4, 4'b0000, 4'b0000};
     mem_out[ i] = tmpi_datain[7:0];  i = 107 + DEFAULT_PC_ADDR*2;
     mem_out[ i] = tmpi_datain[15:8]; i = 108 + DEFAULT_PC_ADDR*2;
 
@@ -763,17 +773,17 @@ module  I_MEMORY_SA_TASK_8BIT(
     mem_out[ i] = tmpi_datain[7:0];  i = 191 + DEFAULT_PC_ADDR*2;
     mem_out[ i] = tmpi_datain[15:8]; i = 192 + DEFAULT_PC_ADDR*2;
 
-    // calculate the probability [1 - (delta_Ana/T)] save in gr5
-    tmpi_datain = {`SUB, `gr5, 1'b0, `gr5, 1'b0, `gr};
+    // calculate the probability [1 - (delta_Ana/T)] and save in gr5
+    tmpi_datain = {`SUB, `gr5, 1'b0, `gr5, 1'b0, `gr4};
     mem_out[ i] = tmpi_datain[7:0];  i = 191 + DEFAULT_PC_ADDR*2;
     mem_out[ i] = tmpi_datain[15:8]; i = 192 + DEFAULT_PC_ADDR*2;
     
-    // Left Shift `gr5 to make it multiply 2
+    // Left Shift `gr5 to make it multiply 2 (gr5 range in [0,1] with 7 bits fraction)
     tmpi_datain = {`SLL, `gr5, 1'b0, `gr5, 4'b0001};
     mem_out[ i] = tmpi_datain[7:0];  i = 19 + DEFAULT_PC_ADDR*2;
     mem_out[ i] = tmpi_datain[15:8]; i = 20 + DEFAULT_PC_ADDR*2;
     
-    // Load LFSR value to gr6 (which is enlarged 256 times)
+    // Load LFSR value to gr6 (which is a 16bits data)
     tmpi_datain = {`LOAD, `gr6, 1'b0, `gr0, 4'b0111};
     mem_out[ i] = tmpi_datain[7:0];  i = 161 + DEFAULT_PC_ADDR*2;
     mem_out[ i] = tmpi_datain[15:8]; i = 162 + DEFAULT_PC_ADDR*2;
@@ -783,17 +793,27 @@ module  I_MEMORY_SA_TASK_8BIT(
     mem_out[ i] = tmpi_datain[7:0];  i = 17+ DEFAULT_PC_ADDR*2;
     mem_out[ i] = tmpi_datain[15:8]; i = 18+ DEFAULT_PC_ADDR*2;
 
+    // Save the new random data (gr6) to SRAM in 0x07
+    tmpi_datain = {`STORE, `gr6, 1'b0, `gr0, 4'b0111};
+    mem_out[ i] = tmpi_datain[7:0];  i = 161 + DEFAULT_PC_ADDR*2;
+    mem_out[ i] = tmpi_datain[15:8]; i = 162 + DEFAULT_PC_ADDR*2;
+    
+    // Right shift 8 bits to take MSB 8bits as a fraction range in [0,1]
+    tmpi_datain = {`SRL, `gr6, 1'b0, `gr6, 4'b1000};
+    mem_out[ i] = tmpi_datain[7:0];  i = 19 + DEFAULT_PC_ADDR*2;
+    mem_out[ i] = tmpi_datain[15:8]; i = 20 + DEFAULT_PC_ADDR*2;
+    
     // Compare the probability (gr5) with random number (gr6)
     tmpi_datain = {`CMP, 4'b0000, `gr5, 1'b0, `gr6};
     mem_out[ i] = tmpi_datain[7:0];  i = 191 + DEFAULT_PC_ADDR*2;
     mem_out[ i] = tmpi_datain[15:8]; i = 192 + DEFAULT_PC_ADDR*2;
     
-    // if (gr5 < gr6) Jump to Update T, SA counter and Neighbour
+    // if (Prob(gr5) < Rand(gr6)) Jump to Update T, SA counter and Neighbour
     tmpi_datain = {`BN, `gr0, 4'bXXXX, 4'b0001};
     mem_out[ i] = tmpi_datain[7:0];  i = 193 + DEFAULT_PC_ADDR*2;
     mem_out[ i] = tmpi_datain[15:8]; i = 194 + DEFAULT_PC_ADDR*2;
     
-    // else (gr5 >= gr6) Use Ana_new (gr7) to update Ana_old
+    // else (Prob(gr5) >= Rand(gr6)) Use Ana_new (gr7) to update Ana_old
     tmpi_datain = {`STORE, `gr7, 1'b0, `gr0, 4'b1101};
     mem_out[ i] = tmpi_datain[7:0];  i = 199 + DEFAULT_PC_ADDR*2;
     mem_out[ i] = tmpi_datain[15:8]; i = 200 + DEFAULT_PC_ADDR*2;
@@ -819,7 +839,7 @@ module  I_MEMORY_SA_TASK_8BIT(
     mem_out[ i] = tmpi_datain[7:0];  i = 191 + DEFAULT_PC_ADDR*2;
     mem_out[ i] = tmpi_datain[15:8]; i = 192 + DEFAULT_PC_ADDR*2;
     
-    // 0 (gr6) Subtract 16 equal to 1111_1111_1110_0000
+    // 0 (gr6) Subtract 16 to get the mask 1111_1111_1110_0000
     tmpi_datain = {`SUBI, `gr6, 4'b0010, 4'b0000};//`gr6 - 32
     mem_out[ i] = tmpi_datain[7:0];  i = 117 + DEFAULT_PC_ADDR*2;
     mem_out[ i] = tmpi_datain[15:8]; i = 118 + DEFAULT_PC_ADDR*2;
@@ -834,7 +854,7 @@ module  I_MEMORY_SA_TASK_8BIT(
     mem_out[ i] = tmpi_datain[7:0];  i = 19 + DEFAULT_PC_ADDR*2;
     mem_out[ i] = tmpi_datain[15:8]; i = 20 + DEFAULT_PC_ADDR*2;
 
-    // Keep the LFSR value in gr7 for later use
+    // Load the LFSR value in gr7 for later use
     tmpi_datain = {`LOAD, `gr7, 1'b0, `gr0, 4'b0111};
     mem_out[ i] = tmpi_datain[7:0];  i = 161 + DEFAULT_PC_ADDR*2;
     mem_out[ i] = tmpi_datain[15:8]; i = 162 + DEFAULT_PC_ADDR*2;
@@ -860,16 +880,30 @@ module  I_MEMORY_SA_TASK_8BIT(
     mem_out[ i] = tmpi_datain[15:8]; i = 192 + DEFAULT_PC_ADDR*2;
 
     // if (Temperature(gr2) == 0) then Jump to the step = 1 process
-    tmpi_datain = {`SUB, `gr5, 1'b0, `gr5, 1'b0, `gr};
+    tmpi_datain = {`BZ, `gr0, 4'b0000, 4'b0000};
     mem_out[ i] = tmpi_datain[7:0];  i = 191 + DEFAULT_PC_ADDR*2;
     mem_out[ i] = tmpi_datain[15:8]; i = 192 + DEFAULT_PC_ADDR*2;
     
-    // else (Temperature(gr2) != 0) then calculate the random step for X and Y
+    // else (Temperature(gr2) != 0) then calculate random step by multiplication
     // Get the LFSR random data to gr3
     tmpi_datain = {`LOAD, `gr3, 1'b0, `gr0, 4'b0111};
     mem_out[ i] = tmpi_datain[7:0];  i = 161 + DEFAULT_PC_ADDR*2;
     mem_out[ i] = tmpi_datain[15:8]; i = 162 + DEFAULT_PC_ADDR*2;
 
+    // Get a new Random value in gr3 by using LFSR
+    tmpi_datain = {`LFSR, `gr3, 4'b0000, 1'b0, `gr3};//`gr3 = LFSR[`gr3];
+    mem_out[ i] = tmpi_datain[7:0];  i = 17+ DEFAULT_PC_ADDR*2;
+    mem_out[ i] = tmpi_datain[15:8]; i = 18+ DEFAULT_PC_ADDR*2;
+    // Make it more randomly
+    tmpi_datain = {`LFSR, `gr3, 4'b0000, 1'b0, `gr3};//`gr3 = LFSR[`gr3];
+    mem_out[ i] = tmpi_datain[7:0];  i = 17+ DEFAULT_PC_ADDR*2;
+    mem_out[ i] = tmpi_datain[15:8]; i = 18+ DEFAULT_PC_ADDR*2;
+    
+    // Store the Random value (gr3) to 0x07
+    tmpi_datain = {`STORE, `gr3, 1'b0, `gr0, 4'b0111};
+    mem_out[ i] = tmpi_datain[7:0];  i = 199 + DEFAULT_PC_ADDR*2;
+    mem_out[ i] = tmpi_datain[15:8]; i = 200 + DEFAULT_PC_ADDR*2;
+    
     // Right Shift `gr3 to use the MSB 8bits as multiplier
     tmpi_datain = {`SRL, `gr3, 1'b0, `gr3, 4'b0001};
     mem_out[ i] = tmpi_datain[7:0];  i = 19 + DEFAULT_PC_ADDR*2;
@@ -994,7 +1028,7 @@ module  I_MEMORY_SA_TASK_8BIT(
     mem_out[ i] = tmpi_datain[7:0];  i = 191 + DEFAULT_PC_ADDR*2;
     mem_out[ i] = tmpi_datain[15:8]; i = 192 + DEFAULT_PC_ADDR*2;
     
-    // Add 63 to gr6 (1111_1111_1110_0000) to get (0000_0000_0001_1111)
+    // Add 63 to gr6 (1111_1111_1110_0000) to get 31(0000_0000_0001_1111)
     tmpi_datain = {`ADDI, `gr6, 4'b0011, 4'b1111};
     mem_out[ i] = tmpi_datain[7:0];  i = 191 + DEFAULT_PC_ADDR*2;
     mem_out[ i] = tmpi_datain[15:8]; i = 192 + DEFAULT_PC_ADDR*2;
@@ -1065,11 +1099,6 @@ module  I_MEMORY_SA_TASK_8BIT(
     mem_out[ i] = tmpi_datain[7:0];  i = 119 + DEFAULT_PC_ADDR*2;
     mem_out[ i] = tmpi_datain[15:8]; i = 120 + DEFAULT_PC_ADDR*2;
     
-    // Save SA iteration (gr2) to SA max iteration at 0x06
-    tmpi_datain = {`STORE, `gr2, 1'b0, `gr0, 4'b0110};
-    mem_out[ i] = tmpi_datain[7:0];  i = 199 + DEFAULT_PC_ADDR*2;
-    mem_out[ i] = tmpi_datain[15:8]; i = 200 + DEFAULT_PC_ADDR*2;
-    
     //else Update the Ana_best to Ana_old; X_new Y_new to X_old Y_old
     tmpi_datain = {`LOAD, `gr7, 1'b0, `gr0, 4'b1011};// Ana_best
     mem_out[ i] = tmpi_datain[7:0];  i = 161 + DEFAULT_PC_ADDR*2;
@@ -1077,6 +1106,11 @@ module  I_MEMORY_SA_TASK_8BIT(
     
     // Save Ana_best (gr7) to Ana_old at 0x0D
     tmpi_datain = {`STORE, `gr7, 1'b0, `gr0, 4'b1101};
+    mem_out[ i] = tmpi_datain[7:0];  i = 199 + DEFAULT_PC_ADDR*2;
+    mem_out[ i] = tmpi_datain[15:8]; i = 200 + DEFAULT_PC_ADDR*2;
+    
+    // Save Ana_best (gr7) to Ana_new at 0x05
+    tmpi_datain = {`STORE, `gr7, 1'b0, `gr0, 4'b0101};
     mem_out[ i] = tmpi_datain[7:0];  i = 199 + DEFAULT_PC_ADDR*2;
     mem_out[ i] = tmpi_datain[15:8]; i = 200 + DEFAULT_PC_ADDR*2;
     
@@ -1095,8 +1129,9 @@ module  I_MEMORY_SA_TASK_8BIT(
     mem_out[ i] = tmpi_datain[7:0];  i = 199 + DEFAULT_PC_ADDR*2;
     mem_out[ i] = tmpi_datain[15:8]; i = 200 + DEFAULT_PC_ADDR*2;
 
-    // (7) start the Sensitivity Algorithm
+    // (7) start the Sensitivity Algorithm (optional)
     
+    // (8) Finally output the X_new Y_new
     //Clear OUT_A & Set SPI starting address;
     tmpi_datain = {`SUB, `gr2, 1'b0, `gr2, 1'b0, `gr2};
     mem_out[ i] = tmpi_datain[7:0];  i = 17 + DEFAULT_PC_ADDR*2;
