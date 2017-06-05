@@ -57,11 +57,12 @@ module  I_MEMORY_SA_TASK_8BIT(
         mem_out[ i] = tmpi_datain[7:0];  i = 9;
         mem_out[ i] = tmpi_datain[15:8]; i = 10;
 
-        tmpi_datain = {`NOP, 3'b000, 4'b0000, 4'b0000};// store Ana_new from CF
+        tmpi_datain = {`NOP, 3'b000, 4'b1111, 4'b1111};// store Ana_new from CF
         mem_out[ i] = tmpi_datain[7:0];  i = 11;
         mem_out[ i] = tmpi_datain[15:8]; i = 12;
 
-        tmpi_datain = {8'b0000_0000, 4'b1111, 4'b1111};// SA max iteration
+        // The initial new Tune bits x_new, y_new (by default 15, 15)
+        tmpi_datain = {8'b0000_1111, 4'b0000, 4'b1111};
         mem_out[ i] = tmpi_datain[7:0];  i = 13;
         mem_out[ i] = tmpi_datain[15:8]; i = 14;
         
@@ -73,8 +74,7 @@ module  I_MEMORY_SA_TASK_8BIT(
         mem_out[ i] = tmpi_datain[7:0];  i = 17;
         mem_out[ i] = tmpi_datain[15:8]; i = 18;
 
-        // The initial new Tune bits x_new, y_new (by default 15, 15)
-        tmpi_datain = {8'b0000_1111, 4'b0000, 4'b1111};
+        tmpi_datain = {8'b0000_0000, 4'b1111, 4'b1111};// SA max iteration
         mem_out[ i] = tmpi_datain[7:0];  i = 19;
         mem_out[ i] = tmpi_datain[15:8]; i = 20;
         
@@ -102,16 +102,16 @@ module  I_MEMORY_SA_TASK_8BIT(
     /* (1) Initialize SA & send tuning bits */ 
     i= DEFAULT_PC_ADDR*2;
     // Load the SA iteration to gr2 (only for the very first time)
-    tmpi_datain = {`LOAD, `gr2, 1'b0, `gr0, 4'b0110};
+    tmpi_datain = {`LOAD, `gr2, 1'b0, `gr0, 4'b1001};
     mem_out[ i] = tmpi_datain[7:0];  i = 161 + DEFAULT_PC_ADDR*2;
     mem_out[ i] = tmpi_datain[15:8]; i = 162 + DEFAULT_PC_ADDR*2;
     
     // Save the SA iteration (gr2) to SRAM, for the loop later
-    tmpi_datain = {`STORE, `gr2, 1'b0, `gr0, 4'b0110};
+    tmpi_datain = {`STORE, `gr2, 1'b0, `gr0, 4'b1001};
     mem_out[ i] = tmpi_datain[7:0];  i = 161 + DEFAULT_PC_ADDR*2;
     mem_out[ i] = tmpi_datain[15:8]; i = 162 + DEFAULT_PC_ADDR*2;
     
-    // Compare gr2 and gr1 to judge if SA has done
+    // Compare SA iteration (gr2) and 0 (gr1) to judge if SA has done
     tmpi_datain = {`CMP, 4'b0000, `gr2, 1'b0, `gr1};//gr1 must be all 0's
     mem_out[ i] = tmpi_datain[7:0];  i = 25 + DEFAULT_PC_ADDR*2;
     mem_out[ i] = tmpi_datain[15:8]; i = 26 + DEFAULT_PC_ADDR*2;
@@ -126,7 +126,7 @@ module  I_MEMORY_SA_TASK_8BIT(
     mem_out[ i] = tmpi_datain[7:0];  i = 17 + DEFAULT_PC_ADDR*2;
     mem_out[ i] = tmpi_datain[15:8]; i = 18 + DEFAULT_PC_ADDR*2;
     
-    tmpi_datain = {`SET, `gr2, 4'b0001, 4'b0001};// Byte data starting addr
+    tmpi_datain = {`SET, `gr2, 4'b0000, 4'b1001};// Byte data starting addr
     mem_out[ i] = tmpi_datain[7:0];  i = 19 + DEFAULT_PC_ADDR*2;
     mem_out[ i] = tmpi_datain[15:8]; i = 20 + DEFAULT_PC_ADDR*2;
 
@@ -135,7 +135,7 @@ module  I_MEMORY_SA_TASK_8BIT(
     mem_out[ i] = tmpi_datain[7:0];  i = 21 + DEFAULT_PC_ADDR*2;
     mem_out[ i] = tmpi_datain[15:8]; i = 22 + DEFAULT_PC_ADDR*2;
     
-    tmpi_datain = {`SET, `gr3, 4'b0000, 4'b0010};//output 2 Bytes data
+    tmpi_datain = {`SET, `gr3, 4'b0000, 4'b0100};//output 4 Bytes data (X_new Y_new) and Ana_new
     mem_out[ i] = tmpi_datain[7:0];  i = 23 + DEFAULT_PC_ADDR*2;
     mem_out[ i] = tmpi_datain[15:8]; i = 24 + DEFAULT_PC_ADDR*2;
 
@@ -665,8 +665,8 @@ module  I_MEMORY_SA_TASK_8BIT(
     mem_out[ i] = tmpi_datain[7:0];  i = 1 + DEFAULT_PC_ADDR*2;
     mem_out[ i] = tmpi_datain[15:8]; i = 2 + DEFAULT_PC_ADDR*2;
 
-    // Load SA iteration at 0x06 to gr2
-    tmpi_datain = {`LOAD, `gr2, 1'b0, `gr0, 4'b0110};
+    // Load SA iteration at 0x09 to gr2
+    tmpi_datain = {`LOAD, `gr2, 1'b0, `gr0, 4'b1001};
     mem_out[ i] = tmpi_datain[7:0];  i = 199 + DEFAULT_PC_ADDR*2;
     mem_out[ i] = tmpi_datain[15:8]; i = 200 + DEFAULT_PC_ADDR*2;
 
@@ -675,7 +675,7 @@ module  I_MEMORY_SA_TASK_8BIT(
     mem_out[ i] = tmpi_datain[7:0];  i = 191 + DEFAULT_PC_ADDR*2;
     mem_out[ i] = tmpi_datain[15:8]; i = 192 + DEFAULT_PC_ADDR*2;
 
-    // if (gr2 == gr0) Jump to Sensitivity Algorithm
+    // if (SA_iteration(gr2) == 0) Jump to Sensitivity Algorithm
     tmpi_datain = {`BZ, `gr0, 4'bXXXX, 4'b0001};// must be SA is done
     mem_out[ i] = tmpi_datain[7:0];  i = 193 + DEFAULT_PC_ADDR*2;
     mem_out[ i] = tmpi_datain[15:8]; i = 194 + DEFAULT_PC_ADDR*2;
@@ -702,7 +702,7 @@ module  I_MEMORY_SA_TASK_8BIT(
     mem_out[ i] = tmpi_datain[15:8]; i = 200 + DEFAULT_PC_ADDR*2;
 
     // load X_new Y_new to gr3
-    tmpi_datain = {`LOAD, `gr3, 1'b0, `gr0, 4'b1001};
+    tmpi_datain = {`LOAD, `gr3, 1'b0, `gr0, 4'b0110};
     mem_out[ i] = tmpi_datain[7:0];  i = 161 + DEFAULT_PC_ADDR*2;
     mem_out[ i] = tmpi_datain[15:8]; i = 162 + DEFAULT_PC_ADDR*2;
 
@@ -819,7 +819,7 @@ module  I_MEMORY_SA_TASK_8BIT(
     mem_out[ i] = tmpi_datain[15:8]; i = 200 + DEFAULT_PC_ADDR*2;
     
     // load X_new Y_new to gr3
-    tmpi_datain = {`LOAD, `gr3, 1'b0, `gr0, 4'b1001};
+    tmpi_datain = {`LOAD, `gr3, 1'b0, `gr0, 4'b0110};
     mem_out[ i] = tmpi_datain[7:0];  i = 161 + DEFAULT_PC_ADDR*2;
     mem_out[ i] = tmpi_datain[15:8]; i = 162 + DEFAULT_PC_ADDR*2;
     
@@ -1055,7 +1055,7 @@ module  I_MEMORY_SA_TASK_8BIT(
     mem_out[ i] = tmpi_datain[15:8]; i = 192 + DEFAULT_PC_ADDR*2;
     
     // Save (X_new, Y_new) back to SRAM
-    tmpi_datain = {`STORE, `gr2, 1'b0, `gr0, 4'b1001};
+    tmpi_datain = {`STORE, `gr2, 1'b0, `gr0, 4'b0110};
     mem_out[ i] = tmpi_datain[7:0];  i = 199 + DEFAULT_PC_ADDR*2;
     mem_out[ i] = tmpi_datain[15:8]; i = 200 + DEFAULT_PC_ADDR*2;
     
@@ -1085,7 +1085,7 @@ module  I_MEMORY_SA_TASK_8BIT(
     mem_out[ i] = tmpi_datain[15:8]; i = 200 + DEFAULT_PC_ADDR*2;
     
     /* (6) Update max SA iteration counter with gr2 */
-    tmpi_datain = {`LOAD, `gr2, 1'b0, `gr0, 4'b0110};
+    tmpi_datain = {`LOAD, `gr2, 1'b0, `gr0, 4'b1001};
     mem_out[ i] = tmpi_datain[7:0];  i = 161 + DEFAULT_PC_ADDR*2;
     mem_out[ i] = tmpi_datain[15:8]; i = 162 + DEFAULT_PC_ADDR*2;
 
@@ -1125,7 +1125,7 @@ module  I_MEMORY_SA_TASK_8BIT(
     mem_out[ i] = tmpi_datain[15:8]; i = 200 + DEFAULT_PC_ADDR*2;
     
     // Save X_best Y_best (gr6) to X_new Y_new
-    tmpi_datain = {`STORE, `gr6, 1'b0, `gr0, 4'b1001};
+    tmpi_datain = {`STORE, `gr6, 1'b0, `gr0, 4'b0110};
     mem_out[ i] = tmpi_datain[7:0];  i = 199 + DEFAULT_PC_ADDR*2;
     mem_out[ i] = tmpi_datain[15:8]; i = 200 + DEFAULT_PC_ADDR*2;
 
@@ -1136,7 +1136,7 @@ module  I_MEMORY_SA_TASK_8BIT(
     tmpi_datain = {`SUB, `gr2, 1'b0, `gr2, 1'b0, `gr2};
     mem_out[ i] = tmpi_datain[7:0];  i = 17 + DEFAULT_PC_ADDR*2;
     mem_out[ i] = tmpi_datain[15:8]; i = 18 + DEFAULT_PC_ADDR*2;
-    tmpi_datain = {`SET, `gr2, 4'b0001, 4'b0001};
+    tmpi_datain = {`SET, `gr2, 4'b0000, 4'b1001};
     mem_out[ i] = tmpi_datain[7:0];  i = 19 + DEFAULT_PC_ADDR*2;
     mem_out[ i] = tmpi_datain[15:8]; i = 20 + DEFAULT_PC_ADDR*2;
 
@@ -1144,7 +1144,7 @@ module  I_MEMORY_SA_TASK_8BIT(
     tmpi_datain = {`SUB, `gr3, 1'b0, `gr3, 1'b0, `gr3};
     mem_out[ i] = tmpi_datain[7:0];  i = 21 + DEFAULT_PC_ADDR*2;
     mem_out[ i] = tmpi_datain[15:8]; i = 22 + DEFAULT_PC_ADDR*2;
-    tmpi_datain = {`SET, `gr3, 4'b0000, 4'b0010};
+    tmpi_datain = {`SET, `gr3, 4'b0000, 4'b0100};// output 4 Bytes (X_new Y_new) and Ana_new
     mem_out[ i] = tmpi_datain[7:0];  i = 23 + DEFAULT_PC_ADDR*2;
     mem_out[ i] = tmpi_datain[15:8]; i = 24 + DEFAULT_PC_ADDR*2;
 

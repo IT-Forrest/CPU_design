@@ -6,10 +6,10 @@ SRAM addr: 512X16
 0x03. A2
 0x04. A1
 0x05. Ana_new
-0x06. SA max iteration
+0x06. X_new  Y_new
 0x07. LFSR Random seed
 0x08. Temperature 
-0x09. X_new  Y_new
+0x09. SA max iteration
 0x0A. X_best Y_best
 0x0B. Ana_best
 0x0C. X_old  Y_old
