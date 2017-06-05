@@ -4733,13 +4733,6 @@ Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
 Top level modules:
 	SRAM_IO_CTRL_RA1512_TEST
 
-} {} {}} {F:/05.Code_Battle/04. Verilog/CPU_design/I_MEMORY_CF_OSCD_TASK_8BIT.v} {1 {vlog -work work -stats=none {F:/05.Code_Battle/04. Verilog/CPU_design/I_MEMORY_CF_OSCD_TASK_8BIT.v}
-Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
--- Compiling module I_MEMORY_CF_OSCD_TASK_8BIT
-
-Top level modules:
-	I_MEMORY_CF_OSCD_TASK_8BIT
-
 } {} {}} {F:/05.Code_Battle/04. Verilog/CPU_design/I_MEMORY_CF_TASK_8BIT.v} {1 {vlog -work work -stats=none {F:/05.Code_Battle/04. Verilog/CPU_design/I_MEMORY_CF_TASK_8BIT.v}
 Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
 -- Compiling module I_MEMORY_CF_TASK_8BIT
@@ -7562,18 +7555,6 @@ Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
 Top level modules:
 	SCPU_SINGLE_8BIT_TOP
 
-} {} {}} {F:/05.Code_Battle/04. Verilog/CPU_design/sim/PCPU_MEM_CTRL_TEST.v} {1 {vlog -work work -stats=none {F:/05.Code_Battle/04. Verilog/CPU_design/sim/PCPU_MEM_CTRL_TEST.v}
-Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
--- Compiling module PIPE_CPU
--- Compiling module I_MEMORY
--- Compiling module D_MEMORY
--- Compiling module SHARE_SUPERALU
--- Compiling module CTRL_LOGIC
--- Compiling module PCPU_MEM_CTRL_TOP
-
-Top level modules:
-	PCPU_MEM_CTRL_TOP
-
 } {} {}} {F:/05.Code_Battle/04. Verilog/CPU_design/sim/SYS_PSEUDO_SPI_INTF_SCAN_VGA_TEST.v} {1 {vlog -work work -stats=none {F:/05.Code_Battle/04. Verilog/CPU_design/sim/SYS_PSEUDO_SPI_INTF_SCAN_VGA_TEST.v}
 Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
 -- Compiling module BUFX2TF
@@ -9154,6 +9135,18 @@ Top level modules:
 	SERIAL_CPU_8BIT_VGA
 	SHARE_SUPERALU_VGA
 	SYS_PSEUDO_SPI_INTF_SCAN_VGA_TEST
+
+} {} {}} {F:/05.Code_Battle/04. Verilog/CPU_design/sim/PCPU_MEM_CTRL_TEST.v} {1 {vlog -work work -stats=none {F:/05.Code_Battle/04. Verilog/CPU_design/sim/PCPU_MEM_CTRL_TEST.v}
+Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
+-- Compiling module PIPE_CPU
+-- Compiling module I_MEMORY
+-- Compiling module D_MEMORY
+-- Compiling module SHARE_SUPERALU
+-- Compiling module CTRL_LOGIC
+-- Compiling module PCPU_MEM_CTRL_TOP
+
+Top level modules:
+	PCPU_MEM_CTRL_TOP
 
 } {} {}} {F:/05.Code_Battle/04. Verilog/CPU_design/CTRL_LOGIC.v} {1 {vlog -work work -stats=none {F:/05.Code_Battle/04. Verilog/CPU_design/CTRL_LOGIC.v}
 Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
@@ -25232,13 +25225,6 @@ Model Technology ModelSim ALTERA vlog 10.4d Compiler 2015.12 Dec 30 2015
 
 Top level modules:
 	PSEUDO_SPI_INTF_TEST
-
-} {} {}} {F:/05.Code_Battle/04. Verilog/CPU_design/I_MEMORY_SA_TASK_8BIT.v} {1 {vlog -work work -stats=none {F:/05.Code_Battle/04. Verilog/CPU_design/I_MEMORY_SA_TASK_8BIT.v}
-Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
--- Compiling module I_MEMORY_SA_TASK_8BIT
-
-Top level modules:
-	I_MEMORY_SA_TASK_8BIT
 
 } {} {}} {F:/05. Code Battle/04. Verilog/CPU_design/SHARE_SUPERALU.v} {1 {vlog -work work -stats=none {F:/05. Code Battle/04. Verilog/CPU_design/SHARE_SUPERALU.v}
 Model Technology ModelSim ALTERA vlog 10.4d Compiler 2015.12 Dec 30 2015
