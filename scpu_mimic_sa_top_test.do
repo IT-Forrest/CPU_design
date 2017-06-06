@@ -7,7 +7,7 @@ add wave -noupdate /SCPU_MIMIC_SA_TOP_TEST/scpu_sram_alu/sram/CLK
 add wave -noupdate /SCPU_MIMIC_SA_TOP_TEST/scpu_sram_alu/sram/CEN
 add wave -noupdate /SCPU_MIMIC_SA_TOP_TEST/scpu_sram_alu/sram/WEN
 add wave -noupdate /SCPU_MIMIC_SA_TOP_TEST/scpu_sram_alu/sram/Q
-add wave -noupdate /SCPU_MIMIC_SA_TOP_TEST/scpu_sram_alu/sram/A
+add wave -noupdate -radix unsigned /SCPU_MIMIC_SA_TOP_TEST/scpu_sram_alu/sram/A
 add wave -noupdate /SCPU_MIMIC_SA_TOP_TEST/scpu_sram_alu/sram/D
 add wave -noupdate -divider spi_module
 add wave -noupdate /SCPU_MIMIC_SA_TOP_TEST/CPU_BGN
@@ -22,7 +22,7 @@ add wave -noupdate /SCPU_MIMIC_SA_TOP_TEST/coe_anag_sclk2_export
 add wave -noupdate /SCPU_MIMIC_SA_TOP_TEST/coe_anag_spi_so_export
 add wave -noupdate /SCPU_MIMIC_SA_TOP_TEST/coe_app_done_export
 add wave -noupdate /SCPU_MIMIC_SA_TOP_TEST/coe_app_start_export
-add wave -noupdate /SCPU_MIMIC_SA_TOP_TEST/ADC_PI_dly
+add wave -noupdate -radix unsigned /SCPU_MIMIC_SA_TOP_TEST/ADC_PI_dly
 add wave -noupdate /SCPU_MIMIC_SA_TOP_TEST/scpu_sram_alu/scpu_ctrl_spi/ALU_01/FOUT
 add wave -noupdate /SCPU_MIMIC_SA_TOP_TEST/scpu_sram_alu/scpu_ctrl_spi/cct/reg_bits
 add wave -noupdate -divider ctrl_logic
@@ -63,9 +63,16 @@ add wave -noupdate /SCPU_MIMIC_SA_TOP_TEST/scpu_sram_alu/scpu_ctrl_spi/uut/zf
 add wave -noupdate /SCPU_MIMIC_SA_TOP_TEST/scpu_sram_alu/scpu_ctrl_spi/uut/nf
 add wave -noupdate /SCPU_MIMIC_SA_TOP_TEST/scpu_sram_alu/scpu_ctrl_spi/uut/cf
 add wave -noupdate /SCPU_MIMIC_SA_TOP_TEST/scpu_sram_alu/scpu_ctrl_spi/uut/io_status
+add wave -noupdate {/SCPU_MIMIC_SA_TOP_TEST/scpu_sram_alu/scpu_ctrl_spi/uut/ALUo[15]}
+add wave -noupdate {/SCPU_MIMIC_SA_TOP_TEST/scpu_sram_alu/scpu_ctrl_spi/uut/ALUo[14]}
+add wave -noupdate {/SCPU_MIMIC_SA_TOP_TEST/scpu_sram_alu/scpu_ctrl_spi/uut/ALUo[13]}
+add wave -noupdate /SCPU_MIMIC_SA_TOP_TEST/scpu_sram_alu/scpu_ctrl_spi/uut/reg_A
+add wave -noupdate /SCPU_MIMIC_SA_TOP_TEST/scpu_sram_alu/scpu_ctrl_spi/uut/reg_B
+add wave -noupdate /SCPU_MIMIC_SA_TOP_TEST/scpu_sram_alu/scpu_ctrl_spi/uut/I_ZFNFCF_TYPE/I_ZFNFCF_TYPE
+add wave -noupdate /SCPU_MIMIC_SA_TOP_TEST/scpu_sram_alu/scpu_ctrl_spi/uut/I_ZFNFCF_TYPE/op
 TreeUpdate [SetDefaultTree]
-WaveRestoreCursors {{Cursor 1} {1706988139 ps} 0} {{Cursor 2} {34437 ps} 0}
-quietly wave cursor active 2
+WaveRestoreCursors {{Cursor 1} {5721021058 ps} 0} {{Cursor 2} {5708717790 ps} 0}
+quietly wave cursor active 1
 configure wave -namecolwidth 250
 configure wave -valuecolwidth 102
 configure wave -justifyvalue left
@@ -80,4 +87,4 @@ configure wave -griddelta 40
 configure wave -timeline 0
 configure wave -timelineunits ps
 update
-WaveRestoreZoom {1697244855 ps} {1698123955 ps}
+WaveRestoreZoom {5715963057 ps} {5723794801 ps}

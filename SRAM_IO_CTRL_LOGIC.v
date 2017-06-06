@@ -217,29 +217,48 @@ module SRAM_IO_CTRL_LOGIC(
     
 	wire	SEL_B;//
 	assign	SEL_B = 1'b0;
-	reg		[MAX_SQRT_WIDTH-1:0]        FOUT;
-	wire	[MAX_SQRT_WIDTH-1:0]        CFSA_FOUT;
+	reg		[31:0]        FOUT;
+	wire	[31:0]        CFSA_FOUT;
 	assign	SPI_SO_dly = coe_anag_spi_so_export;
 	assign	LAT_dly = coe_anag_lat_export;
 	assign	SCLK1_dly = coe_anag_sclk1_export;
 	assign	SCLK2_dly = coe_anag_sclk2_export;
 	
     //************* Need a scan chain module??? *************//
-    SC_CELL_V3	CS208( .SIN(SPI_SO_dly), .SO(M0  ), .PO(CFSA_FOUT[12]), .PIN(FOUT[12]), .SEL(SEL_B), .LAT(LAT_dly), .SCK1(SCLK1_dly), .SCK2(SCLK2_dly), .BYP_N(1'b0) );
-    SC_CELL_V3	CS209( .SIN(M0        ), .SO(M1  ), .PO(CFSA_FOUT[11]), .PIN(FOUT[11]), .SEL(SEL_B), .LAT(LAT_dly), .SCK1(SCLK1_dly), .SCK2(SCLK2_dly), .BYP_N(1'b0) );
-    SC_CELL_V3	CS210( .SIN(M1        ), .SO(M2  ), .PO(CFSA_FOUT[10]), .PIN(FOUT[10]), .SEL(SEL_B), .LAT(LAT_dly), .SCK1(SCLK1_dly), .SCK2(SCLK2_dly), .BYP_N(1'b0) );
-    SC_CELL_V3	CS211( .SIN(M2        ), .SO(M3  ), .PO(CFSA_FOUT[9 ]), .PIN(FOUT[9 ]), .SEL(SEL_B), .LAT(LAT_dly), .SCK1(SCLK1_dly), .SCK2(SCLK2_dly), .BYP_N(1'b0) );
-    SC_CELL_V3	CS212( .SIN(M3        ), .SO(M4  ), .PO(CFSA_FOUT[8 ]), .PIN(FOUT[8 ]), .SEL(SEL_B), .LAT(LAT_dly), .SCK1(SCLK1_dly), .SCK2(SCLK2_dly), .BYP_N(1'b0) );
-    SC_CELL_V3	CS213( .SIN(M4        ), .SO(M5  ), .PO(CFSA_FOUT[7 ]), .PIN(FOUT[7 ]), .SEL(SEL_B), .LAT(LAT_dly), .SCK1(SCLK1_dly), .SCK2(SCLK2_dly), .BYP_N(1'b0) );
-    SC_CELL_V3	CS214( .SIN(M5        ), .SO(M6  ), .PO(CFSA_FOUT[6 ]), .PIN(FOUT[6 ]), .SEL(SEL_B), .LAT(LAT_dly), .SCK1(SCLK1_dly), .SCK2(SCLK2_dly), .BYP_N(1'b0) );
-    SC_CELL_V3	CS215( .SIN(M6        ), .SO(M7  ), .PO(CFSA_FOUT[5 ]), .PIN(FOUT[5 ]), .SEL(SEL_B), .LAT(LAT_dly), .SCK1(SCLK1_dly), .SCK2(SCLK2_dly), .BYP_N(1'b0) );
-    SC_CELL_V3	CS216( .SIN(M7        ), .SO(M8  ), .PO(CFSA_FOUT[4 ]), .PIN(FOUT[4 ]), .SEL(SEL_B), .LAT(LAT_dly), .SCK1(SCLK1_dly), .SCK2(SCLK2_dly), .BYP_N(1'b0) );
-    SC_CELL_V3	CS217( .SIN(M8        ), .SO(M9  ), .PO(CFSA_FOUT[3 ]), .PIN(FOUT[3 ]), .SEL(SEL_B), .LAT(LAT_dly), .SCK1(SCLK1_dly), .SCK2(SCLK2_dly), .BYP_N(1'b0) );
-    SC_CELL_V3	CS218( .SIN(M9        ), .SO(M10 ), .PO(CFSA_FOUT[2 ]), .PIN(FOUT[2 ]), .SEL(SEL_B), .LAT(LAT_dly), .SCK1(SCLK1_dly), .SCK2(SCLK2_dly), .BYP_N(1'b0) );
-    SC_CELL_V3	CS219( .SIN(M10       ), .SO(M11 ), .PO(CFSA_FOUT[1 ]), .PIN(FOUT[1 ]), .SEL(SEL_B), .LAT(LAT_dly), .SCK1(SCLK1_dly), .SCK2(SCLK2_dly), .BYP_N(1'b0) );
-    SC_CELL_V3	CS220( .SIN(M11       ), .SO(SO_B), .PO(CFSA_FOUT[0 ]), .PIN(FOUT[0 ]), .SEL(SEL_B), .LAT(LAT_dly), .SCK1(SCLK1_dly), .SCK2(SCLK2_dly), .BYP_N(1'b0) );
-
-	assign	avs_scan_chain_readdata = {{(32-MAX_SQRT_WIDTH){1'b0}},CFSA_FOUT};
+	SC_CELL_V3	CS208( .SIN(SPI_SO_dly), .SO(M0), .PO(CFSA_FOUT[31]), .PIN(FOUT[31]), .SEL(SEL_B), .LAT(LAT_dly), .SCK1(SCLK1_dly), .SCK2(SCLK2_dly),	 .BYP_N(1'b0) );
+	SC_CELL_V3	CS209( .SIN(M0),  .SO(M1),  .PO(CFSA_FOUT[30]), .PIN(FOUT[30]), .SEL(SEL_B), .LAT(LAT_dly), .SCK1(SCLK1_dly), .SCK2(SCLK2_dly),	 .BYP_N(1'b0) );
+	SC_CELL_V3	CS210( .SIN(M1),  .SO(M2),  .PO(CFSA_FOUT[29]), .PIN(FOUT[29]), .SEL(SEL_B), .LAT(LAT_dly), .SCK1(SCLK1_dly), .SCK2(SCLK2_dly),	 .BYP_N(1'b0) );
+	SC_CELL_V3	CS211( .SIN(M2),  .SO(M3),  .PO(CFSA_FOUT[28]), .PIN(FOUT[28]), .SEL(SEL_B), .LAT(LAT_dly), .SCK1(SCLK1_dly), .SCK2(SCLK2_dly),	 .BYP_N(1'b0) );
+	SC_CELL_V3	CS212( .SIN(M3),  .SO(M4),  .PO(CFSA_FOUT[27]), .PIN(FOUT[27]), .SEL(SEL_B), .LAT(LAT_dly), .SCK1(SCLK1_dly), .SCK2(SCLK2_dly),	 .BYP_N(1'b0) );
+	SC_CELL_V3	CS213( .SIN(M4),  .SO(M5),  .PO(CFSA_FOUT[26]), .PIN(FOUT[26]), .SEL(SEL_B), .LAT(LAT_dly), .SCK1(SCLK1_dly), .SCK2(SCLK2_dly),	 .BYP_N(1'b0) );
+	SC_CELL_V3	CS214( .SIN(M5),  .SO(M6),  .PO(CFSA_FOUT[25]), .PIN(FOUT[25]), .SEL(SEL_B), .LAT(LAT_dly), .SCK1(SCLK1_dly), .SCK2(SCLK2_dly),	 .BYP_N(1'b0) );
+	SC_CELL_V3	CS215( .SIN(M6),  .SO(M7),  .PO(CFSA_FOUT[24]), .PIN(FOUT[24]), .SEL(SEL_B), .LAT(LAT_dly), .SCK1(SCLK1_dly), .SCK2(SCLK2_dly),	 .BYP_N(1'b0) );
+	SC_CELL_V3	CS216( .SIN(M7),  .SO(M8),  .PO(CFSA_FOUT[23]), .PIN(FOUT[23]), .SEL(SEL_B), .LAT(LAT_dly), .SCK1(SCLK1_dly), .SCK2(SCLK2_dly),	 .BYP_N(1'b0) );
+	SC_CELL_V3	CS217( .SIN(M8),  .SO(M9),  .PO(CFSA_FOUT[22]), .PIN(FOUT[22]), .SEL(SEL_B), .LAT(LAT_dly), .SCK1(SCLK1_dly), .SCK2(SCLK2_dly),	 .BYP_N(1'b0) );
+	SC_CELL_V3	CS218( .SIN(M9),  .SO(M10), .PO(CFSA_FOUT[21]), .PIN(FOUT[21]), .SEL(SEL_B), .LAT(LAT_dly), .SCK1(SCLK1_dly), .SCK2(SCLK2_dly),	 .BYP_N(1'b0) );
+	SC_CELL_V3	CS219( .SIN(M10), .SO(M11), .PO(CFSA_FOUT[20]), .PIN(FOUT[20]), .SEL(SEL_B), .LAT(LAT_dly), .SCK1(SCLK1_dly), .SCK2(SCLK2_dly),	 .BYP_N(1'b0) );
+	SC_CELL_V3	CS220( .SIN(M11), .SO(M12), .PO(CFSA_FOUT[19]), .PIN(FOUT[19]), .SEL(SEL_B), .LAT(LAT_dly), .SCK1(SCLK1_dly), .SCK2(SCLK2_dly),	 .BYP_N(1'b0) );
+	SC_CELL_V3	CS221( .SIN(M12), .SO(M13), .PO(CFSA_FOUT[18]), .PIN(FOUT[18]), .SEL(SEL_B), .LAT(LAT_dly), .SCK1(SCLK1_dly), .SCK2(SCLK2_dly),	 .BYP_N(1'b0) );
+	SC_CELL_V3	CS222( .SIN(M13), .SO(M14), .PO(CFSA_FOUT[17]), .PIN(FOUT[17]), .SEL(SEL_B), .LAT(LAT_dly), .SCK1(SCLK1_dly), .SCK2(SCLK2_dly),	 .BYP_N(1'b0) );
+	SC_CELL_V3	CS223( .SIN(M14), .SO(M15), .PO(CFSA_FOUT[16]), .PIN(FOUT[16]), .SEL(SEL_B), .LAT(LAT_dly), .SCK1(SCLK1_dly), .SCK2(SCLK2_dly),	 .BYP_N(1'b0) );
+	SC_CELL_V3	CS224( .SIN(M15), .SO(M16), .PO(CFSA_FOUT[15]), .PIN(FOUT[15]), .SEL(SEL_B), .LAT(LAT_dly), .SCK1(SCLK1_dly), .SCK2(SCLK2_dly),	 .BYP_N(1'b0) );
+	SC_CELL_V3	CS225( .SIN(M16), .SO(M17), .PO(CFSA_FOUT[14]), .PIN(FOUT[14]), .SEL(SEL_B), .LAT(LAT_dly), .SCK1(SCLK1_dly), .SCK2(SCLK2_dly),	 .BYP_N(1'b0) );
+	SC_CELL_V3	CS226( .SIN(M17), .SO(M18), .PO(CFSA_FOUT[13]), .PIN(FOUT[13]), .SEL(SEL_B), .LAT(LAT_dly), .SCK1(SCLK1_dly), .SCK2(SCLK2_dly),	 .BYP_N(1'b0) );
+	SC_CELL_V3	CS227( .SIN(M18), .SO(M19), .PO(CFSA_FOUT[12]), .PIN(FOUT[12]), .SEL(SEL_B), .LAT(LAT_dly), .SCK1(SCLK1_dly), .SCK2(SCLK2_dly),	 .BYP_N(1'b0) );
+	SC_CELL_V3	CS228( .SIN(M19), .SO(M20), .PO(CFSA_FOUT[11]), .PIN(FOUT[11]), .SEL(SEL_B), .LAT(LAT_dly), .SCK1(SCLK1_dly), .SCK2(SCLK2_dly),	 .BYP_N(1'b0) );
+	SC_CELL_V3	CS229( .SIN(M20), .SO(M21), .PO(CFSA_FOUT[10]), .PIN(FOUT[10]), .SEL(SEL_B), .LAT(LAT_dly), .SCK1(SCLK1_dly), .SCK2(SCLK2_dly),	 .BYP_N(1'b0) );
+	SC_CELL_V3	CS230( .SIN(M21), .SO(M22), .PO(CFSA_FOUT[9]),  .PIN(FOUT[9]),  .SEL(SEL_B), .LAT(LAT_dly), .SCK1(SCLK1_dly), .SCK2(SCLK2_dly),	 .BYP_N(1'b0) );
+	SC_CELL_V3	CS231( .SIN(M22), .SO(M23), .PO(CFSA_FOUT[8]),  .PIN(FOUT[8]),  .SEL(SEL_B), .LAT(LAT_dly), .SCK1(SCLK1_dly), .SCK2(SCLK2_dly),	 .BYP_N(1'b0) );
+	SC_CELL_V3	CS232( .SIN(M23), .SO(M24), .PO(CFSA_FOUT[7]),  .PIN(FOUT[7]),  .SEL(SEL_B), .LAT(LAT_dly), .SCK1(SCLK1_dly), .SCK2(SCLK2_dly),	 .BYP_N(1'b0) );
+	SC_CELL_V3	CS233( .SIN(M24), .SO(M25), .PO(CFSA_FOUT[6]),  .PIN(FOUT[6]),  .SEL(SEL_B), .LAT(LAT_dly), .SCK1(SCLK1_dly), .SCK2(SCLK2_dly),	 .BYP_N(1'b0) );
+	SC_CELL_V3	CS234( .SIN(M25), .SO(M26), .PO(CFSA_FOUT[5]),  .PIN(FOUT[5]),  .SEL(SEL_B), .LAT(LAT_dly), .SCK1(SCLK1_dly), .SCK2(SCLK2_dly),	 .BYP_N(1'b0) );
+	SC_CELL_V3	CS235( .SIN(M26), .SO(M27), .PO(CFSA_FOUT[4]),  .PIN(FOUT[4]),  .SEL(SEL_B), .LAT(LAT_dly), .SCK1(SCLK1_dly), .SCK2(SCLK2_dly),	 .BYP_N(1'b0) );
+	SC_CELL_V3	CS236( .SIN(M27), .SO(M28), .PO(CFSA_FOUT[3]),  .PIN(FOUT[3]),  .SEL(SEL_B), .LAT(LAT_dly), .SCK1(SCLK1_dly), .SCK2(SCLK2_dly),	 .BYP_N(1'b0) );
+	SC_CELL_V3	CS237( .SIN(M28), .SO(M29), .PO(CFSA_FOUT[2]),  .PIN(FOUT[2]),  .SEL(SEL_B), .LAT(LAT_dly), .SCK1(SCLK1_dly), .SCK2(SCLK2_dly),	 .BYP_N(1'b0) );
+	SC_CELL_V3	CS238( .SIN(M29), .SO(M30), .PO(CFSA_FOUT[1]),  .PIN(FOUT[1]),  .SEL(SEL_B), .LAT(LAT_dly), .SCK1(SCLK1_dly), .SCK2(SCLK2_dly),	 .BYP_N(1'b0) );
+	SC_CELL_V3	CS239( .SIN(M30), .SO(SO_B), .PO(CFSA_FOUT[0]), .PIN(FOUT[0]),  .SEL(SEL_B), .LAT(LAT_dly), .SCK1(SCLK1_dly), .SCK2(SCLK2_dly),	 .BYP_N(1'b0) );
+    
+	assign	avs_scan_chain_readdata = CFSA_FOUT;
     
     //************* Combinational Mapping For CTRL MODE *************//
     /* always @(*) begin
