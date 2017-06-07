@@ -66,11 +66,11 @@ module  I_MEMORY_SA_TASK_8BIT(
         mem_out[ i] = tmpi_datain[7:0];  i = 13;
         mem_out[ i] = tmpi_datain[15:8]; i = 14;
         
-        tmpi_datain = {8'b0101_1111, 4'b0010, 4'b0101};// LFSR random seed 37 (0x5F25)
+        tmpi_datain = {8'b0101_0101, 4'b0101, 4'b0101};// LFSR random seed 37 (0x5F25)
         mem_out[ i] = tmpi_datain[7:0];  i = 15;
         mem_out[ i] = tmpi_datain[15:8]; i = 16;
         
-        tmpi_datain = {8'b0000_0000, 4'b0010, 4'b0000};// Init Temperature = 32
+        tmpi_datain = {8'b0000_0000, 4'b1000, 4'b0000};// Init Temperature = 128
         mem_out[ i] = tmpi_datain[7:0];  i = 17;
         mem_out[ i] = tmpi_datain[15:8]; i = 18;
 
@@ -1065,7 +1065,7 @@ module  I_MEMORY_SA_TASK_8BIT(
     mem_out[ i] = tmpi_datain[15:8]; i = 378 + DEFAULT_PC_ADDR*2;
     
     // Update the Temperature (gr5) linearly 
-    tmpi_datain = {`SUBI, `gr5, 4'b0000, 4'b0010};//`gr5 = gr5 - 2
+    tmpi_datain = {`SUBI, `gr5, 4'b0000, 4'b0001};//`gr5 = gr5 - 1
     mem_out[ i] = tmpi_datain[7:0];  i = 379 + DEFAULT_PC_ADDR*2;
     mem_out[ i] = tmpi_datain[15:8]; i = 380 + DEFAULT_PC_ADDR*2;
 

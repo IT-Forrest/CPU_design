@@ -251,6 +251,11 @@ module  SCPU_MIMIC_SA_TOP_TEST();
     reg     [15:0]  tunning_new_sa;
     reg     [9:0]   Ana_new_sa;
     reg     [9:0]   SA_iteration;
+    reg     [9:0]   Ana_mimic;
+    reg     div_accu;//1: 128; 0:64
+    reg     [15:0]  A[0:7];
+    reg     [15:0]  F0, F1, F2, F3, F0_tmp, F3_tmp;
+    reg     [9:0]   f2_compen;
    
     assign  avs_cpustat_ctrl_rdy = avs_cpustat_readdata[IDX_SCPU_CTRL_RDY];
     assign  avs_cpustat_nxt_end  = avs_cpustat_readdata[IDX_SCPU_NXT_END];
@@ -613,7 +618,8 @@ module  SCPU_MIMIC_SA_TOP_TEST();
             avs_cpuctrl_writedata[IDX_SCPU_CPU_BGN] = 1'b0;
             #(CLK_PERIOD*10) avs_cpuctrl_write = 0;
 
-            SA_iteration = 255; //X_new = 15; Y_new = 15;
+            div_accu = 1;//1:128; 0:64
+            SA_iteration = 255;//X_new = 15; Y_new = 15;
             //$write("Tune_X =%d\tTune_Y =%d\t", X_new, Y_new);
             //q = 495;// the initial value (15,15) => [0,1023]
             for (j=0; j<SA_iteration; j=j+1) begin//SA iteration
@@ -631,13 +637,64 @@ module  SCPU_MIMIC_SA_TOP_TEST();
                     // From SPI data get the (X_new, Y_new) and ANA_new;
                     if (k == 0) begin
                         Ana_new_sa = avs_scan_chain_readdata[9:0];
-                        if (j != 0)
+                        if (j != 0) begin
                             $write("Ana_data = %d\n", Ana_new_sa);
+                        end
                         tunning_new_sa = avs_scan_chain_readdata[31:16];
                         X_new = tunning_new_sa[15:8];
                         Y_new = tunning_new_sa[7:0];
                         $write("SA#=%4d: Tune_X=%d\tTune_Y=%d\t", j, X_new, Y_new);
                         q = X_new*32 + Y_new;
+                        
+                        // Mimic the Cost function: OSCD
+                        IQ_abs[0] = (ADC01.mem_adc[q*18+0]>ADC01.mem_adc[q*18+2])?(ADC01.mem_adc[q*18+0]-ADC01.mem_adc[q*18+2]):(ADC01.mem_adc[q*18+2]-ADC01.mem_adc[q*18+0]);
+                        IQ_abs[1] = (ADC01.mem_adc[q*18+1]>ADC01.mem_adc[q*18+3])?(ADC01.mem_adc[q*18+1]-ADC01.mem_adc[q*18+3]):(ADC01.mem_adc[q*18+3]-ADC01.mem_adc[q*18+1]);
+                        
+                         //set gr0 = TOL, by default = 18 or (63)
+                        if ((IQ_abs[0] + IQ_abs[1]) < OSCD_TOL) begin
+                            A[0] = Amp_Cordic(ADC01.mem_adc[q*18+ 2], ADC01.mem_adc[q*18+ 3], 516);
+                            A[1] = Amp_Cordic(ADC01.mem_adc[q*18+ 4], ADC01.mem_adc[q*18+ 5], 516);
+                            A[2] = Amp_Cordic(ADC01.mem_adc[q*18+ 6], ADC01.mem_adc[q*18+ 7], 516);
+                            A[3] = Amp_Cordic(ADC01.mem_adc[q*18+ 8], ADC01.mem_adc[q*18+ 9], 516);
+                            A[4] = Amp_Cordic(ADC01.mem_adc[q*18+10], ADC01.mem_adc[q*18+11], 516);
+                            A[5] = Amp_Cordic(ADC01.mem_adc[q*18+12], ADC01.mem_adc[q*18+13], 516);
+                            A[6] = Amp_Cordic(ADC01.mem_adc[q*18+14], ADC01.mem_adc[q*18+15], 516);
+                            A[7] = Amp_Cordic(ADC01.mem_adc[q*18+16], ADC01.mem_adc[q*18+17], 516);
+                            
+                            F0 = Amp_Division(A[0],A[1],div_accu);
+                            F1 = Amp_Division(A[2],A[3],div_accu);
+                            F2 = Amp_Division(A[4],A[5],div_accu);
+                            F3 = Amp_Division(A[6],A[7],div_accu);
+                            
+                            // 1.414*F3
+                            F0_tmp = F0;
+                            F0_tmp = F0 + (F0_tmp >> 2);
+                            F0_tmp = F0 + (F0_tmp >> 2);
+                            F0_tmp = F0 + (F0_tmp >> 1);
+                            F0_tmp = F0 + (F0_tmp >> 2);
+                            // 1.414*F3
+                            F3_tmp = F3;
+                            F3_tmp = F3 + (F3_tmp >> 2);
+                            F3_tmp = F3 + (F3_tmp >> 2);
+                            F3_tmp = F3 + (F3_tmp >> 1);
+                            F3_tmp = F3 + (F3_tmp >> 2);
+                            
+                            Ana_mimic = 0;
+                            Ana_mimic = Ana_mimic + (F1 > F0_tmp)?(F1 - F0_tmp):(F0_tmp - F1);
+                            Ana_mimic = Ana_mimic + (F0 > F3)?(F0 - F3):(F3 - F0);
+                            Ana_mimic = Ana_mimic + (F1 > F2)?(F1 - F2):(F2 - F1);
+                            Ana_mimic = Ana_mimic + (F2 > F3_tmp)?(F2 - F3_tmp):(F3_tmp - F2);
+                            
+                            f2_compen = (div_accu)? 128:64;
+                            if (F2 < f2_compen) Ana_mimic = Ana_mimic + ((f2_compen-F2)<<1);
+                            if (Ana_mimic>255) Ana_mimic = 255;
+                            
+                            $write("Ana_minic = %d\t", Ana_mimic);
+                        end
+                        else begin
+                            Ana_mimic = 255;
+                            $write("Ana_minic = %d\t", Ana_mimic);
+                        end
                     end
 
                     adc_addr = 0;
@@ -744,7 +801,7 @@ module  SCPU_MIMIC_SA_TOP_TEST();
             $write("\nBest_X =%d\tBest_Y =%d\tAna_best = %d\n", X_new, Y_new, Ana_new_sa);
             
         // (5) Judge Final Test Result
-        if (error_cnt || (q != SA_iteration))
+        if (error_cnt || (j != SA_iteration))
             $display("Test Failed!");
         else
             $display("Test Passed!");
@@ -762,6 +819,76 @@ module  SCPU_MIMIC_SA_TOP_TEST();
         //$dumpvars (0, SCPU_MIMIC_CF_TOP_TEST);
     //end
 
+    
+    // Cordic function get sqrt((X-offset)^2, (Y-offset)^2)
+    function [MAX_SQRT_WIDTH-1:0] Amp_Cordic;
+        input   [ADC_DATA_WIDTH-1:0]    I_DATA;
+        input   [ADC_DATA_WIDTH-1:0]    Q_DATA;
+        input   [ADC_DATA_WIDTH-1:0]    offset;
+        
+        integer     i,sig;
+        integer     xn,yn,zn;
+        
+        begin
+            xn = (I_DATA >= offset)? (I_DATA - offset):(offset - I_DATA);
+            yn = (Q_DATA >= offset)? (Q_DATA - offset):(offset - Q_DATA);
+            
+            if (xn < yn) begin
+                zn = xn;
+                xn = yn;
+                yn = zn;
+            end
+            
+            xn = (xn << 4);
+            yn = (yn << 4);
+            
+            for (i=1; i<=8; i=i+1) begin
+                sig = ((xn>0 && yn>0)||(xn<0 && yn<0)) ? -1 : 1;
+                zn = xn;
+                xn = xn - sig * (yn >> i);
+                yn = yn + sig * (zn >> i);
+            end
+            
+            Amp_Cordic = (xn >> 4);
+        end
+    endfunction
+    
+    // Cordic function get division A/B
+    function [ADC_IODATA_NUM-1:0] Amp_Division;
+        input   [ADC_IODATA_NUM-1:0]    x;
+        input   [ADC_IODATA_NUM-1:0]    y;
+        input   div_accu;
+        
+        parameter   QUOTIENT_WIDTH   = 9;
+        
+        integer     i;
+        reg [ADC_IODATA_NUM-1:0] divident, dividor;
+        reg [2*ADC_IODATA_NUM-1:0] divident_tmp, dividor_tmp;
+        
+        begin
+            divident = x;
+            dividor  = y;
+            divident_tmp = (div_accu)? (divident<<7):(divident<<6);
+            dividor_tmp = (dividor << QUOTIENT_WIDTH);//#define QUOTIENT_WIDTH  9
+            
+            if ((divident >> 2) >= dividor) begin
+                // 511 = 9'b11_1111111; 256 = 9'b100_000000
+                Amp_Division = (div_accu)? 511: 256;
+            end 
+            else begin
+                for (i = QUOTIENT_WIDTH; i > 0; i = i-1) begin
+                    divident_tmp = (divident_tmp << 1);// left shift 1 bit
+                    divident_tmp = (divident_tmp & 32'h1FFFFF);// remove the leftmost bit
+
+                    if (divident_tmp >= dividor_tmp) begin
+                        divident_tmp = divident_tmp - dividor_tmp + 1;
+                    end
+                end
+                Amp_Division = (divident_tmp & 32'h1FF);
+            end
+        end
+    endfunction
+    
 endmodule
 
 
