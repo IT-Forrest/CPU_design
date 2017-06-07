@@ -20,7 +20,7 @@
 `ifndef SHARE_SUPERALU_V
 `define SHARE_SUPERALU_V
 
-`define DIV_DEBUG_ON
+//`define DIV_DEBUG_ON
 
 // Fixed-point Multiplication used for generating step from T_value
 module SHARE_SUPERALU(

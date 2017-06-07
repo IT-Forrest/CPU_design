@@ -747,8 +747,8 @@ module  I_MEMORY_SA_TASK_8BIT(
     mem_out[ i] = tmpi_datain[7:0];  i = 253 + DEFAULT_PC_ADDR*2;
     mem_out[ i] = tmpi_datain[15:8]; i = 254 + DEFAULT_PC_ADDR*2;
 
-    // if (delta_Ana(gr2) >= T(gr3)) Jump to Update T, SA counter and Neighbour
-    tmpi_datain = {`BNC, `gr0, 4'b1101, 4'b1010};
+    // if (delta_Ana(gr2) >= T(gr3)) Jump to Update Neighbour and T, SA counter 
+    tmpi_datain = {`BNC, `gr0, 4'b1010, 4'b1101};
     mem_out[ i] = tmpi_datain[7:0];  i = 255 + DEFAULT_PC_ADDR*2;
     mem_out[ i] = tmpi_datain[15:8]; i = 256 + DEFAULT_PC_ADDR*2;
 
@@ -808,8 +808,8 @@ module  I_MEMORY_SA_TASK_8BIT(
     mem_out[ i] = tmpi_datain[7:0];  i = 277 + DEFAULT_PC_ADDR*2;
     mem_out[ i] = tmpi_datain[15:8]; i = 278 + DEFAULT_PC_ADDR*2;
     
-    // if (Prob(gr5) < Rand(gr6)) Jump to Update T, SA counter and Neighbour
-    tmpi_datain = {`BN, `gr0, 4'b1101, 4'b1010};
+    // if (Prob(gr5) < Rand(gr6)) Jump to Update Neighbour and T, SA counter 
+    tmpi_datain = {`BN, `gr0, 4'b1010, 4'b1101};
     mem_out[ i] = tmpi_datain[7:0];  i = 279 + DEFAULT_PC_ADDR*2;
     mem_out[ i] = tmpi_datain[15:8]; i = 280 + DEFAULT_PC_ADDR*2;
     
