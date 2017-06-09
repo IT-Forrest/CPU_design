@@ -14,8 +14,8 @@ SRAM addr: 512X16
 0x0B. Ana_best
 0x0C. X_old  Y_old
 0x0D. Ana_old
-0x0E. SS max iteration
-0x0F. 
+0x0E. SA multi-start cnt
+0x0F. SS max iteration
 0x10. 
 
 
