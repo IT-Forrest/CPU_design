@@ -589,19 +589,21 @@ module SYS_PC_PAUSE_CPU_RESUME_TEST;
             avs_cpuctrl_writedata[IDX_SCPU_APP_DONE] = 1'b1;
             #(CLK_PERIOD*10) avs_cpuctrl_write = 0;
             
+            //#(CLK_PERIOD*200);
+            
             //polling_wait (APP_START) DONE;
-            begin : wait_app_start_done_1st
-                forever begin
-                    #(CLK_PERIOD);
-                    if (!avs_cpustat_app_start) begin //CPU_NXT_dly[0]
-                        disable wait_app_start_done_1st;
-                    end
-                end
-            end
+            //begin : wait_app_start_done_1st
+            //    forever begin
+            //        #(CLK_PERIOD);
+            //        if (!avs_cpustat_app_start) begin //CPU_NXT_dly[0]
+            //            disable wait_app_start_done_1st;
+            //        end
+            //    end
+            //end
             
             //wait enough time to reset APP_DONE
             //#(CLK_PERIOD*avs_cntsclk_writedata*10);
-            #(CLK_PERIOD*10) avs_cpuctrl_write = 1;
+            #(CLK_PERIOD*200) avs_cpuctrl_write = 1;
             avs_cpuctrl_writedata[IDX_SCPU_APP_DONE] = 1'b0;
             #(CLK_PERIOD*10) avs_cpuctrl_write = 0;
         end
