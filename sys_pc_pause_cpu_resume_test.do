@@ -62,7 +62,7 @@ add wave -noupdate /SYS_PC_PAUSE_CPU_RESUME_TEST/scpu_sram_alu/scpu_ctrl_spi/uut
 add wave -noupdate /SYS_PC_PAUSE_CPU_RESUME_TEST/scpu_sram_alu/scpu_ctrl_spi/uut/clk
 add wave -noupdate /SYS_PC_PAUSE_CPU_RESUME_TEST/scpu_sram_alu/scpu_ctrl_spi/uut/state
 TreeUpdate [SetDefaultTree]
-WaveRestoreCursors {{Cursor 1} {231976954 ps} 0} {{Cursor 2} {0 ps} 0}
+WaveRestoreCursors {{Cursor 1} {234974354 ps} 0} {{Cursor 2} {0 ps} 0}
 quietly wave cursor active 1
 configure wave -namecolwidth 250
 configure wave -valuecolwidth 102
@@ -78,4 +78,4 @@ configure wave -griddelta 40
 configure wave -timeline 0
 configure wave -timelineunits ps
 update
-WaveRestoreZoom {231976949 ps} {236321839 ps}
+WaveRestoreZoom {226284562 ps} {243664146 ps}

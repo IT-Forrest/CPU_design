@@ -166,8 +166,8 @@ module SRAM_IO_CTRL_LOGIC(
     reg         reg_ctrl_bgn, reg_ctrl_bgn_dly;
     reg         [1:0]   reg_load_dly, reg_cpu_bgn_dly, reg_clk_1time_dly;
     reg         reg_rst_n, reg_cpu_wait, reg_clk_discrt;
-    reg         reg_LOAD, reg_cpu_bgn, reg_APP_DONE;
-    reg         [1:0]   reg_ctrl_mode;
+    reg         reg_LOAD, reg_cpu_bgn;
+    reg         [1:0]   reg_ctrl_mode, reg_APP_DONE;
     reg         [2:0]   reg_test_mux;
     reg         [CT_WIDTH-1:0]  reg_sram_addr;
     reg         [CT_WIDTH-1:0]  reg_sram_data;
@@ -439,20 +439,26 @@ module SRAM_IO_CTRL_LOGIC(
         else if (!coe_app_start_export)
             reg_app_done_dly <= 1'b0;
         else
-            reg_app_done_dly <= reg_APP_DONE;
+            reg_app_done_dly <= reg_APP_DONE[0];
     end
     
     //************* make IDX_SCPU_APP_DONE only works for one cycle *************//
     always @(posedge csi_clk)
     begin
         if (~rsi_reset_n)
-            reg_APP_DONE <= 1'b0;
-        else if (!coe_app_start_export)
-            reg_APP_DONE <= 1'b0;
-        else if (avs_cpuctrl_write)
-        begin
-            reg_APP_DONE <= avs_cpuctrl_writedata[IDX_SCPU_APP_DONE];
-        end
+            reg_APP_DONE <= 2'b00;
+        else
+        case (reg_APP_DONE)
+            2'b00:
+                if (coe_app_start_export)
+                    reg_APP_DONE <= 2'b10;
+            2'b10:
+                if (avs_cpuctrl_write & (avs_cpuctrl_writedata[IDX_SCPU_APP_DONE]))
+                    reg_APP_DONE <= 2'b11;
+            2'b11:
+                if (!coe_app_start_export)
+                    reg_APP_DONE <= 2'b00;
+        endcase
     end
     
     //************* make IDX_SCPU_CLK_1TIME only works for one cycle *************//

@@ -273,21 +273,47 @@ module SYS_PC_PAUSE_CPU_RESUME_TEST;
         i_mem.I_RAM[ i] = tmpi_datain[7:0];  i = 7;
         i_mem.I_RAM[ i] = tmpi_datain[15:8]; i = 8;
         tmpi_datain = {`LIOA, `gr6, 4'b0000, 4'b0000};
-        i_mem.I_RAM[ i] = tmpi_datain[7:0];  i =  9;
+        i_mem.I_RAM[ i] = tmpi_datain[7:0];  i = 9;
         i_mem.I_RAM[ i] = tmpi_datain[15:8]; i = 10;
         tmpi_datain = {`SET, `gr1, 4'b0000, 4'b0000};
         i_mem.I_RAM[ i] = tmpi_datain[7:0];  i = 11;
         i_mem.I_RAM[ i] = tmpi_datain[15:8]; i = 12;
-        // store data to SRAM
-        tmpi_datain = {`STORE, `gr5, 1'b0, `gr0, 4'b1010};
+        tmpi_datain = {`SET, `gr7, 4'b0000, 4'b0000};
         i_mem.I_RAM[ i] = tmpi_datain[7:0];  i = 13;
         i_mem.I_RAM[ i] = tmpi_datain[15:8]; i = 14;
-        tmpi_datain = {`STORE, `gr6, 1'b0, `gr0, 4'b1011};
+        tmpi_datain = {`SET, `gr7, 4'b0000, 4'b0000};
         i_mem.I_RAM[ i] = tmpi_datain[7:0];  i = 15;
         i_mem.I_RAM[ i] = tmpi_datain[15:8]; i = 16;
-        tmpi_datain = {`HALT, 11'b000_0000_0000};//due to the pipeline, we need to add many `NOP to the instruction set
+        // Repeat load ADC data
+        tmpi_datain = {`SET, `gr1, 4'b1000, 4'b0000};
         i_mem.I_RAM[ i] = tmpi_datain[7:0];  i = 17;
         i_mem.I_RAM[ i] = tmpi_datain[15:8]; i = 18;
+        tmpi_datain = {`LIOA, `gr5, 4'b0000, 4'b0000};
+        i_mem.I_RAM[ i] = tmpi_datain[7:0];  i = 19;
+        i_mem.I_RAM[ i] = tmpi_datain[15:8]; i = 20;
+        tmpi_datain = {`SET, `gr1, 4'b0000, 4'b0000};
+        i_mem.I_RAM[ i] = tmpi_datain[7:0];  i = 21;
+        i_mem.I_RAM[ i] = tmpi_datain[15:8]; i = 22;
+        // load another input to `gr6
+        tmpi_datain = {`SET, `gr1, 4'b1000, 4'b0000};
+        i_mem.I_RAM[ i] = tmpi_datain[7:0];  i = 23;
+        i_mem.I_RAM[ i] = tmpi_datain[15:8]; i = 24;
+        tmpi_datain = {`LIOA, `gr6, 4'b0000, 4'b0000};
+        i_mem.I_RAM[ i] = tmpi_datain[7:0];  i = 25;
+        i_mem.I_RAM[ i] = tmpi_datain[15:8]; i = 26;
+        tmpi_datain = {`SET, `gr1, 4'b0000, 4'b0000};
+        i_mem.I_RAM[ i] = tmpi_datain[7:0];  i = 27;
+        i_mem.I_RAM[ i] = tmpi_datain[15:8]; i = 28;
+        // store data to SRAM
+        tmpi_datain = {`STORE, `gr5, 1'b0, `gr0, 4'b1010};
+        i_mem.I_RAM[ i] = tmpi_datain[7:0];  i = 29;
+        i_mem.I_RAM[ i] = tmpi_datain[15:8]; i = 30;
+        tmpi_datain = {`STORE, `gr6, 1'b0, `gr0, 4'b1011};
+        i_mem.I_RAM[ i] = tmpi_datain[7:0];  i = 31;
+        i_mem.I_RAM[ i] = tmpi_datain[15:8]; i = 32;
+        tmpi_datain = {`HALT, 11'b000_0000_0000};//due to the pipeline, we need to add many `NOP to the instruction set
+        i_mem.I_RAM[ i] = tmpi_datain[7:0];  i = 33;
+        i_mem.I_RAM[ i] = tmpi_datain[15:8]; i = 34;
 
 //        i= DEFAULT_PC_ADDR*2;
 //        tmpi_datain = {`SET, `gr3, 4'b0110, 4'b0100};//reset the loop controller `gr7
@@ -394,7 +420,7 @@ module SYS_PC_PAUSE_CPU_RESUME_TEST;
         #(CLK_PERIOD*avs_cntsclk_writedata*5);// wait enough time
         
         // (2) write data to SRAM
-        for (i = 0; i<9; i = i + 1) begin//DEFAULT_PC_ADDR
+        for (i = 0; i<9+8; i = i + 1) begin//DEFAULT_PC_ADDR
             //$write("%4x\t", (i<<1));
             for (k=2; k>=1; k=k-1) begin
                 /** (a) load data to SRAM_IO_CTRL from PC **/
@@ -565,8 +591,8 @@ module SYS_PC_PAUSE_CPU_RESUME_TEST;
         avs_cpuctrl_writedata[IDX_SCPU_CPU_BGN] = 1'b0;
         #(CLK_PERIOD*10) avs_cpuctrl_write = 0;
         
-        for (j=0; j<2; j=j+1) begin
-            if (j==0)
+        for (j=0; j<4; j=j+1) begin
+            if (j==0 || j==2)
                 ADC_PI = 10'd537;//1st ADC data
             else
                 ADC_PI = 10'd492;//2nd ADC data
@@ -589,21 +615,19 @@ module SYS_PC_PAUSE_CPU_RESUME_TEST;
             avs_cpuctrl_writedata[IDX_SCPU_APP_DONE] = 1'b1;
             #(CLK_PERIOD*10) avs_cpuctrl_write = 0;
             
-            //#(CLK_PERIOD*200);
-            
             //polling_wait (APP_START) DONE;
-            //begin : wait_app_start_done_1st
-            //    forever begin
-            //        #(CLK_PERIOD);
-            //        if (!avs_cpustat_app_start) begin //CPU_NXT_dly[0]
-            //            disable wait_app_start_done_1st;
-            //        end
-            //    end
-            //end
+            begin : wait_app_start_done_1st
+                forever begin
+                    #(CLK_PERIOD);
+                    if (!avs_cpustat_app_start) begin //CPU_NXT_dly[0]
+                        disable wait_app_start_done_1st;
+                    end
+                end
+            end
             
             //wait enough time to reset APP_DONE
             //#(CLK_PERIOD*avs_cntsclk_writedata*10);
-            #(CLK_PERIOD*200) avs_cpuctrl_write = 1;
+            #(CLK_PERIOD*10) avs_cpuctrl_write = 1;
             avs_cpuctrl_writedata[IDX_SCPU_APP_DONE] = 1'b0;
             #(CLK_PERIOD*10) avs_cpuctrl_write = 0;
         end
