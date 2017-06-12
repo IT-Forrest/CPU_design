@@ -442,7 +442,7 @@ module  SCPU_MIMIC_MULTI_SA_TOP_TEST();
         #(CLK_PERIOD*avs_cntsclk_writedata*5);// wait enough time
         
         // (2) write data to SRAM: <(bin_line-1)+DEFAULT_PC_ADDR
-        for (i = 0; i<(225-14)+ DEFAULT_PC_ADDR; i=i) begin
+        for (i = 0; i<(246-15)+ DEFAULT_PC_ADDR; i=i) begin
             for (k=2; k>=1; k=k-1) begin
                 /** (a) load data to SRAM_IO_CTRL from PC **/
                 // C code modify control word
@@ -584,7 +584,7 @@ module  SCPU_MIMIC_MULTI_SA_TOP_TEST();
                 end
             end
             
-            if (i == 13)//There are 14 Words at the beginning of SRAM
+            if (i == 14)//There are 15 Words at the beginning of SRAM
                 i = DEFAULT_PC_ADDR;
             else
                 i = i + 1;
