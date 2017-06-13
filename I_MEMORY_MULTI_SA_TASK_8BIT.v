@@ -121,7 +121,7 @@ module  I_MEMORY_MULTI_SA_TASK_8BIT(
     mem_out[ i] = tmpi_datain[15:8]; i = 6 + DEFAULT_PC_ADDR*2;
     
     // if (SA_iteration (gr2) == 0) Jump to SA finish
-    tmpi_datain = {`BZ, `gr1, 4'b1111, 4'b1000};// gr1 must be all 0's
+    tmpi_datain = {`BZ, `gr1, 4'b1111, 4'b1010};// gr1 must be all 0's
     mem_out[ i] = tmpi_datain[7:0];  i = 7 + DEFAULT_PC_ADDR*2;
     mem_out[ i] = tmpi_datain[15:8]; i = 8 + DEFAULT_PC_ADDR*2;
     
@@ -751,8 +751,8 @@ module  I_MEMORY_MULTI_SA_TASK_8BIT(
     mem_out[ i] = tmpi_datain[7:0];  i = 253 + DEFAULT_PC_ADDR*2;
     mem_out[ i] = tmpi_datain[15:8]; i = 254 + DEFAULT_PC_ADDR*2;
 
-    // if (delta_Ana(gr2) >= T(gr3)) Jump to Update Neighbour and T, SA counter 
-    tmpi_datain = {`BNC, `gr0, 4'b1100, 4'b0001};
+    // if (delta_Ana(gr2) >= T(gr3)) Jump to judge Multi-Start SA counter 
+    tmpi_datain = {`BNC, `gr0, 4'b1010, 4'b1101};
     mem_out[ i] = tmpi_datain[7:0];  i = 255 + DEFAULT_PC_ADDR*2;
     mem_out[ i] = tmpi_datain[15:8]; i = 256 + DEFAULT_PC_ADDR*2;
 
@@ -812,472 +812,482 @@ module  I_MEMORY_MULTI_SA_TASK_8BIT(
     mem_out[ i] = tmpi_datain[7:0];  i = 277 + DEFAULT_PC_ADDR*2;
     mem_out[ i] = tmpi_datain[15:8]; i = 278 + DEFAULT_PC_ADDR*2;
     
-    // if (Prob(gr5) < Rand(gr6)) Jump to Update Neighbour and T, SA counter 
-    tmpi_datain = {`BN, `gr0, 4'b1100, 4'b0001};
+    // if (Prob(gr5) < Rand(gr6)) Jump to judge Multi-Start SA counter 
+    tmpi_datain = {`BN, `gr0, 4'b1010, 4'b1101};
     mem_out[ i] = tmpi_datain[7:0];  i = 279 + DEFAULT_PC_ADDR*2;
     mem_out[ i] = tmpi_datain[15:8]; i = 280 + DEFAULT_PC_ADDR*2;
     
-        // else (Prob(gr5) >= Rand(gr6)) Load Multi-Start SA counter to gr3
+    // else (Prob(gr5) >= Rand(gr6)) Use Ana_new (gr7) to update Ana_old
+    tmpi_datain = {`STORE, `gr7, 1'b0, `gr0, 4'b1101};
+    mem_out[ i] = tmpi_datain[7:0];  i = 281 + DEFAULT_PC_ADDR*2;
+    mem_out[ i] = tmpi_datain[15:8]; i = 282 + DEFAULT_PC_ADDR*2;
+    
+    // load X_new Y_new to gr3
+    tmpi_datain = {`LOAD, `gr3, 1'b0, `gr0, 4'b0110};
+    mem_out[ i] = tmpi_datain[7:0];  i = 283 + DEFAULT_PC_ADDR*2;
+    mem_out[ i] = tmpi_datain[15:8]; i = 284 + DEFAULT_PC_ADDR*2;
+    
+    // Use X_new Y_new (gr3) to update X_old Y_old
+    tmpi_datain = {`STORE, `gr3, 1'b0, `gr0, 4'b1100};
+    mem_out[ i] = tmpi_datain[7:0];  i = 285 + DEFAULT_PC_ADDR*2;
+    mem_out[ i] = tmpi_datain[15:8]; i = 286 + DEFAULT_PC_ADDR*2;
+    
+        /* (3.1) Load Multi-Start SA counter to gr3 */
         tmpi_datain = {`LOAD, `gr3, 1'b0, `gr0, 4'b1110};
-        mem_out[ i] = tmpi_datain[7:0];  i = 281 + DEFAULT_PC_ADDR*2;
-        mem_out[ i] = tmpi_datain[15:8]; i = 282 + DEFAULT_PC_ADDR*2;
-        
-        // Compere Multi-Start counter(gr3) with 0
-        tmpi_datain = {`SUBI, `gr3, 4'b0000, 4'b0001};
-        mem_out[ i] = tmpi_datain[7:0];  i = 283 + DEFAULT_PC_ADDR*2;
-        mem_out[ i] = tmpi_datain[15:8]; i = 284 + DEFAULT_PC_ADDR*2;
-        
-        // if (Multi-Start counter(gr3) == 0) Jump to Multi-Start process
-        tmpi_datain = {`BZ, `gr0, 4'b1010, 4'b1111};
-        mem_out[ i] = tmpi_datain[7:0];  i = 285 + DEFAULT_PC_ADDR*2;
-        mem_out[ i] = tmpi_datain[15:8]; i = 286 + DEFAULT_PC_ADDR*2;
-        
-        // else (Multi-Start counter(gr3) != 0) update Multi-Start counter to 0xE
-        tmpi_datain = {`STORE, `gr3, 1'b0, `gr0, 4'b1110};
         mem_out[ i] = tmpi_datain[7:0];  i = 287 + DEFAULT_PC_ADDR*2;
         mem_out[ i] = tmpi_datain[15:8]; i = 288 + DEFAULT_PC_ADDR*2;
         
-        // Jump to update Ana_old process
-        tmpi_datain = {`JUMP, 3'b000, 4'b1011, 4'b1110};
+        // Compere Multi-Start counter(gr3) with 0
+        tmpi_datain = {`CMP, 4'b0000, `gr3, 1'b0, `gr0};
         mem_out[ i] = tmpi_datain[7:0];  i = 289 + DEFAULT_PC_ADDR*2;
         mem_out[ i] = tmpi_datain[15:8]; i = 290 + DEFAULT_PC_ADDR*2;
         
-        // Multi-Start process: initialize Multi-Start counter to 20
-        tmpi_datain = {`SET, `gr3, 4'b0001, 4'b0100};// gr3 must be all 0's
+        // if (Multi-Start counter(gr3) == 0) Jump to Update Neighbour and T, SA counter
+        tmpi_datain = {`BZ, `gr0, 4'b1100, 4'b0011};
         mem_out[ i] = tmpi_datain[7:0];  i = 291 + DEFAULT_PC_ADDR*2;
         mem_out[ i] = tmpi_datain[15:8]; i = 292 + DEFAULT_PC_ADDR*2;
         
-        // Save  Multi-Start counter (gr3) = 20 to 0xE
-        tmpi_datain = {`STORE, `gr3, 1'b0, `gr0, 4'b1110};
+        // else (Multi-Start counter(gr3) != 0) Update Multi-Start counter(gr3) 
+        tmpi_datain = {`SUBI, `gr3, 4'b0000, 4'b0001};
         mem_out[ i] = tmpi_datain[7:0];  i = 293 + DEFAULT_PC_ADDR*2;
         mem_out[ i] = tmpi_datain[15:8]; i = 294 + DEFAULT_PC_ADDR*2;
         
-        // Reset the value of gr3 = 255 for updating Ana_old
-        tmpi_datain = {`SET, `gr3, 4'b1111, 4'b1111};// gr3 must be all 0's
+        // if (Multi-Start counter(gr3) == 0) Jump to Multi-Start process
+        tmpi_datain = {`BZ, `gr0, 4'b1011, 4'b0100};
         mem_out[ i] = tmpi_datain[7:0];  i = 295 + DEFAULT_PC_ADDR*2;
         mem_out[ i] = tmpi_datain[15:8]; i = 296 + DEFAULT_PC_ADDR*2;
         
-        // Save Ana_old (gr3) = 255 to 0xD
-        tmpi_datain = {`STORE, `gr3, 1'b0, `gr0, 4'b1101};
+        // else (Multi-Start counter(gr3) != 0) update Multi-Start counter to 0xE
+        tmpi_datain = {`STORE, `gr3, 1'b0, `gr0, 4'b1110};
         mem_out[ i] = tmpi_datain[7:0];  i = 297 + DEFAULT_PC_ADDR*2;
         mem_out[ i] = tmpi_datain[15:8]; i = 298 + DEFAULT_PC_ADDR*2;
         
-        // Reset the value of gr3 = (Max(32) + step_T(2)) for updating Temperature T
-        tmpi_datain = {`SET, `gr3, 4'b0010, 4'b0010};
+        // Jump to update Neighbour and T, SA counter
+        tmpi_datain = {`JUMP, 3'b000, 4'b1100, 4'b0011};
         mem_out[ i] = tmpi_datain[7:0];  i = 299 + DEFAULT_PC_ADDR*2;
         mem_out[ i] = tmpi_datain[15:8]; i = 300 + DEFAULT_PC_ADDR*2;
         
-        // Save SA Temperature(gr3) = (Max + step_T) to 0x08, later it will deduct 2
-        tmpi_datain = {`STORE, `gr3, 1'b0, `gr0, 4'b1000};
+        /* (3.2) Multi-Start process: renew Multi-Start counter to 20 */
+        tmpi_datain = {`SET, `gr3, 4'b0001, 4'b0100};// gr3 must be all 0's
         mem_out[ i] = tmpi_datain[7:0];  i = 301 + DEFAULT_PC_ADDR*2;
         mem_out[ i] = tmpi_datain[15:8]; i = 302 + DEFAULT_PC_ADDR*2;
+        
+        // Save  Multi-Start counter (gr3) = 20 to 0xE
+        tmpi_datain = {`STORE, `gr3, 1'b0, `gr0, 4'b1110};
+        mem_out[ i] = tmpi_datain[7:0];  i = 303 + DEFAULT_PC_ADDR*2;
+        mem_out[ i] = tmpi_datain[15:8]; i = 304 + DEFAULT_PC_ADDR*2;
+        
+        // Reset the value of gr3 = 255 for updating Ana_old
+        tmpi_datain = {`SET, `gr3, 4'b1111, 4'b1111};// gr3 must be all 0's
+        mem_out[ i] = tmpi_datain[7:0];  i = 305 + DEFAULT_PC_ADDR*2;
+        mem_out[ i] = tmpi_datain[15:8]; i = 306 + DEFAULT_PC_ADDR*2;
+        
+        // Save Ana_old (gr3) = 255 to 0xD
+        tmpi_datain = {`STORE, `gr3, 1'b0, `gr0, 4'b1101};
+        mem_out[ i] = tmpi_datain[7:0];  i = 307 + DEFAULT_PC_ADDR*2;
+        mem_out[ i] = tmpi_datain[15:8]; i = 308 + DEFAULT_PC_ADDR*2;
+        
+        // Reset the value of gr3 = (Max(32) + step_T(2)) for updating Temperature T
+        tmpi_datain = {`SET, `gr3, 4'b0010, 4'b0010};
+        mem_out[ i] = tmpi_datain[7:0];  i = 309 + DEFAULT_PC_ADDR*2;
+        mem_out[ i] = tmpi_datain[15:8]; i = 310 + DEFAULT_PC_ADDR*2;
+        
+        // Save SA Temperature(gr3) = (Max + step_T) to 0x08, later it will deduct 2
+        tmpi_datain = {`STORE, `gr3, 1'b0, `gr0, 4'b1000};
+        mem_out[ i] = tmpi_datain[7:0];  i = 311 + DEFAULT_PC_ADDR*2;
+        mem_out[ i] = tmpi_datain[15:8]; i = 312 + DEFAULT_PC_ADDR*2;
         
         // Update (X_old,Y_old) (gr4 gr5) = (15, 15)
         // clear the value in X_old(gr4) = 0
         tmpi_datain = {`SUB, `gr4, 1'b0, `gr4, 1'b0, `gr4};
-        mem_out[ i] = tmpi_datain[7:0];  i = 303 + DEFAULT_PC_ADDR*2;
-        mem_out[ i] = tmpi_datain[15:8]; i = 304 + DEFAULT_PC_ADDR*2;
+        mem_out[ i] = tmpi_datain[7:0];  i = 313 + DEFAULT_PC_ADDR*2;
+        mem_out[ i] = tmpi_datain[15:8]; i = 314 + DEFAULT_PC_ADDR*2;
         
         // Set X_old (gr4) = 15
         tmpi_datain = {`SET, `gr4, 4'b0000, 4'b1111};
-        mem_out[ i] = tmpi_datain[7:0];  i = 305 + DEFAULT_PC_ADDR*2;
-        mem_out[ i] = tmpi_datain[15:8]; i = 306 + DEFAULT_PC_ADDR*2;
+        mem_out[ i] = tmpi_datain[7:0];  i = 315 + DEFAULT_PC_ADDR*2;
+        mem_out[ i] = tmpi_datain[15:8]; i = 316 + DEFAULT_PC_ADDR*2;
         
         // Set Y_old (gr5) = X_old (gr4) + 0 (gr0)
         tmpi_datain = {`ADD, `gr5, 1'b0, `gr4, 1'b0, `gr0};// gr3 must be all 0's
-        mem_out[ i] = tmpi_datain[7:0];  i = 307 + DEFAULT_PC_ADDR*2;
-        mem_out[ i] = tmpi_datain[15:8]; i = 308 + DEFAULT_PC_ADDR*2;
+        mem_out[ i] = tmpi_datain[7:0];  i = 317 + DEFAULT_PC_ADDR*2;
+        mem_out[ i] = tmpi_datain[15:8]; i = 318 + DEFAULT_PC_ADDR*2;
         
         // Update step_X step_Y (gr2 gr3) = (7, 7)
         // Set step_Y(gr3) = 7
         tmpi_datain = {`SET, `gr3, 4'b0000, 4'b0111};
-        mem_out[ i] = tmpi_datain[7:0];  i = 309 + DEFAULT_PC_ADDR*2;
-        mem_out[ i] = tmpi_datain[15:8]; i = 310 + DEFAULT_PC_ADDR*2;
-        
-        // Set step_X(gr2) = step_Y(gr3) + 0 (gr0)
-        tmpi_datain = {`ADD, `gr2, 1'b0, `gr3, 1'b0, `gr0};
-        mem_out[ i] = tmpi_datain[7:0];  i = 311 + DEFAULT_PC_ADDR*2;
-        mem_out[ i] = tmpi_datain[15:8]; i = 312 + DEFAULT_PC_ADDR*2;
-        
-        // Load the LFSR value in gr7 for later use
-        tmpi_datain = {`LOAD, `gr7, 1'b0, `gr0, 4'b0111};
-        mem_out[ i] = tmpi_datain[7:0];  i = 313 + DEFAULT_PC_ADDR*2;
-        mem_out[ i] = tmpi_datain[15:8]; i = 314 + DEFAULT_PC_ADDR*2;
-
-        // Get a new Random value in gr7 by using LFSR
-        tmpi_datain = {`LFSR, `gr7, 4'b0000, 1'b0, `gr7};//`gr7 = LFSR[`gr7];
-        mem_out[ i] = tmpi_datain[7:0];  i = 315 + DEFAULT_PC_ADDR*2;
-        mem_out[ i] = tmpi_datain[15:8]; i = 316 + DEFAULT_PC_ADDR*2;
-        
-        // Store the Random value (gr7) to 0x07
-        tmpi_datain = {`STORE, `gr7, 1'b0, `gr0, 4'b0111};
-        mem_out[ i] = tmpi_datain[7:0];  i = 317 + DEFAULT_PC_ADDR*2;
-        mem_out[ i] = tmpi_datain[15:8]; i = 318 + DEFAULT_PC_ADDR*2;
-        
-        // Jump to update neighbour via (X_old,Y_old) (gr4 gr5) and (step_X step_Y) (gr2 gr3)
-        tmpi_datain = {`JUMP, 3'b000, 4'b1110, 4'b0000};
         mem_out[ i] = tmpi_datain[7:0];  i = 319 + DEFAULT_PC_ADDR*2;
         mem_out[ i] = tmpi_datain[15:8]; i = 320 + DEFAULT_PC_ADDR*2;
         
-    // Use Ana_new (gr7) to update Ana_old
-    tmpi_datain = {`STORE, `gr7, 1'b0, `gr0, 4'b1101};
-    mem_out[ i] = tmpi_datain[7:0];  i = 321 + DEFAULT_PC_ADDR*2;
-    mem_out[ i] = tmpi_datain[15:8]; i = 322 + DEFAULT_PC_ADDR*2;
-    
-    // load X_new Y_new to gr3
-    tmpi_datain = {`LOAD, `gr3, 1'b0, `gr0, 4'b0110};
-    mem_out[ i] = tmpi_datain[7:0];  i = 323 + DEFAULT_PC_ADDR*2;
-    mem_out[ i] = tmpi_datain[15:8]; i = 324 + DEFAULT_PC_ADDR*2;
-    
-    // Use X_new Y_new (gr3) to update X_old Y_old
-    tmpi_datain = {`STORE, `gr3, 1'b0, `gr0, 4'b1100};
-    mem_out[ i] = tmpi_datain[7:0];  i = 325 + DEFAULT_PC_ADDR*2;
-    mem_out[ i] = tmpi_datain[15:8]; i = 326 + DEFAULT_PC_ADDR*2;
-    
+        // Set step_X(gr2) = step_Y(gr3) + 0 (gr0)
+        tmpi_datain = {`ADD, `gr2, 1'b0, `gr3, 1'b0, `gr0};
+        mem_out[ i] = tmpi_datain[7:0];  i = 321 + DEFAULT_PC_ADDR*2;
+        mem_out[ i] = tmpi_datain[15:8]; i = 322 + DEFAULT_PC_ADDR*2;
+        
+        // Load the LFSR value in gr7 for later use
+        tmpi_datain = {`LOAD, `gr7, 1'b0, `gr0, 4'b0111};
+        mem_out[ i] = tmpi_datain[7:0];  i = 323 + DEFAULT_PC_ADDR*2;
+        mem_out[ i] = tmpi_datain[15:8]; i = 324 + DEFAULT_PC_ADDR*2;
+
+        // Get a new Random value in gr7 by using LFSR
+        tmpi_datain = {`LFSR, `gr7, 4'b0000, 1'b0, `gr7};//`gr7 = LFSR[`gr7];
+        mem_out[ i] = tmpi_datain[7:0];  i = 325 + DEFAULT_PC_ADDR*2;
+        mem_out[ i] = tmpi_datain[15:8]; i = 326 + DEFAULT_PC_ADDR*2;
+        
+        // Store the Random value (gr7) to 0x07
+        tmpi_datain = {`STORE, `gr7, 1'b0, `gr0, 4'b0111};
+        mem_out[ i] = tmpi_datain[7:0];  i = 327 + DEFAULT_PC_ADDR*2;
+        mem_out[ i] = tmpi_datain[15:8]; i = 328 + DEFAULT_PC_ADDR*2;
+        
+        // Jump to update neighbour via (X_old,Y_old) (gr4 gr5) and (step_X step_Y) (gr2 gr3)
+        tmpi_datain = {`JUMP, 3'b000, 4'b1110, 4'b0010};
+        mem_out[ i] = tmpi_datain[7:0];  i = 329 + DEFAULT_PC_ADDR*2;
+        mem_out[ i] = tmpi_datain[15:8]; i = 330 + DEFAULT_PC_ADDR*2;
+        
     /* (4) Update Neighbour */
     // Get the X_old Y_old data to gr4
     tmpi_datain = {`LOAD, `gr4, 1'b0, `gr0, 4'b1100};
-    mem_out[ i] = tmpi_datain[7:0];  i = 327 + DEFAULT_PC_ADDR*2;
-    mem_out[ i] = tmpi_datain[15:8]; i = 328 + DEFAULT_PC_ADDR*2;
+    mem_out[ i] = tmpi_datain[7:0];  i = 331 + DEFAULT_PC_ADDR*2;
+    mem_out[ i] = tmpi_datain[15:8]; i = 332 + DEFAULT_PC_ADDR*2;
 
     // clear gr6 for the use of mask
     tmpi_datain = {`SUB, `gr6, 1'b0, `gr6, 1'b0, `gr6};
-    mem_out[ i] = tmpi_datain[7:0];  i = 329 + DEFAULT_PC_ADDR*2;
-    mem_out[ i] = tmpi_datain[15:8]; i = 330 + DEFAULT_PC_ADDR*2;
-    
-    // 0 (gr6) ADD 31 to get the mask 0000_0000_0001_1111
-    tmpi_datain = {`ADDI, `gr6, 4'b0001, 4'b1111};//`gr6 + 31
-    mem_out[ i] = tmpi_datain[7:0];  i = 331 + DEFAULT_PC_ADDR*2;
-    mem_out[ i] = tmpi_datain[15:8]; i = 332 + DEFAULT_PC_ADDR*2;
-    
-    // Get the Y_old (LOW 5bits) data to gr5 by (gr4 XOR gr6)
-    tmpi_datain = {`AND, `gr5, 1'b0, `gr4, 1'b0, `gr6};
     mem_out[ i] = tmpi_datain[7:0];  i = 333 + DEFAULT_PC_ADDR*2;
     mem_out[ i] = tmpi_datain[15:8]; i = 334 + DEFAULT_PC_ADDR*2;
     
-    // Right Shift `gr4 to get the MSB of X_old in gr4
-    tmpi_datain = {`SRL, `gr4, 1'b0, `gr4, 4'b1000};
+    // 0 (gr6) ADD 31 to get the mask 0000_0000_0001_1111
+    tmpi_datain = {`ADDI, `gr6, 4'b0001, 4'b1111};//`gr6 + 31
     mem_out[ i] = tmpi_datain[7:0];  i = 335 + DEFAULT_PC_ADDR*2;
     mem_out[ i] = tmpi_datain[15:8]; i = 336 + DEFAULT_PC_ADDR*2;
+    
+    // Get the Y_old (LOW 5bits) data to gr5 by (gr4 XOR gr6)
+    tmpi_datain = {`AND, `gr5, 1'b0, `gr4, 1'b0, `gr6};
+    mem_out[ i] = tmpi_datain[7:0];  i = 337 + DEFAULT_PC_ADDR*2;
+    mem_out[ i] = tmpi_datain[15:8]; i = 338 + DEFAULT_PC_ADDR*2;
+    
+    // Right Shift `gr4 to get the MSB of X_old in gr4
+    tmpi_datain = {`SRL, `gr4, 1'b0, `gr4, 4'b1000};
+    mem_out[ i] = tmpi_datain[7:0];  i = 339 + DEFAULT_PC_ADDR*2;
+    mem_out[ i] = tmpi_datain[15:8]; i = 340 + DEFAULT_PC_ADDR*2;
 
     // Load the LFSR value in gr7 for later use
     tmpi_datain = {`LOAD, `gr7, 1'b0, `gr0, 4'b0111};
-    mem_out[ i] = tmpi_datain[7:0];  i = 337 + DEFAULT_PC_ADDR*2;
-    mem_out[ i] = tmpi_datain[15:8]; i = 338 + DEFAULT_PC_ADDR*2;
+    mem_out[ i] = tmpi_datain[7:0];  i = 341 + DEFAULT_PC_ADDR*2;
+    mem_out[ i] = tmpi_datain[15:8]; i = 342 + DEFAULT_PC_ADDR*2;
 
     // Get a new Random value in gr7 by using LFSR
     tmpi_datain = {`LFSR, `gr7, 4'b0000, 1'b0, `gr7};//`gr7 = LFSR[`gr7];
-    mem_out[ i] = tmpi_datain[7:0];  i = 339 + DEFAULT_PC_ADDR*2;
-    mem_out[ i] = tmpi_datain[15:8]; i = 340 + DEFAULT_PC_ADDR*2;
-    
-    // Store the Random value (gr7) to 0x07
-    tmpi_datain = {`STORE, `gr7, 1'b0, `gr0, 4'b0111};
-    mem_out[ i] = tmpi_datain[7:0];  i = 341 + DEFAULT_PC_ADDR*2;
-    mem_out[ i] = tmpi_datain[15:8]; i = 342 + DEFAULT_PC_ADDR*2;
-    
-    // Get the current Temperature to gr2 as multiplicant
-    tmpi_datain = {`LOAD, `gr2, 1'b0, `gr0, 4'b1000};
     mem_out[ i] = tmpi_datain[7:0];  i = 343 + DEFAULT_PC_ADDR*2;
     mem_out[ i] = tmpi_datain[15:8]; i = 344 + DEFAULT_PC_ADDR*2;
     
-    // Judge if the Temperature (gr2) is Zero (gr0)
-    tmpi_datain = {`CMP, 4'b0000, `gr2, 1'b0, `gr0};
+    // Store the Random value (gr7) to 0x07
+    tmpi_datain = {`STORE, `gr7, 1'b0, `gr0, 4'b0111};
     mem_out[ i] = tmpi_datain[7:0];  i = 345 + DEFAULT_PC_ADDR*2;
     mem_out[ i] = tmpi_datain[15:8]; i = 346 + DEFAULT_PC_ADDR*2;
-
-    // if (Temperature(gr2) == 0) then Jump to the step = 1 process
-    tmpi_datain = {`BZ, `gr0, 4'b1101, 4'b1001};
+    
+    // Get the current Temperature to gr2 as multiplicant
+    tmpi_datain = {`LOAD, `gr2, 1'b0, `gr0, 4'b1000};
     mem_out[ i] = tmpi_datain[7:0];  i = 347 + DEFAULT_PC_ADDR*2;
     mem_out[ i] = tmpi_datain[15:8]; i = 348 + DEFAULT_PC_ADDR*2;
+    
+    // Judge if the Temperature (gr2) is Zero (gr0)
+    tmpi_datain = {`CMP, 4'b0000, `gr2, 1'b0, `gr0};
+    mem_out[ i] = tmpi_datain[7:0];  i = 349 + DEFAULT_PC_ADDR*2;
+    mem_out[ i] = tmpi_datain[15:8]; i = 350 + DEFAULT_PC_ADDR*2;
+
+    // if (Temperature(gr2) == 0) then Jump to the step = 1 process
+    tmpi_datain = {`BZ, `gr0, 4'b1101, 4'b1011};
+    mem_out[ i] = tmpi_datain[7:0];  i = 351 + DEFAULT_PC_ADDR*2;
+    mem_out[ i] = tmpi_datain[15:8]; i = 352 + DEFAULT_PC_ADDR*2;
     
     // else (Temperature(gr2) != 0) then calculate random step by multiplication
     // Get the LFSR random data to gr3
     tmpi_datain = {`LOAD, `gr3, 1'b0, `gr0, 4'b0111};
-    mem_out[ i] = tmpi_datain[7:0];  i = 349 + DEFAULT_PC_ADDR*2;
-    mem_out[ i] = tmpi_datain[15:8]; i = 350 + DEFAULT_PC_ADDR*2;
+    mem_out[ i] = tmpi_datain[7:0];  i = 353 + DEFAULT_PC_ADDR*2;
+    mem_out[ i] = tmpi_datain[15:8]; i = 354 + DEFAULT_PC_ADDR*2;
 
     // Get a new Random value in gr3 by using LFSR
     tmpi_datain = {`LFSR, `gr3, 4'b0000, 1'b0, `gr3};//`gr3 = LFSR[`gr3];
-    mem_out[ i] = tmpi_datain[7:0];  i = 351 + DEFAULT_PC_ADDR*2;
-    mem_out[ i] = tmpi_datain[15:8]; i = 352 + DEFAULT_PC_ADDR*2;
-    // Make it more randomly
-    tmpi_datain = {`LFSR, `gr3, 4'b0000, 1'b0, `gr3};//`gr3 = LFSR[`gr3];
-    mem_out[ i] = tmpi_datain[7:0];  i = 353 + DEFAULT_PC_ADDR*2;
-    mem_out[ i] = tmpi_datain[15:8]; i = 354 + DEFAULT_PC_ADDR*2;
-    
-    // Store the Random value (gr3) to 0x07
-    tmpi_datain = {`STORE, `gr3, 1'b0, `gr0, 4'b0111};
     mem_out[ i] = tmpi_datain[7:0];  i = 355 + DEFAULT_PC_ADDR*2;
     mem_out[ i] = tmpi_datain[15:8]; i = 356 + DEFAULT_PC_ADDR*2;
-    
-    // Right Shift `gr3 to use the MSB 8bits as multiplier
-    tmpi_datain = {`SRL, `gr3, 1'b0, `gr3, 4'b1000};
+    // Make it more randomly
+    tmpi_datain = {`LFSR, `gr3, 4'b0000, 1'b0, `gr3};//`gr3 = LFSR[`gr3];
     mem_out[ i] = tmpi_datain[7:0];  i = 357 + DEFAULT_PC_ADDR*2;
     mem_out[ i] = tmpi_datain[15:8]; i = 358 + DEFAULT_PC_ADDR*2;
     
-    // Start ALU as multiplier with mode_type = 2'b00; (pure fraction)
-    tmpi_datain = {`SET, `gr1, 3'b001, 3'b100, 2'b00};
+    // Store the Random value (gr3) to 0x07
+    tmpi_datain = {`STORE, `gr3, 1'b0, `gr0, 4'b0111};
     mem_out[ i] = tmpi_datain[7:0];  i = 359 + DEFAULT_PC_ADDR*2;
     mem_out[ i] = tmpi_datain[15:8]; i = 360 + DEFAULT_PC_ADDR*2;
     
-    //Get step_Y = step = T(gr2) * random (gr3) in gr3
-    tmpi_datain = {`LIOA, `gr3, 4'b0000, 4'b0000};
+    // Right Shift `gr3 to use the MSB 8bits as multiplier
+    tmpi_datain = {`SRL, `gr3, 1'b0, `gr3, 4'b1000};
     mem_out[ i] = tmpi_datain[7:0];  i = 361 + DEFAULT_PC_ADDR*2;
     mem_out[ i] = tmpi_datain[15:8]; i = 362 + DEFAULT_PC_ADDR*2;
     
-    //reset ALU bit flag 
-    tmpi_datain = {`SET, `gr1, 3'b000, 3'b000, 2'b00};
+    // Start ALU as multiplier with mode_type = 2'b00; (pure fraction)
+    tmpi_datain = {`SET, `gr1, 3'b001, 3'b100, 2'b00};
     mem_out[ i] = tmpi_datain[7:0];  i = 363 + DEFAULT_PC_ADDR*2;
     mem_out[ i] = tmpi_datain[15:8]; i = 364 + DEFAULT_PC_ADDR*2;
     
-    // Left shift gr7 to see if gr7[MSB] is 0 or 1
-    tmpi_datain = {`SLL, `gr7, 1'b0, `gr7, 4'b0001};
+    //Get step_Y = step = T(gr2) * random (gr3) in gr3
+    tmpi_datain = {`LIOA, `gr3, 4'b0000, 4'b0000};
     mem_out[ i] = tmpi_datain[7:0];  i = 365 + DEFAULT_PC_ADDR*2;
     mem_out[ i] = tmpi_datain[15:8]; i = 366 + DEFAULT_PC_ADDR*2;
     
-    // if gr7[MSB] == 1 Jump to (step_X, step_Y) = (T(gr2)-step(gr3), step(gr3))
-    tmpi_datain = {`BN, `gr0, 4'b1101, 4'b0111};
+    //reset ALU bit flag 
+    tmpi_datain = {`SET, `gr1, 3'b000, 3'b000, 2'b00};
     mem_out[ i] = tmpi_datain[7:0];  i = 367 + DEFAULT_PC_ADDR*2;
     mem_out[ i] = tmpi_datain[15:8]; i = 368 + DEFAULT_PC_ADDR*2;
+    
+    // Left shift gr7 to see if gr7[MSB] is 0 or 1
+    tmpi_datain = {`SLL, `gr7, 1'b0, `gr7, 4'b0001};
+    mem_out[ i] = tmpi_datain[7:0];  i = 369 + DEFAULT_PC_ADDR*2;
+    mem_out[ i] = tmpi_datain[15:8]; i = 370 + DEFAULT_PC_ADDR*2;
+    
+    // if gr7[MSB] == 1 Jump to (step_X, step_Y) = (T(gr2)-step(gr3), step(gr3))
+    tmpi_datain = {`BN, `gr0, 4'b1101, 4'b1001};
+    mem_out[ i] = tmpi_datain[7:0];  i = 371 + DEFAULT_PC_ADDR*2;
+    mem_out[ i] = tmpi_datain[15:8]; i = 372 + DEFAULT_PC_ADDR*2;
 
     // else gr7[MSB] == 0 (step_X, step_Y) = (step(gr3), T(gr2)-step(gr3))
     // Set step_Y = T(gr2) - step (gr3) in gr3
     tmpi_datain = {`SUB, `gr3, 1'b0, `gr2, 1'b0, `gr3};
-    mem_out[ i] = tmpi_datain[7:0];  i = 369 + DEFAULT_PC_ADDR*2;
-    mem_out[ i] = tmpi_datain[15:8]; i = 370 + DEFAULT_PC_ADDR*2;
+    mem_out[ i] = tmpi_datain[7:0];  i = 373 + DEFAULT_PC_ADDR*2;
+    mem_out[ i] = tmpi_datain[15:8]; i = 374 + DEFAULT_PC_ADDR*2;
     
     // Save step_X = T(gr2) - step_Y (gr3) in gr2;
     tmpi_datain = {`SUB, `gr2, 1'b0, `gr2, 1'b0, `gr3};
-    mem_out[ i] = tmpi_datain[7:0];  i = 371 + DEFAULT_PC_ADDR*2;
-    mem_out[ i] = tmpi_datain[15:8]; i = 372 + DEFAULT_PC_ADDR*2;
+    mem_out[ i] = tmpi_datain[7:0];  i = 375 + DEFAULT_PC_ADDR*2;
+    mem_out[ i] = tmpi_datain[15:8]; i = 376 + DEFAULT_PC_ADDR*2;
     
     // Jump to update the X_old Y_old (gr4 gr5) with step_X step_Y (gr2 gr3)
-    tmpi_datain = {`JUMP, 3'b000, 4'b1110, 4'b0000};
-    mem_out[ i] = tmpi_datain[7:0];  i = 373 + DEFAULT_PC_ADDR*2;
-    mem_out[ i] = tmpi_datain[15:8]; i = 374 + DEFAULT_PC_ADDR*2;
+    tmpi_datain = {`JUMP, 3'b000, 4'b1110, 4'b0010};
+    mem_out[ i] = tmpi_datain[7:0];  i = 377 + DEFAULT_PC_ADDR*2;
+    mem_out[ i] = tmpi_datain[15:8]; i = 378 + DEFAULT_PC_ADDR*2;
     
     // This is the step = 1 process; step (0 1)
     // clear gr2 as 0
     tmpi_datain = {`SUB, `gr2, 1'b0, `gr2, 1'b0, `gr2};
-    mem_out[ i] = tmpi_datain[7:0];  i = 375 + DEFAULT_PC_ADDR*2;
-    mem_out[ i] = tmpi_datain[15:8]; i = 376 + DEFAULT_PC_ADDR*2;
-
-    // Set gr2 as 1
-    tmpi_datain = {`ADDI, `gr2, 4'b0000, 4'b0001};
-    mem_out[ i] = tmpi_datain[7:0];  i = 377 + DEFAULT_PC_ADDR*2;
-    mem_out[ i] = tmpi_datain[15:8]; i = 378 + DEFAULT_PC_ADDR*2;
-   
-    // clear gr3 as 0
-    tmpi_datain = {`SUB, `gr3, 1'b0, `gr3, 1'b0, `gr3};
     mem_out[ i] = tmpi_datain[7:0];  i = 379 + DEFAULT_PC_ADDR*2;
     mem_out[ i] = tmpi_datain[15:8]; i = 380 + DEFAULT_PC_ADDR*2;
 
-    // Left shift gr7 to see if gr7[MSB] is 0 or 1
-    tmpi_datain = {`SLL, `gr7, 1'b0, `gr7, 4'b0001};
+    // Set gr2 as 1
+    tmpi_datain = {`ADDI, `gr2, 4'b0000, 4'b0001};
     mem_out[ i] = tmpi_datain[7:0];  i = 381 + DEFAULT_PC_ADDR*2;
     mem_out[ i] = tmpi_datain[15:8]; i = 382 + DEFAULT_PC_ADDR*2;
-    
-    // if gr7[MSB] == 1 Jump to (step_X, step_Y) = (1, 0)
-    tmpi_datain = {`BN, `gr0, 4'b1101, 4'b1111};
+   
+    // clear gr3 as 0
+    tmpi_datain = {`SUB, `gr3, 1'b0, `gr3, 1'b0, `gr3};
     mem_out[ i] = tmpi_datain[7:0];  i = 383 + DEFAULT_PC_ADDR*2;
     mem_out[ i] = tmpi_datain[15:8]; i = 384 + DEFAULT_PC_ADDR*2;
+
+    // Left shift gr7 to see if gr7[MSB] is 0 or 1
+    tmpi_datain = {`SLL, `gr7, 1'b0, `gr7, 4'b0001};
+    mem_out[ i] = tmpi_datain[7:0];  i = 385 + DEFAULT_PC_ADDR*2;
+    mem_out[ i] = tmpi_datain[15:8]; i = 386 + DEFAULT_PC_ADDR*2;
+    
+    // if gr7[MSB] == 1 Jump to (step_X, step_Y) = (1, 0)
+    tmpi_datain = {`BN, `gr0, 4'b1110, 4'b0001};
+    mem_out[ i] = tmpi_datain[7:0];  i = 387 + DEFAULT_PC_ADDR*2;
+    mem_out[ i] = tmpi_datain[15:8]; i = 388 + DEFAULT_PC_ADDR*2;
 
     // else gr7[MSB] == 0 (step_X, step_Y) = (0, 1)
     // Set step_Y = (gr2) - step (gr3) in gr3
     tmpi_datain = {`SUB, `gr3, 1'b0, `gr2, 1'b0, `gr3};
-    mem_out[ i] = tmpi_datain[7:0];  i = 385 + DEFAULT_PC_ADDR*2;
-    mem_out[ i] = tmpi_datain[15:8]; i = 386 + DEFAULT_PC_ADDR*2;
+    mem_out[ i] = tmpi_datain[7:0];  i = 389 + DEFAULT_PC_ADDR*2;
+    mem_out[ i] = tmpi_datain[15:8]; i = 390 + DEFAULT_PC_ADDR*2;
     
     // Save step_X = (gr2) - step_Y (gr3) in gr2;
     tmpi_datain = {`SUB, `gr2, 1'b0, `gr2, 1'b0, `gr3};
-    mem_out[ i] = tmpi_datain[7:0];  i = 387 + DEFAULT_PC_ADDR*2;
-    mem_out[ i] = tmpi_datain[15:8]; i = 388 + DEFAULT_PC_ADDR*2;
+    mem_out[ i] = tmpi_datain[7:0];  i = 391 + DEFAULT_PC_ADDR*2;
+    mem_out[ i] = tmpi_datain[15:8]; i = 392 + DEFAULT_PC_ADDR*2;
     
     // Finally, get (X_new,Y_new) by (X_old,Y_old) (gr4 gr5) with step_X step_Y (gr2 gr3)
     // Left shift gr7 to see the value of gr7[MSB-1]; 1 means +; 0 means -;
     tmpi_datain = {`SLL, `gr7, 1'b0, `gr7, 4'b0001};
-    mem_out[ i] = tmpi_datain[7:0];  i = 389 + DEFAULT_PC_ADDR*2;
-    mem_out[ i] = tmpi_datain[15:8]; i = 390 + DEFAULT_PC_ADDR*2;
+    mem_out[ i] = tmpi_datain[7:0];  i = 393 + DEFAULT_PC_ADDR*2;
+    mem_out[ i] = tmpi_datain[15:8]; i = 394 + DEFAULT_PC_ADDR*2;
 
     // if gr7[MSB-1] == 1 X_new = X_old (gr4) + step_X (gr2)
-    tmpi_datain = {`BN, `gr0, 4'b1110, 4'b0011};
-    mem_out[ i] = tmpi_datain[7:0];  i = 391 + DEFAULT_PC_ADDR*2;
-    mem_out[ i] = tmpi_datain[15:8]; i = 392 + DEFAULT_PC_ADDR*2;
+    tmpi_datain = {`BN, `gr0, 4'b1110, 4'b0101};
+    mem_out[ i] = tmpi_datain[7:0];  i = 395 + DEFAULT_PC_ADDR*2;
+    mem_out[ i] = tmpi_datain[15:8]; i = 396 + DEFAULT_PC_ADDR*2;
     
     // else gr7[MSB-1] == 0 X_new = X_old - step_X; or say step_X = 0 - step_X
     tmpi_datain = {`SUB, `gr2, 1'b0, `gr0, 1'b0, `gr2};
-    mem_out[ i] = tmpi_datain[7:0];  i = 393 + DEFAULT_PC_ADDR*2;
-    mem_out[ i] = tmpi_datain[15:8]; i = 394 + DEFAULT_PC_ADDR*2;
+    mem_out[ i] = tmpi_datain[7:0];  i = 397 + DEFAULT_PC_ADDR*2;
+    mem_out[ i] = tmpi_datain[15:8]; i = 398 + DEFAULT_PC_ADDR*2;
     
     // Keep X_new = X_old (gr4) + ((gr7[MSB-1])? step_X(gr2) : -step_X(gr2)) in gr2
     tmpi_datain = {`ADD, `gr2, 1'b0, `gr4, 1'b0, `gr2};
-    mem_out[ i] = tmpi_datain[7:0];  i = 395 + DEFAULT_PC_ADDR*2;
-    mem_out[ i] = tmpi_datain[15:8]; i = 396 + DEFAULT_PC_ADDR*2;
+    mem_out[ i] = tmpi_datain[7:0];  i = 399 + DEFAULT_PC_ADDR*2;
+    mem_out[ i] = tmpi_datain[15:8]; i = 400 + DEFAULT_PC_ADDR*2;
 
     // Left shift gr7 to see the value of gr7[MSB-2]; 1 means +; 0 means -;
     tmpi_datain = {`SLL, `gr7, 1'b0, `gr7, 4'b0001};
-    mem_out[ i] = tmpi_datain[7:0];  i = 397 + DEFAULT_PC_ADDR*2;
-    mem_out[ i] = tmpi_datain[15:8]; i = 398 + DEFAULT_PC_ADDR*2;
-
-    // if gr7[MSB-2] == 1 Y_new = Y_old (gr5) + step_Y (gr3)
-    tmpi_datain = {`BN, `gr0, 4'b1110, 4'b0111};
-    mem_out[ i] = tmpi_datain[7:0];  i = 399 + DEFAULT_PC_ADDR*2;
-    mem_out[ i] = tmpi_datain[15:8]; i = 400 + DEFAULT_PC_ADDR*2;
-    
-    // else gr7[MSB-2] == 0 Y_new = Y_old - step_Y; or say step_Y = 0 - step_Y
-    tmpi_datain = {`SUB, `gr3, 1'b0, `gr0, 1'b0, `gr3};
     mem_out[ i] = tmpi_datain[7:0];  i = 401 + DEFAULT_PC_ADDR*2;
     mem_out[ i] = tmpi_datain[15:8]; i = 402 + DEFAULT_PC_ADDR*2;
-    
-    // Keep Y_new = Y_old (gr5) + ((gr7[MSB-1])? step_Y(gr3) : -step_Y(gr3)) in gr3
-    tmpi_datain = {`ADD, `gr3, 1'b0, `gr5, 1'b0, `gr3};
+
+    // if gr7[MSB-2] == 1 Y_new = Y_old (gr5) + step_Y (gr3)
+    tmpi_datain = {`BN, `gr0, 4'b1110, 4'b1001};
     mem_out[ i] = tmpi_datain[7:0];  i = 403 + DEFAULT_PC_ADDR*2;
     mem_out[ i] = tmpi_datain[15:8]; i = 404 + DEFAULT_PC_ADDR*2;
     
-    // Add 0 to gr6 (0000_0000_0001_1111) to keep 31 as the mask
-    tmpi_datain = {`ADDI, `gr6, 4'b0000, 4'b0000};
+    // else gr7[MSB-2] == 0 Y_new = Y_old - step_Y; or say step_Y = 0 - step_Y
+    tmpi_datain = {`SUB, `gr3, 1'b0, `gr0, 1'b0, `gr3};
     mem_out[ i] = tmpi_datain[7:0];  i = 405 + DEFAULT_PC_ADDR*2;
     mem_out[ i] = tmpi_datain[15:8]; i = 406 + DEFAULT_PC_ADDR*2;
     
-    // AND X_new (gr2) with gr6 to keep the X_new in range [0~31];
-    tmpi_datain = {`AND, `gr2, 1'b0, `gr2, 1'b0, `gr6};
+    // Keep Y_new = Y_old (gr5) + ((gr7[MSB-1])? step_Y(gr3) : -step_Y(gr3)) in gr3
+    tmpi_datain = {`ADD, `gr3, 1'b0, `gr5, 1'b0, `gr3};
     mem_out[ i] = tmpi_datain[7:0];  i = 407 + DEFAULT_PC_ADDR*2;
     mem_out[ i] = tmpi_datain[15:8]; i = 408 + DEFAULT_PC_ADDR*2;
     
-    // AND Y_new (gr3) with gr6 to keep the Y_new in range [0~31];
-    tmpi_datain = {`AND, `gr3, 1'b0, `gr3, 1'b0, `gr6};
+    // Add 0 to gr6 (0000_0000_0001_1111) to keep 31 as the mask
+    tmpi_datain = {`ADDI, `gr6, 4'b0000, 4'b0000};// meaningless
     mem_out[ i] = tmpi_datain[7:0];  i = 409 + DEFAULT_PC_ADDR*2;
     mem_out[ i] = tmpi_datain[15:8]; i = 410 + DEFAULT_PC_ADDR*2;
+    
+    // AND X_new (gr2) with gr6 to keep the X_new in range [0~31];
+    tmpi_datain = {`AND, `gr2, 1'b0, `gr2, 1'b0, `gr6};
+    mem_out[ i] = tmpi_datain[7:0];  i = 411 + DEFAULT_PC_ADDR*2;
+    mem_out[ i] = tmpi_datain[15:8]; i = 412 + DEFAULT_PC_ADDR*2;
+    
+    // AND Y_new (gr3) with gr6 to keep the Y_new in range [0~31];
+    tmpi_datain = {`AND, `gr3, 1'b0, `gr3, 1'b0, `gr6};
+    mem_out[ i] = tmpi_datain[7:0];  i = 413 + DEFAULT_PC_ADDR*2;
+    mem_out[ i] = tmpi_datain[15:8]; i = 414 + DEFAULT_PC_ADDR*2;
     
     // Merge X_new with Y_new and save back to SRAM at 0x09
     // Left shift X_new (gr2) 8bits
     tmpi_datain = {`SLL, `gr2, 1'b0, `gr2, 4'b1000};
-    mem_out[ i] = tmpi_datain[7:0];  i = 411 + DEFAULT_PC_ADDR*2;
-    mem_out[ i] = tmpi_datain[15:8]; i = 412 + DEFAULT_PC_ADDR*2;
-    
-    // ADD X_new (gr2) with Y_new (gr3) and save back to gr2
-    tmpi_datain = {`ADD, `gr2, 1'b0, `gr2, 1'b0, `gr3};
-    mem_out[ i] = tmpi_datain[7:0];  i = 413 + DEFAULT_PC_ADDR*2;
-    mem_out[ i] = tmpi_datain[15:8]; i = 414 + DEFAULT_PC_ADDR*2;
-    
-    // Save (X_new, Y_new) back to SRAM
-    tmpi_datain = {`STORE, `gr2, 1'b0, `gr0, 4'b0110};
     mem_out[ i] = tmpi_datain[7:0];  i = 415 + DEFAULT_PC_ADDR*2;
     mem_out[ i] = tmpi_datain[15:8]; i = 416 + DEFAULT_PC_ADDR*2;
     
-    /* (5) Update SA current Temperature to gr5 */
-    tmpi_datain = {`LOAD, `gr5, 1'b0, `gr0, 4'b1000};
+    // ADD X_new (gr2) with Y_new (gr3) and save back to gr2
+    tmpi_datain = {`ADD, `gr2, 1'b0, `gr2, 1'b0, `gr3};
     mem_out[ i] = tmpi_datain[7:0];  i = 417 + DEFAULT_PC_ADDR*2;
     mem_out[ i] = tmpi_datain[15:8]; i = 418 + DEFAULT_PC_ADDR*2;
     
-    // Update the Temperature (gr5) linearly 
-    tmpi_datain = {`SUBI, `gr5, 4'b0000, 4'b0010};//`gr5 = gr5 - 1
+    // Save (X_new, Y_new) back to SRAM
+    tmpi_datain = {`STORE, `gr2, 1'b0, `gr0, 4'b0110};
     mem_out[ i] = tmpi_datain[7:0];  i = 419 + DEFAULT_PC_ADDR*2;
     mem_out[ i] = tmpi_datain[15:8]; i = 420 + DEFAULT_PC_ADDR*2;
-
-    // if (gr5 >= 0) go to the next and save gr5 directly
-    tmpi_datain = {`BNN, `gr0, 4'b1111, 4'b0010};
+    
+    /* (5) Update SA current Temperature to gr5 */
+    tmpi_datain = {`LOAD, `gr5, 1'b0, `gr0, 4'b1000};
     mem_out[ i] = tmpi_datain[7:0];  i = 421 + DEFAULT_PC_ADDR*2;
     mem_out[ i] = tmpi_datain[15:8]; i = 422 + DEFAULT_PC_ADDR*2;
+    
+    // Update the Temperature (gr5) linearly 
+    tmpi_datain = {`SUBI, `gr5, 4'b0000, 4'b0010};//`gr5 = gr5 - 1
+    mem_out[ i] = tmpi_datain[7:0];  i = 423 + DEFAULT_PC_ADDR*2;
+    mem_out[ i] = tmpi_datain[15:8]; i = 424 + DEFAULT_PC_ADDR*2;
+
+    // if (gr5 >= 0) go to the next and save gr5 directly
+    tmpi_datain = {`BNN, `gr0, 4'b1111, 4'b0100};
+    mem_out[ i] = tmpi_datain[7:0];  i = 425 + DEFAULT_PC_ADDR*2;
+    mem_out[ i] = tmpi_datain[15:8]; i = 426 + DEFAULT_PC_ADDR*2;
 
     // else (gr5 < 0) reset Temperature as 0
     tmpi_datain = {`SUB, `gr5, 1'b0, `gr5, 1'b0, `gr5};
-    mem_out[ i] = tmpi_datain[7:0];  i = 423 + DEFAULT_PC_ADDR*2;
-    mem_out[ i] = tmpi_datain[15:8]; i = 424 + DEFAULT_PC_ADDR*2;
-    
-    // Save Temperature (gr5) back to SRAM
-    tmpi_datain = {`STORE, `gr5, 1'b0, `gr0, 4'b1000};
-    mem_out[ i] = tmpi_datain[7:0];  i = 425 + DEFAULT_PC_ADDR*2;
-    mem_out[ i] = tmpi_datain[15:8]; i = 426 + DEFAULT_PC_ADDR*2;
-    
-    // Just for debug; pause the CPU
-    tmpi_datain = {`SET, `gr1, 4'b1000, 4'b0000};
     mem_out[ i] = tmpi_datain[7:0];  i = 427 + DEFAULT_PC_ADDR*2;
     mem_out[ i] = tmpi_datain[15:8]; i = 428 + DEFAULT_PC_ADDR*2;
     
-    // reset gr1
-    tmpi_datain = {`SET, `gr1, 4'b0000, 4'b0000};
+    // Save Temperature (gr5) back to SRAM
+    tmpi_datain = {`STORE, `gr5, 1'b0, `gr0, 4'b1000};
     mem_out[ i] = tmpi_datain[7:0];  i = 429 + DEFAULT_PC_ADDR*2;
     mem_out[ i] = tmpi_datain[15:8]; i = 430 + DEFAULT_PC_ADDR*2;
     
-    /* (6) Update max SA iteration counter with gr2 */
-    tmpi_datain = {`LOAD, `gr2, 1'b0, `gr0, 4'b1001};
+    // Just for debug; pause the CPU
+    tmpi_datain = {`SET, `gr1, 4'b1000, 4'b0000};
     mem_out[ i] = tmpi_datain[7:0];  i = 431 + DEFAULT_PC_ADDR*2;
     mem_out[ i] = tmpi_datain[15:8]; i = 432 + DEFAULT_PC_ADDR*2;
-
-    // Count down SA iteration # one each time
-    tmpi_datain = {`SUBI, `gr2, 4'b0000, 4'b0001};//`gr2--
+    
+    // Just for debug; reset gr1
+    tmpi_datain = {`SET, `gr1, 4'b0000, 4'b0000};
     mem_out[ i] = tmpi_datain[7:0];  i = 433 + DEFAULT_PC_ADDR*2;
     mem_out[ i] = tmpi_datain[15:8]; i = 434 + DEFAULT_PC_ADDR*2;
     
-    //if (`gr2 != 0) return back to (1), save iteration# and keep on SA
-    tmpi_datain = {`BNZ, `gr0, 4'b0001, 4'b1111};
+    /* (6) Update max SA iteration counter with gr2 */
+    tmpi_datain = {`LOAD, `gr2, 1'b0, `gr0, 4'b1001};
     mem_out[ i] = tmpi_datain[7:0];  i = 435 + DEFAULT_PC_ADDR*2;
     mem_out[ i] = tmpi_datain[15:8]; i = 436 + DEFAULT_PC_ADDR*2;
-    
-    //else Update the Ana_best to Ana_old; X_new Y_new to X_old Y_old
-    tmpi_datain = {`LOAD, `gr7, 1'b0, `gr0, 4'b1011};// Ana_best
+
+    // Count down SA iteration # one each time
+    tmpi_datain = {`SUBI, `gr2, 4'b0000, 4'b0001};//`gr2--
     mem_out[ i] = tmpi_datain[7:0];  i = 437 + DEFAULT_PC_ADDR*2;
     mem_out[ i] = tmpi_datain[15:8]; i = 438 + DEFAULT_PC_ADDR*2;
     
-    // Save Ana_best (gr7) to Ana_old at 0x0D
-    tmpi_datain = {`STORE, `gr7, 1'b0, `gr0, 4'b1101};
+    //if (`gr2 != 0) return back to (1), save iteration# and keep on SA
+    tmpi_datain = {`BNZ, `gr0, 4'b0001, 4'b1111};
     mem_out[ i] = tmpi_datain[7:0];  i = 439 + DEFAULT_PC_ADDR*2;
     mem_out[ i] = tmpi_datain[15:8]; i = 440 + DEFAULT_PC_ADDR*2;
     
-    // Save Ana_best (gr7) to Ana_new at 0x05
-    tmpi_datain = {`STORE, `gr7, 1'b0, `gr0, 4'b0101};
+    //else Update the Ana_best to Ana_old; X_new Y_new to X_old Y_old
+    tmpi_datain = {`LOAD, `gr7, 1'b0, `gr0, 4'b1011};// Ana_best
     mem_out[ i] = tmpi_datain[7:0];  i = 441 + DEFAULT_PC_ADDR*2;
     mem_out[ i] = tmpi_datain[15:8]; i = 442 + DEFAULT_PC_ADDR*2;
     
-    // Load X_best Y_best to gr6
-    tmpi_datain = {`LOAD, `gr6, 1'b0, `gr0, 4'b1010};// X_best Y_best
+    // Save Ana_best (gr7) to Ana_old at 0x0D
+    tmpi_datain = {`STORE, `gr7, 1'b0, `gr0, 4'b1101};
     mem_out[ i] = tmpi_datain[7:0];  i = 443 + DEFAULT_PC_ADDR*2;
     mem_out[ i] = tmpi_datain[15:8]; i = 444 + DEFAULT_PC_ADDR*2;
     
-    // Save X_best Y_best (gr6) to X_old Y_old
-    tmpi_datain = {`STORE, `gr6, 1'b0, `gr0, 4'b1100};
+    // Save Ana_best (gr7) to Ana_new at 0x05
+    tmpi_datain = {`STORE, `gr7, 1'b0, `gr0, 4'b0101};
     mem_out[ i] = tmpi_datain[7:0];  i = 445 + DEFAULT_PC_ADDR*2;
     mem_out[ i] = tmpi_datain[15:8]; i = 446 + DEFAULT_PC_ADDR*2;
     
-    // Save X_best Y_best (gr6) to X_new Y_new
-    tmpi_datain = {`STORE, `gr6, 1'b0, `gr0, 4'b0110};
+    // Load X_best Y_best to gr6
+    tmpi_datain = {`LOAD, `gr6, 1'b0, `gr0, 4'b1010};// X_best Y_best
     mem_out[ i] = tmpi_datain[7:0];  i = 447 + DEFAULT_PC_ADDR*2;
     mem_out[ i] = tmpi_datain[15:8]; i = 448 + DEFAULT_PC_ADDR*2;
+    
+    // Save X_best Y_best (gr6) to X_old Y_old
+    tmpi_datain = {`STORE, `gr6, 1'b0, `gr0, 4'b1100};
+    mem_out[ i] = tmpi_datain[7:0];  i = 449 + DEFAULT_PC_ADDR*2;
+    mem_out[ i] = tmpi_datain[15:8]; i = 450 + DEFAULT_PC_ADDR*2;
+    
+    // Save X_best Y_best (gr6) to X_new Y_new
+    tmpi_datain = {`STORE, `gr6, 1'b0, `gr0, 4'b0110};
+    mem_out[ i] = tmpi_datain[7:0];  i = 451 + DEFAULT_PC_ADDR*2;
+    mem_out[ i] = tmpi_datain[15:8]; i = 452 + DEFAULT_PC_ADDR*2;
 
     // (7) start the Sensitivity Algorithm (optional)
     
     // (8) Finally output the X_new Y_new
     //Clear OUT_A & Set SPI starting address;
     tmpi_datain = {`SUB, `gr2, 1'b0, `gr2, 1'b0, `gr2};
-    mem_out[ i] = tmpi_datain[7:0];  i = 449 + DEFAULT_PC_ADDR*2;
-    mem_out[ i] = tmpi_datain[15:8]; i = 450 + DEFAULT_PC_ADDR*2;
-    tmpi_datain = {`SET, `gr2, 4'b0000, 4'b1001};
-    mem_out[ i] = tmpi_datain[7:0];  i = 451 + DEFAULT_PC_ADDR*2;
-    mem_out[ i] = tmpi_datain[15:8]; i = 452 + DEFAULT_PC_ADDR*2;
-
-    //Clear OUT_B & Set SPI send data length;
-    tmpi_datain = {`SUB, `gr3, 1'b0, `gr3, 1'b0, `gr3};
     mem_out[ i] = tmpi_datain[7:0];  i = 453 + DEFAULT_PC_ADDR*2;
     mem_out[ i] = tmpi_datain[15:8]; i = 454 + DEFAULT_PC_ADDR*2;
-    tmpi_datain = {`SET, `gr3, 4'b0000, 4'b0100};// output 4 Bytes (X_new Y_new) and Ana_new
+    tmpi_datain = {`SET, `gr2, 4'b0000, 4'b1001};
     mem_out[ i] = tmpi_datain[7:0];  i = 455 + DEFAULT_PC_ADDR*2;
     mem_out[ i] = tmpi_datain[15:8]; i = 456 + DEFAULT_PC_ADDR*2;
 
-    //set the control reg for SPI to begin output
-    tmpi_datain = {`SET, `gr1, 3'b010, 3'b000, 2'b00};
+    //Clear OUT_B & Set SPI send data length;
+    tmpi_datain = {`SUB, `gr3, 1'b0, `gr3, 1'b0, `gr3};
     mem_out[ i] = tmpi_datain[7:0];  i = 457 + DEFAULT_PC_ADDR*2;
     mem_out[ i] = tmpi_datain[15:8]; i = 458 + DEFAULT_PC_ADDR*2;
-
-    //reset the control reg for SPI to end output
-    tmpi_datain = {`SET, `gr1, 3'b000, 3'b000, 2'b00};
+    tmpi_datain = {`SET, `gr3, 4'b0000, 4'b0100};// output 4 Bytes (X_new Y_new) and Ana_new
     mem_out[ i] = tmpi_datain[7:0];  i = 459 + DEFAULT_PC_ADDR*2;
     mem_out[ i] = tmpi_datain[15:8]; i = 460 + DEFAULT_PC_ADDR*2;
 
-    //System finish
-    tmpi_datain = {`HALT, 11'b000_0000_0000};
+    //set the control reg for SPI to begin output
+    tmpi_datain = {`SET, `gr1, 3'b010, 3'b000, 2'b00};
     mem_out[ i] = tmpi_datain[7:0];  i = 461 + DEFAULT_PC_ADDR*2;
     mem_out[ i] = tmpi_datain[15:8]; i = 462 + DEFAULT_PC_ADDR*2;
+
+    //reset the control reg for SPI to end output
+    tmpi_datain = {`SET, `gr1, 3'b000, 3'b000, 2'b00};
+    mem_out[ i] = tmpi_datain[7:0];  i = 463 + DEFAULT_PC_ADDR*2;
+    mem_out[ i] = tmpi_datain[15:8]; i = 464 + DEFAULT_PC_ADDR*2;
+
+    //System finish
+    tmpi_datain = {`HALT, 11'b000_0000_0000};
+    mem_out[ i] = tmpi_datain[7:0];  i = 465 + DEFAULT_PC_ADDR*2;
+    mem_out[ i] = tmpi_datain[15:8]; i = 466 + DEFAULT_PC_ADDR*2;
     end
 
     assign  mem_sa = mem_out[addr];
