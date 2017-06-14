@@ -1,0 +1,6144 @@
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 0
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 0
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 1
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 0
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 2
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 2
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 3
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 2
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 4
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 0
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 5
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 0
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 6
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 2
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 7
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 2
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 8
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 8
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 9
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 8
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 10
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 10
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 11
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 10
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 12
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 8
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 13
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 8
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 14
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 10
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 15
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 10
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 16
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 16
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 17
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 16
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 18
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 18
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 19
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 18
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 20
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 16
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 21
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 16
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 22
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 18
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 23
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 18
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 24
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 24
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 25
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 24
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 26
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 26
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 27
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 26
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 28
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 24
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 29
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 24
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 30
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 26
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 31
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 26
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 32
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 0
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 33
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 0
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 34
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 2
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 35
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 2
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 36
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 0
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 37
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 0
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 38
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 2
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 39
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 2
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 40
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 8
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 41
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 8
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 42
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 10
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 43
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 10
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 44
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 8
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 45
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 8
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 46
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 10
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 47
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 10
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 48
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 16
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 49
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 16
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 50
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 18
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 51
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 18
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 52
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 16
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 53
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 16
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 54
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 18
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 55
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 18
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 56
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 24
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 57
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 24
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 58
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 26
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 59
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 26
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 60
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 24
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 61
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 24
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 62
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 26
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 63
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 26
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 64
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 64
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 65
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 64
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 66
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 66
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 67
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 66
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 68
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 64
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 69
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 64
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 70
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 66
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 71
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 66
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 72
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 72
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 73
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 72
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 74
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 74
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 75
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 74
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 76
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 72
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 77
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 72
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 78
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 74
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 79
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 74
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 80
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 80
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 81
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 80
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 82
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 82
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 83
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 82
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 84
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 80
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 85
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 80
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 86
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 82
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 87
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 82
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 88
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 88
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 89
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 88
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 90
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 90
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 91
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 90
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 92
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 88
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 93
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 88
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 94
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 90
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 95
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 90
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 96
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 64
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 97
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 64
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 98
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 66
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 99
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 66
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 100
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 64
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 101
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 64
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 102
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 66
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 103
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 66
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 104
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 72
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 105
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 72
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 106
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 74
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 107
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 74
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 108
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 72
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 109
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 72
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 110
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 74
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 111
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 74
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 112
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 80
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 113
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 80
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 114
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 82
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 115
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 82
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 116
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 80
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 117
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 80
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 118
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 82
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 119
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 82
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 120
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 88
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 121
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 88
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 122
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 90
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 123
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 90
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 124
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 88
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 125
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 88
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 126
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 90
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 127
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 90
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 128
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 128
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 129
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 128
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 130
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 130
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 131
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 130
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 132
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 128
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 133
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 128
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 134
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 130
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 135
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 130
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 136
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 136
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 137
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 136
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 138
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 138
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 139
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 138
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 140
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 136
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 141
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 136
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 142
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 138
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 143
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 138
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 144
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 144
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 145
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 144
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 146
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 146
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 147
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 146
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 148
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 144
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 149
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 144
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 150
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 146
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 151
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 146
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 152
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 152
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 153
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 152
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 154
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 154
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 155
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 154
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 156
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 152
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 157
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 152
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 158
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 154
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 159
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 154
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 160
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 128
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 161
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 128
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 162
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 130
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 163
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 130
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 164
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 128
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 165
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 128
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 166
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 130
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 167
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 130
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 168
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 136
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 169
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 136
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 170
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 138
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 171
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 138
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 172
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 136
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 173
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 136
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 174
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 138
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 175
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 138
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 176
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 144
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 177
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 144
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 178
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 146
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 179
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 146
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 180
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 144
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 181
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 144
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 182
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 146
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 183
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 146
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 184
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 152
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 185
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 152
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 186
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 154
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 187
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 154
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 188
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 152
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 189
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 152
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 190
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 154
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 191
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 154
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 192
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 192
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 193
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 192
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 194
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 194
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 195
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 194
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 196
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 192
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 197
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 192
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 198
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 194
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 199
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 194
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 200
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 200
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 201
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 200
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 202
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 202
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 203
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 202
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 204
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 200
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 205
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 200
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 206
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 202
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 207
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 202
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 208
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 208
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 209
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 208
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 210
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 210
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 211
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 210
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 212
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 208
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 213
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 208
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 214
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 210
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 215
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 210
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 216
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 216
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 217
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 216
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 218
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 218
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 219
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 218
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 220
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 216
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 221
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 216
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 222
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 218
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 223
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 218
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 224
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 192
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 225
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 192
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 226
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 194
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 227
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 194
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 228
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 192
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 229
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 192
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 230
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 194
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 231
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 194
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 232
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 200
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 233
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 200
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 234
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 202
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 235
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 202
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 236
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 200
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 237
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 200
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 238
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 202
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 239
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 202
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 240
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 208
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 241
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 208
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 242
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 210
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 243
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 210
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 244
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 208
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 245
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 208
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 246
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 210
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 247
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 210
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 248
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 216
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 249
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 216
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 250
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 218
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 251
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 218
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 252
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 216
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 253
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 216
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 254
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 218
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 255
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 218
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 256
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 256
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 257
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 256
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 258
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 258
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 259
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 258
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 260
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 256
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 261
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 256
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 262
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 258
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 263
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 258
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 264
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 264
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 265
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 264
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 266
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 266
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 267
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 266
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 268
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 264
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 269
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 264
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 270
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 266
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 271
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 266
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 272
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 272
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 273
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 272
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 274
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 274
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 275
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 274
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 276
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 272
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 277
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 272
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 278
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 274
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 279
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 274
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 280
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 280
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 281
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 280
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 282
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 282
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 283
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 282
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 284
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 280
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 285
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 280
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 286
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 282
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 287
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 282
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 288
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 256
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 289
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 256
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 290
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 258
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 291
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 258
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 292
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 256
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 293
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 256
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 294
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 258
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 295
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 258
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 296
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 264
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 297
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 264
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 298
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 266
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 299
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 266
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 300
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 264
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 301
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 264
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 302
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 266
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 303
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 266
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 304
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 272
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 305
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 272
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 306
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 274
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 307
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 274
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 308
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 272
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 309
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 272
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 310
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 274
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 311
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 274
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 312
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 280
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 313
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 280
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 314
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 282
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 315
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 282
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 316
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 280
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 317
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 280
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 318
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 282
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 319
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 282
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 320
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 320
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 321
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 320
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 322
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 322
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 323
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 322
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 324
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 320
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 325
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 320
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 326
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 322
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 327
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 322
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 328
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 328
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 329
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 328
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 330
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 330
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 331
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 330
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 332
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 328
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 333
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 328
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 334
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 330
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 335
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 330
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 336
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 336
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 337
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 336
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 338
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 338
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 339
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 338
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 340
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 336
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 341
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 336
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 342
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 338
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 343
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 338
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 344
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 344
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 345
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 344
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 346
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 346
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 347
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 346
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 348
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 344
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 349
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 344
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 350
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 346
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 351
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 346
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 352
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 320
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 353
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 320
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 354
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 322
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 355
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 322
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 356
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 320
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 357
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 320
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 358
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 322
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 359
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 322
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 360
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 328
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 361
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 328
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 362
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 330
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 363
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 330
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 364
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 328
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 365
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 328
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 366
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 330
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 367
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 330
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 368
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 336
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 369
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 336
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 370
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 338
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 371
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 338
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 372
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 336
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 373
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 336
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 374
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 338
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 375
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 338
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 376
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 344
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 377
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 344
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 378
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 346
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 379
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 346
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 380
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 344
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 381
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 344
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 382
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 346
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 383
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 346
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 384
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 384
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 385
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 384
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 386
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 386
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 387
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 386
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 388
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 384
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 389
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 384
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 390
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 386
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 391
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 386
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 392
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 392
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 393
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 392
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 394
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 394
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 395
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 394
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 396
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 392
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 397
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 392
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 398
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 394
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 399
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 394
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 400
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 400
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 401
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 400
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 402
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 402
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 403
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 402
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 404
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 400
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 405
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 400
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 406
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 402
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 407
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 402
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 408
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 408
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 409
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 408
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 410
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 410
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 411
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 410
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 412
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 408
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 413
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 408
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 414
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 410
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 415
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 410
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 416
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 384
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 417
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 384
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 418
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 386
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 419
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 386
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 420
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 384
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 421
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 384
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 422
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 386
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 423
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 386
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 424
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 392
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 425
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 392
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 426
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 394
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 427
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 394
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 428
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 392
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 429
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 392
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 430
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 394
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 431
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 394
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 432
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 400
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 433
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 400
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 434
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 402
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 435
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 402
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 436
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 400
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 437
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 400
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 438
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 402
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 439
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 402
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 440
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 408
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 441
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 408
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 442
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 410
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 443
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 410
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 444
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 408
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 445
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 408
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 446
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 410
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 447
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 410
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 448
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 448
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 449
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 448
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 450
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 450
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 451
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 450
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 452
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 448
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 453
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 448
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 454
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 450
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 455
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 450
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 456
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 456
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 457
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 456
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 458
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 458
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 459
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 458
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 460
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 456
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 461
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 456
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 462
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 458
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 463
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 458
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 464
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 464
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 465
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 464
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 466
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 466
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 467
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 466
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 468
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 464
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 469
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 464
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 470
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 466
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 471
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 466
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 472
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 472
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 473
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 472
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 474
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 474
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 475
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 474
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 476
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 472
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 477
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 472
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 478
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 474
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 479
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 474
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 480
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 448
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 481
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 448
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 482
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 450
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 483
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 450
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 484
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 448
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 485
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 448
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 486
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 450
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 487
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 450
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 488
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 456
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 489
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 456
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 490
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 458
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 491
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 458
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 492
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 456
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 493
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 456
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 494
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 458
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 495
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 458
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 496
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 464
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 497
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 464
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 498
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 466
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 499
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 466
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 500
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 464
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 501
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 464
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 502
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 466
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 503
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 466
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 504
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 472
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 505
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 472
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 506
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 474
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 507
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 474
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 508
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 472
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 509
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 472
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 510
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 474
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 511
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 474
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 512
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 512
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 513
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 512
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 514
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 514
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 515
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 514
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 516
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 512
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 517
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 512
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 518
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 514
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 519
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 514
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 520
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 520
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 521
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 520
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 522
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 522
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 523
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 522
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 524
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 520
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 525
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 520
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 526
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 522
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 527
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 522
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 528
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 528
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 529
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 528
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 530
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 530
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 531
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 530
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 532
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 528
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 533
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 528
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 534
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 530
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 535
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 530
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 536
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 536
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 537
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 536
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 538
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 538
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 539
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 538
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 540
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 536
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 541
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 536
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 542
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 538
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 543
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 538
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 544
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 512
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 545
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 512
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 546
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 514
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 547
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 514
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 548
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 512
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 549
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 512
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 550
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 514
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 551
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 514
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 552
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 520
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 553
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 520
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 554
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 522
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 555
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 522
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 556
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 520
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 557
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 520
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 558
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 522
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 559
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 522
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 560
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 528
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 561
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 528
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 562
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 530
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 563
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 530
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 564
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 528
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 565
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 528
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 566
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 530
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 567
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 530
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 568
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 536
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 569
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 536
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 570
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 538
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 571
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 538
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 572
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 536
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 573
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 536
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 574
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 538
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 575
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 538
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 576
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 576
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 577
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 576
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 578
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 578
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 579
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 578
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 580
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 576
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 581
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 576
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 582
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 578
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 583
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 578
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 584
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 584
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 585
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 584
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 586
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 586
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 587
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 586
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 588
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 584
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 589
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 584
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 590
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 586
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 591
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 586
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 592
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 592
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 593
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 592
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 594
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 594
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 595
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 594
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 596
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 592
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 597
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 592
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 598
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 594
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 599
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 594
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 600
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 600
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 601
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 600
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 602
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 602
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 603
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 602
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 604
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 600
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 605
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 600
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 606
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 602
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 607
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 602
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 608
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 576
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 609
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 576
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 610
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 578
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 611
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 578
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 612
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 576
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 613
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 576
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 614
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 578
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 615
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 578
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 616
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 584
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 617
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 584
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 618
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 586
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 619
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 586
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 620
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 584
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 621
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 584
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 622
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 586
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 623
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 586
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 624
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 592
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 625
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 592
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 626
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 594
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 627
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 594
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 628
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 592
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 629
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 592
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 630
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 594
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 631
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 594
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 632
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 600
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 633
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 600
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 634
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 602
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 635
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 602
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 636
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 600
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 637
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 600
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 638
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 602
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 639
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 602
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 640
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 640
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 641
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 640
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 642
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 642
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 643
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 642
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 644
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 640
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 645
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 640
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 646
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 642
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 647
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 642
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 648
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 648
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 649
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 648
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 650
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 650
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 651
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 650
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 652
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 648
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 653
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 648
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 654
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 650
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 655
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 650
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 656
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 656
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 657
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 656
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 658
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 658
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 659
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 658
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 660
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 656
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 661
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 656
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 662
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 658
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 663
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 658
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 664
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 664
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 665
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 664
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 666
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 666
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 667
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 666
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 668
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 664
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 669
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 664
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 670
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 666
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 671
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 666
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 672
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 640
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 673
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 640
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 674
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 642
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 675
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 642
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 676
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 640
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 677
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 640
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 678
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 642
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 679
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 642
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 680
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 648
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 681
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 648
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 682
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 650
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 683
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 650
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 684
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 648
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 685
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 648
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 686
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 650
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 687
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 650
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 688
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 656
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 689
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 656
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 690
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 658
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 691
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 658
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 692
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 656
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 693
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 656
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 694
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 658
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 695
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 658
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 696
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 664
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 697
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 664
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 698
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 666
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 699
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 666
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 700
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 664
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 701
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 664
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 702
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 666
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 703
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 666
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 704
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 704
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 705
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 704
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 706
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 706
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 707
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 706
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 708
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 704
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 709
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 704
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 710
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 706
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 711
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 706
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 712
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 712
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 713
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 712
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 714
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 714
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 715
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 714
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 716
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 712
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 717
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 712
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 718
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 714
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 719
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 714
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 720
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 720
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 721
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 720
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 722
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 722
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 723
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 722
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 724
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 720
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 725
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 720
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 726
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 722
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 727
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 722
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 728
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 728
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 729
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 728
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 730
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 730
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 731
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 730
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 732
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 728
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 733
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 728
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 734
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 730
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 735
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 730
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 736
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 704
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 737
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 704
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 738
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 706
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 739
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 706
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 740
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 704
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 741
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 704
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 742
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 706
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 743
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 706
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 744
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 712
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 745
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 712
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 746
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 714
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 747
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 714
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 748
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 712
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 749
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 712
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 750
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 714
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 751
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 714
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 752
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 720
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 753
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 720
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 754
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 722
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 755
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 722
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 756
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 720
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 757
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 720
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 758
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 722
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 759
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 722
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 760
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 728
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 761
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 728
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 762
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 730
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 763
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 730
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 764
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 728
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 765
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 728
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 766
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 730
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 767
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 730
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 768
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 768
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 769
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 768
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 770
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 770
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 771
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 770
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 772
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 768
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 773
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 768
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 774
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 770
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 775
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 770
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 776
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 776
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 777
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 776
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 778
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 778
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 779
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 778
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 780
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 776
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 781
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 776
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 782
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 778
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 783
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 778
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 784
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 784
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 785
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 784
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 786
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 786
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 787
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 786
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 788
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 784
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 789
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 784
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 790
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 786
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 791
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 786
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 792
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 792
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 793
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 792
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 794
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 794
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 795
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 794
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 796
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 792
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 797
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 792
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 798
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 794
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 799
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 794
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 800
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 768
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 801
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 768
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 802
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 770
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 803
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 770
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 804
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 768
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 805
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 768
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 806
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 770
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 807
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 770
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 808
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 776
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 809
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 776
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 810
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 778
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 811
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 778
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 812
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 776
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 813
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 776
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 814
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 778
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 815
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 778
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 816
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 784
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 817
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 784
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 818
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 786
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 819
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 786
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 820
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 784
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 821
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 784
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 822
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 786
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 823
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 786
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 824
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 792
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 825
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 792
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 826
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 794
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 827
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 794
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 828
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 792
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 829
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 792
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 830
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 794
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 831
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 794
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 832
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 832
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 833
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 832
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 834
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 834
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 835
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 834
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 836
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 832
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 837
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 832
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 838
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 834
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 839
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 834
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 840
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 840
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 841
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 840
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 842
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 842
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 843
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 842
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 844
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 840
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 845
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 840
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 846
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 842
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 847
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 842
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 848
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 848
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 849
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 848
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 850
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 850
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 851
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 850
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 852
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 848
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 853
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 848
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 854
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 850
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 855
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 850
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 856
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 856
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 857
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 856
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 858
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 858
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 859
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 858
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 860
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 856
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 861
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 856
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 862
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 858
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 863
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 858
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 864
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 832
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 865
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 832
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 866
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 834
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 867
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 834
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 868
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 832
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 869
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 832
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 870
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 834
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 871
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 834
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 872
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 840
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 873
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 840
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 874
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 842
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 875
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 842
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 876
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 840
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 877
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 840
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 878
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 842
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 879
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 842
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 880
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 848
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 881
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 848
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 882
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 850
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 883
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 850
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 884
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 848
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 885
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 848
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 886
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 850
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 887
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 850
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 888
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 856
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 889
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 856
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 890
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 858
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 891
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 858
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 892
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 856
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 893
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 856
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 894
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 858
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 895
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 858
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 896
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 896
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 897
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 896
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 898
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 898
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 899
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 898
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 900
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 896
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 901
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 896
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 902
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 898
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 903
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 898
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 904
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 904
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 905
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 904
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 906
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 906
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 907
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 906
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 908
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 904
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 909
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 904
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 910
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 906
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 911
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 906
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 912
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 912
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 913
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 912
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 914
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 914
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 915
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 914
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 916
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 912
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 917
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 912
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 918
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 914
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 919
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 914
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 920
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 920
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 921
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 920
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 922
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 922
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 923
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 922
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 924
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 920
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 925
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 920
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 926
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 922
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 927
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 922
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 928
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 896
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 929
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 896
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 930
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 898
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 931
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 898
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 932
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 896
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 933
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 896
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 934
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 898
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 935
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 898
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 936
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 904
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 937
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 904
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 938
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 906
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 939
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 906
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 940
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 904
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 941
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 904
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 942
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 906
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 943
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 906
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 944
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 912
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 945
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 912
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 946
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 914
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 947
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 914
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 948
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 912
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 949
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 912
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 950
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 914
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 951
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 914
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 952
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 920
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 953
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 920
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 954
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 922
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 955
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 922
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 956
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 920
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 957
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 920
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 958
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 922
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 959
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 922
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 960
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 960
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 961
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 960
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 962
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 962
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 963
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 962
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 964
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 960
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 965
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 960
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 966
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 962
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 967
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 962
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 968
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 968
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 969
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 968
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 970
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 970
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 971
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 970
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 972
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 968
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 973
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 968
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 974
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 970
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 975
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 970
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 976
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 976
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 977
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 976
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 978
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 978
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 979
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 978
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 980
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 976
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 981
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 976
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 982
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 978
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 983
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 978
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 984
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 984
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 985
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 984
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 986
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 986
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 987
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 986
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 988
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 984
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 989
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 984
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 990
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 986
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 991
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 986
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 992
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 960
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 993
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 960
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 994
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 962
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 995
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 962
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 996
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 960
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 997
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 960
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 998
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 962
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 999
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 962
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 1000
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 968
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 1001
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 968
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 1002
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 970
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 1003
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 970
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 1004
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 968
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 1005
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 968
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 1006
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 970
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 1007
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 970
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 1008
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 976
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 1009
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 976
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 1010
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 978
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 1011
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 978
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 1012
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 976
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 1013
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 976
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 1014
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 978
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 1015
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 978
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 1016
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 984
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 1017
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 984
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 1018
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 986
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 1019
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 986
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 1020
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 984
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 1021
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 984
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 1022
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 986
+#DLC    App Start: CPU request ADC!!
+#DLC    Set ADC data = 1023
+#DLC    Wait for App Start => 0
+#DLC    App Start change to 0
+#DLC    CPU Process finish!
+#DLC    Value = 986

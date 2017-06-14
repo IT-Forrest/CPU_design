@@ -1,13 +1,17 @@
 function [ output_args ] = plotadc_snd_rd( input_args )
 %This function is used to compared the send-to and read-out ADC data
 %   Detailed explanation goes here
-    file_name = 'test_14_bit_failed_analysis.txt';
-    output_name = 'test_14_bit_failed_bits.txt';
+    %file_name = 'test_14_bit_failed_analysis.txt';
+    %output_name = 'test_14_bit_failed_bits.txt';
+    %file_name = 'test_14_error_analysis_1LIOA.txt';
+    %output_name = 'test_14_error_analysis_1LIOA_bits.txt';
+    file_name = 'test14_error_analysis2.txt';
+    output_name = 'test14_error_analysis2_bits.txt';
     fid = fopen(output_name, 'w+');
     
     offset_snd = 2;
-    offset_rd  = 18;
-    block_len = 27;
+    offset_rd  = 6;
+    block_len = 6;
     data_len = 1024;
     keybits = 10;
     
