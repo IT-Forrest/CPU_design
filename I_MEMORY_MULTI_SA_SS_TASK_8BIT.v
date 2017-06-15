@@ -103,13 +103,18 @@ module  I_MEMORY_MULTI_SA_SS_TASK_8BIT(
         mem_out[ i] = tmpi_datain[7:0];  i = 29;
         mem_out[ i] = tmpi_datain[15:8]; i = 30;
         
+        // The counter for Sensitivity Search = 10
+        tmpi_datain = {8'b0000_0000, 4'b0001, 4'b0100};
+        mem_out[ i] = tmpi_datain[7:0];  i = 31;
+        mem_out[ i] = tmpi_datain[15:8]; i = 32;
+        
     /* (1) Initialize SA & send tuning bits */ 
     i= DEFAULT_PC_ADDR*2;
     // Load the SA iteration to gr2 (only for the very first time)
     tmpi_datain = {`LOAD, `gr2, 1'b0, `gr0, 4'b1001};
     mem_out[ i] = tmpi_datain[7:0];  i = 1 + DEFAULT_PC_ADDR*2;
     mem_out[ i] = tmpi_datain[15:8]; i = 2 + DEFAULT_PC_ADDR*2;
-    
+
     // Save the SA iteration (gr2) to SRAM, for the loop later
     tmpi_datain = {`STORE, `gr2, 1'b0, `gr0, 4'b1001};
     mem_out[ i] = tmpi_datain[7:0];  i = 3 + DEFAULT_PC_ADDR*2;
@@ -120,10 +125,30 @@ module  I_MEMORY_MULTI_SA_SS_TASK_8BIT(
     mem_out[ i] = tmpi_datain[7:0];  i = 5 + DEFAULT_PC_ADDR*2;
     mem_out[ i] = tmpi_datain[15:8]; i = 6 + DEFAULT_PC_ADDR*2;
     
-    // if (SA_iteration (gr2) == 0) Jump to SA finish
+    // if (SA_iteration (gr2) != 0) Jump to send X_new Y_new via SPI
     tmpi_datain = {`BZ, `gr1, 4'b1111, 4'b1010};// gr1 must be all 0's
     mem_out[ i] = tmpi_datain[7:0];  i = 7 + DEFAULT_PC_ADDR*2;
     mem_out[ i] = tmpi_datain[15:8]; i = 8 + DEFAULT_PC_ADDR*2;
+
+        // else (SA_iteration (gr2) == 0) Load the SS iteration to gr3
+        tmpi_datain = {`LOAD, `gr3, 1'b0, `gr0, 4'b1111};
+        mem_out[ i] = tmpi_datain[7:0];  i = 1 + DEFAULT_PC_ADDR*2;
+        mem_out[ i] = tmpi_datain[15:8]; i = 2 + DEFAULT_PC_ADDR*2;
+    
+        // Save the SS iteration (gr3) to SRAM, for the loop later
+        tmpi_datain = {`STORE, `gr3, 1'b0, `gr0, 4'b1111};
+        mem_out[ i] = tmpi_datain[7:0];  i = 3 + DEFAULT_PC_ADDR*2;
+        mem_out[ i] = tmpi_datain[15:8]; i = 4 + DEFAULT_PC_ADDR*2;
+        
+        // Compare SS iteration (gr3) and 0 (gr1) to judge if SS has done
+        tmpi_datain = {`CMP, 4'b0000, `gr3, 1'b0, `gr1};//gr1 must be all 0's
+        mem_out[ i] = tmpi_datain[7:0];  i = 5 + DEFAULT_PC_ADDR*2;
+        mem_out[ i] = tmpi_datain[15:8]; i = 6 + DEFAULT_PC_ADDR*2;
+        
+        // if (SS_iteration (gr3) == 0) Jump to SS finish
+        tmpi_datain = {`BZ, `gr1, 4'b1111, 4'b1010};// gr1 must be all 0's
+        mem_out[ i] = tmpi_datain[7:0];  i = 7 + DEFAULT_PC_ADDR*2;
+        mem_out[ i] = tmpi_datain[15:8]; i = 8 + DEFAULT_PC_ADDR*2;
     
     // Clear OUT_A & Set SPI starting address;
     tmpi_datain = {`SUB, `gr2, 1'b0, `gr2, 1'b0, `gr2};
@@ -684,6 +709,21 @@ module  I_MEMORY_MULTI_SA_SS_TASK_8BIT(
     mem_out[ i] = tmpi_datain[7:0];  i = 227 + DEFAULT_PC_ADDR*2;
     mem_out[ i] = tmpi_datain[15:8]; i = 228 + DEFAULT_PC_ADDR*2;
     // else continue the Simulated Annealing process
+
+        // Load SS iteration at 0x0F to gr3
+        tmpi_datain = {`LOAD, `gr3, 1'b0, `gr0, 4'b1111};
+        mem_out[ i] = tmpi_datain[7:0];  i = 223 + DEFAULT_PC_ADDR*2;
+        mem_out[ i] = tmpi_datain[15:8]; i = 224 + DEFAULT_PC_ADDR*2;
+
+        // Compare SS iteration (gr3) to check if it's done (gr0)
+        tmpi_datain = {`CMP, 4'b0000, `gr3, 1'b0, `gr0};
+        mem_out[ i] = tmpi_datain[7:0];  i = 225 + DEFAULT_PC_ADDR*2;
+        mem_out[ i] = tmpi_datain[15:8]; i = 226 + DEFAULT_PC_ADDR*2;
+
+        // if (SS_iteration(gr3) == 0) Jump to Sensitivity Algorithm
+        tmpi_datain = {`BZ, `gr0, 4'b1110, 4'b0010};// must be SA is done
+        mem_out[ i] = tmpi_datain[7:0];  i = 227 + DEFAULT_PC_ADDR*2;
+        mem_out[ i] = tmpi_datain[15:8]; i = 228 + DEFAULT_PC_ADDR*2;
     
     // load Ana_best to gr2 for comparison
     tmpi_datain = {`LOAD, `gr2, 1'b0, `gr0, 4'b1011};
@@ -1256,7 +1296,322 @@ module  I_MEMORY_MULTI_SA_SS_TASK_8BIT(
     mem_out[ i] = tmpi_datain[15:8]; i = 452 + DEFAULT_PC_ADDR*2;
 
     // (7) start the Sensitivity Algorithm (optional)
+        // (7.1) clear the register gr2
+        tmpi_datain = {`SUB, `gr2, 1'b0, `gr2, 1'b0, `gr2};
+        mem_out[ i] = tmpi_datain[7:0];  i = 427 + DEFAULT_PC_ADDR*2;
+        mem_out[ i] = tmpi_datain[15:8]; i = 428 + DEFAULT_PC_ADDR*2;
+
+        tmpi_datain = {`SET, `gr2, 4'b0000, 4'b0100};
+        mem_out[ i] = tmpi_datain[7:0];  i = 433 + DEFAULT_PC_ADDR*2;
+        mem_out[ i] = tmpi_datain[15:8]; i = 434 + DEFAULT_PC_ADDR*2;
+        
+        // Initialize the SS neighbor cnt to 4 at 0x8 (reuse the Temperature)
+        tmpi_datain = {`STORE, `gr2, 1'b0, `gr0, 4'b1000};
+        mem_out[ i] = tmpi_datain[7:0];  i = 449 + DEFAULT_PC_ADDR*2;
+        mem_out[ i] = tmpi_datain[15:8]; i = 450 + DEFAULT_PC_ADDR*2;
+        
+        // (7.2) Access here: Load the SS iteration from 0xF to gr3
+        tmpi_datain = {`LOAD, `gr3, 1'b0, `gr0, 4'b1111};
+        mem_out[ i] = tmpi_datain[7:0];  i = 447 + DEFAULT_PC_ADDR*2;
+        mem_out[ i] = tmpi_datain[15:8]; i = 448 + DEFAULT_PC_ADDR*2;
+        
+        // Judge if the SS iteration (gr3) is Zero (gr0)
+        tmpi_datain = {`CMP, 4'b0000, `gr3, 1'b0, `gr0};
+        mem_out[ i] = tmpi_datain[7:0];  i = 349 + DEFAULT_PC_ADDR*2;
+        mem_out[ i] = tmpi_datain[15:8]; i = 350 + DEFAULT_PC_ADDR*2;
+
+        // if SS iteration (gr3) == 0 jump to (8) Finally
+        tmpi_datain = {`BZ, `gr0, 4'b0001, 4'b1111};
+        mem_out[ i] = tmpi_datain[7:0];  i = 439 + DEFAULT_PC_ADDR*2;
+        mem_out[ i] = tmpi_datain[15:8]; i = 440 + DEFAULT_PC_ADDR*2;
+
+        // else (SS iteration (gr3) != 0)
+        // load the SS neighbor counter to gr2 from 0x8;
+        tmpi_datain = {`LOAD, `gr2, 1'b0, `gr0, 4'b1000};
+        mem_out[ i] = tmpi_datain[7:0];  i = 447 + DEFAULT_PC_ADDR*2;
+        mem_out[ i] = tmpi_datain[15:8]; i = 448 + DEFAULT_PC_ADDR*2;
+        
+        // Load Ana_best to gr7 from 0xB
+        tmpi_datain = {`LOAD, `gr7, 1'b0, `gr0, 4'b1011};// Ana_best
+        mem_out[ i] = tmpi_datain[7:0];  i = 441 + DEFAULT_PC_ADDR*2;
+        mem_out[ i] = tmpi_datain[15:8]; i = 442 + DEFAULT_PC_ADDR*2;
     
+        // Load X_best Y_best to gr6 from 0xA
+        tmpi_datain = {`LOAD, `gr6, 1'b0, `gr0, 4'b1010};// X_best Y_best
+        mem_out[ i] = tmpi_datain[7:0];  i = 341 + DEFAULT_PC_ADDR*2;
+        mem_out[ i] = tmpi_datain[15:8]; i = 342 + DEFAULT_PC_ADDR*2;
+        
+        // Load X_new, Y_new to gr4 frpm 0x06
+        tmpi_datain = {`LOAD, `gr4, 1'b0, `gr0, 4'b0110};
+        mem_out[ i] = tmpi_datain[7:0];  i = 447 + DEFAULT_PC_ADDR*2;
+        mem_out[ i] = tmpi_datain[15:8]; i = 448 + DEFAULT_PC_ADDR*2;
+        
+        // Load Ana_new to gr5 from 0x05
+        tmpi_datain = {`LOAD, `gr5, 1'b0, `gr0, 4'b0101};
+        mem_out[ i] = tmpi_datain[7:0];  i = 447 + DEFAULT_PC_ADDR*2;
+        mem_out[ i] = tmpi_datain[15:8]; i = 448 + DEFAULT_PC_ADDR*2;
+        
+        // Compare Ana_new (gr5) with Ana_best (gr7)
+        tmpi_datain = {`CMP, 4'b0000, `gr5, 1'b0, `gr7};
+        mem_out[ i] = tmpi_datain[7:0];  i = 349 + DEFAULT_PC_ADDR*2;
+        mem_out[ i] = tmpi_datain[15:8]; i = 350 + DEFAULT_PC_ADDR*2;
+        
+        // if Ana_new (gr5) >= Ana_best (gr7) Jump without update Ana_best
+        tmpi_datain = {`BNN, `gr0, 4'b0000, 4'b0000};
+        mem_out[ i] = tmpi_datain[7:0];  i = 349 + DEFAULT_PC_ADDR*2;
+        mem_out[ i] = tmpi_datain[15:8]; i = 350 + DEFAULT_PC_ADDR*2;
+
+        // else (Ana_new (gr5) < Ana_best (gr7)) save Ana_new to Ana_best 0xB
+        tmpi_datain = {`STORE, `gr5, 1'b0, `gr0, 4'b1011};
+        mem_out[ i] = tmpi_datain[7:0];  i = 331 + DEFAULT_PC_ADDR*2;
+        mem_out[ i] = tmpi_datain[15:8]; i = 332 + DEFAULT_PC_ADDR*2;
+
+        // Make Ana_best (gr7) <= Ana_new (gr5)
+        tmpi_datain = {`LOAD, `gr7, 1'b0, `gr0, 4'b1011};
+        mem_out[ i] = tmpi_datain[7:0];  i = 331 + DEFAULT_PC_ADDR*2;
+        mem_out[ i] = tmpi_datain[15:8]; i = 332 + DEFAULT_PC_ADDR*2;
+
+        // Save X_new Y_new (gr4) to the X_best Y_best at 0xA
+        tmpi_datain = {`STORE, `gr4, 1'b0, `gr0, 4'b1010};
+        mem_out[ i] = tmpi_datain[7:0];  i = 331 + DEFAULT_PC_ADDR*2;
+        mem_out[ i] = tmpi_datain[15:8]; i = 332 + DEFAULT_PC_ADDR*2;
+
+        // Make X_best Y_best (gr6) <= X_new Y_new (gr4)
+        tmpi_datain = {`LOAD, `gr6, 1'b0, `gr0, 4'b1010};
+        mem_out[ i] = tmpi_datain[7:0];  i = 331 + DEFAULT_PC_ADDR*2;
+        mem_out[ i] = tmpi_datain[15:8]; i = 332 + DEFAULT_PC_ADDR*2;
+
+        // (7.3) Load Ana_old to gr5 from 0x0D
+        tmpi_datain = {`LOAD, `gr5, 1'b0, `gr0, 4'b1101};
+        mem_out[ i] = tmpi_datain[7:0];  i = 331 + DEFAULT_PC_ADDR*2;
+        mem_out[ i] = tmpi_datain[15:8]; i = 332 + DEFAULT_PC_ADDR*2;
+        
+        // Load X_old Y_old to gr6 from 0x0C
+        tmpi_datain = {`LOAD, `gr6, 1'b0, `gr0, 4'b1100};
+        mem_out[ i] = tmpi_datain[7:0];  i = 331 + DEFAULT_PC_ADDR*2;
+        mem_out[ i] = tmpi_datain[15:8]; i = 332 + DEFAULT_PC_ADDR*2;
+        
+        // Judge if SA neighbor counter (gr2) is zero (gr1)
+        tmpi_datain = {`CMP, 4'b0000, `gr2, 1'b0, `gr1};// gr1 must be all 0's
+        mem_out[ i] = tmpi_datain[7:0];  i = 349 + DEFAULT_PC_ADDR*2;
+        mem_out[ i] = tmpi_datain[15:8]; i = 350 + DEFAULT_PC_ADDR*2;
+        
+        // if (SA neighbor counter (gr2) != 0(gr1)) Jump to update neighbor with X_old Y_old
+        tmpi_datain = {`BNZ, `gr0, 4'b0000, 4'b0000};
+        mem_out[ i] = tmpi_datain[7:0];  i = 349 + DEFAULT_PC_ADDR*2;
+        mem_out[ i] = tmpi_datain[15:8]; i = 350 + DEFAULT_PC_ADDR*2;
+        
+        // else (SA neighbor counter (gr2) == 0) Reload SA neighbor counter(gr2) = 4
+        tmpi_datain = {`SET, `gr2, 4'b0000, 4'b0100};
+        mem_out[ i] = tmpi_datain[7:0];  i = 433 + DEFAULT_PC_ADDR*2;
+        mem_out[ i] = tmpi_datain[15:8]; i = 434 + DEFAULT_PC_ADDR*2;
+        
+        // Compare the Ana_best (gr7) with Ana_old (gr5)
+        tmpi_datain = {`CMP, 4'b0000, `gr7, 1'b0, `gr5};
+        mem_out[ i] = tmpi_datain[7:0];  i = 349 + DEFAULT_PC_ADDR*2;
+        mem_out[ i] = tmpi_datain[15:8]; i = 350 + DEFAULT_PC_ADDR*2;
+        
+        // Judge if (Ana_best (gr7) >= Ana_old (gr5)) Jump to (8) finish
+        tmpi_datain = {`BNN, `gr0, 4'b0000, 4'b0000};
+        mem_out[ i] = tmpi_datain[7:0];  i = 349 + DEFAULT_PC_ADDR*2;
+        mem_out[ i] = tmpi_datain[15:8]; i = 350 + DEFAULT_PC_ADDR*2;
+        
+        // else (Ana_best (gr7) < Ana_old (gr5)) save Ana_best to Ana_old 0xD
+        tmpi_datain = {`STORE, `gr7, 1'b0, `gr0, 4'b1101};
+        mem_out[ i] = tmpi_datain[7:0];  i = 331 + DEFAULT_PC_ADDR*2;
+        mem_out[ i] = tmpi_datain[15:8]; i = 332 + DEFAULT_PC_ADDR*2;
+
+        // Make Ana_old (gr5) <= Ana_best (gr7)
+        tmpi_datain = {`LOAD, `gr5, 1'b0, `gr0, 4'b1101};
+        mem_out[ i] = tmpi_datain[7:0];  i = 331 + DEFAULT_PC_ADDR*2;
+        mem_out[ i] = tmpi_datain[15:8]; i = 332 + DEFAULT_PC_ADDR*2;
+
+        // Save the X_best Y_best (gr6) to X_old Y_old at 0xC
+        tmpi_datain = {`STORE, `gr6, 1'b0, `gr0, 4'b1100};
+        mem_out[ i] = tmpi_datain[7:0];  i = 331 + DEFAULT_PC_ADDR*2;
+        mem_out[ i] = tmpi_datain[15:8]; i = 332 + DEFAULT_PC_ADDR*2;
+
+        // (7.4) Load X_old Y_old (gr4) from 0xC (<= X_best Y_best (gr6))
+        tmpi_datain = {`LOAD, `gr4, 1'b0, `gr0, 4'b1100};
+        mem_out[ i] = tmpi_datain[7:0];  i = 331 + DEFAULT_PC_ADDR*2;
+        mem_out[ i] = tmpi_datain[15:8]; i = 332 + DEFAULT_PC_ADDR*2;
+        
+        // clear gr6 for the use of mask
+        tmpi_datain = {`SUB, `gr6, 1'b0, `gr6, 1'b0, `gr6};
+        mem_out[ i] = tmpi_datain[7:0];  i = 333 + DEFAULT_PC_ADDR*2;
+        mem_out[ i] = tmpi_datain[15:8]; i = 334 + DEFAULT_PC_ADDR*2;
+        
+        // 0 (gr6) ADD 31 to get the mask 0000_0000_0001_1111
+        tmpi_datain = {`ADDI, `gr6, 4'b0001, 4'b1111};//`gr6 + 31
+        mem_out[ i] = tmpi_datain[7:0];  i = 335 + DEFAULT_PC_ADDR*2;
+        mem_out[ i] = tmpi_datain[15:8]; i = 336 + DEFAULT_PC_ADDR*2;
+        
+        // Get the Y_old (LOW 5bits) data to gr5 by (gr4 XOR gr6)
+        tmpi_datain = {`AND, `gr5, 1'b0, `gr4, 1'b0, `gr6};
+        mem_out[ i] = tmpi_datain[7:0];  i = 337 + DEFAULT_PC_ADDR*2;
+        mem_out[ i] = tmpi_datain[15:8]; i = 338 + DEFAULT_PC_ADDR*2;
+        
+        // Right Shift `gr4 to get the MSB of X_old in gr4
+        tmpi_datain = {`SRL, `gr4, 1'b0, `gr4, 4'b1000};
+        mem_out[ i] = tmpi_datain[7:0];  i = 339 + DEFAULT_PC_ADDR*2;
+        mem_out[ i] = tmpi_datain[15:8]; i = 340 + DEFAULT_PC_ADDR*2;
+        
+        // Reload the SS neighbor counter value in gr7 
+        tmpi_datain = {`LOAD, `gr7, 1'b0, `gr0, 4'b1000};
+        mem_out[ i] = tmpi_datain[7:0];  i = 341 + DEFAULT_PC_ADDR*2;
+        mem_out[ i] = tmpi_datain[15:8]; i = 342 + DEFAULT_PC_ADDR*2;
+
+    // This is the step = 1 process; step (0 1) // clear gr2 as 0
+    tmpi_datain = {`SUB, `gr2, 1'b0, `gr2, 1'b0, `gr2};
+    mem_out[ i] = tmpi_datain[7:0];  i = 379 + DEFAULT_PC_ADDR*2;
+    mem_out[ i] = tmpi_datain[15:8]; i = 380 + DEFAULT_PC_ADDR*2;
+
+    // Set gr2 as 1
+    tmpi_datain = {`ADDI, `gr2, 4'b0000, 4'b0001};
+    mem_out[ i] = tmpi_datain[7:0];  i = 381 + DEFAULT_PC_ADDR*2;
+    mem_out[ i] = tmpi_datain[15:8]; i = 382 + DEFAULT_PC_ADDR*2;
+   
+    // clear gr3 as 0
+    tmpi_datain = {`SUB, `gr3, 1'b0, `gr3, 1'b0, `gr3};
+    mem_out[ i] = tmpi_datain[7:0];  i = 383 + DEFAULT_PC_ADDR*2;
+    mem_out[ i] = tmpi_datain[15:8]; i = 384 + DEFAULT_PC_ADDR*2;
+
+    // Left shift gr7 to see if gr7[1] is 0 or 1
+    tmpi_datain = {`SLL, `gr7, 1'b0, `gr7, 4'b1110};
+    mem_out[ i] = tmpi_datain[7:0];  i = 385 + DEFAULT_PC_ADDR*2;
+    mem_out[ i] = tmpi_datain[15:8]; i = 386 + DEFAULT_PC_ADDR*2;
+    
+    // if gr7[1] == 1 Jump to (step_X, step_Y) = (1, 0)
+    tmpi_datain = {`BN, `gr0, 4'b1110, 4'b0001};
+    mem_out[ i] = tmpi_datain[7:0];  i = 387 + DEFAULT_PC_ADDR*2;
+    mem_out[ i] = tmpi_datain[15:8]; i = 388 + DEFAULT_PC_ADDR*2;
+
+    // else gr7[1] == 0 (step_X, step_Y) = (0, 1)
+    // Set step_Y = (gr2) - step (gr3) in gr3
+    tmpi_datain = {`SUB, `gr3, 1'b0, `gr2, 1'b0, `gr3};
+    mem_out[ i] = tmpi_datain[7:0];  i = 389 + DEFAULT_PC_ADDR*2;
+    mem_out[ i] = tmpi_datain[15:8]; i = 390 + DEFAULT_PC_ADDR*2;
+    
+    // Save step_X = (gr2) - step_Y (gr3) in gr2;
+    tmpi_datain = {`SUB, `gr2, 1'b0, `gr2, 1'b0, `gr3};
+    mem_out[ i] = tmpi_datain[7:0];  i = 391 + DEFAULT_PC_ADDR*2;
+    mem_out[ i] = tmpi_datain[15:8]; i = 392 + DEFAULT_PC_ADDR*2;
+    
+    // Finally, get (X_new,Y_new) by (X_old,Y_old) (gr4 gr5) with step_X step_Y (gr2 gr3)
+    // Left shift gr7 to see the value of gr7[0]; 1 means +; 0 means -;
+    tmpi_datain = {`SLL, `gr7, 1'b0, `gr7, 4'b0001};
+    mem_out[ i] = tmpi_datain[7:0];  i = 393 + DEFAULT_PC_ADDR*2;
+    mem_out[ i] = tmpi_datain[15:8]; i = 394 + DEFAULT_PC_ADDR*2;
+
+    // if gr7[0] == 1 Jump to X_new = X_old (gr4) + step_X (gr2)
+    // Y_new = Y_old (gr5) + step_Y (gr3)
+    tmpi_datain = {`BN, `gr0, 4'b1110, 4'b0101};
+    mem_out[ i] = tmpi_datain[7:0];  i = 395 + DEFAULT_PC_ADDR*2;
+    mem_out[ i] = tmpi_datain[15:8]; i = 396 + DEFAULT_PC_ADDR*2;
+    
+    // else gr7[0] == 0 X_new = X_old - step_X; or say step_X = 0 - step_X
+    tmpi_datain = {`SUB, `gr2, 1'b0, `gr0, 1'b0, `gr2};
+    mem_out[ i] = tmpi_datain[7:0];  i = 397 + DEFAULT_PC_ADDR*2;
+    mem_out[ i] = tmpi_datain[15:8]; i = 398 + DEFAULT_PC_ADDR*2;
+    
+    // Let Y_new = Y_old - step_Y; or say step_Y = 0 - step_Y
+    tmpi_datain = {`SUB, `gr3, 1'b0, `gr0, 1'b0, `gr3};
+    mem_out[ i] = tmpi_datain[7:0];  i = 405 + DEFAULT_PC_ADDR*2;
+    mem_out[ i] = tmpi_datain[15:8]; i = 406 + DEFAULT_PC_ADDR*2;
+    
+    // Keep X_new = X_old (gr4) + ((gr7[0])? step_X(gr2) : -step_X(gr2)) in gr2
+    tmpi_datain = {`ADD, `gr2, 1'b0, `gr4, 1'b0, `gr2};
+    mem_out[ i] = tmpi_datain[7:0];  i = 399 + DEFAULT_PC_ADDR*2;
+    mem_out[ i] = tmpi_datain[15:8]; i = 400 + DEFAULT_PC_ADDR*2;
+
+    // Keep Y_new = Y_old (gr5) + ((gr7[0])? step_Y(gr3) : -step_Y(gr3)) in gr3
+    tmpi_datain = {`ADD, `gr3, 1'b0, `gr5, 1'b0, `gr3};
+    mem_out[ i] = tmpi_datain[7:0];  i = 407 + DEFAULT_PC_ADDR*2;
+    mem_out[ i] = tmpi_datain[15:8]; i = 408 + DEFAULT_PC_ADDR*2;
+    
+    // Add 0 to gr6 (0000_0000_0001_1111) to keep 31 as the mask
+    tmpi_datain = {`ADDI, `gr6, 4'b0000, 4'b0000};// meaningless
+    mem_out[ i] = tmpi_datain[7:0];  i = 409 + DEFAULT_PC_ADDR*2;
+    mem_out[ i] = tmpi_datain[15:8]; i = 410 + DEFAULT_PC_ADDR*2;
+    
+    // AND X_new (gr2) with gr6 to keep the X_new in range [0~31];
+    tmpi_datain = {`AND, `gr2, 1'b0, `gr2, 1'b0, `gr6};
+    mem_out[ i] = tmpi_datain[7:0];  i = 411 + DEFAULT_PC_ADDR*2;
+    mem_out[ i] = tmpi_datain[15:8]; i = 412 + DEFAULT_PC_ADDR*2;
+    
+    // AND Y_new (gr3) with gr6 to keep the Y_new in range [0~31];
+    tmpi_datain = {`AND, `gr3, 1'b0, `gr3, 1'b0, `gr6};
+    mem_out[ i] = tmpi_datain[7:0];  i = 413 + DEFAULT_PC_ADDR*2;
+    mem_out[ i] = tmpi_datain[15:8]; i = 414 + DEFAULT_PC_ADDR*2;
+    
+    // Merge X_new with Y_new and save back to SRAM at 0x09
+    // Left shift X_new (gr2) 8bits
+    tmpi_datain = {`SLL, `gr2, 1'b0, `gr2, 4'b1000};
+    mem_out[ i] = tmpi_datain[7:0];  i = 415 + DEFAULT_PC_ADDR*2;
+    mem_out[ i] = tmpi_datain[15:8]; i = 416 + DEFAULT_PC_ADDR*2;
+    
+    // ADD X_new (gr2) with Y_new (gr3) and save back to gr2
+    tmpi_datain = {`ADD, `gr2, 1'b0, `gr2, 1'b0, `gr3};
+    mem_out[ i] = tmpi_datain[7:0];  i = 417 + DEFAULT_PC_ADDR*2;
+    mem_out[ i] = tmpi_datain[15:8]; i = 418 + DEFAULT_PC_ADDR*2;
+    
+    // Save (X_new, Y_new) back to SRAM
+    tmpi_datain = {`STORE, `gr2, 1'b0, `gr0, 4'b0110};
+    mem_out[ i] = tmpi_datain[7:0];  i = 419 + DEFAULT_PC_ADDR*2;
+    mem_out[ i] = tmpi_datain[15:8]; i = 420 + DEFAULT_PC_ADDR*2;
+
+    // (7.5) Reload the SS neighbor counter value in gr2 
+        tmpi_datain = {`LOAD, `gr2, 1'b0, `gr0, 4'b1000};
+        mem_out[ i] = tmpi_datain[7:0];  i = 341 + DEFAULT_PC_ADDR*2;
+        mem_out[ i] = tmpi_datain[15:8]; i = 342 + DEFAULT_PC_ADDR*2;
+    
+        // Count down SS neighbor counter by 1
+        tmpi_datain = {`SUBI, `gr2, 4'b0000, 4'b0001};//`gr2--
+        mem_out[ i] = tmpi_datain[7:0];  i = 437 + DEFAULT_PC_ADDR*2;
+        mem_out[ i] = tmpi_datain[15:8]; i = 438 + DEFAULT_PC_ADDR*2;
+    
+        // Save back the data to SRAM
+        tmpi_datain = {`STORE, `gr2, 1'b0, `gr0, 4'b1000};
+        mem_out[ i] = tmpi_datain[7:0];  i = 419 + DEFAULT_PC_ADDR*2;
+        mem_out[ i] = tmpi_datain[15:8]; i = 420 + DEFAULT_PC_ADDR*2;
+
+        // Update the SS iteration to gr3
+        tmpi_datain = {`LOAD, `gr3, 1'b0, `gr0, 4'b1111};
+        mem_out[ i] = tmpi_datain[7:0];  i = 341 + DEFAULT_PC_ADDR*2;
+        mem_out[ i] = tmpi_datain[15:8]; i = 342 + DEFAULT_PC_ADDR*2;
+        
+        // Count down SS iteration by 1
+        tmpi_datain = {`SUBI, `gr3, 4'b0000, 4'b0001};//`gr3--
+        mem_out[ i] = tmpi_datain[7:0];  i = 437 + DEFAULT_PC_ADDR*2;
+        mem_out[ i] = tmpi_datain[15:8]; i = 438 + DEFAULT_PC_ADDR*2;
+        
+        //if (`gr3 != 0) return back to (1), save iteration# and keep on SS
+        tmpi_datain = {`BNZ, `gr0, 4'b0001, 4'b1111};
+        mem_out[ i] = tmpi_datain[7:0];  i = 439 + DEFAULT_PC_ADDR*2;
+        mem_out[ i] = tmpi_datain[15:8]; i = 440 + DEFAULT_PC_ADDR*2;
+        
+        //else Update the Ana_best and X_best Y_best (Ana_old; X_old Y_old)
+        tmpi_datain = {`LOAD, `gr7, 1'b0, `gr0, 4'b1011};// Ana_best
+        mem_out[ i] = tmpi_datain[7:0];  i = 441 + DEFAULT_PC_ADDR*2;
+        mem_out[ i] = tmpi_datain[15:8]; i = 442 + DEFAULT_PC_ADDR*2;
+        
+        // Save Ana_best (gr7) to Ana_new at 0x05 (ignore Ana_old)
+        tmpi_datain = {`STORE, `gr7, 1'b0, `gr0, 4'b0101};
+        mem_out[ i] = tmpi_datain[7:0];  i = 445 + DEFAULT_PC_ADDR*2;
+        mem_out[ i] = tmpi_datain[15:8]; i = 446 + DEFAULT_PC_ADDR*2;
+        
+        // Load X_best Y_best to gr6 from 0xA
+        tmpi_datain = {`LOAD, `gr6, 1'b0, `gr0, 4'b1010};// X_best Y_best
+        mem_out[ i] = tmpi_datain[7:0];  i = 447 + DEFAULT_PC_ADDR*2;
+        mem_out[ i] = tmpi_datain[15:8]; i = 448 + DEFAULT_PC_ADDR*2;
+       
+        // Save X_best Y_best (gr6) to X_new Y_new (ignore X_old Y_old)
+        tmpi_datain = {`STORE, `gr6, 1'b0, `gr0, 4'b0110};
+        mem_out[ i] = tmpi_datain[7:0];  i = 451 + DEFAULT_PC_ADDR*2;
+        mem_out[ i] = tmpi_datain[15:8]; i = 452 + DEFAULT_PC_ADDR*2;
+        
+        // In SS, Ana_best is always the min, thus just output 
+        
     // (8) Finally output the X_new Y_new
     //Clear OUT_A & Set SPI starting address;
     tmpi_datain = {`SUB, `gr2, 1'b0, `gr2, 1'b0, `gr2};
